@@ -3,7 +3,7 @@
     <img alt="Vue logo" src="../assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js App"/>
     <div :key="q.uri" v-for="q in quotes">
-      {{ quotes }}
+      {{ q.text }}
     </div>
   </div>
 </template>
@@ -28,8 +28,8 @@ export default {
     for (let kn in quotes.data) {
       bucket.push(quotes.data[kn])
     }
-    quotes.data = bucket
-    this.quotes = JSON.parse(JSON.stringify(quotes))
+    // quotes.data = bucket
+    this.quotes = bucket
   }
 }
 </script>
