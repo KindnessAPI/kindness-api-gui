@@ -3,8 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "npm run serve",
-    "devlive": "netlify dev --live",
+    "dev": "netlify dev",
     "deploy": "npm run build; npm run netlify; npm run github",
     "github": "git add .; git commit -am \"front-end-deploy\"; git push -u origin master;",
     "netlify": "netlify deploy --dir=\"./dist\" --prod",
@@ -14,6 +13,7 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
+    "node-fetch": "^2.6.0",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
     "vuex": "^3.0.1"
