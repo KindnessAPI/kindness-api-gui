@@ -1,0 +1,14 @@
+# COMMENT: This a rule for Single Page Applications
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+## COMMENT: This rule redirects to an external api signing requests with a secret
+[[redirects]]
+  from = "/www.wonglok.com"
+  to = "https://api.mysearch.com"
+  status = 200
+  force = true # COMMENT: ensure that we always redirect
+  headers = {X-From = "Netlify", Access-Control-Allow-Origin= "http://localhost:8080"} # COMMENT: add this header to the search request
+  signed = "API_SIGNATURE_TOKEN" # COMMENT: sign each request with the value of this env variable
