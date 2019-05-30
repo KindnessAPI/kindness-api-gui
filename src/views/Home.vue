@@ -3,7 +3,7 @@
     <img alt="Vue logo" src="../assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js App"/>
     <div :key="q.uri" v-for="q in quotes">
-      {{ q.text }}
+      {{ q.text }} - {{ q.author }}
     </div>
   </div>
 </template>
