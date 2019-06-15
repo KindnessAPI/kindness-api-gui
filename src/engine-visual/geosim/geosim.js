@@ -108,9 +108,7 @@ let simulatePosition = glsl`
 
     out4.xyz += LAST_VEL.xyz;
 
-    out4.xyz = rotateY(0.025) * out4.xyz;
-    out4.xyz = rotateX(0.025) * out4.xyz;
-    out4.xyz = rotateZ(0.025) * out4.xyz;
+    out4.xyz = rotateZ(0.025 + out4.z * 0.001) * out4.xyz;
 
     gl_FragColor = out4;
   }
