@@ -23,7 +23,7 @@ export default {
     }
   },
   async mounted () {
-    let quotes = await API.load({ pageAt: 0, perPage: 10 })
+    let quotes = await API.loadWONGLOK({ pageAt: 0, perPage: 10 })
     let bucket = []
     for (let kn in quotes.data) {
       bucket.push(quotes.data[kn])
