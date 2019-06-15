@@ -4,6 +4,29 @@ import GPUComputationRenderer from './gpgpu.js'
 let glsl = x => x[0]
 
 let simulateVelocity = glsl`
+  float constrain(float val, float min, float max) {
+    if (val < min) {
+        return min;
+    } else if (val > max) {
+        return max;
+    } else {
+        return val;
+    }
+  }
+
+  vec3 getDiff (in vec3 lastPos, in vec3 mousePos) {
+    vec3 diff = lastPos.xyz / 33.3 - mousePos;
+    float distance = constrain(length(diff), 5.0, 100.0);
+    float strength = 0.35 / (distance * distance);
+
+    diff = normalize(diff);
+    // delta
+    diff = diff * strength * -2.0;
+    // diff = diff * strength * (-20.83) * (1.0 / delta) * 0.0183;
+
+    return diff;
+  }
+
   uniform sampler2D index;
   uniform float time;
   void main (void) {
@@ -12,13 +35,53 @@ let simulateVelocity = glsl`
     vec4 LAST_VEL = texture2D(textureVelocity, uv);
     vec4 IDX = texture2D(index, uv);
 
-    vec4 pos = vec4(0.0);
+    vec4 out4 = vec4(LAST_VEL);
 
-    gl_FragColor = vec4(pos.xyz, 1.0);
+    out4.xyz += getDiff(LAST_POS.xyz, vec3(0.0));
+
+    gl_FragColor = vec4(out4.xyz, 1.0);
   }
 `
 
 let simulatePosition = glsl`
+  /*
+    LIBRARY
+  */
+  #include <common>
+
+  mat3 rotateX(float rad) {
+    float c = cos(rad);
+    float s = sin(rad);
+    return mat3(
+        1.0, 0.0, 0.0,
+        0.0, c, s,
+        0.0, -s, c
+    );
+  }
+
+  mat3 rotateY(float rad) {
+    float c = cos(rad);
+    float s = sin(rad);
+    return mat3(
+        c, 0.0, -s,
+        0.0, 1.0, 0.0,
+        s, 0.0, c
+    );
+  }
+
+  mat3 rotateZ(float rad) {
+    float c = cos(rad);
+    float s = sin(rad);
+    return mat3(
+        c, s, 0.0,
+        -s, c, 0.0,
+        0.0, 0.0, 1.0
+    );
+  }
+
+  /*
+    MAIN CODE
+  */
   uniform sampler2D index;
   uniform float time;
   void main (void) {
@@ -28,24 +91,28 @@ let simulatePosition = glsl`
     vec4 IDX = texture2D(index, uv);
     float isDone = 0.0;
 
-    vec4 pos = vec4(LAST_POS);
+    vec4 out4 = vec4(LAST_POS);
 
-    if (pos.w == 0.0) {
-      pos.x = (IDX.x - IDX.z * 0.5) / IDX.z;
-      pos.y = (IDX.y - IDX.z * 0.5) / IDX.z;
+    if (out4.w == 0.0) {
+      out4.x = (IDX.x - IDX.z * 0.5) / IDX.z;
+      out4.y = (IDX.y - IDX.z * 0.5) / IDX.z;
 
-      pos.x *= 200.0;
-      pos.y *= 200.0;
+      out4.x *= 200.0;
+      out4.y *= 200.0;
 
-      pos.w = 1.0;
+      out4.w = 1.0;
     }
 
-    // pos.z += sin(pos.y * 0.1 + time) * 25.0;
-    // pos.z += sin(pos.x * 0.1 + time) * 25.0;
+    // out4.z += sin(out4.y * 0.1 + time) * 25.0;
+    // out4.z += sin(out4.x * 0.1 + time) * 25.0;
 
-    pos.xyz += LAST_VEL.xyz;
+    out4.xyz += LAST_VEL.xyz;
 
-    gl_FragColor = pos;
+    out4.xyz = rotateY(0.025) * out4.xyz;
+    out4.xyz = rotateX(0.025) * out4.xyz;
+    out4.xyz = rotateZ(0.025) * out4.xyz;
+
+    gl_FragColor = out4;
   }
 `
 
@@ -53,7 +120,7 @@ export const makeAPI = ({ renderer, scene }) => {
   let api = {
     render () {}
   }
-  let WIDTH = 1024
+  let WIDTH = 512
   var gpuCompute = new GPUComputationRenderer(WIDTH, WIDTH, renderer)
   var pos0 = gpuCompute.createTexture()
   var vel0 = gpuCompute.createTexture()
@@ -136,7 +203,7 @@ export const makeAPI = ({ renderer, scene }) => {
   geo.addAttribute('lookupIndex', new THREE.Float32BufferAttribute(IDX.indexAtrribute, 3))
 
   var uniforms = {
-    solidColor: { value: new THREE.Color(`#ff0000`) },
+    solidColor: { value: new THREE.Color(`#ff00ff`) },
     time: { value: 0 },
     tPos: { value: null }
   }
@@ -147,14 +214,52 @@ export const makeAPI = ({ renderer, scene }) => {
       resolution: `vec2(${WIDTH.toFixed(1)}, ${WIDTH.toFixed(1)})`
     },
     vertexShader: glsl`
+      /*
+        Baller
+      */
+
+      #define M_PI 3.1415926535897932384626433832795
+      float atan2(in float y, in float x) {
+        bool xgty = (abs(x) > abs(y));
+        return mix(M_PI/2.0 - atan(x,y), atan(y,x), float(xgty));
+      }
+
+      vec3 fromBall(float r, float az, float el) {
+        return vec3(
+          r * cos(el) * cos(az),
+          r * cos(el) * sin(az),
+          r * sin(el)
+        );
+      }
+
+      void toBall(vec3 pos, out float az, out float el) {
+        az = atan2(pos.y, pos.x);
+        el = atan2(pos.z, sqrt(pos.x * pos.x + pos.y * pos.y));
+      }
+
+      // float az = 0.0;
+      // float el = 0.0;
+      // vec3 noiser = vec3(lastVel);
+      // toBall(noiser, az, el);
+      // lastVel.xyz = fromBall(1.0, az, el);
+
       uniform sampler2D tPos;
       void main () {
         vec4 posTex = texture2D(tPos, uv);
-        gl_PointSize = 1.0;
+        // posTex.xyz
+
+        // gl_PointSize = 1.0;
+        // float az = 0.0;
+        // float el = 0.0;
+        // vec3 noiser = vec3(posTex.xyz);
+        // toBall(noiser, az, el);
+        // vec3 nPos = fromBall(100.0, az, el);
+
         gl_Position = projectionMatrix * modelViewMatrix * vec4( posTex.xyz, 1.0 );
       }
     `,
     fragmentShader: glsl`
+
       uniform vec3 solidColor;
       void main (void) {
         gl_FragColor = vec4(solidColor, 0.7);
