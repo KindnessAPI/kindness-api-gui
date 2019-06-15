@@ -13,11 +13,16 @@ export default {
       api: {}
     }
   },
-  async mounted () {
-    let GLAPI = await import('./geosim/geosim.js')
-    this.api = GLAPI.makeAPI({ renderer: this.engine.renderer, scene: this.engine.scene })
-    this.engine.execStack.renderActiveLearningART = () => {
-      this.api.render()
+  mounted () {
+    this.setup()
+  },
+  methods: {
+    async setup () {
+      let GLAPI = await import('./geosim/geosim.js')
+      this.api = GLAPI.makeAPI({ renderer: this.engine.renderer, scene: this.engine.scene })
+      this.engine.execStack.renderActiveLearningART = () => {
+        this.api.render()
+      }
     }
   },
   beforeDestroy () {

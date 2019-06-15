@@ -8,20 +8,11 @@ let simulateVelocity = glsl`
   uniform float time;
   void main (void) {
     vec2 uv = gl_FragCoord.xy / resolution.xy;
-
-    vec4 VEL = texture2D(textureVelocity, uv);
-
+    vec4 LAST_POS = texture2D(texturePosition, uv);
+    vec4 LAST_VEL = texture2D(textureVelocity, uv);
     vec4 IDX = texture2D(index, uv);
+
     vec4 pos = vec4(0.0);
-
-    pos.x = (IDX.x - IDX.z * 0.5) / IDX.z;
-    pos.y = (IDX.y - IDX.z * 0.5) / IDX.z;
-
-    pos.x *= 200.0;
-    pos.y *= 200.0;
-
-    pos.z += sin(pos.y * 0.1 + time) * 25.0;
-    pos.z += sin(pos.x * 0.1 + time) * 25.0;
 
     gl_FragColor = vec4(pos.xyz, 1.0);
   }
@@ -32,24 +23,29 @@ let simulatePosition = glsl`
   uniform float time;
   void main (void) {
     vec2 uv = gl_FragCoord.xy / resolution.xy;
-
-    vec4 VEL = texture2D(textureVelocity, uv);
-
+    vec4 LAST_POS = texture2D(texturePosition, uv);
+    vec4 LAST_VEL = texture2D(textureVelocity, uv);
     vec4 IDX = texture2D(index, uv);
-    vec4 pos = vec4(0.0);
+    float isDone = 0.0;
 
-    pos.x = (IDX.x - IDX.z * 0.5) / IDX.z;
-    pos.y = (IDX.y - IDX.z * 0.5) / IDX.z;
+    vec4 pos = vec4(LAST_POS);
 
-    pos.x *= 200.0;
-    pos.y *= 200.0;
+    if (pos.w == 0.0) {
+      pos.x = (IDX.x - IDX.z * 0.5) / IDX.z;
+      pos.y = (IDX.y - IDX.z * 0.5) / IDX.z;
 
-    pos.z += sin(pos.y * 0.1 + time) * 25.0;
-    pos.z += sin(pos.x * 0.1 + time) * 25.0;
+      pos.x *= 200.0;
+      pos.y *= 200.0;
 
-    pos.xyz += VEL.xyz;
+      pos.w = 1.0;
+    }
 
-    gl_FragColor = vec4(pos.xyz, 1.0);
+    // pos.z += sin(pos.y * 0.1 + time) * 25.0;
+    // pos.z += sin(pos.x * 0.1 + time) * 25.0;
+
+    pos.xyz += LAST_VEL.xyz;
+
+    gl_FragColor = pos;
   }
 `
 
@@ -63,7 +59,7 @@ export const makeAPI = ({ renderer, scene }) => {
   var vel0 = gpuCompute.createTexture()
   let idx0 = gpuCompute.createTexture()
 
-  console.log(idx0)
+  // console.log(idx0)
 
   var velVar = gpuCompute.addVariable('textureVelocity', simulateVelocity, pos0)
   var posVar = gpuCompute.addVariable('texturePosition', simulatePosition, vel0)
@@ -137,7 +133,7 @@ export const makeAPI = ({ renderer, scene }) => {
 
   geo.addAttribute('position', new THREE.Float32BufferAttribute(getPosition(), 3))
   geo.addAttribute('uv', new THREE.Float32BufferAttribute(IDX.uv, 2))
-  geo.addAttribute('indexer', new THREE.Float32BufferAttribute(IDX.indexAtrribute, 3))
+  geo.addAttribute('lookupIndex', new THREE.Float32BufferAttribute(IDX.indexAtrribute, 3))
 
   var uniforms = {
     solidColor: { value: new THREE.Color(`#ff0000`) },
