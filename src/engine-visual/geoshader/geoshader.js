@@ -154,7 +154,6 @@ void main () {
   pos.z += sin(time + cos(time * 0.1) * pos.x * 0.3) * 3.0;
   pos.z += sin(time + cos(time * 0.1) * pos.y * 0.3) * 3.0;
 
-
   if (isInvalid) {
     pos.w = 0.0;
   } else {
