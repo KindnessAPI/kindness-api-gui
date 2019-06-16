@@ -1,6 +1,6 @@
 <template>
   <div class="full">
-    <ActivePipe class="full overlay" v-if="toucher" :toucher="toucher" :runComposer="true" :glowConfig="glowConfig">
+    <ActivePipe class="full overlay" v-if="toucher" :toucher="toucher" :runComposer="false" :glowConfig="glowConfig">
       <template v-slot:scene="engine">
         <ActiveLearningART class="full" :engine="engine"></ActiveLearningART>
       </template>

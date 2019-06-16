@@ -135,15 +135,31 @@ let simulatePosition = glsl`
     vec4 out4 = vec4(LAST_POS);
 
     if (out4.w == 0.0) {
-      // float az = 0.0;
-      // float el = 0.0;
-      // vec3 noiser = vec3(D3.xyz);
-      // toBall(noiser, az, el);
-      // out4.xyz = fromBall(200.0, az, el);
-      out4.xyz = D3.xyz * 300.0;
+      float az = 0.0;
+      float el = 0.0;
+      vec3 noiser = vec3(D3.xyz);
+      toBall(noiser, az, el);
+      out4.xyz = fromBall(200.0, az, el);
       out4.w = 1.0;
     }
 
+    // out4.xyz = rotateX(out4.x * 0.001) * out4.xyz;
+    // out4.xyz = rotateY(out4.y * 0.001) * out4.xyz;
+    // out4.xyz = rotateZ(out4.z * 0.001) * out4.xyz;
+
+    // out4.xyz = rotateX(LAST_VEL.x * 0.001) * out4.xyz;
+    // out4.xyz = rotateY(LAST_VEL.y * 0.001) * out4.xyz;
+    // out4.xyz = rotateZ(LAST_VEL.z * 0.001) * out4.xyz;
+
+    out4.xyz += LAST_VEL.xyz * 5.0;
+
+    vec3 mpos = out4.xyz / 100.0;
+
+    out4.xyz = rotateX(mpos.x) * out4.xyz;
+    out4.xyz = rotateY(mpos.y) * out4.xyz;
+    out4.xyz = rotateZ(mpos.z) * out4.xyz;
+
+    out4.xyz = rotateQ(normalize(mpos.xyz), time) * out4.xyz;
 
     gl_FragColor = out4;
   }
@@ -215,9 +231,9 @@ export const makeAPI = ({ renderer, scene }) => {
           // console.log(iii)
           let id = iii / 4
 
-          D3[iii + 0] = (ix - dimension05) / dimension
-          D3[iii + 1] = (iy - dimension05) / dimension
-          D3[iii + 2] = (iz - dimension05) / dimension
+          D3[iii + 0] = ix - dimension05
+          D3[iii + 1] = iy - dimension05
+          D3[iii + 2] = iz - dimension05
           D3[iii + 3] = id
 
           iii += 4
