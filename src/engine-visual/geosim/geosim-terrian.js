@@ -330,7 +330,7 @@ export const makeAPI = ({ renderer, scene }) => {
   let api = {
     render () {}
   }
-  let WIDTH = 1024
+  let WIDTH = 512
 
   let gpuCompute = new GPUComputationRenderer(WIDTH, WIDTH, renderer)
 

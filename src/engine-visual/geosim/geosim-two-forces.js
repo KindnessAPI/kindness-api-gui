@@ -13,9 +13,9 @@ let simulatePosition = glsl`
     float c = cos(rad);
     float s = sin(rad);
     return mat3(
-      1.0, 0.0, 0.0,
-      0.0, c, s,
-      0.0, -s, c
+        1.0, 0.0, 0.0,
+        0.0, c, s,
+        0.0, -s, c
     );
   }
 
@@ -23,9 +23,9 @@ let simulatePosition = glsl`
     float c = cos(rad);
     float s = sin(rad);
     return mat3(
-      c, 0.0, -s,
-      0.0, 1.0, 0.0,
-      s, 0.0, c
+        c, 0.0, -s,
+        0.0, 1.0, 0.0,
+        s, 0.0, c
     );
   }
 
@@ -33,9 +33,9 @@ let simulatePosition = glsl`
     float c = cos(rad);
     float s = sin(rad);
     return mat3(
-      c, s, 0.0,
-      -s, c, 0.0,
-      0.0, 0.0, 1.0
+        c, s, 0.0,
+        -s, c, 0.0,
+        0.0, 0.0, 1.0
     );
   }
 
@@ -50,11 +50,35 @@ let simulatePosition = glsl`
     vec3 qw = q.w * q2.xyz;
 
     return mat3(
-      1.0 - (qq2.y + qq2.z),  qx.x - qw.z,            qx.y + qw.y,
-      qx.x + qw.z,            1.0 - (qq2.x + qq2.z),  qy - qw.x,
-      qx.y - qw.y,            qy + qw.x,              1.0 - (qq2.x + qq2.y)
+        1.0 - (qq2.y + qq2.z),  qx.x - qw.z,            qx.y + qw.y,
+        qx.x + qw.z,            1.0 - (qq2.x + qq2.z),  qy - qw.x,
+        qx.y - qw.y,            qy + qw.x,              1.0 - (qq2.x + qq2.y)
     );
   }
+  /*
+    to Ball
+  */
+  #define M_PI 3.1415926535897932384626433832795
+  float atan2(in float y, in float x) {
+    bool xgty = (abs(x) > abs(y));
+    return mix(M_PI/2.0 - atan(x,y), atan(y,x), float(xgty));
+  }
+  vec3 fromBall(float r, float az, float el) {
+    return vec3(
+      r * cos(el) * cos(az),
+      r * cos(el) * sin(az),
+      r * sin(el)
+    );
+  }
+  void toBall(vec3 pos, out float az, out float el) {
+    az = atan2(pos.y, pos.x);
+    el = atan2(pos.z, sqrt(pos.x * pos.x + pos.y * pos.y));
+  }
+  // float az = 0.0;
+  // float el = 0.0;
+  // vec3 noiser = vec3(lastVel);
+  // toBall(noiser, az, el);
+  // lastVel.xyz = fromBall(1.0, az, el);
 
   /*
   Perlin Noise
@@ -136,38 +160,12 @@ let simulatePosition = glsl`
   }
 
   /*
-    toBall
-  */
-  #define M_PI 3.1415926535897932384626433832795
-  float atan2(in float y, in float x) {
-    bool xgty = (abs(x) > abs(y));
-    return mix(M_PI/2.0 - atan(x,y), atan(y,x), float(xgty));
-  }
-  vec3 fromBall(float r, float az, float el) {
-    return vec3(
-      r * cos(el) * cos(az),
-      r * cos(el) * sin(az),
-      r * sin(el)
-    );
-  }
-  void toBall(vec3 pos, out float az, out float el) {
-    az = atan2(pos.y, pos.x);
-    el = atan2(pos.z, sqrt(pos.x * pos.x + pos.y * pos.y));
-  }
-  // float az = 0.0;
-  // float el = 0.0;
-  // vec3 noiser = vec3(lastVel);
-  // toBall(noiser, az, el);
-  // lastVel.xyz = fromBall(1.0, az, el);
-
-
-  /*
-  Random Pattern
+  Random
   */
  float random (in vec2 _st) {
       return fract(sin(dot(_st.xy,
-        vec2(12.9898,78.233)))*
-        43758.5453123);
+                          vec2(12.9898,78.233)))*
+          43758.5453123);
   }
 
   /*
@@ -192,7 +190,7 @@ let simulatePosition = glsl`
   }
 
   /*
-    Pattern
+
   */
   #define NUM_OCTAVES 5
   float fbm ( in vec2 _st) {
@@ -222,7 +220,7 @@ let simulatePosition = glsl`
   }
 
   /*
-    Position Main Code
+    MAIN CODE
   */
   uniform sampler2D dimension3;
   uniform sampler2D meta0;
@@ -236,34 +234,31 @@ let simulatePosition = glsl`
 
     float dotID = META0.x;
     float playerSide = META0.y;
-    bool isPlayer1 = playerSide == 0.0;
-    bool isPlayer2 = playerSide == 1.0;
+    float velocity = rand(vec2(dotID, dotID));
 
     // output
     vec4 out4 = vec4(LAST_POS);
 
-    bool needReset = LAST_STATE.x == 0.0;
-    if (needReset) {
-      D3.y *= 0.0;
+    bool needsReset = LAST_STATE.x == 0.0;
+    if (needsReset) {
+      D3.x *= 0.01;
 
-      // float az = 0.0;
-      // float el = 0.0;
-      // vec3 noiser = vec3(lastVel);
-      // toBall(noiser, az, el);
-      // lastVel.xyz = fromBall(1.0, az, el);
+      out4.xyz = D3.xyz * 300.0;
 
-      out4.xyz = D3.xyz * 400.0 * pattern(D3.xz + time * 0.08);
-
-      if (isPlayer1) {
-        out4.x += -150.0;
-      } else if (isPlayer2) {
-        out4.x += 150.0;
+      if (playerSide == 0.0) {
+        out4.x += 300.0;
+      } else if (playerSide == 1.0) {
+        out4.x += -300.0;
       }
     } else {
-      out4.y += 0.5;
+      if (playerSide == 0.0) {
+        out4.x -= velocity;
+      } else if (playerSide == 1.0) {
+        out4.x += velocity;
+      }
     }
 
-    out4.w = 1.0 - LAST_STATE.x;
+    //
     gl_FragColor = out4;
   }
 `
@@ -275,7 +270,7 @@ let simulateState = glsl`
   #include <common>
 
   /*
-    Simulatin Main Code
+    MAIN CODE
   */
   uniform float time;
   uniform sampler2D meta0;
@@ -286,43 +281,22 @@ let simulateState = glsl`
     vec4 META0 = texture2D(meta0, uv);
     float dotID = META0.x;
     float playerSide = META0.y;
+    float maxAge = META0.y;
 
-    float curentAge = LAST_STATE.x;
+    float age = LAST_STATE.x;
 
-    float maxAge = 1.0;
+    float MAX_AGE = 1.0;
 
-    float agingRate = rand(vec2(dotID, 1.0)) * 0.1;
+    float ageInc = rand(vec2(dotID, dotID)) * 0.01;
 
     // aging ....
-    curentAge += agingRate;
+    age += ageInc;
 
-    if (curentAge >= maxAge) {
-      curentAge = 0.0;
+    if (age >= MAX_AGE) {
+      age = 0.0;
     }
 
-    gl_FragColor = vec4(curentAge, agingRate, 0.0, 1.0);
-  }
-`
-
-let displayVert = glsl`
-  varying vec2 vUv;
-  uniform sampler2D tPos;
-  void main () {
-    vec4 posTex = texture2D(tPos, uv);
-    gl_PointSize = 1.0;
-    vUv = uv;
-    gl_Position = projectionMatrix * modelViewMatrix * vec4( posTex.xyz, 1.0 );
-  }
-`
-
-let displayFrag = glsl`
-  uniform vec3 solidColor;
-  uniform sampler2D tPos;
-  varying vec2 vUv;
-  void main (void) {
-    vec4 posTex = texture2D(tPos, vUv);
-
-    gl_FragColor = vec4(solidColor, posTex.a);
+    gl_FragColor = vec4(age, 0.0, 0.0, 1.0);
   }
 `
 
@@ -330,7 +304,7 @@ export const makeAPI = ({ renderer, scene }) => {
   let api = {
     render () {}
   }
-  let WIDTH = 1024
+  let WIDTH = 512
 
   let gpuCompute = new GPUComputationRenderer(WIDTH, WIDTH, renderer)
 
@@ -364,75 +338,23 @@ export const makeAPI = ({ renderer, scene }) => {
   }
 
   let geo = new THREE.BufferGeometry()
-  let processMeta = () => {
-    let iii = 0
-    let dimension = Math.pow(WIDTH * WIDTH, 1 / 3)
-    let total = dimension * dimension * dimension
+  let processIndex = ({ D3 = [], uv = [], meta0 = [] }) => {
+    let uvi = 0
+    for (var j = 0; j < WIDTH; j++) {
+      for (var i = 0; i < WIDTH; i++) {
+        uv[uvi + 0] = i / WIDTH
+        uv[uvi + 1] = j / WIDTH
 
-    let metaArr = meta0.image.data
-    for (var ix = 0; ix < dimension; ix++) {
-      for (var iy = 0; iy < dimension; iy++) {
-        for (var iz = 0; iz < dimension; iz++) {
-          // console.log(iii)
-          let id = iii / 4
-
-          // dot id
-          metaArr[iii + 0] = id / total
-          // playerSide of dot, 0, and 1
-          if (Math.random() * 100 < 50) {
-            metaArr[iii + 1] = 0
-          } else {
-            metaArr[iii + 1] = 1
-          }
-
-          // reserved
-          metaArr[iii + 2] = 0
-          metaArr[iii + 3] = 0
-
-          iii += 4
-        }
+        uvi += 2
       }
     }
-  }
 
-  let processForceEnergy = ({ percentage = 10 }) => {
-    console.log(percentage)
-    let iii = 0
-    let dimension = Math.pow(WIDTH * WIDTH, 1 / 3)
-    let total = dimension * dimension * dimension
-
-    let metaArr = meta0.image.data
-    for (var ix = 0; ix < dimension; ix++) {
-      for (var iy = 0; iy < dimension; iy++) {
-        for (var iz = 0; iz < dimension; iz++) {
-          // console.log(iii)
-          let id = iii / 4
-
-          // dot id
-          metaArr[iii + 0] = id / total
-          // playerSide of dot, 0, and 1
-          if (Math.random() * 100 < percentage) {
-            metaArr[iii + 1] = 0
-          } else {
-            metaArr[iii + 1] = 1
-          }
-
-          // reserved
-          metaArr[iii + 2] = 0
-          metaArr[iii + 3] = 0
-
-          iii += 4
-        }
-      }
-    }
-    meta0.needsUpdate = true
-  }
-
-  let processD3 = () => {
-    let D3 = d3Offset0.image.data
     let iii = 0
     let dimension = Math.pow(WIDTH * WIDTH, 1 / 3)
     let dimension05 = dimension / 2
+    let total = dimension * dimension * dimension
+
+    let numOfSides = 2
 
     for (var ix = 0; ix < dimension; ix++) {
       for (var iy = 0; iy < dimension; iy++) {
@@ -444,28 +366,28 @@ export const makeAPI = ({ renderer, scene }) => {
           D3[iii + 1] = (iy - dimension05) / dimension
           D3[iii + 2] = (iz - dimension05) / dimension
           D3[iii + 3] = id
+
+          // dot id
+          meta0[iii + 0] = id / total
+          // playerSide of dot
+          meta0[iii + 1] = id % numOfSides
+
+          // reserved
+          meta0[iii + 2] = 0
+          meta0[iii + 3] = 0
+
           iii += 4
         }
       }
     }
-  }
 
-  let getUV = () => {
-    let uv = []
-    let uvi = 0
-    for (var j = 0; j < WIDTH; j++) {
-      for (var i = 0; i < WIDTH; i++) {
-        uv[uvi + 0] = i / WIDTH
-        uv[uvi + 1] = j / WIDTH
-
-        uvi += 2
-      }
+    return {
+      D3,
+      uv
     }
-    return uv
   }
 
-  processD3()
-  processMeta()
+  let IDX = processIndex({ D3: d3Offset0.image.data, meta0: meta0.image.data })
 
   let getPosition = () => {
     let newArr = []
@@ -483,7 +405,7 @@ export const makeAPI = ({ renderer, scene }) => {
   }
 
   geo.addAttribute('position', new THREE.Float32BufferAttribute(getPosition(), 3))
-  geo.addAttribute('uv', new THREE.Float32BufferAttribute(getUV(), 2))
+  geo.addAttribute('uv', new THREE.Float32BufferAttribute(IDX.uv, 2))
 
   var uniforms = {
     solidColor: { value: new THREE.Color(`#000000`) },
@@ -496,20 +418,28 @@ export const makeAPI = ({ renderer, scene }) => {
     defines: {
       resolution: `vec2(${WIDTH.toFixed(1)}, ${WIDTH.toFixed(1)})`
     },
-    vertexShader: displayVert,
-    fragmentShader: displayFrag,
+    vertexShader: glsl`
+      uniform sampler2D tPos;
+      void main () {
+        vec4 posTex = texture2D(tPos, uv);
+        gl_PointSize = 1.0;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4( posTex.xyz, 1.0 );
+      }
+    `,
+    fragmentShader: glsl`
+      uniform vec3 solidColor;
+      void main (void) {
+        gl_FragColor = vec4(solidColor, 0.7);
+      }
+    `,
     side: THREE.DoubleSide
   })
   let mesh = new THREE.Points(geo, material)
   scene.add(mesh)
 
   scene.background = new THREE.Color('#ffffff')
-  window.processForceEnergy = (percentage) => {
-    processForceEnergy({ percentage })
-  }
-  api.render = () => {
-    // processForceEnergy({ percentage: window.performance.now() * 0.01 % 100 })
 
+  api.render = () => {
     // Update texture uniforms in your visualization materials with the gpu renderer output
     material.uniforms.tPos.value = gpuCompute.getCurrentRenderTarget(posVar).texture
     let time = window.performance.now() * 0.001
