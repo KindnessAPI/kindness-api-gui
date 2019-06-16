@@ -268,6 +268,7 @@ export const makeAPI = ({ renderer, scene }) => {
       uniform sampler2D tPos;
       void main () {
         vec4 posTex = texture2D(tPos, uv);
+        gl_PointSize = 1.0;
         gl_Position = projectionMatrix * modelViewMatrix * vec4( posTex.xyz, 1.0 );
       }
     `,
