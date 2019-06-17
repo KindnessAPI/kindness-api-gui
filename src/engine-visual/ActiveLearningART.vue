@@ -18,7 +18,7 @@ export default {
   },
   methods: {
     async setup () {
-      let GLAPI = await import('./geosim/geosim-one-terrian.js')
+      let GLAPI = await import('./geosim/geosim.js')
       this.api = GLAPI.makeAPI({ renderer: this.engine.renderer, scene: this.engine.scene })
       this.engine.execStack.renderActiveLearningART = () => {
         this.api.render()

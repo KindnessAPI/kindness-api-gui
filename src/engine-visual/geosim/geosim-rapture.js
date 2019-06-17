@@ -224,6 +224,7 @@ let simulatePosition = glsl`
   /*
     Position Main Code
   */
+  uniform sampler2D dimension3;
   uniform sampler2D meta0;
   uniform float time;
 
@@ -254,83 +255,41 @@ let simulatePosition = glsl`
     return v3;
   }
 
+  // idx = 0.0 ~ 1.0 of xyz
+  // position = -0.5 ~ 0.5 of xyz
+  // pt = currentPosition. initally is -150 ~ 150
+  // output xyz
+  vec3 computeVectorField (vec3 pt, vec4 state, vec3 idx, vec3 position) {
+    vec3 exportXYZ = vec3(0.0);
+    exportXYZ = pt;
+
+    vec3 drag = vec3(0.0, 300.0, 0.0);
+    exportXYZ += dragField(pt, drag) * 5000.0;
+    // exportXYZ = exportXYZ * rotateX(position.x * 0.0314159265 + time * 0.001);
+
+    return exportXYZ;
+  }
+
   void main (void) {
     vec2 uv = gl_FragCoord.xy / resolution.xy;
-
     vec4 LAST_POS = texture2D(texturePosition, uv);
-    vec4 LAST_COLOR = texture2D(textureColor, uv);
+    vec4 LAST_STATE = texture2D(textureState, uv);
+    vec4 D3 = texture2D(dimension3, uv);
     vec4 META0 = texture2D(meta0, uv);
 
-    bool needReset = LAST_COLOR.x == 0.0;
-    vec4 pos = vec4(0.0);
+    bool needReset = LAST_STATE.x == 0.0;
 
-    float vertexIDX = META0.x;
-    float squareIDX = META0.y;
-    float totalSquares = META0.z;
-    float pointIDX = META0.w;
+    // output
+    vec4 out4 = vec4(LAST_POS);
 
-    /*
-    Assemble
-    */
-    vec3 plane = vec3(0.3, 0.3, 0.0);
-    bool isInvalid = false;
-    if (vertexIDX == 0.0) {
-      pos.x = 1.0 * plane.x;
-      pos.y = 1.0 * plane.y;
-      pos.z = 1.0 * plane.z;
-    } else if (vertexIDX == 1.0) {
-      pos.x = -1.0 * plane.x;
-      pos.y = 1.0 * plane.y;
-      pos.z = 1.0 * plane.z;
-    } else if (vertexIDX == 2.0) {
-      pos.x = -1.0 * plane.x;
-      pos.y = -1.0 * plane.y;
-      pos.z = 1.0 * plane.z;
-    } else if (vertexIDX == 3.0) {
-      pos.x = 1.0 * plane.x;
-      pos.y = 1.0 * plane.y;
-      pos.z = 1.0 * plane.z;
-    } else if (vertexIDX == 4.0) {
-      pos.x = -1.0 * plane.x;
-      pos.y = -1.0 * plane.y;
-      pos.z = 1.0 * plane.z;
-    } else if (vertexIDX == 5.0) {
-      pos.x = 1.0 * plane.x;
-      pos.y = -1.0 * plane.y;
-      pos.z = 1.0 * plane.z;
+    if (needReset) {
+      out4.xyz = D3.xyz * 300.0;
+      out4.xyz = computeVectorField(out4.xyz, LAST_STATE.xyzw, META0.xyz, D3.xyz);
     } else {
-      isInvalid = true;
-    }
-    if (squareIDX >= 0.5 * 1024.0 * 1024.0) {
-      isInvalid = true;
+      out4.xyz = computeVectorField(out4.xyz, LAST_STATE.xyzw, META0.xyz, D3.xyz);
     }
 
-    if (!isInvalid) {
-      float dimension = floor(pow(totalSquares, 1.0 / 2.0));
-
-      vec3 offset = vec3(
-        plane.x * 10.25 * floor(squareIDX / dimension),
-        plane.y * 1.0 * floor(mod(squareIDX, dimension)),
-        plane.z * 0.0
-      );
-
-      pos.xyz += offset.xyz;
-
-      float pX = pos.x;
-      float pY = pos.y;
-
-      float piz = 0.01 * 2.0 * 3.14159265;
-
-      pos.xyz = rotateQ(normalize(vec3(1.0, 1.0, 1.0)), time + pY * piz) * rotateZ(time + pY * piz) * pos.xyz;
-      pos.z += sin(time  + pX * piz * 0.333) * 50.0;
-
-      pos.w = 1.0;
-      gl_FragColor = pos;
-    } else {
-      pos.w = 0.0;
-      gl_FragColor = pos;
-      discard;
-    }
+    gl_FragColor = out4;
   }
 `
 
@@ -347,24 +306,23 @@ let simulateState = glsl`
   uniform sampler2D meta0;
   void main (void) {
     vec2 uv = gl_FragCoord.xy / resolution.xy;
+    vec4 LAST_STATE = texture2D(textureState, uv);
 
-    vec4 LAST_POS = texture2D(texturePosition, uv);
-    vec4 LAST_COLOR = texture2D(textureColor, uv);
     vec4 META0 = texture2D(meta0, uv);
+    float dotID = META0.w;
 
-    bool needReset = LAST_COLOR.x == 0.0;
-    vec4 pos = vec4(0.0);
+    float curentAge = LAST_STATE.x;
+    float maxAge = 1.0;
+    float agingRate = 0.001;
 
-    float vertexIDX = META0.x;
-    float squareIDX = META0.y;
-    float totalSquares = META0.z;
-    float pointIDX = META0.w;
+    // aging ....
+    curentAge += agingRate;
 
-    float red = uv.x + 0.5;
-    float green = uv.y + 0.5;
-    float blue = 0.5;
+    if (curentAge >= maxAge) {
+      curentAge = 0.0;
+    }
 
-    gl_FragColor = vec4(red, green, blue, 1.0);
+    gl_FragColor = vec4(curentAge, 0.0, 0.0, 0.0);
   }
 `
 
@@ -377,24 +335,27 @@ export const makeAPI = ({ renderer, scene }) => {
   let gpuCompute = new GPUComputationRenderer(WIDTH, WIDTH, renderer)
 
   let pos0 = gpuCompute.createTexture()
-  let colorShader = gpuCompute.createTexture()
-
+  let d3Offset0 = gpuCompute.createTexture()
   let meta0 = gpuCompute.createTexture()
+  let state0 = gpuCompute.createTexture()
 
   let posVar = gpuCompute.addVariable('texturePosition', simulatePosition, pos0)
-  let colorVar = gpuCompute.addVariable('textureColor', simulateState, colorShader)
+  let stateVar = gpuCompute.addVariable('textureState', simulateState, state0)
 
   // Add variable dependencies
-  gpuCompute.setVariableDependencies(posVar, [ posVar, colorVar ])
-  gpuCompute.setVariableDependencies(colorVar, [ colorVar, posVar ])
+  gpuCompute.setVariableDependencies(posVar, [ posVar, stateVar ])
+  gpuCompute.setVariableDependencies(stateVar, [ stateVar, posVar ])
 
   // pos var
   posVar.material.uniforms.time = { value: 0.0 }
+  posVar.material.uniforms.dimension3 = { value: d3Offset0 }
   posVar.material.uniforms.meta0 = { value: meta0 }
 
+  posVar.material.defines.WIDTH = `${WIDTH.toFixed(0)}`
+
   // state var
-  colorVar.material.uniforms.time = { value: 0.0 }
-  colorVar.material.uniforms.meta0 = { value: meta0 }
+  stateVar.material.uniforms.time = { value: 0.0 }
+  stateVar.material.uniforms.meta0 = { value: meta0 }
 
   // Check for completeness
   let error = gpuCompute.init()
@@ -403,26 +364,24 @@ export const makeAPI = ({ renderer, scene }) => {
   }
 
   let geo = new THREE.BufferGeometry()
-
   let processMeta = () => {
     let iii = 0
     let dimension = Math.pow(WIDTH * WIDTH, 1 / 3)
     let total = dimension * dimension * dimension
-    // let dimension05 = dimension / 2
 
-    let ARR_VALUE = meta0.image.data
+    let ARR = meta0.image.data
     for (var ix = 0; ix < dimension; ix++) {
       for (var iy = 0; iy < dimension; iy++) {
         for (var iz = 0; iz < dimension; iz++) {
           // console.log(iii)
           let id = iii / 4
 
-          ARR_VALUE[iii + 0] = id % 6 // square vertex ID
-          ARR_VALUE[iii + 1] = Math.floor(id / 6) // square ID
-          ARR_VALUE[iii + 2] = total / 6.0 // percentage
+          ARR[iii + 0] = ix / dimension
+          ARR[iii + 1] = iy / dimension
+          ARR[iii + 2] = iz / dimension
 
           // dot id
-          ARR_VALUE[iii + 3] = id // point ID
+          ARR[iii + 3] = id / total
 
           iii += 4
         }
@@ -430,6 +389,49 @@ export const makeAPI = ({ renderer, scene }) => {
     }
   }
   processMeta()
+
+  let processLayoutTexture = () => {
+    let ARR = d3Offset0.image.data
+    let iii = 0
+    let dimension = Math.pow(WIDTH * WIDTH, 1 / 3)
+    let dimension05 = dimension / 2
+
+    for (var ix = 0; ix < dimension; ix++) {
+      for (var iy = 0; iy < dimension; iy++) {
+        for (var iz = 0; iz < dimension; iz++) {
+          // console.log(iii)
+          let id = iii / 4
+
+          ARR[iii + 0] = (ix - dimension05) / dimension
+          ARR[iii + 1] = (iy - dimension05) / dimension
+          ARR[iii + 2] = (iz - dimension05) / dimension
+          ARR[iii + 3] = id
+          iii += 4
+        }
+      }
+    }
+  }
+  processLayoutTexture()
+
+  let processStateTexture = () => {
+    let ARR = state0.image.data
+    let iii = 0
+    let dimension = Math.pow(WIDTH * WIDTH, 1 / 3)
+
+    for (var ix = 0; ix < dimension; ix++) {
+      for (var iy = 0; iy < dimension; iy++) {
+        for (var iz = 0; iz < dimension; iz++) {
+          // console.log(iii)
+          ARR[iii + 0] = 1.0
+          ARR[iii + 1] = 1.0
+          ARR[iii + 2] = 1.0
+          ARR[iii + 3] = 1.0
+          iii += 4
+        }
+      }
+    }
+  }
+  processStateTexture()
 
   let getUV = () => {
     let uv = []
@@ -466,8 +468,8 @@ export const makeAPI = ({ renderer, scene }) => {
   var uniforms = {
     solidColor: { value: new THREE.Color(`#000000`) },
     time: { value: 0 },
-    geoShader: { value: null },
-    colorShader: { value: null }
+    tPos: { value: null },
+    state0: { value: null }
   }
   var material = new THREE.ShaderMaterial({
     transparent: true,
@@ -477,38 +479,36 @@ export const makeAPI = ({ renderer, scene }) => {
     },
     vertexShader: glsl`
       varying vec2 vUv;
-      uniform sampler2D geoShader;
+      uniform sampler2D tPos;
       void main () {
-        vec4 posTex = texture2D(geoShader, uv);
+        vec4 posTex = texture2D(tPos, uv);
         gl_PointSize = 1.0;
         vUv = uv;
-        gl_Position = projectionMatrix * modelViewMatrix * posTex;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4( posTex.xyz, 1.0 );
       }
     `,
     fragmentShader: glsl`
       uniform vec3 solidColor;
-      uniform sampler2D colorShader;
+      uniform sampler2D state0;
       varying vec2 vUv;
       void main (void) {
-        vec4 colorVal = texture2D(colorShader, vUv);
+        vec4 stateTexture = texture2D(state0, vUv);
 
-        gl_FragColor = colorVal;//vec4(0.0, 0.0, 0.0, 1.0);
+        gl_FragColor = vec4(solidColor, 1.0);
       }
     `,
     side: THREE.DoubleSide
   })
-  let mesh = new THREE.Mesh(geo, material)
+  let mesh = new THREE.Points(geo, material)
   scene.add(mesh)
 
   scene.background = new THREE.Color('#ffffff')
   api.render = () => {
     // Update texture uniforms in your visualization materials with the gpu renderer output
-    material.uniforms.geoShader.value = gpuCompute.getCurrentRenderTarget(posVar).texture
-    material.uniforms.colorShader.value = gpuCompute.getCurrentRenderTarget(colorVar).texture
-
+    material.uniforms.tPos.value = gpuCompute.getCurrentRenderTarget(posVar).texture
+    material.uniforms.state0.value = gpuCompute.getCurrentRenderTarget(stateVar).texture
     let time = window.performance.now() * 0.001
     posVar.material.uniforms.time.value = time
-    colorVar.material.uniforms.time.value = time
     gpuCompute.compute()
   }
 
