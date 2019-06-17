@@ -227,6 +227,18 @@ let simulatePosition = glsl`
   uniform sampler2D dimension3;
   uniform sampler2D meta0;
   uniform float time;
+
+  // idx = 0.0 ~ 1.0 of xyz
+  // position = -0.5 ~ 0.5 of xyz
+  vec3 toVectorField (vec3 currentPosition, vec3 idx, vec3 position) {
+    vec3 finalPt = currentPosition;
+
+    finalPt.x += sin(finalPt.y * 0.01);
+    finalPt.y -= sin(finalPt.x * 0.01);
+
+    return finalPt;
+  }
+
   void main (void) {
     vec2 uv = gl_FragCoord.xy / resolution.xy;
     vec4 LAST_POS = texture2D(texturePosition, uv);
@@ -234,36 +246,18 @@ let simulatePosition = glsl`
     vec4 D3 = texture2D(dimension3, uv);
     vec4 META0 = texture2D(meta0, uv);
 
-    float dotID = META0.x;
-    float playerSide = META0.y;
-    bool isPlayer1 = playerSide == 0.0;
-    bool isPlayer2 = playerSide == 1.0;
+    bool needReset = LAST_STATE.x == 0.0;
 
     // output
     vec4 out4 = vec4(LAST_POS);
 
-    bool needReset = LAST_STATE.x == 0.0;
     if (needReset) {
-      D3.y *= 0.0;
-
-      // float az = 0.0;
-      // float el = 0.0;
-      // vec3 noiser = vec3(lastVel);
-      // toBall(noiser, az, el);
-      // lastVel.xyz = fromBall(1.0, az, el);
-
-      out4.xyz = D3.xyz * 400.0 * pattern(D3.xz + time * 0.08);
-
-      if (isPlayer1) {
-        out4.x += -150.0;
-      } else if (isPlayer2) {
-        out4.x += 150.0;
-      }
+      out4.xyz = D3.xyz * 300.0;
+      out4.xyz = toVectorField(out4.xyz, META0.xyz, D3.xyz);
     } else {
-      out4.y += 0.5;
+      out4.xyz = toVectorField(out4.xyz, META0.xyz, D3.xyz);
     }
 
-    out4.w = 1.0 - LAST_STATE.x;
     gl_FragColor = out4;
   }
 `
@@ -275,7 +269,7 @@ let simulateState = glsl`
   #include <common>
 
   /*
-    Simulatin Main Code
+    Simulation Main Code
   */
   uniform float time;
   uniform sampler2D meta0;
@@ -285,13 +279,12 @@ let simulateState = glsl`
 
     vec4 META0 = texture2D(meta0, uv);
     float dotID = META0.x;
-    float playerSide = META0.y;
 
     float curentAge = LAST_STATE.x;
 
     float maxAge = 1.0;
 
-    float agingRate = rand(vec2(dotID, 1.0)) * 0.1;
+    float agingRate = 0.00001;
 
     // aging ....
     curentAge += agingRate;
@@ -301,28 +294,6 @@ let simulateState = glsl`
     }
 
     gl_FragColor = vec4(curentAge, agingRate, 0.0, 1.0);
-  }
-`
-
-let displayVert = glsl`
-  varying vec2 vUv;
-  uniform sampler2D tPos;
-  void main () {
-    vec4 posTex = texture2D(tPos, uv);
-    gl_PointSize = 1.0;
-    vUv = uv;
-    gl_Position = projectionMatrix * modelViewMatrix * vec4( posTex.xyz, 1.0 );
-  }
-`
-
-let displayFrag = glsl`
-  uniform vec3 solidColor;
-  uniform sampler2D tPos;
-  varying vec2 vUv;
-  void main (void) {
-    vec4 posTex = texture2D(tPos, vUv);
-
-    gl_FragColor = vec4(solidColor, posTex.a);
   }
 `
 
@@ -364,39 +335,7 @@ export const makeAPI = ({ renderer, scene }) => {
   }
 
   let geo = new THREE.BufferGeometry()
-  // let processMeta = () => {
-  //   let iii = 0
-  //   let dimension = Math.pow(WIDTH * WIDTH, 1 / 3)
-  //   let total = dimension * dimension * dimension
-
-  //   let metaArr = meta0.image.data
-  //   for (var ix = 0; ix < dimension; ix++) {
-  //     for (var iy = 0; iy < dimension; iy++) {
-  //       for (var iz = 0; iz < dimension; iz++) {
-  //         // console.log(iii)
-  //         let id = iii / 4
-
-  //         // dot id
-  //         metaArr[iii + 0] = id / total
-  //         // playerSide of dot, 0, and 1
-  //         if (Math.random() * 100 < 50) {
-  //           metaArr[iii + 1] = 0
-  //         } else {
-  //           metaArr[iii + 1] = 1
-  //         }
-
-  //         // reserved
-  //         metaArr[iii + 2] = 0
-  //         metaArr[iii + 3] = 0
-
-  //         iii += 4
-  //       }
-  //     }
-  //   }
-  // }
-
-  let processForceEnergy = ({ percentage = 50 }) => {
-    // console.log(percentage)
+  let processMeta = () => {
     let iii = 0
     let dimension = Math.pow(WIDTH * WIDTH, 1 / 3)
     let total = dimension * dimension * dimension
@@ -408,27 +347,21 @@ export const makeAPI = ({ renderer, scene }) => {
           // console.log(iii)
           let id = iii / 4
 
-          // dot id
-          metaArr[iii + 0] = id / total
-          // playerSide of dot, 0, and 1
-          if (Math.random() * 100 < percentage) {
-            metaArr[iii + 1] = 0
-          } else {
-            metaArr[iii + 1] = 1
-          }
+          metaArr[iii + 0] = ix / dimension
+          metaArr[iii + 1] = iy / dimension
+          metaArr[iii + 2] = iz / dimension
 
-          // reserved
-          metaArr[iii + 2] = 0
-          metaArr[iii + 3] = 0
+          // dot id
+          metaArr[iii + 3] = id / total
 
           iii += 4
         }
       }
     }
-    meta0.needsUpdate = true
   }
+  processMeta()
 
-  let processD3 = () => {
+  let processLayoutTexture = () => {
     let D3 = d3Offset0.image.data
     let iii = 0
     let dimension = Math.pow(WIDTH * WIDTH, 1 / 3)
@@ -449,6 +382,27 @@ export const makeAPI = ({ renderer, scene }) => {
       }
     }
   }
+  processLayoutTexture()
+
+  let processStateTexture = () => {
+    let D3 = state0.image.data
+    let iii = 0
+    let dimension = Math.pow(WIDTH * WIDTH, 1 / 3)
+
+    for (var ix = 0; ix < dimension; ix++) {
+      for (var iy = 0; iy < dimension; iy++) {
+        for (var iz = 0; iz < dimension; iz++) {
+          // console.log(iii)
+          D3[iii + 0] = 1.0
+          D3[iii + 1] = 1.0
+          D3[iii + 2] = 1.0
+          D3[iii + 3] = 1.0
+          iii += 4
+        }
+      }
+    }
+  }
+  processStateTexture()
 
   let getUV = () => {
     let uv = []
@@ -463,9 +417,6 @@ export const makeAPI = ({ renderer, scene }) => {
     }
     return uv
   }
-
-  processD3()
-  processForceEnergy({ percentage: 50 })
 
   let getPosition = () => {
     let newArr = []
@@ -488,7 +439,8 @@ export const makeAPI = ({ renderer, scene }) => {
   var uniforms = {
     solidColor: { value: new THREE.Color(`#000000`) },
     time: { value: 0 },
-    tPos: { value: null }
+    tPos: { value: null },
+    state0: { value: null }
   }
   var material = new THREE.ShaderMaterial({
     transparent: true,
@@ -496,8 +448,26 @@ export const makeAPI = ({ renderer, scene }) => {
     defines: {
       resolution: `vec2(${WIDTH.toFixed(1)}, ${WIDTH.toFixed(1)})`
     },
-    vertexShader: displayVert,
-    fragmentShader: displayFrag,
+    vertexShader: glsl`
+      varying vec2 vUv;
+      uniform sampler2D tPos;
+      void main () {
+        vec4 posTex = texture2D(tPos, uv);
+        gl_PointSize = 1.0;
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4( posTex.xyz, 1.0 );
+      }
+    `,
+    fragmentShader: glsl`
+      uniform vec3 solidColor;
+      uniform sampler2D state0;
+      varying vec2 vUv;
+      void main (void) {
+        vec4 stateTexture = texture2D(state0, vUv);
+
+        gl_FragColor = vec4(solidColor, 1.0);
+      }
+    `,
     side: THREE.DoubleSide
   })
   let mesh = new THREE.Points(geo, material)
@@ -507,6 +477,7 @@ export const makeAPI = ({ renderer, scene }) => {
   api.render = () => {
     // Update texture uniforms in your visualization materials with the gpu renderer output
     material.uniforms.tPos.value = gpuCompute.getCurrentRenderTarget(posVar).texture
+    material.uniforms.state0.value = gpuCompute.getCurrentRenderTarget(stateVar).texture
     let time = window.performance.now() * 0.001
     posVar.material.uniforms.time.value = time
     gpuCompute.compute()
