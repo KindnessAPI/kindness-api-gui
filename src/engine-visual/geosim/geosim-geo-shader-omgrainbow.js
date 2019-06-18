@@ -121,14 +121,11 @@ let simulatePosition = glsl`
 
       float pX = pos.x;
       float pY = pos.y;
-      float pZ = pos.y;
 
-      float piz = 0.001 * 2.0 * 3.14159265;
+      float piz = 0.01 * 2.0 * 3.14159265;
 
-      pos.xyz = rotateQ(normalize(vec3(1.0, pZ * piz, 1.0)), time + pX * piz) * rotateY(time + pY * piz) * pos.xyz;
+      pos.xyz = rotateQ(normalize(vec3(1.0, 1.0, 1.0)), time + pY * piz) * rotateZ(time + pY * piz) * pos.xyz;
       pos.z += sin(time  + pX * piz * 0.333) * 50.0;
-
-      pos.xyz *= 0.1;
 
       pos.w = 1.0;
       gl_FragColor = pos;
@@ -303,9 +300,9 @@ export const makeAPI = ({ renderer, scene }) => {
       void main () {
         vec4 colorVal = texture2D(colorShader, vUv);
         gl_FragColor = vec4(vec3(
-          vPos.x / 100.0 + 0.7,
-          vPos.y / 100.0 + 0.7,
-          vPos.z / 100.0 + 0.7
+          vPos.x / 100.0 * 0.05 + 0.1,
+          vPos.y / 100.0 * 0.05 + 0.7,
+          vPos.z / 100.0 * 0.05 + 0.7
         ), 0.9);
       }
     `,
