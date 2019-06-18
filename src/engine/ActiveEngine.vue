@@ -7,7 +7,9 @@
     </ActivePipe>
 
     <div class="full overlay" ref="toucher">
-      UI CONTENT
+      <div class="hero-happy">
+        Welcome to KindnessAPI
+      </div>
     </div>
   </div>
 </template>
@@ -43,5 +45,20 @@ export default {
   position: absolute;
   top: 0px;
   left: 0px;
+}
+
+.hero-happy{
+  position: absolute;
+  bottom: 20px;
+  left: 0px;
+  width: 100%;
+  text-align: center;
+  font-size: 25px;
+}
+
+@media screen and (min-width: 767px) {
+  .hero-happy{
+    font-size: 45px;
+  }
 }
 </style>
