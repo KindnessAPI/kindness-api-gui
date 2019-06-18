@@ -12,6 +12,11 @@ export default new Router({
       path: '/',
       name: 'home',
       component: () => import(/* webpackChunkName: "landing" */ './page/ActiveLearningPage.vue')
+    },
+    {
+      path: '/build/wonlgok.com',
+      name: 'home',
+      component: () => import(/* webpackChunkName: "wonglok-com" */ './engine/WONGLOK.vue')
     }
     // {
     //   path: '/',
