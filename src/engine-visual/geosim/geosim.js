@@ -9,7 +9,7 @@ let simulatePosition = glsl`
   */
   #include <common>
 
-  mat3 rotateX(float rad) {
+  mat3 rotateX (float rad) {
     float c = cos(rad);
     float s = sin(rad);
     return mat3(
@@ -19,7 +19,7 @@ let simulatePosition = glsl`
     );
   }
 
-  mat3 rotateY(float rad) {
+  mat3 rotateY (float rad) {
     float c = cos(rad);
     float s = sin(rad);
     return mat3(
@@ -29,7 +29,7 @@ let simulatePosition = glsl`
     );
   }
 
-  mat3 rotateZ(float rad) {
+  mat3 rotateZ (float rad) {
     float c = cos(rad);
     float s = sin(rad);
     return mat3(
@@ -59,8 +59,8 @@ let simulatePosition = glsl`
   /*
     Position Main Code
   */
- precision highp sampler2D;
- uniform sampler2D meta0;
+  precision highp sampler2D;
+  uniform sampler2D meta0;
   uniform float time;
 
   void main (void) {
@@ -78,7 +78,7 @@ let simulatePosition = glsl`
     /*
       Assemble
     */
-    vec3 plane = vec3(0.3, 0.3, 0.0);
+    vec3 plane = vec3(0.6, 0.3, 0.0);
     bool isInvalid = false;
     if (vertexIDX == 0.0) {
       pos.x = 1.0 * plane.x;
@@ -112,7 +112,7 @@ let simulatePosition = glsl`
       float dimension = (pow(totalSquares, 0.5));
 
       vec3 offset = vec3(
-        plane.x * 10.25 * (squareIDX / dimension),
+        plane.x * 15.25 * (squareIDX / dimension),
         plane.y * 1.0 * (mod(squareIDX, dimension)),
         plane.z * 0.0
       );
@@ -278,14 +278,16 @@ export const makeAPI = ({ renderer, scene }) => {
       precision highp float;
       precision highp sampler2D;
 
-
       varying highp vec2 vUv;
+      varying highp vec3 vPos;
+
       uniform sampler2D geoShader;
       void main () {
         vUv = uv;
         vec4 posTex = texture2D(geoShader, uv);
         gl_PointSize = 1.0;
-        gl_Position = projectionMatrix * modelViewMatrix * vec4(posTex.xyz, 1.0);
+        vPos = posTex.xyz;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(posTex.xyz, posTex.w);
       }
     `,
     fragmentShader: glsl`
@@ -294,9 +296,14 @@ export const makeAPI = ({ renderer, scene }) => {
 
       uniform sampler2D colorShader;
       varying highp vec2 vUv;
+      varying highp vec3 vPos;
       void main () {
         vec4 colorVal = texture2D(colorShader, vUv);
-        gl_FragColor = vec4(vec3(colorVal), 0.9);
+        gl_FragColor = vec4(vec3(
+          vPos.x / 100.0 * 0.05 + 0.1,
+          vPos.y / 100.0 * 0.05 + 0.7,
+          vPos.z / 100.0 * 0.05 + 0.7
+        ), 0.9);
       }
     `,
     side: THREE.DoubleSide
