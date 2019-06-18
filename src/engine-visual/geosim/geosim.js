@@ -128,7 +128,7 @@ let simulatePosition = glsl`
       pos.xyz = rotateQ(normalize(vec3(1.0, pZ * piz, 1.0)), time + pX * piz) * rotateY(time + pY * piz) * pos.xyz;
       pos.z += sin(time  + pX * piz * 0.333) * 50.0;
 
-      pos.xyz *= 0.1;
+      pos.xyz *= 0.075;
 
       pos.w = 1.0;
       gl_FragColor = pos;
