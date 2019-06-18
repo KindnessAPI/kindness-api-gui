@@ -68,6 +68,7 @@ let simulatePosition = glsl`
 
     vec4 LAST_POS = texture2D(texturePosition, uv);
     vec4 META0 = texture2D(meta0, uv);
+
     vec4 pos = vec4(0.0);
 
     float vertexIDX = META0.x;
@@ -263,6 +264,7 @@ export const makeAPI = ({ renderer, scene }) => {
   geo.addAttribute('uv', new THREE.Float32BufferAttribute(getUV(), 2))
 
   var uniforms = {
+    solidColor: { value: new THREE.Color(`#000000`) },
     time: { value: 0 },
     geoShader: { value: null },
     colorShader: { value: null }
@@ -289,14 +291,15 @@ export const makeAPI = ({ renderer, scene }) => {
       }
     `,
     fragmentShader: glsl`
-      precision highp float;
-      precision highp sampler2D;
+      // precision highp sampler2D;
+      // precision highp float;
 
-      uniform sampler2D colorShader;
-      varying highp vec2 vUv;
+      // uniform vec3 solidColor;
+      // uniform sampler2D colorShader;
+      // varying highp vec2 vUv;
       void main () {
-        vec4 colorVal = texture2D(colorShader, vUv);
-        gl_FragColor = vec4(vec3(colorVal), 0.9);
+        // vec4 colorVal = texture2D(colorShader, vUv);
+        gl_FragColor = vec4(vec3(0.1), 0.9);
       }
     `,
     side: THREE.DoubleSide
