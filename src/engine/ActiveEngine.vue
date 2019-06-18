@@ -15,7 +15,6 @@
 </template>
 
 <script>
-
 export default {
   components: {
     ActivePipe: () => import(/* webpackChunkName: "engine" */ '../engine/ActivePipe.vue'),
