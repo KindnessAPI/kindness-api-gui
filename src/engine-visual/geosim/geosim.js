@@ -303,9 +303,9 @@ export const makeAPI = ({ renderer, scene }) => {
       void main () {
         vec4 colorVal = texture2D(colorShader, vUv);
         gl_FragColor = vec4(vec3(
-          vPos.x / 100.0 + 0.7,
-          vPos.y / 100.0 + 0.7,
-          vPos.z / 100.0 + 0.7
+          vPos.x / 100.0 * 0.6 + 0.5,
+          vPos.y / 100.0 * 0.6 + 0.5,
+          vPos.z / 100.0 * 0.6 + 0.5
         ), 0.9);
       }
     `,
