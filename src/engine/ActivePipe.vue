@@ -49,6 +49,9 @@ export default {
     mounter: {},
     videoAPI: {},
     audioAPI: {},
+    controlType: {
+      default: 'orbit'
+    },
     runComposer: {
       required: true
     },
@@ -144,7 +147,9 @@ export default {
       this.setupSizer()
       this.setupCamera()
       this.setupComposer()
-      this.setupControl()
+      if (this.controlType === 'orbit') {
+        this.setupControl()
+      }
       this.syncSize()
       this.$emit('ready')
       this.start()
@@ -246,7 +251,9 @@ export default {
     syncSize () {
       let sync = () => {
         let { composer, renderer, camera, size, dpi, control } = this
-        control.update()
+        if (control) {
+          control.update()
+        }
         composer.setSize(size.width * dpi, size.height * dpi)
         renderer.setPixelRatio(dpi)
         renderer.setSize(size.width, size.height)
