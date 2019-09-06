@@ -10,26 +10,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: () => import(/* webpackChunkName: "landing" */ './page/ActiveLearningPage.vue')
-    },
-    {
-      path: '/build/wonlgok.com',
-      name: 'home',
-      component: () => import(/* webpackChunkName: "wonglok-com" */ './engine/WONGLOK.vue')
+      component: () => import(/* webpackChunkName: "landing" */ './v0-app/pages/Home.vue')
     }
-    // {
-    //   path: '/',
-    //   name: 'home',
-    //   component: Home
-    // },
-    // {
-    //   path: '/about',
-    //   name: 'about',
-    //   // route level code-splitting
-    //   // this generates a separate chunk (about.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
-    // }
   ]
 })

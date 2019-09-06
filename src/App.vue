@@ -4,9 +4,18 @@
   </div>
 </template>
 
+<script>
+// import './css/normalize.css'
+// import './css/cutegrids.css'
+export default {
+
+}
+</script>
 <style>
-@import url(./css/normalize.css);
-@import url(./css/cutegrids.css);
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -22,4 +31,5 @@
   width: 100%;
   height: 100%;
 }
+
 </style>
