@@ -31,6 +31,8 @@ var THREE = {
 
 window.THREE = THREE
 
+THREE.Cache.enabled = true
+
 // window.Zlib = Zlib.Zlib
 // const FBXLoader = require('three/examples/js/loaders/FBXLoader')
 // window.FBXLoader = FBXLoader
@@ -85,7 +87,7 @@ export default {
 
         loadTarget.forEach((item, idx) => {
           item.position.x = idx * 40 - ((loadTarget.length - 1) * 0.5 * 40)
-          item.position.y = (((Math.random() - 0.5) * loadTarget.length - 1) * 20.5)
+          item.position.y = (((Math.random() - 0.5) * loadTarget.length - 1) * 10.5)
           this.justload(item, this.mounter)
         })
       }
