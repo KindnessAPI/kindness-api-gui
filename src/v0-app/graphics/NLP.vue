@@ -93,10 +93,10 @@ export default {
         group.add(obj.scene)
         obj.scene.scale.multiplyScalar(40)
 
-        var light = new THREE.PointLight(0xffffff, 5.5, 156)
-        light.position.set(0, 60, 125)
-        var light2 = new THREE.PointLight(0xffffff, 5.5, 156)
-        light2.position.set(0, 60, -125)
+        var light = new THREE.PointLight(0xffffff, 6, 156)
+        light.position.set(30, 60, 125)
+        var light2 = new THREE.PointLight(0xffffff, 6, 156)
+        light2.position.set(-30, 60, -125)
 
         group.add(light)
         group.add(light2)
