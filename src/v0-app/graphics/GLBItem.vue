@@ -45,15 +45,15 @@ export default {
         group.add(obj.scene)
         obj.scene.scale.multiplyScalar(40)
 
-        var light = new THREE.PointLight(0xffffff, 10, 150)
-        light.position.set(0, 50, 125)
-        var light2 = new THREE.PointLight(0xffffff, 10, 150)
-        light2.position.set(0, 50, -125)
+        var light = new THREE.PointLight(0xffffff, 12.5, 150)
+        light.position.set(0, 60, 125)
+        var light2 = new THREE.PointLight(0xffffff, 12.5, 150)
+        light2.position.set(0, 60, -125)
 
         group.add(light)
         group.add(light2)
 
-        group.rotation.y = Math.PI
+        // group.rotation.y = Math.PI
 
         // obj.traverse(mesh => {
         //   mesh.material = new THREE.MeshPhongMaterial({
@@ -93,7 +93,7 @@ export default {
     requireAll(require.context('file-loader!./model/glb', true, /\.glb$/))
 
     // eslint-disable-next-line
-    let file = require('file-loader!./model/glb/icons1/party_popper.glb')
+    let file = require('file-loader!./model/glb/emoji3/party.glb')
 
     this.loadFBX(file)
 
