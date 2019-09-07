@@ -84,6 +84,7 @@ export default {
 
         loadTarget.forEach((item, idx) => {
           item.position.x = idx * 40 - ((loadTarget.length - 1) * 0.5 * 40)
+          item.position.y = ((Math.random() * loadTarget.length - 1) * 20.5)
           this.justload(item)
         })
       }
@@ -230,9 +231,12 @@ export default {
     setInterval(() => {
       let time = window.performance.now() * 0.0001
       let mounter = this.mounter
+
       if (mounter) {
-        mounter.rotation.x = Math.sin(time * 2.0) * 0.15
-        mounter.rotation.z = Math.sin(time * 2.0) * 0.15
+        mounter.children.forEach((each, idx) => {
+          each.rotation.x = Math.sin(idx + time * 2.0) * 0.15
+          each.rotation.z = Math.sin(idx + time * 2.0) * 0.15
+        })
       }
     }, 15)
   },
