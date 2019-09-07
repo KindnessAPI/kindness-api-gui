@@ -5,7 +5,6 @@
       </textarea>
 
       <div class="h-32"></div>
-
       <div :key="item._id" v-for="item in items">
         <div @click="loadFBX(item)" class="cursor-pointer" @mouseenter="loadFBXDev(item)">
           {{ item.name }}
@@ -58,7 +57,9 @@ export default {
       console.log(result)
       let loadTarget = false
       result.tokens.forEach((word) => {
-        let item = this.items.slice().reverse().filter(each => each.name.toLowerCase().indexOf(word.toLowerCase()) !== -1).filter((item, idx) => {
+        let item = this.items.slice().reverse().sort(() => {
+          return Math.random() * 10 - 5
+        }).filter(each => each.name.toLowerCase().indexOf(word.toLowerCase()) !== -1).filter((item, idx) => {
           return idx < 10
         })
         if (item) {
@@ -84,7 +85,7 @@ export default {
 
         loadTarget.forEach((item, idx) => {
           item.position.x = idx * 40 - ((loadTarget.length - 1) * 0.5 * 40)
-          item.position.y = ((Math.random() * loadTarget.length - 1) * 20.5)
+          item.position.y = (((Math.random() - 0.5) * loadTarget.length - 1) * 20.5)
           this.justload(item, this.mounter)
         })
       }
@@ -145,10 +146,10 @@ export default {
 
         if (this.mounter) {
           this.scene.remove(this.mounter)
+          this.mounter = new THREE.Object3D()
+          this.mounter.add(group)
+          this.scene.add(this.mounter)
         }
-        this.mounter = new THREE.Object3D()
-        this.mounter.add(group)
-        this.scene.add(this.mounter)
 
         // this.setup({ obj: obj.children[0] })
       })
