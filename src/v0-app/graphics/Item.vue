@@ -98,9 +98,8 @@ export default {
       let time = window.performance.now() * 0.0001
       let mounter = this.mounter
       if (mounter) {
-        mounter.rotation.x = Math.sin(time + Math.cos(time * 2.0)) * 0.5
-        // mounter.position.y = mounter.position.y + mounter.position.y * Math.sin(time + Math.sin(2.0)) * 1.00
-        mounter.rotation.z = Math.sin(time + Math.sin(time * 2.0)) * 0.5
+        mounter.rotation.x = Math.sin(Math.sin(time * 2.0)) * 0.15
+        mounter.rotation.z = Math.sin(Math.sin(time * 2.0)) * 0.15
       }
     }, 15)
   },
