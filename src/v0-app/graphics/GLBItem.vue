@@ -1,7 +1,7 @@
 <template>
   <div class="h-full">
     <div class="h-full overflow-auto scroller">
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="preloadAll">PreloadAll</button>
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="preloadAll">Preload All to Offline Cache</button>
       <div :key="item._id" v-for="item in items">
         <div @click="loadFBX(item)" class="cursor-pointer" @mouseenter="loadFBXDev(item)">
           {{ item.name }}
@@ -51,10 +51,12 @@ export default {
       let data = false
       try {
         data = await store.getItem(file)
-      } catch (e) {
-      }
-      if (data) {
         file = URL.createObjectURL(data)
+        console.log(file)
+      } catch (e) {
+        fileLoader.load(file, (res) => {
+          store.setItem(file, res)
+        })
       }
 
       // eslint-disable-next-line
@@ -100,7 +102,6 @@ export default {
     preloadAll () {
       this.items.forEach((item) => {
         fileLoader.load(item.file, (res) => {
-          console.log(res)
           store.setItem(item.file, res)
         })
       })
