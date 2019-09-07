@@ -5,7 +5,8 @@
       </textarea>
 
       <div class="h-32"></div>
-      <button @click="cache">Cache</button>
+      <button @click="cache">Download Cache</button>
+      <button @click="clearCache">Clear Cache</button>
       <p v-if="showProgress">
         {{ (accu / total * 100).toFixed(0) }}
       </p>
@@ -157,8 +158,12 @@ export default {
       this.loader = loader
       NProgress.start()
 
+      let arraybuffer = await this.getArrayBuffer(item)
+      console.log(arraybuffer)
       // eslint-disable-next-line
-      this.loader.load(item.file, (obj) => {
+      this.loader.parse(arraybuffer, '/', (obj) => {
+        // // eslint-disable-next-line
+        // this.loader.load(item.file, (obj) => {
         NProgress.done()
         let group = new THREE.Object3D()
         console.log(obj)
