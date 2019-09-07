@@ -20,6 +20,7 @@
     "node-fetch": "^2.6.0",
     "nprogress": "^0.2.0",
     "raw-loader": "^3.0.0",
+    "sentiment": "^5.0.2",
     "tailwindcss": "^1.1.2",
     "three": "^0.105.2",
     "vue": "^2.6.10",

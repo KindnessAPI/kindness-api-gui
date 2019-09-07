@@ -1,7 +1,7 @@
 <template>
   <div class="full" ref="toucher">
     <BGTemplate class="absolute full" @ready="engine = $event" :toucher="toucher"></BGTemplate>
-    <GLBItem class="absolute" v-if="engine" :engine="engine" :scene="engine.scene" @items="items = $event"></GLBItem>
+    <NLP class="absolute" v-if="engine" :engine="engine" :scene="engine.scene" @items="items = $event"></NLP>
     <!-- <FBXItem class="absolute" v-if="engine" :engine="engine" :scene="engine.scene" @items="items = $event"></FBXItem> -->
   </div>
 </template>
@@ -9,7 +9,7 @@
 <script>
 export default {
   components: {
-    GLBItem: require('./GLBItem.vue').default,
+    NLP: require('./NLP.vue').default,
     // FBXItem: require('./FBXItem.vue').default,
     BGTemplate: require('./BGTemplate.vue').default
   },
