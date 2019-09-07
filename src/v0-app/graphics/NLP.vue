@@ -5,6 +5,10 @@
       </textarea>
 
       <div class="h-32"></div>
+      <button @click="cache">Cache</button>
+      <p v-if="showProgress">
+        {{ (accu / total * 100).toFixed(0) }}
+      </p>
       <div :key="item._id" v-for="item in items">
         <div @click="loadFBX(item)" class="cursor-pointer" @mouseenter="loadFBXDev(item)">
           {{ item.name }}
@@ -54,6 +58,35 @@ export default {
     }
   },
   methods: {
+    cache () {
+      let loader = new THREE.FileLoader()
+      this.total = this.items.length
+      this.accu = 0
+      this.showProgress = true
+      loader.setResponseType('arraybuffer')
+      this.items.forEach((item) => {
+        loader.load(item.file, async (data) => {
+          this.accu++
+          await store.setItem(item.file, data)
+          this.$forceUpdate()
+        })
+      })
+    },
+    getArrayBuffer (item) {
+      return new Promise(async (resolve) => {
+        try {
+          let data = await store.getItem(item.file)
+          resolve(data)
+        } catch (e) {
+          let loader = new THREE.FileLoader()
+          loader.setResponseType('arraybuffer')
+          loader.load(item.file, async (data) => {
+            resolve(data)
+            store.setItem(item.file, data)
+          })
+        }
+      })
+    },
     onType () {
       var result = sentiment.analyze(this.source)
       console.log(result)
@@ -98,8 +131,10 @@ export default {
       this.loader = loader
       NProgress.start()
 
+      let arraybuffer = await this.getArrayBuffer(item)
+      console.log(arraybuffer)
       // eslint-disable-next-line
-      this.loader.load(item.file, (obj) => {
+      this.loader.parse(arraybuffer, '/', (obj) => {
         NProgress.done()
         let group = new THREE.Object3D()
         console.log(obj)
@@ -142,9 +177,11 @@ export default {
         group.rotation.y = item.rotation.y
         group.rotation.z = item.rotation.z
 
-        group.position.x = item.position.x
-        group.position.y = item.position.y
-        group.position.z = item.position.z
+        // args.position = new THREE.Vector3()
+
+        // group.position.x = item.position.x
+        // group.position.y = item.position.y
+        // group.position.z = item.position.z
 
         if (this.mounter) {
           this.scene.remove(this.mounter)
