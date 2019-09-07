@@ -2,7 +2,7 @@
   <div class="h-full">
     <div class="h-full overflow-auto scroller">
       <div :key="item._id" v-for="item in items">
-        <div @click="loadFBX(item)" @mouseenter="loadFBXDev(item)">
+        <div @click="loadFBX(item)" class="cursor-pointer" @mouseenter="loadFBXDev(item)">
           {{ item.name }}
         </div>
       </div>
@@ -86,7 +86,7 @@ export default {
     this.mounter.add(atmosphwere)
 
     var fixRotation = (list, item, v3) => {
-      if (list.some(li => item.name.indexOf(li) !== -1)) {
+      if (list.some(li => item.name.toLowerCase().indexOf(li.toLowerCase()) !== -1)) {
         item.rotation = v3
       }
     }
@@ -101,16 +101,17 @@ export default {
       'dog',
       'snowman',
       'lips',
+      'money',
       'party_popper',
       'pink bow'
     ]
     let zList = [
       'baby',
       'confused',
-      'money',
       'monkey',
       'rolling eyes',
-      'Smiling Hearts',
+      'smiling hearts',
+      'pleading',
       'envelope_with_heart',
       'fearful'
     ]
