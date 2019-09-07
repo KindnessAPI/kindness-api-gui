@@ -85,12 +85,12 @@ export default {
         loadTarget.forEach((item, idx) => {
           item.position.x = idx * 40 - ((loadTarget.length - 1) * 0.5 * 40)
           item.position.y = ((Math.random() * loadTarget.length - 1) * 20.5)
-          this.justload(item)
+          this.justload(item, this.mounter)
         })
       }
       // list.some(li => item.name.toLowerCase().indexOf(li.toLowerCase()) !== -1)
     },
-    async justload (item) {
+    async justload (item, mounter) {
       var loader = new THREE.GLTFLoader()
       this.loader = loader
       NProgress.start()
@@ -111,7 +111,7 @@ export default {
         group.position.y = item.position.y
         group.position.z = item.position.z
 
-        this.mounter.add(group)
+        mounter.add(group)
       })
     },
     async loadFBX (item) {
