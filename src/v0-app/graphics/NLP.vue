@@ -59,7 +59,7 @@ export default {
       let loadTarget = false
       result.tokens.forEach((word) => {
         let item = this.items.slice().reverse().filter(each => each.name.toLowerCase().indexOf(word.toLowerCase()) !== -1).filter((item, idx) => {
-          return idx < 5
+          return idx < 10
         })
         if (item) {
           loadTarget = item
@@ -72,17 +72,18 @@ export default {
           this.mounter = new THREE.Object3D()
           this.scene.add(this.mounter)
         }
+        let num = loadTarget.length
 
-        var light = new THREE.PointLight(0xffffff, 1, 900)
-        light.position.set(0, 10, 90)
-        var light2 = new THREE.PointLight(0xffffff, 1, 900)
-        light2.position.set(0, 10, -90)
+        var light = new THREE.PointLight(0xffffff, 1.8, 900 * num)
+        light.position.set(0, 10, 90 * num)
+        var light2 = new THREE.PointLight(0xffffff, 1.8, 900 * num)
+        light2.position.set(0, 10, -90 * num)
 
-        group.add(light)
-        group.add(light2)
+        this.mounter.add(light)
+        this.mounter.add(light2)
 
         loadTarget.forEach((item, idx) => {
-          item.position.x = idx * 45 - ((loadTarget.length - 1) * 0.5 * 45)
+          item.position.x = idx * 40 - ((loadTarget.length - 1) * 0.5 * 40)
           this.justload(item)
         })
       }
@@ -101,8 +102,6 @@ export default {
         group.add(obj.scene)
         obj.scene.scale.multiplyScalar(40)
 
-
-
         group.rotation.x = item.rotation.x
         group.rotation.y = item.rotation.y
         group.rotation.z = item.rotation.z
@@ -112,8 +111,6 @@ export default {
         group.position.z = item.position.z
 
         this.mounter.add(group)
-
-        // this.setup({ obj: obj.children[0] })
       })
     },
     async loadFBX (item) {
