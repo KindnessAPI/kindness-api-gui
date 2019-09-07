@@ -1,14 +1,16 @@
 <template>
   <div class="full" ref="toucher">
     <BGTemplate class="absolute full" @ready="engine = $event" :toucher="toucher"></BGTemplate>
-    <Item class="absolute" v-if="engine" :engine="engine" :scene="engine.scene" @items="items = $event"></Item>
+    <GLBItem class="absolute" v-if="engine" :engine="engine" :scene="engine.scene" @items="items = $event"></GLBItem>
+    <!-- <FBXItem class="absolute" v-if="engine" :engine="engine" :scene="engine.scene" @items="items = $event"></FBXItem> -->
   </div>
 </template>
 
 <script>
 export default {
   components: {
-    Item: require('./Item.vue').default,
+    GLBItem: require('./GLBItem.vue').default,
+    // FBXItem: require('./FBXItem.vue').default,
     BGTemplate: require('./BGTemplate.vue').default
   },
   data () {

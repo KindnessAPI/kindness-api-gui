@@ -13,13 +13,12 @@
 <script>
 var THREE = {
   ...require('three'),
-  ...require('three/examples/jsm/loaders/OBJLoader.js'),
-  ...require('three/examples/jsm/loaders/FBXLoader.js')
+  // ...require('three/examples/jsm/loaders/OBJLoader.js'),
+  ...require('three/examples/jsm/loaders/GLTFLoader.js')
 }
 window.THREE = THREE
 
-const Zlib = require('three/examples/js/libs/inflate.min')
-window.Zlib = Zlib.Zlib
+// window.Zlib = Zlib.Zlib
 // const FBXLoader = require('three/examples/js/loaders/FBXLoader')
 // window.FBXLoader = FBXLoader
 
@@ -36,29 +35,33 @@ export default {
   },
   methods: {
     loadFBX (file) {
-      this.loader = new THREE.FBXLoader()
+      var loader = new THREE.GLTFLoader()
+      this.loader = loader
 
       // eslint-disable-next-line
       this.loader.load(file, (obj) => {
         let group = new THREE.Object3D()
+        console.log(obj)
+        group.add(obj.scene)
+        obj.scene.scale.multiplyScalar(40)
 
-        var light = new THREE.PointLight(0xffffff, 8, 79)
-        light.position.set(0, 50, 50)
-        var light2 = new THREE.PointLight(0xffffff, 8, 79)
-        light2.position.set(0, 50, -50)
+        var light = new THREE.PointLight(0xffffff, 10, 150)
+        light.position.set(0, 50, 125)
+        var light2 = new THREE.PointLight(0xffffff, 10, 150)
+        light2.position.set(0, 50, -125)
 
         group.add(light)
         group.add(light2)
 
-        obj.rotation.y = Math.PI
+        group.rotation.y = Math.PI
 
-        obj.traverse(mesh => {
-          mesh.material = new THREE.MeshPhongMaterial({
-            color: new THREE.Color().setHSL(Math.random(), 0.5, 0.5)
-          })
-        })
+        // obj.traverse(mesh => {
+        //   mesh.material = new THREE.MeshPhongMaterial({
+        //     color: new THREE.Color().setHSL(Math.random(), 0.5, 0.5)
+        //   })
+        // })
 
-        group.add(obj)
+        // group.add(obj)
 
         if (this.mounter) {
           this.scene.remove(this.mounter)
@@ -87,10 +90,10 @@ export default {
       this.$emit('items', this.items)
     }
 
-    requireAll(require.context('file-loader!./model/', true, /\.FBX$/))
+    requireAll(require.context('file-loader!./model/glb', true, /\.glb$/))
 
     // eslint-disable-next-line
-    let file = require('file-loader!./model/megapack1/party-popper.FBX')
+    let file = require('file-loader!./model/glb/icons1/party_popper.glb')
 
     this.loadFBX(file)
 
