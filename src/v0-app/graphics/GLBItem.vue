@@ -88,7 +88,7 @@ export default {
         let url = r(item)
         this.items.push({
           _id: this.items.length,
-          name: (item + '').replace('./', '').replace('.FBX', ''),
+          name: (item + '').replace('./', '').replace('.glb', '').replace(' 3DS', '').replace(' FBX', '').replace('/', '__'),
           file: url
         })
       })
