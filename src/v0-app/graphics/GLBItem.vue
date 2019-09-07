@@ -12,13 +12,20 @@
 </template>
 
 <script>
+import localforage from 'localforage'
+var store = localforage.createInstance({
+  name: 'glb'
+})
 var THREE = {
   ...require('three'),
   // ...require('three/examples/jsm/loaders/OBJLoader.js'),
   ...require('three/examples/jsm/loaders/GLTFLoader.js')
 }
+
 window.THREE = THREE
-THREE.Cache.enabled = true
+
+let fileLoader = new THREE.FileLoader()
+fileLoader.setResponseType('blob')
 
 // window.Zlib = Zlib.Zlib
 // const FBXLoader = require('three/examples/js/loaders/FBXLoader')
@@ -31,17 +38,30 @@ export default {
   },
   data () {
     return {
+      goCache: false,
       items: [],
       mounter: new THREE.Object3D()
     }
   },
   methods: {
-    loadFBX ({ file, rotation }) {
+    async loadFBX ({ file, rotation }) {
       var loader = new THREE.GLTFLoader()
       this.loader = loader
 
+      let data = false
+      try {
+        data = await store.getItem(file)
+      } catch (e) {
+      }
+      if (data) {
+        file = URL.createObjectURL(data)
+      }
+
       // eslint-disable-next-line
       this.loader.load(file, (obj) => {
+        if (data) {
+          URL.revokeObjectURL(file)
+        }
         let group = new THREE.Object3D()
         console.log(obj)
         group.add(obj.scene)
@@ -78,13 +98,16 @@ export default {
       })
     },
     preloadAll () {
-      let fileLoader = new THREE.FileLoader()
       this.items.forEach((item) => {
-        fileLoader.load(item.file)
+        fileLoader.load(item.file, (res) => {
+          console.log(res)
+          store.setItem(item.file, res)
+        })
       })
+      this.goCache = true
     },
     loadFBXDev (args) {
-      if (process.env.NODE_ENV === 'development') {
+      if (this.goCache || process.env.NODE_ENV === 'development') {
         this.loadFBX(args)
       }
     }
