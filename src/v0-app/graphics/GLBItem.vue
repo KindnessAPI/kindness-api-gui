@@ -2,7 +2,7 @@
   <div class="h-full">
     <div class="h-full overflow-auto scroller">
       <div :key="item._id" v-for="item in items">
-        <div @click="loadFBX(item.file)">
+        <div @click="loadFBX(item.file)" @mouseenter="loadFBXDev(item.file)">
           {{ item.name }}
         </div>
       </div>
@@ -72,6 +72,11 @@ export default {
 
         // this.setup({ obj: obj.children[0] })
       })
+    },
+    loadFBXDev (file) {
+      if (process.env.NODE_ENV === 'development') {
+        this.loadFBX(file)
+      }
     }
   },
   mounted () {
