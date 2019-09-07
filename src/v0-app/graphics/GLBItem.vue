@@ -2,7 +2,7 @@
   <div class="h-full">
     <div class="h-full overflow-auto scroller">
       <div :key="item._id" v-for="item in items">
-        <div @click="loadFBX(item.file)" @mouseenter="loadFBXDev(item.file)">
+        <div @click="loadFBX(item)" @mouseenter="loadFBXDev(item)">
           {{ item.name }}
         </div>
       </div>
@@ -34,7 +34,7 @@ export default {
     }
   },
   methods: {
-    loadFBX (file) {
+    loadFBX ({ file, rotation }) {
       var loader = new THREE.GLTFLoader()
       this.loader = loader
 
@@ -53,7 +53,9 @@ export default {
         group.add(light)
         group.add(light2)
 
-        // group.rotation.y = Math.PI
+        group.rotation.x = rotation.x
+        group.rotation.y = rotation.y
+        group.rotation.z = rotation.z
 
         // obj.traverse(mesh => {
         //   mesh.material = new THREE.MeshPhongMaterial({
@@ -73,9 +75,9 @@ export default {
         // this.setup({ obj: obj.children[0] })
       })
     },
-    loadFBXDev (file) {
+    loadFBXDev (args) {
       if (process.env.NODE_ENV === 'development') {
-        this.loadFBX(file)
+        this.loadFBX(args)
       }
     }
   },
@@ -83,31 +85,70 @@ export default {
     var atmosphwere = new THREE.AmbientLight(0xffffff)
     this.mounter.add(atmosphwere)
 
-    var requireAll = (r) => {
+    var fixRotation = (list, item, v3) => {
+      if (list.some(li => item.name.indexOf(li) !== -1)) {
+        item.rotation = v3
+      }
+    }
+    let rPIList = [
+      'alien',
+      'ape',
+      'ear',
+      'eyes',
+      'panda',
+      'rabit',
+      'robot',
+      'dog',
+      'snowman',
+      'lips',
+      'party_popper',
+      'pink bow'
+    ]
+    let zList = [
+      'baby',
+      'confused',
+      'money',
+      'monkey',
+      'rolling eyes',
+      'Smiling Hearts',
+      'envelope_with_heart',
+      'fearful'
+    ]
+    var requireAll = (r, folder, offset) => {
       r.keys().forEach((item, idx) => {
+        let name = folder + ' - ' + (item + '').replace('./', '').replace('.glb', '').replace(' 3DS', '').replace(' FBX', '').replace('/', '__')
         let url = r(item)
-        this.items.push({
+        let newItem = {
           _id: this.items.length,
-          name: (item + '').replace('./', '').replace('.glb', '').replace(' 3DS', '').replace(' FBX', '').replace('/', '__'),
+          rotation: offset,
+          name,
           file: url
-        })
+        }
+
+        this.items.push(newItem)
+        fixRotation(rPIList, newItem, new THREE.Vector3(0, Math.PI, 0))
+        fixRotation(zList, newItem, new THREE.Vector3(0, 0, 0))
       })
       this.$emit('items', this.items)
     }
 
-    requireAll(require.context('file-loader!./model/glb', true, /\.glb$/))
+    requireAll(require.context('file-loader!./model/glb/emoji1', true, /\.glb$/), 'emoji1', new THREE.Vector3(0, Math.PI, 0))
+    requireAll(require.context('file-loader!./model/glb/emoji2', true, /\.glb$/), 'emoji2', new THREE.Vector3(0, 0, 0))
+    requireAll(require.context('file-loader!./model/glb/emoji3', true, /\.glb$/), 'emoji3', new THREE.Vector3(0, 0, 0))
+    requireAll(require.context('file-loader!./model/glb/hands', true, /\.glb$/), 'hands', new THREE.Vector3(0, 0, 0))
+    requireAll(require.context('file-loader!./model/glb/icons1', true, /\.glb$/), 'icons1', new THREE.Vector3(0, 0, 0))
+    requireAll(require.context('file-loader!./model/glb/icons2', true, /\.glb$/), 'icons2', new THREE.Vector3(0, 0, 0))
 
     // eslint-disable-next-line
     let file = require('file-loader!./model/glb/emoji3/party.glb')
-
-    this.loadFBX(file)
+    this.loadFBX({ file, rotation: new THREE.Vector3(0, 0, 0) })
 
     setInterval(() => {
       let time = window.performance.now() * 0.0001
       let mounter = this.mounter
       if (mounter) {
-        mounter.rotation.x = Math.sin(Math.sin(time * 2.0)) * 0.15
-        mounter.rotation.z = Math.sin(Math.sin(time * 2.0)) * 0.15
+        mounter.rotation.x = Math.sin(time * 2.0) * 0.15
+        mounter.rotation.z = Math.sin(time * 2.0) * 0.15
       }
     }, 15)
   },
