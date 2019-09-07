@@ -9,8 +9,12 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
+      path: '/tailwind',
       component: () => import(/* webpackChunkName: "landing" */ './v0-app/pages/Home.vue')
+    },
+    {
+      path: '/',
+      component: () => import(/* webpackChunkName: "landing" */ './v0-app/graphics/Viewer.vue')
     }
   ]
 })
