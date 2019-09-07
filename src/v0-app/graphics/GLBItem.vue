@@ -1,7 +1,13 @@
 <template>
   <div class="h-full">
     <div class="h-full overflow-auto scroller">
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="preloadAll">Preload All to Offline Cache</button>
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="preloadAll">Preload</button>
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="clearCache">Clear Cache</button>
+
+      <div v-if="showProgress">
+        Progress {{ accu }} / {{ total }}
+      </div>
+
       <div :key="item._id" v-for="item in items">
         <div @click="loadFBX(item)" class="cursor-pointer" @mouseenter="loadFBXDev(item)">
           {{ item.name }}
@@ -38,6 +44,9 @@ export default {
   },
   data () {
     return {
+      total: 0,
+      accu: 0,
+      showProgress: false,
       goCache: false,
       items: [],
       mounter: new THREE.Object3D()
@@ -48,22 +57,16 @@ export default {
       var loader = new THREE.GLTFLoader()
       this.loader = loader
 
-      let data = false
       try {
-        data = await store.getItem(file)
+        let data = await store.getItem(file)
         file = URL.createObjectURL(data)
         console.log(file)
       } catch (e) {
-        fileLoader.load(file, (res) => {
-          store.setItem(file, res)
-        })
+
       }
 
       // eslint-disable-next-line
       this.loader.load(file, (obj) => {
-        if (data) {
-          URL.revokeObjectURL(file)
-        }
         let group = new THREE.Object3D()
         console.log(obj)
         group.add(obj.scene)
@@ -86,7 +89,6 @@ export default {
         //     color: new THREE.Color().setHSL(Math.random(), 0.5, 0.5)
         //   })
         // })
-
         // group.add(obj)
 
         if (this.mounter) {
@@ -100,17 +102,22 @@ export default {
       })
     },
     preloadAll () {
+      this.total = this.items.length
       this.items.forEach((item) => {
-        fileLoader.load(item.file, (res) => {
-          store.setItem(item.file, res)
+        fileLoader.load(item.file, async (data) => {
+          await store.setItem(item.file, data)
+          this.accu++
         })
       })
-      this.goCache = true
+      this.showProgress = true
     },
     loadFBXDev (args) {
-      if (this.goCache || process.env.NODE_ENV === 'development') {
-        this.loadFBX(args)
-      }
+      // if (process.env.NODE_ENV === 'development') {
+      this.loadFBX(args)
+      // }
+    },
+    clearCache () {
+      store.clear()
     }
   },
   mounted () {
