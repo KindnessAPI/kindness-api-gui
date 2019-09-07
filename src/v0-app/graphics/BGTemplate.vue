@@ -73,7 +73,7 @@ export default {
         camPosition: {
           'x': 0,
           'y': 0,
-          'z': 50
+          'z': 60
         },
         bloomModes: {
           // 0.112 1.7297 0.6778

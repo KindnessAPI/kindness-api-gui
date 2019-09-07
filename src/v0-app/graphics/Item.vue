@@ -2,7 +2,7 @@
   <div class="h-full">
     <div class="h-full overflow-auto">
       <div :key="item._id" v-for="item in items">
-        <div @click="look(item.file)">
+        <div @click="loadFBX(item.file)">
           {{ item.name }}
         </div>
       </div>
@@ -57,6 +57,7 @@ export default {
             color: new THREE.Color().setHSL(Math.random(), 0.5, 0.5)
           })
         })
+
         group.add(obj)
 
         if (this.mounter) {
@@ -68,9 +69,6 @@ export default {
 
         // this.setup({ obj: obj.children[0] })
       })
-    },
-    look (file) {
-      this.loadFBX(file)
     }
   },
   mounted () {
@@ -91,8 +89,8 @@ export default {
 
     requireAll(require.context('file-loader!./model/', true, /\.FBX$/))
 
-    let file = require('file-loader!./model/megapack1/close-book.FBX')
-    this.look(file)
+    let file = require('file-loader!./model/megapack1/party-popper.FBX')
+    this.loadFBX(file)
   },
   beforeDestroy () {
     this.scene.remove(this.mounter)
