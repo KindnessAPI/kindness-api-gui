@@ -8,7 +8,7 @@
       <button @click="cache">Download Cache</button>
       <button @click="clearCache">Clear Cache</button>
       <p v-if="showProgress">
-        {{ (accu / total * 100).toFixed(0) }}
+        {{ (accu / total * 100).toFixed(0) }}%
       </p>
       <div :key="item._id" v-for="item in items">
         <div @click="loadFBX(item)" class="cursor-pointer" @mouseenter="loadFBXDev(item)">
@@ -204,9 +204,9 @@ export default {
       })
     },
     loadFBXDev (args) {
-      if (process.env.NODE_ENV === 'development') {
-        this.loadFBX(args)
-      }
+      // if (process.env.NODE_ENV === 'development') {
+      this.loadFBX(args)
+      // }
     },
     clearCache () {
       store.clear()
