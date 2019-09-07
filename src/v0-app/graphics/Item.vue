@@ -59,19 +59,18 @@ export default {
         })
         group.add(obj)
 
+        if (this.mounter) {
+          this.scene.remove(this.mounter)
+        }
+        this.mounter = new THREE.Object3D()
         this.mounter.add(group)
+        this.scene.add(this.mounter)
 
         // this.setup({ obj: obj.children[0] })
       })
     },
     look (file) {
-      if (this.mounter) {
-        this.scene.remove(this.mounter)
-      }
-      this.mounter = new THREE.Object3D()
-      //
       this.loadFBX(file)
-      this.scene.add(this.mounter)
     }
   },
   mounted () {
