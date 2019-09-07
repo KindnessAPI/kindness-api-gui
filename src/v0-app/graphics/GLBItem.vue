@@ -48,7 +48,7 @@ export default {
     async loadFBX (item) {
       var loader = new THREE.GLTFLoader()
       this.loader = loader
-
+      NProgress.start()
       // eslint-disable-next-line
       this.loader.load(item.file, (obj) => {
         NProgress.done()
@@ -80,7 +80,9 @@ export default {
       })
     },
     loadFBXDev (args) {
-      this.loadFBX(args)
+      if (process.env.NODE_ENV === 'development') {
+        this.loadFBX(args)
+      }
     },
     clearCache () {
       store.clear()
