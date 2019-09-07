@@ -1,6 +1,7 @@
 <template>
   <div class="h-full">
     <div class="h-full overflow-auto scroller">
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="preloadAll">PreloadAll</button>
       <div :key="item._id" v-for="item in items">
         <div @click="loadFBX(item)" class="cursor-pointer" @mouseenter="loadFBXDev(item)">
           {{ item.name }}
@@ -17,6 +18,7 @@ var THREE = {
   ...require('three/examples/jsm/loaders/GLTFLoader.js')
 }
 window.THREE = THREE
+THREE.Cache.enabled = true
 
 // window.Zlib = Zlib.Zlib
 // const FBXLoader = require('three/examples/js/loaders/FBXLoader')
@@ -75,6 +77,12 @@ export default {
         // this.setup({ obj: obj.children[0] })
       })
     },
+    preloadAll () {
+      let fileLoader = new THREE.FileLoader()
+      this.items.forEach((item) => {
+        fileLoader.load(item.file)
+      })
+    },
     loadFBXDev (args) {
       if (process.env.NODE_ENV === 'development') {
         this.loadFBX(args)
@@ -130,7 +138,6 @@ export default {
         fixRotation(rPIList, newItem, new THREE.Vector3(0, Math.PI, 0))
         fixRotation(zList, newItem, new THREE.Vector3(0, 0, 0))
       })
-      this.$emit('items', this.items)
     }
 
     requireAll(require.context('file-loader!./model/glb/emoji1', true, /\.glb$/), 'emoji1', new THREE.Vector3(0, Math.PI, 0))
