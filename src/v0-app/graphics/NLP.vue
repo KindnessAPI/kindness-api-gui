@@ -73,6 +73,14 @@ export default {
           this.scene.add(this.mounter)
         }
 
+        var light = new THREE.PointLight(0xffffff, 1, 900)
+        light.position.set(0, 10, 90)
+        var light2 = new THREE.PointLight(0xffffff, 1, 900)
+        light2.position.set(0, 10, -90)
+
+        group.add(light)
+        group.add(light2)
+
         loadTarget.forEach((item, idx) => {
           item.position.x = idx * 45 - ((loadTarget.length - 1) * 0.5 * 45)
           this.justload(item)
@@ -93,13 +101,7 @@ export default {
         group.add(obj.scene)
         obj.scene.scale.multiplyScalar(40)
 
-        var light = new THREE.PointLight(0xffffff, 6, 156)
-        light.position.set(30, 60, 125)
-        var light2 = new THREE.PointLight(0xffffff, 6, 156)
-        light2.position.set(-30, 60, -125)
 
-        group.add(light)
-        group.add(light2)
 
         group.rotation.x = item.rotation.x
         group.rotation.y = item.rotation.y
