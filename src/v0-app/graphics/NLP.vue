@@ -43,7 +43,7 @@ export default {
   },
   data () {
     return {
-      source: '',
+      source: 'party',
       total: 0,
       accu: 0,
       showProgress: false,
@@ -58,21 +58,67 @@ export default {
       console.log(result)
       let loadTarget = false
       result.tokens.forEach((word) => {
-        let item = this.items.slice().reverse().find(each => each.name.toLowerCase().indexOf(word.toLowerCase()) !== -1)
+        let item = this.items.slice().reverse().filter(each => each.name.toLowerCase().indexOf(word.toLowerCase()) !== -1).filter((item, idx) => {
+          return idx < 5
+        })
         if (item) {
           loadTarget = item
         }
       })
 
       if (loadTarget) {
-        this.loadFBX(loadTarget)
+        if (this.mounter) {
+          this.scene.remove(this.mounter)
+          this.mounter = new THREE.Object3D()
+          this.scene.add(this.mounter)
+        }
+
+        loadTarget.forEach((item, idx) => {
+          item.position.x = idx * 45 - ((loadTarget.length - 1) * 0.5 * 45)
+          this.justload(item)
+        })
       }
       // list.some(li => item.name.toLowerCase().indexOf(li.toLowerCase()) !== -1)
+    },
+    async justload (item) {
+      var loader = new THREE.GLTFLoader()
+      this.loader = loader
+      NProgress.start()
+
+      // eslint-disable-next-line
+      this.loader.load(item.file, (obj) => {
+        NProgress.done()
+        let group = new THREE.Object3D()
+        console.log(obj)
+        group.add(obj.scene)
+        obj.scene.scale.multiplyScalar(40)
+
+        var light = new THREE.PointLight(0xffffff, 5.5, 156)
+        light.position.set(0, 50, 125)
+        var light2 = new THREE.PointLight(0xffffff, 5.5, 156)
+        light2.position.set(0, 50, -125)
+
+        group.add(light)
+        group.add(light2)
+
+        group.rotation.x = item.rotation.x
+        group.rotation.y = item.rotation.y
+        group.rotation.z = item.rotation.z
+
+        group.position.x = item.position.x
+        group.position.y = item.position.y
+        group.position.z = item.position.z
+
+        this.mounter.add(group)
+
+        // this.setup({ obj: obj.children[0] })
+      })
     },
     async loadFBX (item) {
       var loader = new THREE.GLTFLoader()
       this.loader = loader
       NProgress.start()
+
       // eslint-disable-next-line
       this.loader.load(item.file, (obj) => {
         NProgress.done()
@@ -92,6 +138,10 @@ export default {
         group.rotation.x = item.rotation.x
         group.rotation.y = item.rotation.y
         group.rotation.z = item.rotation.z
+
+        group.position.x = item.position.x
+        group.position.y = item.position.y
+        group.position.z = item.position.z
 
         if (this.mounter) {
           this.scene.remove(this.mounter)
@@ -144,16 +194,17 @@ export default {
       'rolling eyes',
       'smiling hearts',
       'pleading',
-      'envelope_with_heart',
+      'envelope with heart',
       'fearful'
     ]
-    var requireAll = (r, folder, offset) => {
+    var requireAll = (r, folder, rotation) => {
       r.keys().forEach((item, idx) => {
         let name = folder + ' - ' + (item + '').replace('./', '').replace('.glb', '').replace(' 3DS', '').replace(' FBX', '').replace('/', '__')
         let url = r(item)
         let newItem = {
           _id: this.items.length,
-          rotation: offset,
+          rotation: rotation,
+          position: new THREE.Vector3(),
           name,
           file: url
         }
@@ -172,8 +223,10 @@ export default {
     requireAll(require.context('file-loader!./model/glb/icons2', true, /\.glb$/), 'icons2', new THREE.Vector3(0, 0, 0))
 
     // eslint-disable-next-line
-    let file = require('file-loader!./model/glb/emoji3/party.glb')
-    this.loadFBX({ file, rotation: new THREE.Vector3(0, 0, 0) })
+    // let file = require('file-loader!./model/glb/emoji3/party.glb')
+    // this.loadFBX({ file, rotation: new THREE.Vector3(0, 0, 0), position: new THREE.Vector3() })
+
+    this.onType()
 
     setInterval(() => {
       let time = window.performance.now() * 0.0001
