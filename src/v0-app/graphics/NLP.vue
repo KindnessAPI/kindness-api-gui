@@ -36,8 +36,6 @@ var THREE = {
 
 window.THREE = THREE
 
-THREE.Cache.enabled = true
-
 // window.Zlib = Zlib.Zlib
 // const FBXLoader = require('three/examples/js/loaders/FBXLoader')
 // window.FBXLoader = FBXLoader
@@ -75,16 +73,23 @@ export default {
     },
     getArrayBuffer (item) {
       return new Promise(async (resolve) => {
-        try {
-          let data = await store.getItem(item.file)
-          resolve(data)
-        } catch (e) {
+        let download = () => {
           let loader = new THREE.FileLoader()
           loader.setResponseType('arraybuffer')
           loader.load(item.file, async (data) => {
+            await store.setItem(item.file, data)
             resolve(data)
-            store.setItem(item.file, data)
           })
+        }
+        try {
+          let data = await store.getItem(item.file)
+          if (!data) {
+            download()
+          } else {
+            resolve(data)
+          }
+        } catch (e) {
+          download()
         }
       })
     },
@@ -159,7 +164,7 @@ export default {
       NProgress.start()
 
       let arraybuffer = await this.getArrayBuffer(item)
-      console.log(arraybuffer)
+      // console.log(arraybuffer)
       // eslint-disable-next-line
       this.loader.parse(arraybuffer, '/', (obj) => {
         // // eslint-disable-next-line
