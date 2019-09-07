@@ -2,7 +2,7 @@
   <div class="h-full">
     <div class="h-full overflow-auto scroller">
       <div :key="item._id" v-for="item in items">
-        <div @click="loadFBX(item.file)">
+        <div @click="loadFBX(item.file)" @mouseenter="loadFBX(item.file)">
           {{ item.name }}
         </div>
       </div>
