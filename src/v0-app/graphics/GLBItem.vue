@@ -1,13 +1,6 @@
 <template>
   <div class="h-full">
     <div class="h-full overflow-auto scroller">
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="preloadAll">Preload</button>
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="clearCache">Clear Cache</button>
-
-      <div v-if="showProgress">
-        Progress {{ accu }} / {{ total }}
-      </div>
-
       <div :key="item._id" v-for="item in items">
         <div @click="loadFBX(item)" class="cursor-pointer" @mouseenter="loadFBXDev(item)">
           {{ item.name }}
@@ -19,6 +12,8 @@
 
 <script>
 import localforage from 'localforage'
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 var store = localforage.createInstance({
   name: 'glb'
 })
@@ -29,9 +24,6 @@ var THREE = {
 }
 
 window.THREE = THREE
-
-let fileLoader = new THREE.FileLoader()
-fileLoader.setResponseType('blob')
 
 // window.Zlib = Zlib.Zlib
 // const FBXLoader = require('three/examples/js/loaders/FBXLoader')
@@ -53,20 +45,13 @@ export default {
     }
   },
   methods: {
-    async loadFBX ({ file, rotation }) {
+    async loadFBX (item) {
       var loader = new THREE.GLTFLoader()
       this.loader = loader
 
-      try {
-        let data = await store.getItem(file)
-        file = URL.createObjectURL(data)
-        console.log(file)
-      } catch (e) {
-
-      }
-
       // eslint-disable-next-line
-      this.loader.load(file, (obj) => {
+      this.loader.load(item.file, (obj) => {
+        NProgress.done()
         let group = new THREE.Object3D()
         console.log(obj)
         group.add(obj.scene)
@@ -80,16 +65,9 @@ export default {
         group.add(light)
         group.add(light2)
 
-        group.rotation.x = rotation.x
-        group.rotation.y = rotation.y
-        group.rotation.z = rotation.z
-
-        // obj.traverse(mesh => {
-        //   mesh.material = new THREE.MeshPhongMaterial({
-        //     color: new THREE.Color().setHSL(Math.random(), 0.5, 0.5)
-        //   })
-        // })
-        // group.add(obj)
+        group.rotation.x = item.rotation.x
+        group.rotation.y = item.rotation.y
+        group.rotation.z = item.rotation.z
 
         if (this.mounter) {
           this.scene.remove(this.mounter)
@@ -101,20 +79,8 @@ export default {
         // this.setup({ obj: obj.children[0] })
       })
     },
-    preloadAll () {
-      this.total = this.items.length
-      this.items.forEach((item) => {
-        fileLoader.load(item.file, async (data) => {
-          await store.setItem(item.file, data)
-          this.accu++
-        })
-      })
-      this.showProgress = true
-    },
     loadFBXDev (args) {
-      // if (process.env.NODE_ENV === 'development') {
       this.loadFBX(args)
-      // }
     },
     clearCache () {
       store.clear()
@@ -129,6 +95,7 @@ export default {
         item.rotation = v3
       }
     }
+
     let rPIList = [
       'alien',
       'ape',
