@@ -1,6 +1,6 @@
 <template>
   <div class="h-full">
-    <div class="h-full overflow-auto">
+    <div class="h-full overflow-auto scroller">
       <div :key="item._id" v-for="item in items">
         <div @click="loadFBX(item.file)">
           {{ item.name }}
@@ -89,8 +89,20 @@ export default {
 
     requireAll(require.context('file-loader!./model/', true, /\.FBX$/))
 
+    // eslint-disable-next-line
     let file = require('file-loader!./model/megapack1/party-popper.FBX')
+
     this.loadFBX(file)
+
+    setInterval(() => {
+      let time = window.performance.now() * 0.0001
+      let mounter = this.mounter
+      if (mounter) {
+        mounter.rotation.x = Math.sin(time + Math.cos(time * 2.0)) * 0.5
+        // mounter.position.y = mounter.position.y + mounter.position.y * Math.sin(time + Math.sin(2.0)) * 1.00
+        mounter.rotation.z = Math.sin(time + Math.sin(time * 2.0)) * 0.5
+      }
+    }, 15)
   },
   beforeDestroy () {
     this.scene.remove(this.mounter)
