@@ -116,7 +116,11 @@ export default {
         let item = this.items.slice().reverse().sort(() => {
           return Math.random() * 10 - 5
         }).filter(each => each.name.toLowerCase().indexOf(word.toLowerCase()) !== -1).filter((item, idx) => {
-          return idx < 10
+          if (this.hasEnoughCache) {
+            return idx < 10
+          } else {
+            return idx < 1
+          }
         })
         if (item) {
           loadTarget.push(...item)
