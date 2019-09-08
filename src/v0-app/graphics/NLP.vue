@@ -6,11 +6,12 @@
 
       <div v-if="canType" class="h-32"></div>
       <!-- <button @click="cache">Download Cache</button> -->
+      <button @click="cache">Enable Typing</button>
       <button v-if="canType" @click="clearCache">Clear Cache</button>
       <h2 v-if="showProgress">
         {{ (accu / total * 100).toFixed(0) }}%
       </h2>
-      <div v-if="canType" >
+      <div >
         <div :key="item._id" v-for="item in items">
           <div @click="loadFBX(item)" class="cursor-pointer" @mouseenter="loadFBXDev(item)">
             {{ item.name }}
@@ -61,7 +62,9 @@ export default {
   },
   methods: {
     async checkCanType () {
-      this.canType = (await store.length()) > 0
+      let howmany = await store.length()
+      console.log(howmany)
+      this.canType = (howmany) > 20
       this.$forceUpdate()
     },
     cache () {
@@ -221,9 +224,8 @@ export default {
       // }
     },
     async clearCache () {
+      await localforage.clear()
       await store.clear()
-      await this.checkCanType()
-      await this.cache()
       await this.checkCanType()
     }
   },
@@ -292,11 +294,6 @@ export default {
     // eslint-disable-next-line
     // let file = require('file-loader!./model/glb/emoji3/party.glb')
     // this.loadFBX({ file, rotation: new THREE.Vector3(0, 0, 0), position: new THREE.Vector3() })
-
-    let length = await store.length()
-    if (length === 0) {
-      await this.cache()
-    }
 
     this.onType()
 
