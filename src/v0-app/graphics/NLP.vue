@@ -7,9 +7,9 @@
       <div v-if="canType" class="h-32"></div>
       <!-- <button @click="cache">Download Cache</button> -->
       <button v-if="canType" @click="clearCache">Clear Cache</button>
-      <p v-if="showProgress">
+      <h2 v-if="showProgress">
         {{ (accu / total * 100).toFixed(0) }}%
-      </p>
+      </h2>
       <div v-if="canType" >
         <div :key="item._id" v-for="item in items">
           <div @click="loadFBX(item)" class="cursor-pointer" @mouseenter="loadFBXDev(item)">
@@ -222,8 +222,9 @@ export default {
     },
     async clearCache () {
       await store.clear()
-      this.$forceUpdate()
-      this.checkCanType()
+      await this.checkCanType()
+      await this.cache()
+      await this.checkCanType()
     }
   },
   async mounted () {
