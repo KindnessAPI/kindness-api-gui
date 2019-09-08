@@ -1,13 +1,13 @@
 <template>
   <div class="h-full">
     <div class="h-full overflow-auto scroller">
-      <textarea v-if="canType" class="fixed shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" v-model="source" @input="onType">
+      <textarea class="fixed shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" v-model="source" @input="onType">
       </textarea>
 
-      <div v-if="canType" class="h-32"></div>
+      <div class="h-32"></div>
       <!-- <button @click="cache">Download Cache</button> -->
-      <button @click="cache">Enable Typing</button>
-      <button v-if="canType" @click="clearCache">Clear Cache</button>
+      <button v-if="!hasEnoughCache" @click="cache">Download Cache</button>
+      <button v-if="hasEnoughCache" @click="clearCache">Clear Cache</button>
       <h2 v-if="showProgress">
         {{ (accu / total * 100).toFixed(0) }}%
       </h2>
@@ -53,7 +53,7 @@ export default {
       source: 'party',
       total: 0,
       accu: 0,
-      canType: false,
+      hasEnoughCache: false,
       showProgress: false,
       goCache: false,
       items: [],
@@ -64,7 +64,7 @@ export default {
     async checkCanType () {
       let howmany = await store.length()
       console.log(howmany)
-      this.canType = (howmany) > 20
+      this.hasEnoughCache = (howmany) > 20
       this.$forceUpdate()
     },
     cache () {
@@ -111,7 +111,7 @@ export default {
     onType () {
       var result = sentiment.analyze(this.source)
       console.log(result)
-      let loadTarget = false
+      let loadTarget = []
       result.tokens.forEach((word) => {
         let item = this.items.slice().reverse().sort(() => {
           return Math.random() * 10 - 5
@@ -119,7 +119,7 @@ export default {
           return idx < 10
         })
         if (item) {
-          loadTarget = item
+          loadTarget.push(...item)
         }
       })
 
