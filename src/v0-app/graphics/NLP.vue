@@ -13,7 +13,7 @@
       </h2>
       <div >
         <div :key="item._id" v-for="item in items">
-          <div @click="loadFBX(item)" class="cursor-pointer" @mouseenter="loadFBXDev(item)">
+          <div @click="loadFBX(item)" class="cursor-pointer" @mouseenter="!hasEnoughCache ? loadFBXDev(item) : loadFBX(item)">
             {{ item.name }}
           </div>
         </div>
@@ -56,7 +56,6 @@ export default {
       accu: 0,
       hasEnoughCache: false,
       showProgress: false,
-      goCache: false,
       items: [],
       mounter: new THREE.Object3D()
     }
@@ -230,7 +229,7 @@ export default {
       // if (process.env.NODE_ENV === 'development') {
       this.loadFBX(args)
       // }
-    }, 50),
+    }, 150),
     async clearCache () {
       await localforage.clear()
       await store.clear()
