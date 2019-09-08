@@ -77,8 +77,8 @@ export default {
           let loader = new THREE.FileLoader()
           loader.setResponseType('arraybuffer')
           loader.load(item.file, async (data) => {
-            await store.setItem(item.file, data)
             resolve(data)
+            await store.setItem(item.file, data)
           })
         }
         try {
