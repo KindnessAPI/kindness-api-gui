@@ -119,7 +119,7 @@ export default {
           if (this.hasEnoughCache) {
             return idx < 10
           } else {
-            return idx < 1
+            return idx < 2
           }
         })
         if (item) {
@@ -157,12 +157,12 @@ export default {
       NProgress.start()
 
       let arraybuffer = await this.getArrayBuffer(item)
-      console.log(arraybuffer)
+      // console.log(arraybuffer)
       // eslint-disable-next-line
       this.loader.parse(arraybuffer, '/', (obj) => {
         NProgress.done()
         let group = new THREE.Object3D()
-        console.log(obj)
+        // console.log(obj)
         group.add(obj.scene)
         obj.scene.scale.multiplyScalar(40)
 
