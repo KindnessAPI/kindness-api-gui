@@ -1,11 +1,11 @@
 <template>
   <div class="h-full">
     <div class="h-full overflow-auto scroller">
-      <textarea class="fixed shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" v-model="source" @input="onType">
+      <textarea v-if="canType" class="fixed shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" v-model="source" @input="onType">
       </textarea>
 
-      <div class="h-32"></div>
-      <button @click="cache">Download Cache</button>
+      <div v-if="canType" class="h-32"></div>
+      <!-- <button @click="cache">Download Cache</button> -->
       <button @click="clearCache">Clear Cache</button>
       <p v-if="showProgress">
         {{ (accu / total * 100).toFixed(0) }}%
@@ -50,6 +50,7 @@ export default {
       source: 'party',
       total: 0,
       accu: 0,
+      canType: false,
       showProgress: false,
       goCache: false,
       items: [],
@@ -57,17 +58,26 @@ export default {
     }
   },
   methods: {
+    async checkCanType () {
+      this.canType = (await store.length()) > 0
+      this.$forceUpdate()
+    },
     cache () {
-      let loader = new THREE.FileLoader()
-      this.total = this.items.length
-      this.accu = 0
-      this.showProgress = true
-      loader.setResponseType('arraybuffer')
-      this.items.forEach((item) => {
-        loader.load(item.file, async (data) => {
-          this.accu++
-          await store.setItem(item.file, data)
-          this.$forceUpdate()
+      return new Promise((resolve) => {
+        let loader = new THREE.FileLoader()
+        this.total = this.items.length
+        this.accu = 0
+        this.showProgress = true
+        loader.setResponseType('arraybuffer')
+        this.items.forEach((item) => {
+          loader.load(item.file, async (data) => {
+            this.accu++
+            if (this.accu === this.total) {
+              resolve()
+              this.checkCanType()
+            }
+            await store.setItem(item.file, data)
+          })
         })
       })
     },
@@ -208,11 +218,14 @@ export default {
       this.loadFBX(args)
       // }
     },
-    clearCache () {
-      store.clear()
+    async clearCache () {
+      await store.clear()
+      this.$forceUpdate()
     }
   },
-  mounted () {
+  async mounted () {
+    this.checkCanType()
+
     var atmosphwere = new THREE.AmbientLight(0xffffff)
     this.mounter.add(atmosphwere)
 
@@ -275,6 +288,11 @@ export default {
     // eslint-disable-next-line
     // let file = require('file-loader!./model/glb/emoji3/party.glb')
     // this.loadFBX({ file, rotation: new THREE.Vector3(0, 0, 0), position: new THREE.Vector3() })
+
+    let length = await store.length()
+    if (length === 0) {
+      await this.cache()
+    }
 
     this.onType()
 
