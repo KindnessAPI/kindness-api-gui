@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import localforage from 'localforage'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
@@ -135,6 +136,8 @@ export default {
         }
         let num = loadTarget.length
 
+        this.engine.camera.position.z = num * 50
+
         var light = new THREE.PointLight(0xffffff, 1.8, 900 * num)
         light.position.set(0, 10, 90 * num)
         var light2 = new THREE.PointLight(0xffffff, 1.8, 900 * num)
@@ -178,6 +181,7 @@ export default {
       })
     },
     async loadFBX (item) {
+      this.engine.camera.position.z = 50
       var loader = new THREE.GLTFLoader()
       this.loader = loader
       NProgress.start()
@@ -222,11 +226,11 @@ export default {
         // this.setup({ obj: obj.children[0] })
       })
     },
-    loadFBXDev (args) {
+    loadFBXDev: _.debounce(function (args) {
       // if (process.env.NODE_ENV === 'development') {
       this.loadFBX(args)
       // }
-    },
+    }, 50),
     async clearCache () {
       await localforage.clear()
       await store.clear()
