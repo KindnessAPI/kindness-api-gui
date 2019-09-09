@@ -21,36 +21,35 @@ export default {
     },
     setupGraphics () {
       let geo = new THREE.BufferGeometry()
-      let rowMax = 20
-      let colMax = 20
-      let depMax = 20
-      let total = rowMax * colMax * depMax
+      let dots = Math.pow(512 * 512, 0.5)
+      console.log(dots)
+      let rowMax = 512
+      let colMax = 512
+      let total = rowMax * colMax
 
       let makePos = () => {
         let stride3 = 3
         var ARR_VAL = []
         let vIDX = 0
-        for (var dep = 0; dep < depMax; dep++) {
-          for (var col = 0; col < colMax; col++) {
-            for (var row = 0; row < rowMax; row++) {
-              // angle = 0.1 * vIDX
-              // let x = (1 + 10) * Math.cos(angle)
-              // let y = (1 + 10) * Math.sin(angle)
-              let cos = Math.cos
-              let sin = Math.sin
-              let PI = Math.PI
+        for (var col = 0; col < colMax; col++) {
+          for (var row = 0; row < rowMax; row++) {
+            // angle = 0.1 * vIDX
+            // let x = (1 + 10) * Math.cos(angle)
+            // let y = (1 + 10) * Math.sin(angle)
+            let cos = Math.cos
+            let sin = Math.sin
+            let PI = Math.PI
 
-              let k = 4
-              let t = (vIDX / total) * (2 * PI)
-              let x = 30 * cos(k * t) * cos(t)
-              let y = 30 * cos(k * t) * sin(t)
+            let k = 4
+            let t = (vIDX / total) * (2 * PI)
+            let x = 30 * cos(k * t) * cos(t)
+            let y = 30 * cos(k * t) * sin(t)
 
-              ARR_VAL[stride3 * vIDX + 0] = x
-              ARR_VAL[stride3 * vIDX + 1] = y
-              ARR_VAL[stride3 * vIDX + 2] = 0.0
+            ARR_VAL[stride3 * vIDX + 0] = x
+            ARR_VAL[stride3 * vIDX + 1] = y
+            ARR_VAL[stride3 * vIDX + 2] = 0.0
 
-              vIDX++
-            }
+            vIDX++
           }
         }
         geo.addAttribute('position', new THREE.BufferAttribute(new Float32Array(ARR_VAL), 3))
@@ -61,16 +60,14 @@ export default {
         let stride4 = 4
         var ARR_VAL = []
         let vIDX = 0
-        for (var dep = 0; dep < depMax; dep++) {
-          for (var col = 0; col < colMax; col++) {
-            for (var row = 0; row < rowMax; row++) {
-              ARR_VAL[stride4 * vIDX + 0] = vIDX
-              ARR_VAL[stride4 * vIDX + 1] = total
-              ARR_VAL[stride4 * vIDX + 2] = 0
-              ARR_VAL[stride4 * vIDX + 3] = 0
+        for (var col = 0; col < colMax; col++) {
+          for (var row = 0; row < rowMax; row++) {
+            ARR_VAL[stride4 * vIDX + 0] = vIDX
+            ARR_VAL[stride4 * vIDX + 1] = total
+            ARR_VAL[stride4 * vIDX + 2] = 0
+            ARR_VAL[stride4 * vIDX + 3] = 0
 
-              vIDX++
-            }
+            vIDX++
           }
         }
         geo.addAttribute('meta', new THREE.BufferAttribute(new Float32Array(ARR_VAL), 4))
@@ -179,8 +176,11 @@ export default {
       // this.engine.scene.background = new THREE.Color('#000000')
 
       this.engine.scene.add(points)
+      this.clean = () => {
+        this.engine.scene.remove(points)
+      }
 
-      this.engine.execStack.omg = () => {
+      this.engine.execStack.flower = () => {
         this.uniforms.time.value = window.performance.now() * 0.001
       }
     }
@@ -189,7 +189,8 @@ export default {
     this.setup()
   },
   beforeDestroy () {
-    this.engine.execStack.omg = () => {
+    this.clean()
+    this.engine.execStack.flower = () => {
     }
   }
 }
