@@ -22,7 +22,7 @@
     "raw-loader": "^3.0.0",
     "sentiment": "^5.0.2",
     "tailwindcss": "^1.1.2",
-    "three": "^0.105.2",
+    "three": "^0.108.0",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
     "vuex": "^3.0.1",

@@ -13,6 +13,10 @@ export default new Router({
       component: () => import(/* webpackChunkName: "landing" */ './v0-app/pages/Home.vue')
     },
     {
+      path: '/geo',
+      component: () => import(/* webpackChunkName: "landing" */ './v0-app/graphics/GeoShade.vue')
+    },
+    {
       path: '/',
       component: () => import(/* webpackChunkName: "landing" */ './v0-app/graphics/Viewer.vue')
     }

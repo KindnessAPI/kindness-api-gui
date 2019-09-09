@@ -4,10 +4,11 @@
 </template>
 
 <script>
-let GLAPI = require('./geosim/geosim.js')
+let GLAPI = require('./geosim/geosim-sentiment-3d.js')
 
 export default {
   props: {
+    scene: {},
     engine: {}
   },
   data () {
@@ -20,7 +21,7 @@ export default {
   },
   methods: {
     async setup () {
-      this.api = GLAPI.makeAPI({ renderer: this.engine.renderer, scene: this.engine.scene })
+      this.api = GLAPI.makeAPI({ renderer: this.engine.renderer, scene: this.scene })
       this.engine.execStack.renderActiveLearningART = () => {
         this.api.render()
       }

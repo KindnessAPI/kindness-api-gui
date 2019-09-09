@@ -1,5 +1,10 @@
-import * as THREE from 'three'
-import GPUComputationRenderer from './gpgpu.js'
+// import * as THREE from 'three'
+// import GPUComputationRenderer from './gpgpu.js'
+
+var THREE = {
+  ...require('three'),
+  ...require('three/examples/jsm/misc/GPUComputationRenderer.js')
+}
 
 let glsl = v => v[0]
 
@@ -170,7 +175,7 @@ export const makeAPI = ({ renderer, scene }) => {
   }
 
   var WIDTH = 1024
-  var gpuCompute = new GPUComputationRenderer(WIDTH, WIDTH, renderer)
+  var gpuCompute = new THREE.GPUComputationRenderer(WIDTH, WIDTH, renderer)
 
   // ----- simulation pass ---------
   var posIdx = gpuCompute.createTexture()

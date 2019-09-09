@@ -23,10 +23,11 @@ let THREE = {
   ...require('three/examples/jsm/postprocessing/EffectComposer.js'),
   ...require('three/examples/jsm/postprocessing/RenderPass.js'),
   ...require('three/examples/jsm/postprocessing/MaskPass.js'),
-  ...require('three/examples/jsm/postprocessing/ShaderPass.js'),
-  ...require('three/examples/jsm/controls/OrbitControls.js')
+  ...require('three/examples/jsm/postprocessing/ShaderPass.js')
   // ...require('three/examples/jsm/controls/')
 }
+
+let { OrbitControls } = require('three/examples/jsm/controls/OrbitControls.js')
 
 // import * as THREE from 'three'
 // import * as AuAu from '../Simulation/GeoShader/audio/mic.js'
@@ -56,7 +57,7 @@ export default {
       mouse: { x: 0, y: 0, z: 0 },
       rect: false,
       execMap: {},
-      execStack: [],
+      execStack: {},
       gameReady: false,
       audio: false,
       control: false,
@@ -120,6 +121,11 @@ export default {
   created () {
 
   },
+  computed: {
+    uilayer () {
+      return this.toucher || this.$refs['mounter']
+    }
+  },
   mounted () {
     // var tiltHandler = (event) => {
     //   if (this.rotator) {
@@ -155,7 +161,7 @@ export default {
     //   this.audio = AuAu.setup()
     // },
     setupControl () {
-      var control = new THREE.OrbitControls(this.camera, this.$refs['mounter'])
+      var control = new OrbitControls(this.camera, this.uilayer)
       this.control = control
       control.enableDamping = true
       control.enableKeys = false
@@ -166,7 +172,7 @@ export default {
     },
     // setupControl () {
     //   // var control = new THREE.OrbitControls(this.camera, this.toucher)
-    //   var control = new THREE.MapControls(this.camera, this.toucher || this.$refs['mounter'])
+    //   var control = new THREE.MapControls(this.camera, this.toucher || this.uilayer)
     //   // control.addEventListener( 'change', render ); // call this only in static scenes (i.e., if there is no animation loop)
     //   control.enableDamping = true // an animation loop is required when either damping or auto-rotation are enabled
     //   control.dampingFactor = 0.65
@@ -197,7 +203,7 @@ export default {
         preserveDrawingBuffer: false
       })
       this.renderer.domElement.style.marginBottom = '-6px'
-      this.$refs['mounter'].appendChild(this.renderer.domElement)
+      this.$refs.mounter.appendChild(this.renderer.domElement)
     },
     setupCamera () {
       let { size, Settings } = this
@@ -233,7 +239,7 @@ export default {
       window.addEventListener('resize', this.getSizeInfo, false)
     },
     getSizeInfo () {
-      var rect = this.$refs['mounter'].getBoundingClientRect()
+      var rect = this.uilayer.getBoundingClientRect()
       this.rect = rect
       this.size = {
         width: rect.width,
@@ -255,7 +261,7 @@ export default {
       sync()
       window.addEventListener('resize', sync, false)
 
-      this.$refs['mounter'].addEventListener('mousemove', (evt) => {
+      this.uilayer.addEventListener('mousemove', (evt) => {
         this.mouse.x = evt.pageX
         this.mouse.y = evt.pageY
       }, false)
@@ -283,7 +289,7 @@ export default {
         this.execMap[kn]({ mouse, rect })
       }
 
-      this.execStack.forEach(e => e({ mouse, rect }))
+      Object.keys(this.execStack).forEach(e => this.execStack[e]({ mouse, rect }))
       let useBloom = false
       if (useBloom && scene && camera && renderer && composer) {
         composer.render()
