@@ -265,7 +265,7 @@ export default {
 
             vPos = nPos;
             gl_Position = projectionMatrix * modelViewMatrix * vec4(pos0data.xyz, 1.0);
-            gl_PointSize = clamp(length(vel0data.xyz), 0.0, 1.0) * 30.0;
+            gl_PointSize = clamp(length(vel0data.xyz) * 30.0, 0.0, 15.0);
           }
         `,
         fragmentShader: `
@@ -289,7 +289,7 @@ export default {
 
               float distanceToLightSource = 1.0 / distance(particlePosition, lightPosition);
               vec4 lighterColor = lightColor * distanceToLightSource * lightStrength;
-
+              lighterColor.a = 0.6;
               gl_FragColor = lighterColor;
             } else {
               discard;
