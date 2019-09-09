@@ -265,7 +265,7 @@ export default {
 
             vPos = nPos;
             gl_Position = projectionMatrix * modelViewMatrix * vec4(pos0data.xyz, 1.0);
-            gl_PointSize = clamp(length(vel0data.xyz) * 30.0, 0.0, 15.0);
+            gl_PointSize = clamp(length(vel0data.xyz) * 30.0, 0.1, 2.0);
           }
         `,
         fragmentShader: `
