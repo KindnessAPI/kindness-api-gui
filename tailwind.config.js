@@ -76,8 +76,8 @@ module.exports = {
     width: ['responsive'],
     zIndex: ['responsive'],
   },
-  corePlugins: {
-    container: false,
-  },
+  // corePlugins: {
+  //   container: false,
+  // },
   plugins: [],
 }
