@@ -8,16 +8,24 @@ export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
+    // {
+    //   path: '/tailwind',
+    //   component: () => import(/* webpackChunkName: "landing" */ './v0-app/pages/Home.vue')
+    // },
     {
-      path: '/tailwind',
+      path: '/',
       component: () => import(/* webpackChunkName: "landing" */ './v0-app/pages/Home.vue')
     },
     {
       path: '/geo',
+      redirect: '/flower'
+    },
+    {
+      path: '/flower',
       component: () => import(/* webpackChunkName: "landing" */ './v0-app/graphics/GeoShade.vue')
     },
     {
-      path: '/',
+      path: '/emoji',
       component: () => import(/* webpackChunkName: "landing" */ './v0-app/graphics/Viewer.vue')
     }
   ]
