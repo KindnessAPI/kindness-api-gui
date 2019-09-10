@@ -102,8 +102,8 @@ export default {
           float k = 0.8;
 
           float t = (vIDX / total) * (10.0 * pi);
-          float x = -5.0 * cos(k * t) * cos(t);
-          float y = -5.0 * cos(k * t) * sin(t);
+          float x = 3.3 * cos(k * t) * cos(t);
+          float y = 3.3 * cos(k * t) * sin(t);
 
           vec3 vel = getDiff(posdata.xyz, vec3(x, y, 0.0));
           gl_FragColor = vec4(veldata.xyz + vel.xyz, 1.0);
@@ -133,8 +133,8 @@ export default {
             float k = 0.8;
 
             float t = (vIDX / total) * (10.0 * pi);
-            float x = -5.0 * cos(k * t) * cos(t);
-            float y = -5.0 * cos(k * t) * sin(t);
+            float x = 3.3 * cos(k * t) * cos(t);
+            float y = 3.3 * cos(k * t) * sin(t);
             posdata.x = x;
             posdata.y = y;
           }
