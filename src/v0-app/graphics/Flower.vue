@@ -296,7 +296,7 @@ export default {
               vec4 vel0data = texture2D(vel0, vUv);
 
               vec4 particleColor = vec4(vec3(1.0, 1.0, 1.0), 1.0);
-              vec4 lightColor = vec4(abs(vel0data.xyz) * rand(vel0data.xy), 1.0);
+              vec4 lightColor = vec4(abs(vel0data.xyz), 1.0);
               vec3 lightPosition = vec3(0.0, 0.0, sin(time) * 100.0);
               float lightStrength = 100.0;
 
