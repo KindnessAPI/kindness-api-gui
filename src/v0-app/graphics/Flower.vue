@@ -22,7 +22,6 @@ export default {
     },
     setupGraphics () {
       let geo = new THREE.BufferGeometry()
-
       let rowMax = 512
       let colMax = 512
       let total = rowMax * colMax
@@ -106,8 +105,7 @@ export default {
           float x = -5.0 * cos(k * t) * cos(t);
           float y = -5.0 * cos(k * t) * sin(t);
 
-          vec3 vel = getDiff(posdata.xyz, vec3(x, y, 0.0)) * 0.3;
-
+          vec3 vel = getDiff(posdata.xyz, vec3(x, y, 0.0));
           gl_FragColor = vec4(veldata.xyz + vel.xyz, 1.0);
         }
       `
@@ -122,21 +120,26 @@ export default {
 
         void main (void) {
           vec2 uv = gl_FragCoord.xy / resolution.xy;
+
           vec4 posdata = texture2D(t_pos0, uv);
           vec4 veldata = texture2D(t_vel0, uv);
 
-          vec4 metadata = texture2D(meta0, uv);
-          float vIDX = metadata.x;
-          float total = metadata.y;
+          if (posdata.a == 0.0) {
+            vec4 metadata = texture2D(meta0, uv);
+            float vIDX = metadata.x;
+            float total = metadata.y;
 
-          float pi = 3.14159265;
-          float k = 0.4;
+            float pi = 3.14159265;
+            float k = 0.8;
 
-          float t = (vIDX / total) * (10.0 * pi);
-          float x = -10.0 * cos(k * t) * cos(t);
-          float y = -10.0 * cos(k * t) * sin(t);
+            float t = (vIDX / total) * (10.0 * pi);
+            float x = -5.0 * cos(k * t) * cos(t);
+            float y = -5.0 * cos(k * t) * sin(t);
+            posdata.x = x;
+            posdata.y = y;
+          }
 
-          gl_FragColor = vec4((posdata.xyz + veldata.xyz), 1.0);
+          gl_FragColor = vec4(posdata.xyz + veldata.xyz, 1.0);
         }
       `
 
@@ -184,8 +187,8 @@ export default {
         let vIDX = 0
         for (var col = 0; col < colMax; col++) {
           for (var row = 0; row < rowMax; row++) {
-            ARR_VAL[stride3 * vIDX + 0] = 0.0
-            ARR_VAL[stride3 * vIDX + 1] = 0.0
+            ARR_VAL[stride3 * vIDX + 0] = 0
+            ARR_VAL[stride3 * vIDX + 1] = 0
             ARR_VAL[stride3 * vIDX + 2] = 0.0
 
             vIDX++
