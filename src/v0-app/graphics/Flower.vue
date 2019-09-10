@@ -102,12 +102,11 @@ export default {
           float k = 0.4;
 
           k += tt * 0.2;
-
-          k = mod(k, 2.6);
+          k = mod(k, 3.0);
 
           float t = (vIDX / total) * (20.0 * pi);
-          float x = 30.0 * cos(k * t) * cos(t + tt);
-          float y = 30.0 * cos(k * t) * sin(t + tt);
+          float x = 30.0 * cos(k * t) * cos(t + time);
+          float y = 30.0 * cos(k * t) * sin(t + time);
 
           vec3 vel = (vec3(x, y, 0.5) - posdata.xyz) * 0.1;
 
