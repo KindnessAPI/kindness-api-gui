@@ -272,7 +272,7 @@ export default {
 
             vPos = nPos;
             gl_Position = projectionMatrix * modelViewMatrix * vec4(nPos.xyz, 1.0);
-            gl_PointSize = 1.5;
+            gl_PointSize = 3.0;
           }
         `,
         fragmentShader: `
@@ -284,13 +284,18 @@ export default {
           uniform float time;
           varying vec2 vUv;
           varying vec3 vPos;
+
+          uniform sampler2D vel0;
+
           void main (void) {
             float d = length(gl_PointCoord.xy - 0.5);
             if (d < 0.5) {
               vec3 particlePosition = vPos;
 
+              vec4 vel0data = texture2D(vel0, vUv);
+
               vec4 particleColor = vec4(vec3(1.0, 1.0, 1.0), 1.0);
-              vec4 lightColor = vec4(0.0, 0.0, abs(sin(time)), 0.5);
+              vec4 lightColor = vec4(abs(vel0data.xyz), 1.0);
               vec3 lightPosition = vec3(0.0, 0.0, sin(time) * 100.0);
               float lightStrength = 100.0;
 
@@ -306,7 +311,7 @@ export default {
       })
 
       let points = new THREE.Points(geo, mat)
-      // this.engine.scene.background = new THREE.Color('#000000')
+      this.engine.scene.background = new THREE.Color('#aaaaaa')
 
       this.engine.scene.add(points)
       this.clean = () => {
