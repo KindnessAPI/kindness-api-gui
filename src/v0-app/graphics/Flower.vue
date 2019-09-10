@@ -22,12 +22,11 @@ export default {
     },
     setupGraphics () {
       let geo = new THREE.BufferGeometry()
-      let rowMax = 512
-      let colMax = 512
+      let rowMax = 256
+      let colMax = 256
       let total = rowMax * colMax
 
       let vel0GLSL = `
-
         // ---------------------------------------
         // Gravity
         // ---------------------------------------
@@ -98,15 +97,21 @@ export default {
           float vIDX = metadata.x;
           float total = metadata.y;
 
+          float tt = floor(time * 0.5);
           float pi = 3.14159265;
-          float k = 0.8;
+          float k = 0.4;
 
-          float t = (vIDX / total) * (10.0 * pi);
-          float x = 3.3 * cos(k * t) * cos(t);
-          float y = 3.3 * cos(k * t) * sin(t);
+          k += tt * 0.2;
 
-          vec3 vel = getDiff(posdata.xyz, vec3(x, y, 0.0));
-          gl_FragColor = vec4(veldata.xyz + vel.xyz, 1.0);
+          k = mod(k, 2.6);
+
+          float t = (vIDX / total) * (20.0 * pi);
+          float x = 30.0 * cos(k * t) * cos(t + tt);
+          float y = 30.0 * cos(k * t) * sin(t + tt);
+
+          vec3 vel = (vec3(x, y, 0.5) - posdata.xyz) * 0.1;
+
+          gl_FragColor = vec4(vel.xyz, 1.0);
         }
       `
 
@@ -129,12 +134,13 @@ export default {
             float vIDX = metadata.x;
             float total = metadata.y;
 
+            float tt = time;
             float pi = 3.14159265;
-            float k = 0.8;
+            float k = 0.0;
 
             float t = (vIDX / total) * (10.0 * pi);
-            float x = 3.3 * cos(k * t) * cos(t);
-            float y = 3.3 * cos(k * t) * sin(t);
+            float x = 30.0 * cos(k * t) * cos(t);
+            float y = 30.0 * cos(k * t) * sin(t);
             posdata.x = x;
             posdata.y = y;
           }
@@ -263,11 +269,11 @@ export default {
             vec4 pos0data = texture2D(pos0, uv);
             vec4 vel0data = texture2D(vel0, uv);
 
-            vec3 nPos = pos0data.xyz * 0.1;
+            vec3 nPos = pos0data.xyz;
 
             vPos = nPos;
             gl_Position = projectionMatrix * modelViewMatrix * vec4(nPos.xyz, 1.0);
-            gl_PointSize = clamp(length(vel0data.xyz) * 30.0, 0.1, 2.0);
+            gl_PointSize = 1.5;
           }
         `,
         fragmentShader: `
@@ -291,7 +297,7 @@ export default {
 
               float distanceToLightSource = 1.0 / distance(particlePosition, lightPosition);
               vec4 lighterColor = lightColor * distanceToLightSource * lightStrength;
-              lighterColor.a = 0.6;
+              lighterColor.a = 0.5;
               gl_FragColor = lighterColor;
             } else {
               discard;
@@ -309,6 +315,8 @@ export default {
       }
 
       this.engine.execStack.flower = () => {
+        gpuCompute.compute()
+
         let pos0tex = gpuCompute.getCurrentRenderTarget(posVar).texture
         this.uniforms.pos0.value = pos0tex
         let vel0tex = gpuCompute.getCurrentRenderTarget(velVar).texture
@@ -318,7 +326,6 @@ export default {
         this.uniforms.time.value = time
         posVar.material.uniforms.time.value = time
         velVar.material.uniforms.time.value = time
-        gpuCompute.compute()
       }
     }
   },
