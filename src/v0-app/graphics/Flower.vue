@@ -28,9 +28,6 @@ export default {
       let total = rowMax * colMax
 
       let vel0GLSL = `
-        precision highp sampler2D;
-        uniform float time;
-        uniform sampler2D meta0;
 
         // ---------------------------------------
         // Gravity
@@ -62,8 +59,6 @@ export default {
         // ---------------------------------------
         // Perlin Noise
         // ---------------------------------------
-
-
         float mod289(float x){return x - floor(x * (1.0 / 289.0)) * 289.0;}
         vec4 mod289(vec4 x){return x - floor(x * (1.0 / 289.0)) * 289.0;}
         vec4 perm(vec4 x){return mod289(((x * 34.0) + 1.0) * x);}
@@ -88,29 +83,9 @@ export default {
           return o4.y * d.y + o4.x * (1.0 - d.y);
         }
 
-
-        void main (void) {
-          vec2 uv = gl_FragCoord.xy / resolution.xy;
-          vec4 posdata = texture2D(t_pos0, uv);
-          vec4 veldata = texture2D(t_vel0, uv);
-          vec4 metadata = texture2D(meta0, uv);
-          float vIDX = metadata.x;
-          float total = metadata.y;
-
-          float pi = 3.14159265;
-          float k = 0.8;
-
-          float t = (vIDX / total) * (10.0 * pi);
-          float x = 0.3 * cos(k * t) * cos(t);
-          float y = 0.3 * cos(k * t) * sin(t);
-
-          vec3 vel = getDiff(posdata.xyz, vec3(x, y, 0.1)) * 0.3;
-
-          gl_FragColor = vec4(veldata.xyz + vel.xyz, 1.0);
-        }
-      `
-
-      let pos0GLSL = `
+        // ---------------------------------------
+        // Main Code
+        // ---------------------------------------
         precision highp sampler2D;
         uniform float time;
         uniform sampler2D meta0;
@@ -128,10 +103,40 @@ export default {
           float k = 0.8;
 
           float t = (vIDX / total) * (10.0 * pi);
-          float x = cos(k * t) * cos(t);
-          float y = cos(k * t) * sin(t);
+          float x = -5.0 * cos(k * t) * cos(t);
+          float y = -5.0 * cos(k * t) * sin(t);
 
-          gl_FragColor = vec4(posdata.xyz + veldata.xyz, 1.0);
+          vec3 vel = getDiff(posdata.xyz, vec3(x, y, 0.0)) * 0.3;
+
+          gl_FragColor = vec4(veldata.xyz + vel.xyz, 1.0);
+        }
+      `
+
+      let pos0GLSL = `
+        // ---------------------------------------
+        // Main Code
+        // ---------------------------------------
+        precision highp sampler2D;
+        uniform float time;
+        uniform sampler2D meta0;
+
+        void main (void) {
+          vec2 uv = gl_FragCoord.xy / resolution.xy;
+          vec4 posdata = texture2D(t_pos0, uv);
+          vec4 veldata = texture2D(t_vel0, uv);
+
+          vec4 metadata = texture2D(meta0, uv);
+          float vIDX = metadata.x;
+          float total = metadata.y;
+
+          float pi = 3.14159265;
+          float k = 0.4;
+
+          float t = (vIDX / total) * (10.0 * pi);
+          float x = -10.0 * cos(k * t) * cos(t);
+          float y = -10.0 * cos(k * t) * sin(t);
+
+          gl_FragColor = vec4((posdata.xyz + veldata.xyz), 1.0);
         }
       `
 
@@ -233,9 +238,6 @@ export default {
       let mat = new THREE.ShaderMaterial({
         uniforms: this.uniforms,
         vertexShader: `
-
-
-
           // ---------------------------------------
           // Main Code
           // ---------------------------------------
@@ -253,18 +255,15 @@ export default {
           uniform float time;
 
           void main (void) {
-
             vUv = uv;
+
             vec4 pos0data = texture2D(pos0, uv);
             vec4 vel0data = texture2D(vel0, uv);
 
-            vec3 nPos = position;
-            // nPos.x = x + pos0data.x;
-            // nPos.y = y + pos0data.y;
-            // nPos.z = noise(nPos * 0.1 + time) * 2.0 + pos0data.z;
+            vec3 nPos = pos0data.xyz * 0.1;
 
             vPos = nPos;
-            gl_Position = projectionMatrix * modelViewMatrix * vec4(pos0data.xyz, 1.0);
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(nPos.xyz, 1.0);
             gl_PointSize = clamp(length(vel0data.xyz) * 30.0, 0.1, 2.0);
           }
         `,
@@ -297,6 +296,7 @@ export default {
           }
         `
       })
+
       let points = new THREE.Points(geo, mat)
       // this.engine.scene.background = new THREE.Color('#000000')
 
