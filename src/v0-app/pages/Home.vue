@@ -23,8 +23,8 @@
         </div>
       </div>
       <div class="hidden lg:block lg:w-1/2">
-        <div class=" lg:relative h-full max-w-4xl">
-          <img class="absolute inset-0 h-full w-full object-cover object-center" src="./img/beach-work.jpg" alt="Woman workcationing on the beach">
+        <div class=" lg:relative h-full d-max-w-4xl">
+          <img class="absolute inset-0 h-full w-full object-cover object-center" src="./img/galaxy.jpg" alt="Woman workcationing on the beach">
         </div>
       </div>
     </div>
