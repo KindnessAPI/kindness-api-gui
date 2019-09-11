@@ -3,9 +3,9 @@
     <BGTemplate class="absolute full" v-if="toucher" @ready="engine = $event; setup()" :toucher="toucher"></BGTemplate>
     <Flower class="absolute full" :textpad="textpad" v-if="engine" :engine="engine"></Flower>
     <div class="absolute full"  ref="toucher"></div>
-    <div class="absolute">
+    <!-- <div class="absolute">
       <textarea type="text" v-model="textpad" @input="onText"></textarea>
-    </div>
+    </div> -->
   </div>
 </template>
 

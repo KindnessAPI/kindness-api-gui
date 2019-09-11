@@ -1,6 +1,6 @@
 <template>
   <div class="h-full">
-    <div class="h-full overflow-auto scroller">
+    <div class="h-full overflow-auto scroller bg-white">
       <textarea class="fixed shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" v-model="source" @input="onType">
       </textarea>
 
@@ -13,7 +13,7 @@
       </h2>
       <div >
         <div :key="item._id" v-for="item in items">
-          <div @click="loadFBX(item)" class="cursor-pointer" @mouseenter="!hasEnoughCache ? loadFBXDev(item) : loadFBX(item)">
+          <div @click="loadFBX(item)" class="cursor-pointer" @mouseenter="!hasEnoughCache ? () => {} : loadFBX(item)">
             {{ item.name }}
           </div>
         </div>
