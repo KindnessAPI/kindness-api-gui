@@ -5,15 +5,14 @@
 </template>
 
 <script>
-import './tw.post.css'
-// import './css/normalize.css'
+
 // import './css/cutegrids.css'
 export default {
 
 }
 </script>
 <style>
-/* @import 'assets/styles/tailwind.postcss'; */
+@import './tw.postcss';
 
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

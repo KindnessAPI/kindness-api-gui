@@ -9,6 +9,9 @@ module.exports = {
     //   }
     // }
   },
+  css: {
+    extract: false
+  },
   configureWebpack: {
     plugins: [
       // new MonacoWebpackPlugin()
