@@ -9,7 +9,7 @@
             <span class="text-gray-900">
               Praciting Coding Tailwindcss
             </span>
-            <br class="hidden lg:inline"><span class="text-brand-blue">
+            <br class="hidden sm:hidden lg:inline"><span class="text-brand-blue">
               Coding is Practical.
             </span>
           </h1>
@@ -22,8 +22,8 @@
           </div>
         </div>
       </div>
-      <div class="hidden lg:block lg:w-1/2">
-        <div class=" lg:relative h-full d-max-w-4xl">
+      <div class="hidden sm:hidden lg:block lg:w-1/2">
+        <div class="lg:relative h-full d-max-w-4xl">
           <img class="absolute inset-0 h-full w-full object-cover object-center" src="./img/galaxy.jpg" alt="Woman workcationing on the beach">
         </div>
       </div>

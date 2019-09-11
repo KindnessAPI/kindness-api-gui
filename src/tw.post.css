@@ -4,7 +4,6 @@
 .btn {
   @apply inline-block px-5 py-3 rounded-lg text-sm uppercase tracking-wider font-semibold;
 }
-
 .btn:focus {
   @apply outline-none shadow-outline;
 }
@@ -28,5 +27,7 @@
 .btn-gray:active {
   @apply bg-gray-500;
 }
+
+
 
 @tailwind utilities;

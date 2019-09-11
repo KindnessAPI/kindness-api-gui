@@ -11,6 +11,7 @@ module.exports = {
     },
   },
   variants: {
+    hidden: ['responsive'],
     appearance: ['responsive'],
     backgroundAttachment: ['responsive'],
     backgroundColor: ['responsive', 'hover', 'focus'],
