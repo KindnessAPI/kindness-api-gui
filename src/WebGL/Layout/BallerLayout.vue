@@ -10,8 +10,8 @@
     <O3D :animated="true" layout="dome">
       <SkyDome v-if="paint2DTex" :texture="paint2DTex"></SkyDome>
     </O3D>
-    <O3D :animated="true" layout="cross">
-      <RefactorArea dudv="cube-2" :blur="0.998"></RefactorArea>
+    <O3D :animated="true" layout="crossLayer">
+      <RefactorArea dudv="cube-2" :blur="0.0"></RefactorArea>
       <O3D :animated="true" layout="mainMessage">
         <TextureText :canplay="true" font="Arial" align="left" :gotClicked="goMini" :text="mainMessage"></TextureText>
       </O3D>
@@ -81,6 +81,7 @@ export default {
       canRun: true,
       y: 1
     }
+
     this.fader = new Damper(0, this.lookup('base'))
 
     this.scroller = makeScroller({ base: this.lookup('base'), mounter: this.lookup('mounter'), limit: this.limit, onMove: () => { this.$emit('onMove') } })
@@ -95,17 +96,13 @@ export default {
       this.paintCubeTex.needsUpdate = true
 
       this.layouts = {
-        cross: {
+        crossLayer: {
           // visible: this.blur > 0.1,
           pz: 20,
-          py: (-this.scroller.value + 1.0) * -(this.screen.height)
+          py: ((1.0 - this.scroller.value) * -(this.screen.height))
         },
-        // ball: {
-        //   pz: -100,
-        //   px: this.scroller.value * (this.screen.height * 0.5)
-        // },
         cluster: {
-          pz: -200,
+          pz: -250,
           rz: this.scroller.value * (Math.PI * 2)
         },
         mainMessage: {

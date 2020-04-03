@@ -11,7 +11,7 @@
       <SkyDome v-if="paint2DTex" :texture="paint2DTex"></SkyDome>
     </O3D>
     <O3D :animated="true" layout="cross">
-      <RefactorArea dudv="cross-2" :blur="blur"></RefactorArea>
+      <RefactorArea dudv="cross-2" :blur="0.0"></RefactorArea>
       <O3D :animated="true" layout="gospel">
         <TextureText :canplay="true" font="Arial" align="left" :gotClicked="goMini" :text="gospel"></TextureText>
       </O3D>
