@@ -30,7 +30,7 @@ export default {
   mixins: [Tree],
   data () {
     return {
-      gospel: `Click me to see the metal flower clearly....`,
+      gospel: `Click me to see the metal orb clearly....`,
       scene: new Scene(),
       paint2DTex: false,
       paintCubeTex: false,
