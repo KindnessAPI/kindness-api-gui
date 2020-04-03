@@ -55,7 +55,10 @@ export default {
         item.material.uniforms['tDudv'].value = new TextureLoader().load(require('./tex/cross-2.jpg'))
       } else if (this.dudv === 'flower') {
         item.material.uniforms['tDudv'].value = new TextureLoader().load(require('./tex/flower.jpg'))
+      } else if (this.dudv === 'cube-2') {
+        item.material.uniforms['tDudv'].value = new TextureLoader().load(require('./tex/cube-2.png'))
       }
+
       item.material.uniforms['resolution'].value = new Vector2(RES_SIZE, RES_SIZE * camera.aspect)
 
       this.o3d.children.forEach((v) => {

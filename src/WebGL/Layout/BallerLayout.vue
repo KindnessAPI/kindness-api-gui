@@ -11,7 +11,7 @@
       <SkyDome v-if="paint2DTex" :texture="paint2DTex"></SkyDome>
     </O3D>
     <O3D :animated="true" layout="cross">
-      <RefactorArea dudv="cross-2" :blur="blur"></RefactorArea>
+      <RefactorArea dudv="cube-2" :blur="0.998"></RefactorArea>
       <O3D :animated="true" layout="gospel">
         <TextureText :canplay="true" font="Arial" align="left" :gotClicked="runDemo" :text="gospel"></TextureText>
       </O3D>
@@ -30,7 +30,7 @@ export default {
   mixins: [Tree],
   data () {
     return {
-      gospel: `Love is....`,
+      gospel: `Click me to see the metal flower clearly....`,
       scene: new Scene(),
       paint2DTex: false,
       paintCubeTex: false,
@@ -51,13 +51,7 @@ export default {
   },
   methods: {
     runDemo (v) {
-      // if ()
-      console.log(this.$route.path, 'run demo', v)
-      if (this.$route.path === '/') {
-        this.$router.push('/2')
-      } else if (this.$route.path === '/2') {
-        this.$router.push('/')
-      }
+      this.scroller.value = 1.0
     }
   },
   async mounted () {
@@ -72,15 +66,16 @@ export default {
     this.scroller = makeScroller({ base: this.lookup('base'), mounter: this.lookup('mounter'), limit: this.limit, onMove: () => { this.$emit('onMove') } })
 
     this.lookup('base').onLoop(() => {
-      this.blur = 1.0 - this.scroller.value
+      // this.blur = 1.0 - this.scroller.value
 
       // let time = window.performance.now() * 0.001
       // this.paint2DTex.needsUpdate = true
+
       this.paintCubeTex.needsUpdate = true
 
       this.layouts = {
         cross: {
-          visible: this.blur > 0.1,
+          // visible: this.blur > 0.1,
           pz: 20,
           py: this.scroller.value * (this.screen.height)
         },
