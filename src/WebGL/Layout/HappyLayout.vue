@@ -13,7 +13,7 @@
     <O3D :animated="true" layout="cross">
       <RefactorArea dudv="cross-2" :blur="0.0"></RefactorArea>
       <O3D :animated="true" layout="gospel">
-        <TextureText :canplay="true" font="Arial" align="left" :gotClicked="say" :text="gospel"></TextureText>
+        <TextureText :canplay="true" font="Arial" align="left" :gotClicked="goMini" :text="gospel"></TextureText>
       </O3D>
 
       <O3D :animated="true" layout="ctaButton">
@@ -24,8 +24,7 @@
 </template>
 
 <script>
-import { LamdaSocket, getWS } from '../../APIs/KA'
-import { Tree, makePaintCanvas, makeScroller, Damper, getID } from '../Reusable'
+import { Tree, makePaintCanvas, makeScroller, Damper } from '../Reusable'
 import { Scene, CubeTexture } from 'three'
 export default {
   name: 'HappyLayout',
@@ -84,33 +83,9 @@ Love never ends.
     },
     goMini (v) {
       this.scroller.value = 0
-    },
-    setupSocket () {
-      this.socket = new LamdaSocket({
-        url: getWS(),
-        roomId: 'room-test',
-        nickname: 'kindness-api-client@' + getID()
-      })
-
-      this.socket.addEventListener('text', ({ detail }) => {
-        let html = `<pre>${detail.type} - ${JSON.stringify(detail)}</pre>`
-        console.log(detail, html)
-        this.gospel = detail.text
-        console.log(this.gospel)
-        this.$forceUpdate()
-      })
-
-      this.socket.addEventListener('online', ({ detail }) => {
-        let html = `<pre>me: ${this.socket.nickname} - ${JSON.stringify(detail)}</pre>`
-        console.log(detail, html)
-      })
-    },
-    say () {
-      this.socket.sendText({ text: window.prompt('what u wanna say?') })
     }
   },
   async mounted () {
-    this.setupSocket()
     this.scene.add(this.o3d)
     this.$emit('scene', this.scene)
     this.scene.background = this.paintCubeTex

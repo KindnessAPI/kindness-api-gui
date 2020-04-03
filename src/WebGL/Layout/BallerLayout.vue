@@ -12,9 +12,12 @@
     </O3D>
     <O3D :animated="true" layout="crossLayer">
       <RefactorArea dudv="cube-2" :blur="0.0"></RefactorArea>
+
       <O3D :animated="true" layout="mainMessage">
-        <TextureText :canplay="true" font="Arial" align="left" :gotClicked="goMini" :text="mainMessage"></TextureText>
+        <ChatBox></ChatBox>
+        <!-- <TextureText :canplay="true" font="Arial" align="left" :gotClicked="goMini" :text="mainMessage"></TextureText> -->
       </O3D>
+
       <O3D :animated="true" layout="ctaButton">
         <TextureText :canplay="true" font="Arial" align="left" :gotClicked="nextPage" :text="ctaButton"></TextureText>
       </O3D>
@@ -23,7 +26,6 @@
 </template>
 
 <script>
-import '../../APIs/KA.js'
 import { Tree, makePaintCanvas, makeScroller, Damper } from '../Reusable'
 import { Scene, CubeTexture } from 'three'
 export default {

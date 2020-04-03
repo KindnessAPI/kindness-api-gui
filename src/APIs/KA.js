@@ -122,7 +122,7 @@ export class LamdaSocket extends EventTarget {
         clearInterval(tt)
         fnc()
       }
-    }, 50)
+    }, 25)
   }
 
   ensureSend (data) {
