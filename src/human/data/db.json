@@ -1,0 +1,572 @@
+{
+  "objects": [
+    {
+      "group": "paint-canvas",
+      "key": "hue-spread",
+      "type": "number",
+      "value": 0,
+      "id": "_160237"
+    },
+    {
+      "group": "paint-canvas",
+      "key": "canvas-texture-dot",
+      "type": "color",
+      "value": {
+        "r": 144,
+        "g": 221,
+        "b": 255,
+        "a": 0.74
+      },
+      "id": "_929803"
+    },
+    {
+      "group": "paint-canvas",
+      "key": "canvas-texture-bg",
+      "type": "color",
+      "value": {
+        "r": 0,
+        "g": 58,
+        "b": 138,
+        "a": 0.74
+      },
+      "id": "_959545"
+    },
+    {
+      "group": "font-resort",
+      "key": "depth",
+      "type": "number",
+      "value": 1.37,
+      "id": "_573371"
+    },
+    {
+      "group": "font-resort",
+      "key": "curveSegments",
+      "type": "number",
+      "value": 0,
+      "id": "_17130"
+    },
+    {
+      "group": "font-resort",
+      "key": "bevelEnabled",
+      "type": "boolean",
+      "value": false,
+      "id": "_395861"
+    },
+    {
+      "group": "font-resort",
+      "key": "bevelThickness",
+      "type": "number",
+      "value": 5.92,
+      "id": "_92237"
+    },
+    {
+      "group": "font-resort",
+      "key": "bevelSize",
+      "type": "number",
+      "value": 0,
+      "id": "_19623"
+    },
+    {
+      "group": "font-resort",
+      "key": "bevelOffset",
+      "type": "number",
+      "value": 0,
+      "id": "_11645"
+    },
+    {
+      "group": "font-resort",
+      "key": "bevelSegments",
+      "type": "number",
+      "value": 28.43,
+      "id": "_525024"
+    },
+    {
+      "group": "font-resort",
+      "key": "width",
+      "type": "number",
+      "value": 15.39,
+      "id": "_346921"
+    },
+    {
+      "group": "paint-canvas-purple",
+      "key": "hue-spread",
+      "type": "number",
+      "value": 1.97,
+      "id": "_67763"
+    },
+    {
+      "group": "paint-canvas-purple",
+      "key": "canvas-texture-dot",
+      "type": "color",
+      "value": {
+        "r": 255,
+        "g": 107,
+        "b": 107,
+        "a": 1
+      },
+      "id": "_932962"
+    },
+    {
+      "group": "paint-canvas-purple",
+      "key": "canvas-texture-bg",
+      "type": "color",
+      "value": {
+        "r": 250,
+        "g": 255,
+        "b": 0,
+        "a": 0.74
+      },
+      "id": "_388738"
+    },
+    {
+      "group": "parametric-baller",
+      "key": "maxLines",
+      "type": "number",
+      "value": 38.61,
+      "id": "_150565"
+    },
+    {
+      "group": "parametric-baller",
+      "key": "spread",
+      "type": "number",
+      "value": 3.13,
+      "id": "_234245"
+    },
+    {
+      "group": "parametric-baller",
+      "key": "thickness",
+      "type": "number",
+      "value": 5.96,
+      "id": "_159234"
+    },
+    {
+      "group": "parametric-baller",
+      "key": "baseOpacity",
+      "type": "number",
+      "value": 100,
+      "id": "_904040"
+    },
+    {
+      "group": "font-life-saver",
+      "key": "depth",
+      "type": "number",
+      "value": 14.1,
+      "id": "_2343"
+    },
+    {
+      "group": "font-life-saver",
+      "key": "curveSegments",
+      "type": "number",
+      "value": 6.43,
+      "id": "_582504"
+    },
+    {
+      "group": "font-life-saver",
+      "key": "bevelEnabled",
+      "type": "boolean",
+      "value": false,
+      "id": "_536655"
+    },
+    {
+      "group": "font-life-saver",
+      "key": "bevelThickness",
+      "type": "number",
+      "value": 17.54,
+      "id": "_536875"
+    },
+    {
+      "group": "font-life-saver",
+      "key": "bevelSize",
+      "type": "number",
+      "value": 11.69,
+      "id": "_705924"
+    },
+    {
+      "group": "font-life-saver",
+      "key": "bevelOffset",
+      "type": "number",
+      "value": 0,
+      "id": "_2800"
+    },
+    {
+      "group": "font-life-saver",
+      "key": "bevelSegments",
+      "type": "number",
+      "value": 28.43,
+      "id": "_987257"
+    },
+    {
+      "group": "font-life-saver",
+      "key": "width",
+      "type": "number",
+      "value": 7.28,
+      "id": "_437053"
+    },
+    {
+      "group": "parametric-cluster",
+      "key": "maxLines",
+      "type": "number",
+      "value": 12.39,
+      "id": "_49638"
+    },
+    {
+      "group": "parametric-cluster",
+      "key": "spread",
+      "type": "number",
+      "value": 13.86,
+      "id": "_343757"
+    },
+    {
+      "group": "parametric-cluster",
+      "key": "thickness",
+      "type": "number",
+      "value": 15.27,
+      "id": "_51587"
+    },
+    {
+      "group": "parametric-cluster",
+      "key": "baseOpacity",
+      "type": "number",
+      "value": 65.19,
+      "id": "_351378"
+    },
+    {
+      "group": "parametric-cluster",
+      "key": "displacement",
+      "type": "vec3",
+      "value": {
+        "x": 10,
+        "y": 15,
+        "z": 0
+      },
+      "id": "_577116"
+    },
+    {
+      "group": "parametric-cluster",
+      "key": "width",
+      "type": "number",
+      "value": 6.81,
+      "id": "_677702"
+    },
+    {
+      "group": "gospel-overlay",
+      "key": "open-menu",
+      "type": "layout",
+      "value": {
+        "fpx": "0",
+        "fpy": "0",
+        "fpz": "10",
+        "frx": "0",
+        "fry": "0",
+        "frz": "0",
+        "fsx": "4.5",
+        "fsy": "4.5",
+        "fsz": "4.5"
+      },
+      "id": "_901920"
+    },
+    {
+      "group": "gospel-overlay",
+      "key": "bible",
+      "type": "layout",
+      "value": {
+        "fpx": "0",
+        "fpy": "0",
+        "fpz": "0",
+        "frx": "0",
+        "fry": "0",
+        "frz": "0",
+        "fsx": "4",
+        "fsy": "4",
+        "fsz": "4"
+      },
+      "id": "_637909"
+    },
+    {
+      "group": "gospel-overlay",
+      "key": "close-menu",
+      "type": "layout",
+      "value": {
+        "fpx": "right + padding * -2.0",
+        "fpy": "top + padding * -2.0",
+        "fpz": "0",
+        "frx": "0",
+        "fry": "0",
+        "frz": "0",
+        "fsx": "4",
+        "fsy": "4",
+        "fsz": "1"
+      },
+      "id": "_415127"
+    },
+    {
+      "group": "menu-overlay",
+      "key": "open-menu",
+      "type": "layout",
+      "value": {
+        "fpx": "right - padding * 2.0",
+        "fpy": "top - padding * 2.0",
+        "fpz": "0",
+        "frx": "0",
+        "fry": "0",
+        "frz": "0",
+        "fsx": "4",
+        "fsy": "4",
+        "fsz": "1"
+      },
+      "id": "_930182"
+    },
+    {
+      "group": "menu-overlay",
+      "key": "close-menu",
+      "type": "layout",
+      "value": {
+        "fpx": "right + padding * -2.0",
+        "fpy": "top + padding * -2.0",
+        "fpz": "0",
+        "frx": "0",
+        "fry": "0",
+        "frz": "0",
+        "fsx": "4",
+        "fsy": "4",
+        "fsz": "1"
+      },
+      "id": "_983597"
+    },
+    {
+      "group": "menu-overlay",
+      "key": "menu-codelab",
+      "type": "layout",
+      "value": {
+        "fpx": "0",
+        "fpy": "height * 6 * scaleY",
+        "fpz": "0",
+        "frx": "0",
+        "fry": "0",
+        "frz": "0",
+        "fsx": "4",
+        "fsy": "4",
+        "fsz": "1"
+      },
+      "id": "_246817"
+    },
+    {
+      "group": "menu-overlay",
+      "key": "menu-effectnode",
+      "type": "layout",
+      "value": {
+        "fpx": "0",
+        "fpy": "height * 4 * scaleY",
+        "fpz": "0",
+        "frx": "0",
+        "fry": "0",
+        "frz": "0",
+        "fsx": "4",
+        "fsy": "4",
+        "fsz": "1"
+      },
+      "id": "_151090"
+    },
+    {
+      "group": "menu-overlay",
+      "key": "menu-effectnode-2",
+      "type": "layout",
+      "value": {
+        "fpx": "0",
+        "fpy": "height * 2 * scaleY",
+        "fpz": "0",
+        "frx": "0",
+        "fry": "0",
+        "frz": "0",
+        "fsx": "4",
+        "fsy": "4",
+        "fsz": "1"
+      },
+      "id": "_110147"
+    },
+    {
+      "group": "menu-overlay",
+      "key": "menu-igraph",
+      "type": "layout",
+      "value": {
+        "fpx": "0",
+        "fpy": "height * -4 * scaleY",
+        "fpz": "0",
+        "frx": "0",
+        "fry": "0",
+        "frz": "0",
+        "fsx": "4",
+        "fsy": "4",
+        "fsz": "1"
+      },
+      "id": "_10861"
+    },
+    {
+      "group": "menu-overlay",
+      "key": "menu-wonglok",
+      "type": "layout",
+      "value": {
+        "fpx": "0",
+        "fpy": "height * -2 * scaleY",
+        "fpz": "0",
+        "frx": "0",
+        "fry": "0",
+        "frz": "0",
+        "fsx": "4",
+        "fsy": "4",
+        "fsz": "1"
+      },
+      "id": "_593063"
+    },
+    {
+      "group": "menu-overlay",
+      "key": "menu-wonglok-age",
+      "type": "layout",
+      "value": {
+        "fpx": "0",
+        "fpy": "height * -0 * scaleY",
+        "fpz": "0",
+        "frx": "0",
+        "fry": "0",
+        "frz": "0",
+        "fsx": "4",
+        "fsy": "4",
+        "fsz": "1"
+      },
+      "id": "_819389"
+    },
+    {
+      "group": "home-page",
+      "key": "loklok",
+      "type": "layout",
+      "value": {
+        "fpx": "left + padding * 2.0",
+        "fpy": "top - padding * 2.0",
+        "fpz": "0",
+        "frx": "0",
+        "fry": "0",
+        "frz": "0",
+        "fsx": "10",
+        "fsy": "10",
+        "fsz": "1"
+      },
+      "id": "_466204"
+    },
+    {
+      "group": "gospel-overlay",
+      "key": "cluster",
+      "type": "layout",
+      "value": {
+        "fpx": "0",
+        "fpy": "0",
+        "fpz": "0",
+        "frx": "0",
+        "fry": "0",
+        "frz": "0",
+        "fsx": "3",
+        "fsy": "3",
+        "fsz": "3"
+      },
+      "id": "_472451"
+    },
+    {
+      "group": "menu-overlay",
+      "key": "baller",
+      "type": "layout",
+      "value": {
+        "fpx": "0",
+        "fpy": "0",
+        "fpz": "-150",
+        "frx": "0",
+        "fry": "0",
+        "frz": "0",
+        "fsx": "2.5",
+        "fsy": "2.5",
+        "fsz": "2.5"
+      },
+      "id": "_291058"
+    },
+    {
+      "group": "menu-overlay",
+      "key": "brand-logo",
+      "type": "layout",
+      "value": {
+        "fpx": "left + padding * 2",
+        "fpy": "top - padding * 2",
+        "fpz": "0",
+        "frx": "0",
+        "fry": "0",
+        "frz": "0",
+        "fsx": "4",
+        "fsy": "4",
+        "fsz": "1"
+      },
+      "id": "_438061"
+    },
+    {
+      "group": "icecream-overlay",
+      "key": "ice-cream",
+      "type": "layout",
+      "value": {
+        "fpx": "0",
+        "fpy": "0",
+        "fpz": "0",
+        "frx": "0",
+        "fry": "0",
+        "frz": "0",
+        "fsx": "10",
+        "fsy": "10",
+        "fsz": "10"
+      },
+      "id": "_590407"
+    },
+    {
+      "group": "cream-canvas",
+      "key": "hue-spread",
+      "type": "number",
+      "value": 77.97,
+      "id": "_658137"
+    },
+    {
+      "group": "cream-canvas",
+      "key": "canvas-texture-dot",
+      "type": "color",
+      "value": {
+        "r": 255,
+        "g": 0,
+        "b": 0,
+        "a": 0.74
+      },
+      "id": "_185363"
+    },
+    {
+      "group": "cream-canvas",
+      "key": "canvas-texture-bg",
+      "type": "color",
+      "value": {
+        "r": 255,
+        "g": 255,
+        "b": 255,
+        "a": 0.8
+      },
+      "id": "_976259"
+    },
+    {
+      "group": "gospel-overlay",
+      "key": "ice-cream",
+      "type": "layout",
+      "value": {
+        "fpx": "0",
+        "fpy": "0",
+        "fpz": "50",
+        "frx": "0",
+        "fry": "0",
+        "frz": "0",
+        "fsx": "10",
+        "fsy": "10",
+        "fsz": "10"
+      },
+      "id": "_150543"
+    }
+  ]
+}

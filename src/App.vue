@@ -29,7 +29,7 @@ export default {
   width: 100%;
   height: 100%;
 }
-.scroller{
+.scroll-touch{
   -webkit-overflow-scrolling: touch;
 }
 </style>

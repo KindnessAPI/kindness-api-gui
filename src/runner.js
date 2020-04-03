@@ -2,15 +2,12 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import './tw.postcss'
 
 Vue.config.productionTip = false
 
-let app = new Vue({
+new Vue({
   router,
   store,
   render: h => h(App)
 }).$mount('#app')
-
-if (process.env.NODE_ENV === 'development') {
-  require('./human/installer').install({ app, router })
-}
