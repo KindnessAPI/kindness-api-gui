@@ -39,7 +39,9 @@ export class RayPlay {
       this.mouser.x = (event.clientX / window.innerWidth) * 2 - 1
       this.mouser.y = -(event.clientY / window.innerHeight) * 2 + 1
     }
+    let moveAmount = 0
     var onDocumentTouchMove = (event) => {
+      moveAmount += 1
       let obj = event.touches[0]
       console.log(obj)
       this.mouser.x = (obj.pageX / window.innerWidth) * 2 - 1
@@ -47,6 +49,10 @@ export class RayPlay {
     }
 
     let onDocumentClick = () => {
+      if (moveAmount > 10) {
+        moveAmount = 0
+        return
+      }
       let rc = this.raycaster
       if (this.camera && this.mouser && rc) {
         rc.setFromCamera(this.mouser, this.camera)
@@ -74,12 +80,15 @@ export class RayPlay {
         }
       }
     }
+    let onStart = () => {
+      moveAmount = 0
+    }
 
-    mounter.addEventListener('touchstart', onDocumentTouchMove, { passive: false })
+    mounter.addEventListener('touchstart', (evt) => { onStart(evt); onDocumentTouchMove(evt) }, { passive: false })
     mounter.addEventListener('touchmove', onDocumentTouchMove, { passive: false })
     mounter.addEventListener('mousemove', onDocumentMouseMove, { passive: false })
     mounter.addEventListener('click', onDocumentClick, { passive: false })
-    mounter.addEventListener('touchstart', onDocumentClick, { passive: false })
+    mounter.addEventListener('touchend', onDocumentClick, { passive: false })
     base.onLoop(onDocumentHover)
   }
 }

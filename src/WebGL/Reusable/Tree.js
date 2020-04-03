@@ -124,6 +124,17 @@ export const Tree = {
   computed: {
   },
   methods: {
+    async waitDoOnce ({ getter = () => {}, fnc = () => {} }) {
+      let clean = true
+      this.lookup('base').onLoop(() => {
+        if (!clean) { return }
+        let v = getter()
+        if (v) {
+          fnc(v)
+          clean = false
+        }
+      })
+    },
     // relayout () {
     //   let castDown = ({ lv, ev, data }) => {
     //     lv.$emit(ev, data)

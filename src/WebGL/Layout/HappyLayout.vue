@@ -13,14 +13,18 @@
     <O3D :animated="true" layout="cross">
       <RefactorArea dudv="cross-2" :blur="blur"></RefactorArea>
       <O3D :animated="true" layout="gospel">
-        <TextureText :canplay="true" font="Arial" align="left" :gotClicked="runDemo" :text="gospel"></TextureText>
+        <TextureText :canplay="true" font="Arial" align="left" :gotClicked="goMini" :text="gospel"></TextureText>
+      </O3D>
+
+      <O3D :animated="true" layout="ctaButton">
+        <TextureText :canplay="true" font="Arial" align="left" :gotClicked="nextPage" :text="ctaButton"></TextureText>
       </O3D>
     </O3D>
   </O3D>
 </template>
 
 <script>
-import { Tree, makePaintCanvas, makeScroller } from '../Reusable'
+import { Tree, makePaintCanvas, makeScroller, Damper } from '../Reusable'
 import { Scene, CubeTexture } from 'three'
 export default {
   name: 'HappyLayout',
@@ -30,6 +34,7 @@ export default {
   mixins: [Tree],
   data () {
     return {
+      ctaButton: `Let's Go!`,
       gospel: `Love is patient and kind;
 love does not envy or boast;
 It is not arrogant or rude.
@@ -63,14 +68,20 @@ Love never ends.
     ])
   },
   methods: {
-    runDemo (v) {
-      // if ()
-      console.log(this.$route.path, 'run demo', v)
-      if (this.$route.path === '/') {
-        this.$router.push('/2')
-      } else if (this.$route.path === '/2') {
-        this.$router.push('/')
-      }
+    nextPage () {
+      this.fader.value = 0
+      this.scroller.value = 0
+      this.waitDoOnce({
+        getter: () => {
+          return this.fader.value <= 0.05
+        },
+        fnc: () => {
+          this.$router.push('/2')
+        }
+      })
+    },
+    goMini (v) {
+      this.scroller.value = 0
     }
   },
   async mounted () {
@@ -79,12 +90,16 @@ Love never ends.
     this.scene.background = this.paintCubeTex
 
     this.limit = {
+      direction: 'vertical',
       canRun: true,
       y: 1
     }
     this.scroller = makeScroller({ base: this.lookup('base'), mounter: this.lookup('mounter'), limit: this.limit, onMove: () => { this.$emit('onMove') } })
+    this.fader = new Damper(0, this.lookup('base'))
 
-    this.lookup('base').onLoop(() => {
+    let looper = () => {
+      this.lookup('renderer').domElement.style.opacity = this.fader.value
+
       this.blur = 1.0 - this.scroller.value
 
       // let time = window.performance.now() * 0.001
@@ -93,9 +108,9 @@ Love never ends.
 
       this.layouts = {
         cross: {
-          visible: this.blur > 0.1,
+          // visible: this.blur > 0.1,
           pz: 20,
-          py: this.scroller.value * (this.screen.height)
+          py: -(1.0 - this.scroller.value) * (this.screen.height)
         },
         ball: {
           py: this.scroller.value * (this.screen.height * 0.5)
@@ -106,9 +121,16 @@ Love never ends.
         },
         gospel: {
           pz: 1
+        },
+        ctaButton: {
+          pz: 1,
+          py: `${this.screen.height * -0.5} + child.height * 2.5`
         }
       }
-    })
+    }
+    this.lookup('base').onLoop(looper)
+    this.scroller.value = 1
+    this.fader.value = 1
   }
 }
 </script>

@@ -1,6 +1,6 @@
 
 // can scroll how many pages = limit.y
-export const makeScroller = ({ base, mounter, limit = { canRun: true, y: 1000 }, onMove = () => {} }) => {
+export const makeScroller = ({ base, mounter, limit = { direction: 'vertical', canRun: true, y: 1000 }, onMove = () => {} }) => {
   let state = {
     tsY: 0,
     tdY: 0,
@@ -44,11 +44,15 @@ export const makeScroller = ({ base, mounter, limit = { canRun: true, y: 1000 },
       if (!limit.canRun) {
         return
       }
-      scrollAmount += evt.deltaY
+      let delta = evt.deltaY
+      if (limit.direction !== 'vertical') {
+        delta = evt.deltaX
+      }
+      scrollAmount += delta
       if (scrollAmount < 0) {
-        scrollAmount -= evt.deltaY
+        scrollAmount -= delta
       } else if (scrollAmount > (limit.y * window.innerHeight)) {
-        scrollAmount -= evt.deltaY
+        scrollAmount -= delta
       }
       SmoothY.value = scrollAmount / window.innerHeight
 
@@ -58,8 +62,13 @@ export const makeScroller = ({ base, mounter, limit = { canRun: true, y: 1000 },
     mounter.addEventListener('touchstart', (evt) => {
       evt.preventDefault()
       let t1 = evt.touches[0]
+
+      let key = 'pageY'
+      if (limit.direction !== 'vertical') {
+        key = 'pageX'
+      }
       // console.log(t1)
-      state.tsY = t1.pageY
+      state.tsY = t1[key]
       state.tD = true
     }, { passive: false })
     mounter.addEventListener('touchmove', (evt) => {
@@ -67,11 +76,15 @@ export const makeScroller = ({ base, mounter, limit = { canRun: true, y: 1000 },
       if (!limit.canRun) {
         return
       }
+      let key = 'pageY'
+      if (limit.direction !== 'vertical') {
+        key = 'pageX'
+      }
       if (state.tD) {
         let t1 = evt.touches[0]
         // console.log(t1)
-        state.tdY = t1.pageY - state.tsY
-        state.tsY = t1.pageY
+        state.tdY = t1[key] - state.tsY
+        state.tsY = t1[key]
         state.inertiaY = 1.5
       }
       onMove(SmoothY)

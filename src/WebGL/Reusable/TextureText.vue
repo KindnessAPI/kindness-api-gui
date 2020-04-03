@@ -40,12 +40,14 @@ export default {
           weight: `normal`
           // `font-weight: normal; font-style: normal;`
         })
+
         await font.load()
         document.fonts.add(font)
       }
       if (this.font === 'SeasideResortNF') {
         await loadSeaside()
       }
+
       let texture = new TextTexture({
         align: this.align || 'center',
         fillStyle: 'white',
@@ -96,27 +98,27 @@ export default {
       this.$emit('enable-play', item)
     })
     var tout = 0
-    this.$on('init', () => {
+    this.$on('try-init', () => {
       clearTimeout(tout)
       tout = setTimeout(() => {
         this.$emit('exec')
       }, 50)
     })
-    this.$emit('init')
+    this.$emit('try-init')
     this.$watch('text', () => {
-      this.$emit('init')
+      this.$emit('try-init')
     })
     this.$watch('font', () => {
-      this.$emit('init')
+      this.$emit('try-init')
     })
     this.$watch('align', () => {
-      this.$emit('init')
+      this.$emit('try-init')
     })
     this.lookup('base').onResize(() => {
-      this.$emit('init')
+      this.$emit('try-init')
     })
     this.$watch('screen', () => {
-      this.$emit('init')
+      this.$emit('exec')
     })
   },
   beforeDestroy () {

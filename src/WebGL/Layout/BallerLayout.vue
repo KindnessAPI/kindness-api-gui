@@ -12,15 +12,18 @@
     </O3D>
     <O3D :animated="true" layout="cross">
       <RefactorArea dudv="cube-2" :blur="0.998"></RefactorArea>
-      <O3D :animated="true" layout="gospel">
-        <TextureText :canplay="true" font="Arial" align="left" :gotClicked="runDemo" :text="gospel"></TextureText>
+      <O3D :animated="true" layout="mainMessage">
+        <TextureText :canplay="true" font="Arial" align="left" :gotClicked="goMini" :text="mainMessage"></TextureText>
+      </O3D>
+      <O3D :animated="true" layout="ctaButton">
+        <TextureText :canplay="true" font="Arial" align="left" :gotClicked="nextPage" :text="ctaButton"></TextureText>
       </O3D>
     </O3D>
   </O3D>
 </template>
 
 <script>
-import { Tree, makePaintCanvas, makeScroller } from '../Reusable'
+import { Tree, makePaintCanvas, makeScroller, Damper } from '../Reusable'
 import { Scene, CubeTexture } from 'three'
 export default {
   name: 'HappyLayout',
@@ -30,7 +33,8 @@ export default {
   mixins: [Tree],
   data () {
     return {
-      gospel: `Click me to see the metal orb clearly....`,
+      mainMessage: `Orb of Fun Fun Parametric Equation....`,
+      ctaButton: `Let's Go!`,
       scene: new Scene(),
       paint2DTex: false,
       paintCubeTex: false,
@@ -50,8 +54,21 @@ export default {
     ])
   },
   methods: {
-    runDemo (v) {
-      this.scroller.value = 1.0
+    nextPage () {
+      this.fader.value = 0
+      this.scroller.value = 0
+      this.waitDoOnce({
+        getter: () => {
+          // console.log(this.fader.value)
+          return this.fader.value <= 0.04
+        },
+        fnc: () => {
+          this.$router.push('/')
+        }
+      })
+    },
+    goMini (v) {
+      this.scroller.value = 0
     }
   },
   async mounted () {
@@ -60,12 +77,16 @@ export default {
     this.scene.background = this.paintCubeTex
 
     this.limit = {
+      direction: 'horizontal',
       canRun: true,
       y: 1
     }
-    this.scroller = makeScroller({ base: this.lookup('base'), mounter: this.lookup('mounter'), limit: this.limit, onMove: () => { this.$emit('onMove') } })
+    this.fader = new Damper(0, this.lookup('base'))
 
-    this.lookup('base').onLoop(() => {
+    this.scroller = makeScroller({ base: this.lookup('base'), mounter: this.lookup('mounter'), limit: this.limit, onMove: () => { this.$emit('onMove') } })
+    let looper = () => {
+      this.lookup('renderer').domElement.style.opacity = this.fader.value
+
       // this.blur = 1.0 - this.scroller.value
 
       // let time = window.performance.now() * 0.001
@@ -77,21 +98,29 @@ export default {
         cross: {
           // visible: this.blur > 0.1,
           pz: 20,
-          py: this.scroller.value * (this.screen.height)
+          px: (1.0 - this.scroller.value) * (this.screen.width)
         },
-        ball: {
-          pz: -100,
-          py: this.scroller.value * (this.screen.height * 0.5)
-        },
+        // ball: {
+        //   pz: -100,
+        //   px: this.scroller.value * (this.screen.width * 0.5)
+        // },
         cluster: {
           pz: -200,
           rz: this.scroller.value * (Math.PI * 2)
         },
-        gospel: {
+        mainMessage: {
           pz: 1
+        },
+        ctaButton: {
+          pz: 0.1,
+          py: `${this.screen.height * -0.5} + child.height * 2.5`
         }
       }
-    })
+    }
+    looper()
+    this.lookup('base').onLoop(looper)
+    this.scroller.value = 1
+    this.fader.value = 1
   }
 }
 </script>
