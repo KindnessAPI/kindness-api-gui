@@ -5,7 +5,7 @@
     </O3D> -->
 
     <O3D :animated="true" layout="cluster">
-      <ParametricCluster v-if="paintCubeTex" :tCube="paintCubeTex"></ParametricCluster>
+      <ParametricBall v-if="paintCubeTex" :tCube="paintCubeTex"></ParametricBall>
     </O3D>
     <O3D :animated="true" layout="dome">
       <SkyDome v-if="paint2DTex" :texture="paint2DTex"></SkyDome>
@@ -30,20 +30,7 @@ export default {
   mixins: [Tree],
   data () {
     return {
-      gospel: `Love is patient and kind;
-love does not envy or boast;
-It is not arrogant or rude.
-It does not insist on its own way;
-It is not irritable or resentful;
-It does not rejoice at wrongdoing,
-but rejoices with the truth.
-Love bears all things,
-believes all things,
-hopes all things,
-endures all things.
-Love never ends.
-
-1 Corinthians 13:4–8a`,
+      gospel: `Love is....`,
       scene: new Scene(),
       paint2DTex: false,
       paintCubeTex: false,
@@ -98,11 +85,12 @@ Love never ends.
           py: this.scroller.value * (this.screen.height)
         },
         ball: {
+          pz: -100,
           py: this.scroller.value * (this.screen.height * 0.5)
         },
         cluster: {
           pz: -200,
-          rx: this.scroller.value * (Math.PI)
+          rz: this.scroller.value * (Math.PI * 2)
         },
         gospel: {
           pz: 1

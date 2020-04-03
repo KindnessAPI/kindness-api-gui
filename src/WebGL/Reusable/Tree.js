@@ -31,6 +31,12 @@ export const Tree = {
     animated: {
       default: false
     },
+    gotClicked: {
+      default () {
+        return () => {}
+      }
+    },
+    canplay: {},
     visible: {},
     layout: {}
   },
@@ -96,6 +102,19 @@ export const Tree = {
 
     console.log('Mounted:', this.$options.name)
     window.dispatchEvent(new Event('resize'))
+
+    if (this.canplay) {
+      let ray = this.lookup('rayplay')
+      if (ray) {
+        this.$on('enable-play', (v) => {
+          ray.add(v, this.gotClicked)
+        })
+        this.$on('disable-play', (v) => {
+          console.log(v)
+          ray.remove(v)
+        })
+      }
+    }
   },
 
   beforeDestroy () {

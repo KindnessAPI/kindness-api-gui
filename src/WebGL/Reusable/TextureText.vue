@@ -89,9 +89,11 @@ export default {
       let mat = new MeshBasicMaterial({ color: 0xffffff, opacity: 1, map: texture, transparent: true })
       let item = new Mesh(geo, mat)
       this.o3d.children.forEach((v) => {
+        this.$emit('disable-play', v)
         this.o3d.remove(v)
       })
       this.o3d.add(item)
+      this.$emit('enable-play', item)
     })
     var tout = 0
     this.$on('init', () => {

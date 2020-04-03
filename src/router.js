@@ -11,26 +11,10 @@ export default new Router({
     {
       path: '/',
       component: () => import('./WebGL/Pages/Home.vue')
+    },
+    {
+      path: '/2',
+      component: () => import('./WebGL/Pages/Lok.vue')
     }
-    // {
-    //   path: '/tailwind',
-    //   component: () => import(/* webpackChunkName: "landing" */ './v0-app/pages/Home.vue')
-    // },
-    // {
-    //   path: '/',
-    //   component: () => import(/* webpackChunkName: "landing" */ './v0-app/pages/Home.vue')
-    // },
-    // {
-    //   path: '/geo',
-    //   redirect: '/flower'
-    // },
-    // {
-    //   path: '/flower',
-    //   component: () => import(/* webpackChunkName: "landing" */ './v0-app/graphics/GeoShade.vue')
-    // },
-    // {
-    //   path: '/emoji',
-    //   component: () => import(/* webpackChunkName: "landing" */ './v0-app/graphics/Viewer.vue')
-    // }
   ]
 })

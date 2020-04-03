@@ -2,6 +2,7 @@ export const getID = () => '_' + (100000000.0 * Math.random()).toFixed(0) + ''
 
 export const makeBase = () => {
   let env = {
+    isActiveRender: true,
     _mounter: document.body,
     get mounter () {
       return env._mounter
@@ -61,6 +62,9 @@ export const makeBase = () => {
   }
   let rAFID = 0
   let runLoop = () => {
+    if (!env.isActiveRender) {
+      return
+    }
     for (var loopKN in env._.loop) {
       env._.loop[loopKN]()
     }
@@ -84,6 +88,9 @@ export const makeBase = () => {
 
   let tout = 0
   let runResize = async () => {
+    if (!env.isActiveRender) {
+      return
+    }
     let rect = env.mounter.getBoundingClientRect()
     for (var resizeKN in env._.resize) {
       await env._.resize[resizeKN](rect)
