@@ -77,7 +77,7 @@ export default {
     this.scene.background = this.paintCubeTex
 
     this.limit = {
-      direction: 'horizontal',
+      direction: 'vertical',
       canRun: true,
       y: 1
     }
@@ -98,11 +98,11 @@ export default {
         cross: {
           // visible: this.blur > 0.1,
           pz: 20,
-          px: (1.0 - this.scroller.value) * (this.screen.width)
+          py: (-this.scroller.value + 1.0) * -(this.screen.height)
         },
         // ball: {
         //   pz: -100,
-        //   px: this.scroller.value * (this.screen.width * 0.5)
+        //   px: this.scroller.value * (this.screen.height * 0.5)
         // },
         cluster: {
           pz: -200,

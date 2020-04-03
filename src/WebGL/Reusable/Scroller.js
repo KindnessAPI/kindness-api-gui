@@ -7,6 +7,9 @@ export const makeScroller = ({ base, mounter, limit = { direction: 'vertical', c
     taY: 0,
     inertiaY: 1
   }
+  if (!limit.direction) {
+    limit.direction = 'vertical'
+  }
   class ValueDamper {
     constructor (v = 0) {
       this.maxY = limit.y

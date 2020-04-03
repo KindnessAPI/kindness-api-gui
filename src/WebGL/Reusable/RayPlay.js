@@ -43,7 +43,7 @@ export class RayPlay {
     var onDocumentTouchMove = (event) => {
       moveAmount += 1
       let obj = event.touches[0]
-      console.log(obj)
+      // console.log(obj)
       this.mouser.x = (obj.pageX / window.innerWidth) * 2 - 1
       this.mouser.y = -(obj.pageY / window.innerHeight) * 2 + 1
     }
@@ -56,7 +56,6 @@ export class RayPlay {
       let rc = this.raycaster
       if (this.camera && this.mouser && rc) {
         rc.setFromCamera(this.mouser, this.camera)
-
         // console.log(this.o3dClickers.children)
 
         var findings = rc.intersectObjects(this.activeTargets)

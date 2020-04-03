@@ -121,8 +121,10 @@ export const Tree = {
     this.o3d.visible = false
     this.$parent.$emit('remove', this.o3d)
   },
+
   computed: {
   },
+
   methods: {
     async waitDoOnce ({ getter = () => {}, fnc = () => {} }) {
       let clean = true
