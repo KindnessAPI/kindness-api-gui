@@ -10,3 +10,7 @@ export { Tree } from './Tree'
 export { PipeBasic } from './PipeBasic'
 export { RayPlay } from './RayPlay'
 export { Damper } from './Damper'
+
+export const getID = () => {
+  return '_' + Math.random().toString(36).substr(2, 9)
+}

@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import '../../APIs/KA.js'
 import { Tree, makePaintCanvas, makeScroller, Damper } from '../Reusable'
 import { Scene, CubeTexture } from 'three'
 export default {
