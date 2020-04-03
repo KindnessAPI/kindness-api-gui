@@ -82,7 +82,7 @@ export const makeSDK = async () => {
     })
   }
 
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
     sdk.data = require('../data/db.json')
     sdk.ready = true
   }
