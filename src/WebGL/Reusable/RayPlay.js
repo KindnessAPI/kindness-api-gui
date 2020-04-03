@@ -49,7 +49,7 @@ export class RayPlay {
     }
 
     let onDocumentClick = () => {
-      if (moveAmount > 10) {
+      if (moveAmount > 5) {
         moveAmount = 0
         return
       }
@@ -76,7 +76,7 @@ export class RayPlay {
           } else {
             console.error('handler not found')
           }
-          console.log(event)
+          // console.log(event)
         }
       }
     }
