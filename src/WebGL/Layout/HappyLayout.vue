@@ -13,11 +13,11 @@
     <O3D :animated="true" layout="cross">
       <RefactorArea dudv="cross-2" :blur="0.0"></RefactorArea>
       <O3D :animated="true" layout="gospel">
-        <TextureText :canplay="true" font="Arial" align="left" :gotClicked="goMini" :text="gospel"></TextureText>
+        <TextureText :canplay="true" font="Arial" align="left" :clicked="goMini" :text="gospel"></TextureText>
       </O3D>
 
       <O3D :animated="true" layout="ctaButton">
-        <TextureText :canplay="true" font="Arial" align="left" :gotClicked="nextPage" :text="ctaButton"></TextureText>
+        <TextureText :canplay="true" font="Arial" align="left" :clicked="nextPage" :text="ctaButton"></TextureText>
       </O3D>
     </O3D>
   </O3D>

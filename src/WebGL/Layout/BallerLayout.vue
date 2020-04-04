@@ -15,11 +15,11 @@
 
       <O3D :animated="true" layout="mainMessage">
         <GridLayout></GridLayout>
-        <!-- <TextureText :canplay="true" font="Arial" align="left" :gotClicked="goMini" :text="mainMessage"></TextureText> -->
+        <!-- <TextureText :canplay="true" font="Arial" align="left" :clicked="goMini" :text="mainMessage"></TextureText> -->
       </O3D>
 
       <O3D :animated="true" layout="ctaButton">
-        <TextureText :canplay="true" font="Arial" align="left" :gotClicked="nextPage" :text="ctaButton"></TextureText>
+        <TextureText :canplay="true" font="Arial" align="left" :clicked="nextPage" :text="ctaButton"></TextureText>
       </O3D>
     </O3D>
   </O3D>

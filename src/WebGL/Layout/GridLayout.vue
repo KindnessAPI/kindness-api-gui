@@ -1,9 +1,10 @@
 <template>
   <O3D layout="scrollLayer" :animated="true" v-if="layouts">
-    <TextureText :canplay="true" font="Arial" align="left" :gotClicked="say" :text="sendMsgBtn" :visible="lamda && lamda.ready"></TextureText>
-    <O3D :key="msg._id" :animated="true"  v-for="msg in msgs" :layout="msg._id">
-      <TextureText :canplay="true" font="Arial" align="left" :gotClicked="say" :text="msg.text"></TextureText>
-    </O3D>
+    <BMText :text="allText" :clicked="say"></BMText>
+    <!-- <TextureText font="Arial" align="left" :clicked="say" :text="sendMsgBtn" :visible="lamda && lamda.ready"></TextureText> -->
+    <!-- <O3D :key="msg._id" :animated="true"  v-for="msg in msgs" :layout="msg._id">
+      <TextureText :canplay="true" font="Arial" align="left" :clicked="say" :text="msg.text"></TextureText>
+    </O3D> -->
   </O3D>
 </template>
 
@@ -22,6 +23,7 @@ export default {
     return {
       lamda: false,
       msgs: [],
+      allText: 'click me to add text',
       sendMsgBtn: 'Send Msg',
 
       // scene: new Scene(),
@@ -62,6 +64,8 @@ export default {
           _id: id,
           text: text + ''
         })
+        this.allText += `\n${text}`
+
         this.layouts[id] = {
           py: this.msgs.length * 20
         }
