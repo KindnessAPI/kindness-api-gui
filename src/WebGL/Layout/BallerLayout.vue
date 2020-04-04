@@ -14,7 +14,7 @@
       <RefactorArea dudv="cube-2" :blur="0.0"></RefactorArea>
 
       <O3D :animated="true" layout="mainMessage">
-        <ChatBox></ChatBox>
+        <GridLayout></GridLayout>
         <!-- <TextureText :canplay="true" font="Arial" align="left" :gotClicked="goMini" :text="mainMessage"></TextureText> -->
       </O3D>
 

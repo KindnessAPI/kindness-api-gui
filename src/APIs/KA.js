@@ -18,7 +18,7 @@ export const getWS = () => {
 let getID = () => {
   return '_' + Math.random().toString(36).substr(2, 9)
 }
-let socket = new LamdaSocket({
+let socket = new LamdaClient({
   url: getWS(),
   roomId: 'room-test',
   nickname: 'kindness-api-client-' + getID()
@@ -37,7 +37,7 @@ socket.addEventListener('online', ({ detail }) => {
 })
 */
 
-export class LamdaSocket extends EventTarget {
+export class LamdaClient extends EventTarget {
   constructor ({ url, nickname, roomId }) {
     super()
     this.url = url

@@ -102,7 +102,7 @@ export default {
       clearTimeout(tout)
       tout = setTimeout(() => {
         this.$emit('exec')
-      }, 50)
+      }, 100)
     })
     this.$emit('try-init')
     this.$watch('text', () => {
@@ -117,9 +117,9 @@ export default {
     this.lookup('base').onResize(() => {
       this.$emit('try-init')
     })
-    this.$watch('screen', () => {
-      this.$emit('exec')
-    })
+    // this.$watch('screen', () => {
+    //   this.$emit('try-init')
+    // })
   },
   beforeDestroy () {
   }

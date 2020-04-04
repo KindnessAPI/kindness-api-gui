@@ -93,7 +93,6 @@ export const Tree = {
       })
     }
     if (this.lookup('base')) {
-      this.screen = this.getScreen()
       this.lookup('base').onResize(() => {
         this.$emit('syncFormula')
         this.screen = this.getScreen()
@@ -101,7 +100,7 @@ export const Tree = {
     }
 
     console.log('Mounted:', this.$options.name)
-    window.dispatchEvent(new Event('resize'))
+    // window.dispatchEvent(new Event('resize'))
 
     if (this.canplay) {
       let ray = this.lookup('rayplay')
