@@ -52,6 +52,7 @@ export default {
       })
     }
 
+    // https://msdf-bmfont.donmccurdy.com/
     let { texture, font } = await load({
       // eslint-disable-next-line
       fontURL: require('./bmfonts/Roboto-msdf.json'),
@@ -74,6 +75,13 @@ export default {
       var layout = geom.layout
       mesh.position.x = -layout.width / 2
       mesh.position.y = -layout.height / 2
+
+      this.$parent.$emit('child', {
+        width: layout.width,
+        height: layout.height,
+        depth: 0,
+        raidus: layout.width * 0.5
+      })
     })
     this.$watch('text', (v) => {
       this.$emit('updateText', v)
@@ -88,6 +96,7 @@ export default {
 
     var mesh = new Mesh(geom, material)
     mesh.scale.y = -1
+    mesh.frustumCulled = false
     this.$emit('updateText', this.text)
 
     let container = new Object3D()

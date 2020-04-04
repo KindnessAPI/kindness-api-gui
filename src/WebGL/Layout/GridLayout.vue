@@ -76,6 +76,10 @@ export default {
         }
       }
 
+      // setInterval(() => {
+      //   this.allText = Math.random()
+      // }, 16)
+
       // let i = 0
       // setInterval(() => {
       //   if (i >= 300) {
