@@ -24,14 +24,14 @@ let socket = new LamdaClient({
   nickname: 'kindness-api-client-' + getID()
 })
 
-socket.addEventListener('text', ({ detail }) => {
+socket.on('text', ({ detail }) => {
   let html = `<pre>${detail.type} - ${JSON.stringify(detail)}</pre>`
   console.log(html)
 })
 
 socket.send({ text })
 
-socket.addEventListener('online', ({ detail }) => {
+socket.on('online', ({ detail }) => {
   let html = `<pre>me: ${socket.nickname} - ${JSON.stringify(detail)}</pre>`
   console.log(html)
 })
@@ -45,12 +45,12 @@ class EventEmitter {
   constructor () {
     this.listeners = new Map()
   }
-  addEventListener (label, callback) {
+  on (label, callback) {
     this.listeners.has(label) || this.listeners.set(label, [])
     this.listeners.get(label).push(callback)
   }
 
-  removeEventListener (label, callback) {
+  off (label, callback) {
     let listeners = this.listeners.get(label)
     let index = 0
 
@@ -71,7 +71,7 @@ class EventEmitter {
     }
     return false
   }
-  dispatchEvent (label, ...args) {
+  emit (label, ...args) {
     let listeners = this.listeners.get(label)
 
     if (listeners && listeners.length) {
@@ -113,7 +113,7 @@ export class LamdaClient extends EventEmitter {
 
       try {
         let detail = JSON.parse(evt.data)
-        this.dispatchEvent(detail.type, detail)
+        this.emit(detail.type, detail)
       } catch (e) {
         console.log(e)
       }
@@ -172,7 +172,7 @@ export class LamdaClient extends EventEmitter {
         clearInterval(tt)
         fnc()
       }
-    }, 25)
+    }, 0)
   }
 
   ensureSend (data) {

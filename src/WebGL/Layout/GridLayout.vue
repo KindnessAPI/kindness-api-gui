@@ -1,6 +1,6 @@
 <template>
   <O3D layout="scrollLayer" :animated="true" v-if="layouts">
-    <TextureText :canplay="true" font="Arial" align="left" :gotClicked="say" :text="sendMsgBtn" :visible="socket && socket.ready"></TextureText>
+    <TextureText :canplay="true" font="Arial" align="left" :gotClicked="say" :text="sendMsgBtn" :visible="lamda && lamda.ready"></TextureText>
     <O3D :key="msg._id" :animated="true"  v-for="msg in msgs" :layout="msg._id">
       <TextureText :canplay="true" font="Arial" align="left" :gotClicked="say" :text="msg.text"></TextureText>
     </O3D>
@@ -20,7 +20,7 @@ export default {
   mixins: [Tree],
   data () {
     return {
-      socket: false,
+      lamda: false,
       msgs: [],
       sendMsgBtn: 'Send Msg',
 
@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     setup () {
-      this.socket = new LamdaClient({
+      this.lamda = new LamdaClient({
         url: getWS(),
         roomId: 'chat-box-inst',
         nickname: 'KA@' + getID()
@@ -63,7 +63,7 @@ export default {
           text: text + ''
         })
         this.layouts[id] = {
-          py: this.msgs.length * -20
+          py: this.msgs.length * 20
         }
 
         let amount = Math.abs(this.msgs.length * -20)
@@ -80,20 +80,20 @@ export default {
       //   onMsg({ text: i++ })
       // }, 0)
 
-      this.socket.addEventListener('text', (detail) => {
+      this.lamda.on('text', (detail) => {
         let html = `<pre>${detail.type} - ${JSON.stringify(detail)}</pre>`
         console.log(detail, html)
         onMsg({ text: detail.text })
         this.$forceUpdate()
       })
 
-      this.socket.addEventListener('online', (detail) => {
-        let html = `<pre>me: ${this.socket.nickname} - ${JSON.stringify(detail)}</pre>`
+      this.lamda.on('online', (detail) => {
+        let html = `<pre>me: ${this.lamda.nickname} - ${JSON.stringify(detail)}</pre>`
         console.log(detail, html)
       })
     },
     say () {
-      this.socket.sendText({ text: window.prompt('what u wanna say?') || '...' })
+      this.lamda.sendText({ text: window.prompt('what u wanna say?') || '...' })
     },
     nextPage () {
       this.fader.value = 0
