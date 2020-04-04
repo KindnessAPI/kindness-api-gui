@@ -1,6 +1,6 @@
 <template>
   <O3D layout="scrollLayer" :animated="true" v-if="layouts">
-    <TextureText :canplay="true" font="Arial" align="left" :gotClicked="say" :text="sendMsgBtn"></TextureText>
+    <TextureText :canplay="true" font="Arial" align="left" :gotClicked="say" :text="sendMsgBtn" :visible="socket && socket.ready"></TextureText>
     <O3D :key="msg._id" :animated="true"  v-for="msg in msgs" :layout="msg._id">
       <TextureText :canplay="true" font="Arial" align="left" :gotClicked="say" :text="msg.text"></TextureText>
     </O3D>
@@ -80,14 +80,14 @@ export default {
       //   onMsg({ text: i++ })
       // }, 0)
 
-      this.socket.addEventListener('text', ({ detail }) => {
+      this.socket.addEventListener('text', (detail) => {
         let html = `<pre>${detail.type} - ${JSON.stringify(detail)}</pre>`
         console.log(detail, html)
         onMsg({ text: detail.text })
         this.$forceUpdate()
       })
 
-      this.socket.addEventListener('online', ({ detail }) => {
+      this.socket.addEventListener('online', (detail) => {
         let html = `<pre>me: ${this.socket.nickname} - ${JSON.stringify(detail)}</pre>`
         console.log(detail, html)
       })

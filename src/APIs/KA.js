@@ -37,15 +37,65 @@ socket.addEventListener('online', ({ detail }) => {
 })
 */
 
-export class LamdaClient extends EventTarget {
+let isFunction = function (obj) {
+  return typeof obj === 'function' || false
+}
+
+class EventEmitter {
+  constructor () {
+    this.listeners = new Map()
+  }
+  addEventListener (label, callback) {
+    this.listeners.has(label) || this.listeners.set(label, [])
+    this.listeners.get(label).push(callback)
+  }
+
+  removeEventListener (label, callback) {
+    let listeners = this.listeners.get(label)
+    let index = 0
+
+    if (listeners && listeners.length) {
+      index = listeners.reduce((i, listener, index) => {
+        let a = () => {
+          i = index
+          return i
+        }
+        return (isFunction(listener) && listener === callback) ? a() : i
+      }, -1)
+
+      if (index > -1) {
+        listeners.splice(index, 1)
+        this.listeners.set(label, listeners)
+        return true
+      }
+    }
+    return false
+  }
+  dispatchEvent (label, ...args) {
+    let listeners = this.listeners.get(label)
+
+    if (listeners && listeners.length) {
+      listeners.forEach((listener) => {
+        listener(...args)
+      })
+      return true
+    }
+    return false
+  }
+}
+
+export class LamdaClient extends EventEmitter {
   constructor ({ url, nickname, roomId }) {
     super()
     this.url = url
     this.nickname = nickname
     this.roomId = roomId
     this.autoReconnectInterval = 5 * 1000
-
     this.open()
+  }
+
+  get ready () {
+    return this.ws.readyState === WebSocket.OPEN
   }
 
   open () {
@@ -63,7 +113,7 @@ export class LamdaClient extends EventTarget {
 
       try {
         let detail = JSON.parse(evt.data)
-        this.dispatchEvent(new CustomEvent(detail.type, { detail }))
+        this.dispatchEvent(detail.type, detail)
       } catch (e) {
         console.log(e)
       }
