@@ -52,7 +52,9 @@ export default {
       })
     }
 
+    // https://github.com/Jam3/msdf-bmfont
     // https://msdf-bmfont.donmccurdy.com/
+
     let { texture, font } = await load({
       // eslint-disable-next-line
       fontURL: require('./bmfonts/Roboto-msdf.json'),

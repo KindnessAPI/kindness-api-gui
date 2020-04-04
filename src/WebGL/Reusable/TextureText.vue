@@ -106,7 +106,7 @@ export default {
     })
     this.$emit('try-init')
     this.$watch('text', () => {
-      this.$emit('try-init')
+      this.$emit('exec')
     })
     this.$watch('font', () => {
       this.$emit('try-init')

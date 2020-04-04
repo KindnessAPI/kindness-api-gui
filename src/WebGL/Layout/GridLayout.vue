@@ -1,7 +1,8 @@
 <template>
   <O3D layout="scrollLayer" :animated="true" v-if="layouts">
-    <BMText :text="allText" :clicked="say"></BMText>
-    <!-- <TextureText font="Arial" align="left" :clicked="say" :text="sendMsgBtn" :visible="lamda && lamda.ready"></TextureText> -->
+    <!-- <BMText :text="allText" :clicked="say"></BMText> -->
+    <TextureText font="Arial" align="left" :clicked="say" :text="allText"></TextureText>
+
     <!-- <O3D :key="msg._id" :animated="true"  v-for="msg in msgs" :layout="msg._id">
       <TextureText :canplay="true" font="Arial" align="left" :clicked="say" :text="msg.text"></TextureText>
     </O3D> -->
@@ -57,6 +58,17 @@ export default {
           py: -30
         }
       }
+
+      let textarea = document.createElement('textarea')
+      textarea.style.position = 'fixed'
+      textarea.style.top = '0px'
+      textarea.style.left = '0px'
+
+      textarea.oninput = (evt) => {
+        this.allText = evt.target.value
+      }
+      this.lookup('mounter').appendChild(textarea)
+      textarea.focus()
 
       let onMsg = ({ text }) => {
         let id = getID()
