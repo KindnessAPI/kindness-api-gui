@@ -10,7 +10,7 @@
     "lint": "vue-cli-service lint",
     "git": "git add .; git commit -am \"git backup\"; git push -u origin master",
     "deploy": "npm run build; npm run netlify; npm run git; ",
-    "deploy-staging": "npm run build-staging; npm run netlify-staging; npm run git; ",
+    "preview": "npm run build-staging; npm run netlify-staging; npm run git; ",
     "netlify": "netlify deploy --dir=\"./dist\" --prod",
     "netlify-staging": "netlify deploy --dir=\"./dist\"",
     "tunnel": "ssh -f -N -T -R 9000:127.0.0.1:8080 lok@157.230.247.60",

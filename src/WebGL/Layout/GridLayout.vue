@@ -68,7 +68,7 @@ export default {
         this.allText = evt.target.value
       }
       this.lookup('mounter').appendChild(textarea)
-      textarea.focus()
+      // textarea.focus()
 
       let onMsg = ({ text }) => {
         let id = getID()
