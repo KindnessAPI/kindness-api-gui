@@ -1,0 +1,65 @@
+<template>
+  <div ref="dom">
+    <slot class="full" name="dom"></slot>
+    <slot name="o3d" @scene="scene = $event" @camera="camera = $event"></slot>
+  </div>
+</template>
+
+<script>
+import { Tree, getID } from '../Reusable'
+export default {
+  props: {
+    area: {
+      default () {
+        return getID()
+      }
+    }
+  },
+  name: 'ScissorArea',
+  mixins: [Tree],
+  components: {
+    ...require('../webgl').default
+  },
+  data () {
+    return {
+      element: false,
+      scene: false,
+      camera: false
+    }
+  },
+  created () {
+    this.$on('scene', (v) => {
+      this.scene = v
+      this.tryHook()
+    })
+    this.$on('camera', (v) => {
+      this.camera = v
+      this.tryHook()
+    })
+  },
+  mounted () {
+    this.element = this.$refs.dom
+    this.tryHook()
+  },
+  methods: {
+    tryHook () {
+      if (this.scene && this.camera && this.element) {
+        let aeras = this.lookup('areas')
+        aeras[this.area] = {
+          element: this.element,
+          scene: this.scene,
+          camera: this.camera
+        }
+      }
+    }
+  },
+  beforeDestroy () {
+    let areas = this.lookup('areas')
+    delete areas[this.area]
+  }
+}
+</script>
+
+<style>
+
+</style>

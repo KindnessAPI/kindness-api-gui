@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { Tree, makePaintCanvas, makeScroller, Damper } from '../Reusable'
+import { Tree, makePaintCanvas, makeScroller, Damper, RayPlay, PCamera } from '../Reusable'
 import { Scene, CubeTexture } from 'three'
 export default {
   name: 'HappyLayout',
@@ -86,8 +86,16 @@ Love never ends.
     }
   },
   async mounted () {
+    // prepare camera
+    this.camera = new PCamera({ base: this.lookup('base') })
+    this.camera.position.z = 200
+
+    this.rayplay = new RayPlay({ mounter: this.lookup('element'), base: this.lookup('base'), camera: this.camera })
+
     this.scene.add(this.o3d)
-    this.$emit('scene', this.scene)
+
+    this.$parent.$emit('scene', this.scene)
+    this.$parent.$emit('camera', this.camera)
     this.scene.background = this.paintCubeTex
 
     this.limit = {
@@ -95,10 +103,16 @@ Love never ends.
       canRun: true,
       y: 1
     }
-    this.scroller = makeScroller({ base: this.lookup('base'), mounter: this.lookup('mounter'), limit: this.limit, onMove: () => { this.$emit('onMove') } })
+
+    console.log(this.lookup('element'))
+
+    this.scroller = makeScroller({ base: this.lookup('base'), mounter: this.lookup('element'), limit: this.limit, onMove: () => { this.$emit('onMove') } })
     this.fader = new Damper(0, this.lookup('base'))
 
     let looper = () => {
+      if (!this.screen) {
+        return
+      }
       this.lookup('renderer').domElement.style.opacity = this.fader.value
 
       this.blur = 1.0 - this.scroller.value
@@ -129,6 +143,7 @@ Love never ends.
         }
       }
     }
+
     this.lookup('base').onLoop(looper)
     this.scroller.value = 1
     this.fader.value = 1

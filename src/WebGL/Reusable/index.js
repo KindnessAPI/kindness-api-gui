@@ -8,6 +8,7 @@ export { visibleHeightAtZDepth, visibleWidthAtZDepth, getScreen } from './Screen
 export { makePaintCanvas } from './makePaintCanvas'
 export { Tree } from './Tree'
 export { PipeBasic } from './PipeBasic'
+export { PipeScissor } from './PipeScissor'
 export { RayPlay } from './RayPlay'
 export { Damper } from './Damper'
 

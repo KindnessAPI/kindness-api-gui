@@ -81,8 +81,7 @@ export const Tree = {
       this.$emit('syncFormula')
     }
   },
-
-  mounted () {
+  async mounted () {
     this.$parent.$emit('add', this.o3d)
 
     this.$emit('syncFormula')
@@ -93,15 +92,15 @@ export const Tree = {
       })
     }
     if (this.lookup('base')) {
-      this.lookup('base').onResize(() => {
+      this.screen = await this.getScreen()
+      this.lookup('base').onResize(async () => {
         this.$emit('syncFormula')
-        this.screen = this.getScreen()
+        this.screen = await this.getScreen()
       })
     }
 
     console.log('Mounted:', this.$options.name)
     // window.dispatchEvent(new Event('resize'))
-
     let ray = this.lookup('rayplay')
     if (ray) {
       this.$on('enable-play', (v) => {
@@ -143,9 +142,9 @@ export const Tree = {
     //   }
     //   castDown({ lv: this, ev: 'relayout', data: true })
     // },
-    getScreen () {
-      let scene = this.lookup('scene')
-      let camera = this.lookup('camera')
+    async getScreen () {
+      let scene = this.lookup('scene') || await this.lookupWait('scene')
+      let camera = this.lookup('camera') || await this.lookupWait('camera')
       if (scene) {
         scene.updateMatrixWorld()
       }
@@ -159,6 +158,18 @@ export const Tree = {
 
     castdown (ev, data) {
       return castdown(this, ev, data)
+    },
+    async lookupWait (key) {
+      return new Promise(async (resolve) => {
+        let base = this.lookup('base')
+        let clean = await base.onLoop(() => {
+          let lookupResult = this.lookup(key)
+          if (lookupResult) {
+            clean()
+            resolve(lookupResult)
+          }
+        })
+      })
     },
     lookup (key) {
       return lookup(this, key)

@@ -1,11 +1,23 @@
 import { PerspectiveCamera } from 'three'
 
 export class PCamera {
-  constructor ({ base }) {
-    let camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.01, 10000000)
+  constructor ({ base, element }) {
+    let rect = false
+    if (element) {
+      rect = element.getBoundingClientRect()
+    } else {
+      base.mounter.getBoundingClientRect()
+    }
+    let camera = new PerspectiveCamera(75, base.getWidth(rect) / base.getHeight(rect), 0.01, 10000000)
 
     let resizer = () => {
-      camera.aspect = base.getWidth() / base.getHeight()
+      let rect = false
+      if (element) {
+        rect = element.getBoundingClientRect()
+      } else {
+        base.mounter.getBoundingClientRect()
+      }
+      camera.aspect = base.getWidth(rect) / base.getHeight(rect)
       camera.updateProjectionMatrix()
     }
     base.onResize(resizer)
