@@ -8,7 +8,7 @@
 
 <script>
 import { Tree, makeScroller, RayPlay, PCamera } from '../Reusable'
-import { Scene } from 'three'
+import { Scene, Color } from 'three'
 export default {
   name: 'HappyLayout',
   components: {
@@ -53,7 +53,7 @@ export default {
     //   paintCanvas.canvas,
     //   paintCanvas.canvas
     // ])
-    // this.scene.background = this.paintCubeTex
+    this.scene.background = new Color('#baeaba')
 
     // prepare camera
     this.camera = new PCamera({ base: this.lookup('base'), element: this.lookup('element') })
