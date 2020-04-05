@@ -123,13 +123,13 @@ export const Tree = {
 
   methods: {
     async waitDoOnce ({ getter = () => {}, fnc = () => {} }) {
-      let clean = true
+      let execute = true
       this.lookup('base').onLoop(() => {
-        if (!clean) { return }
+        if (!execute) { return }
         let v = getter()
         if (v) {
           fnc(v)
-          clean = false
+          execute = false
         }
       })
     },
@@ -161,12 +161,12 @@ export const Tree = {
     },
     async lookupWait (key) {
       return new Promise(async (resolve) => {
-        let base = this.lookup('base')
-        let clean = await base.onLoop(() => {
-          let lookupResult = this.lookup(key)
-          if (lookupResult) {
-            clean()
-            resolve(lookupResult)
+        this.waitDoOnce({
+          getter: () => {
+            return this.lookup(key)
+          },
+          fnc: (v) => {
+            resolve(v)
           }
         })
       })
