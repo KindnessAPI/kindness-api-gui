@@ -1,14 +1,16 @@
 <template>
   <O3D v-if="layouts">
     <O3D :animated="true" layout="ball">
-      <Test></Test>
+      <Test @click="click"></Test>
     </O3D>
   </O3D>
 </template>
 
 <script>
-import { Tree, makeScroller, RayPlay, PCamera } from '../Reusable'
+import { Tree, RayPlay, PCamera } from '../Reusable'
 import { Scene, Color } from 'three'
+import { Interaction } from 'three.interaction'
+
 export default {
   name: 'HappyLayout',
   components: {
@@ -26,33 +28,13 @@ export default {
     }
   },
   methods: {
-    nextPage () {
-      this.fader.value = 0
-      this.scroller.value = 0
-      this.waitDoOnce({
-        getter: () => {
-          return this.fader.value <= 0.05
-        },
-        fnc: () => {
-          this.$router.push('/2')
-        }
-      })
-    },
-    goMini (v) {
-      this.scroller.value = 0
+    click () {
+      console.log('123')
     }
   },
   async mounted () {
     await this.lookupWait('ready')
-    // let paintCanvas = makePaintCanvas({ pixel: 64, sdk: this.lookup('sdk'), setting: 'paint-canvas', domElement: this.lookup('touchDom'), base: this.lookup('base') })
-    // this.paintCubeTex = new CubeTexture([
-    //   paintCanvas.canvas,
-    //   paintCanvas.canvas,
-    //   paintCanvas.canvas,
-    //   paintCanvas.canvas,
-    //   paintCanvas.canvas,
-    //   paintCanvas.canvas
-    // ])
+
     this.scene.background = new Color('#baeaba')
 
     // prepare camera
@@ -62,39 +44,29 @@ export default {
 
     this.scene.add(this.o3d)
 
+    this.interaction = new Interaction(this.lookup('renderer'), this.scene, this.camera)
+    this.interaction.setTargetElement(this.lookup('element'))
+
     this.$parent.$emit('scene', this.scene)
     this.$parent.$emit('camera', this.camera)
 
     this.limit = {
-      direction: 'vertical',
+      direction: 'horizontal',
       canRun: true,
       y: 1
     }
 
-    console.log(this.lookup('element'))
-
-    this.scroller = makeScroller({ base: this.lookup('base'), mounter: this.lookup('element'), limit: this.limit, onMove: () => { this.$emit('onMove') } })
+    // this.scroller = makeScroller({ base: this.lookup('base'), mounter: this.lookup('element'), limit: this.limit, onMove: () => { this.$emit('onMove') } })
 
     let looper = () => {
-      if (!this.screen) {
-        return
-      }
-
-      this.blur = 1.0 - this.scroller.value
-
-      // let time = window.performance.now() * 0.001
-      // this.paint2DTex.needsUpdate = true
-      // this.paintCubeTex.needsUpdate = true
-
       this.layouts = {
         ball: {
-          px: (this.scroller.value - 0.5) * (this.screen.width)
+          px: 0
         }
       }
     }
 
     this.lookup('base').onLoop(looper)
-    this.scroller.value = 1
   }
 }
 </script>
