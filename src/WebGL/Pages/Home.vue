@@ -17,6 +17,7 @@
         <HomeBannerLayout slot="o3d"></HomeBannerLayout>
       </ScissorArea>
       <div class=" h-64"></div>
+      <div class=" h-64"></div>
       <ScissorArea>
         <div slot="dom" class="p-3 text-green-500 text-4xl">
           KindnessAPI.com
@@ -31,7 +32,19 @@
 import { PipeScissor } from '../Reusable'
 export default {
   name: 'Home',
-  mixins: [PipeScissor]
+  mixins: [PipeScissor],
+  data () {
+    return {
+      origColor: ''
+    }
+  },
+  mounted () {
+    this.origColor = document.body.style.backgroundColor
+    document.body.style.backgroundColor = '#ececec'
+  },
+  beforeDestroy () {
+    document.body.style.backgroundColor = this.origColor
+  }
 }
 </script>
 
