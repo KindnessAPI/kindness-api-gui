@@ -1,8 +1,8 @@
 <template>
   <O3D v-if="layouts">
-    <O3D :animated="true" layout="ball">
+    <!-- <O3D :animated="true" layout="ball">
       <Test @click="click"></Test>
-    </O3D>
+    </O3D> -->
     <GradientBG></GradientBG>
   </O3D>
 </template>

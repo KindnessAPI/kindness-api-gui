@@ -48,9 +48,10 @@ export const PipeScissor = {
 
         // get its position relative to the page's viewport
         var rect = element.getBoundingClientRect()
+        var newTop = rect.top
 
         // check if it's offscreen. If so skip it
-        if (rect.bottom < 0 || rect.top > this.renderer.domElement.clientHeight ||
+        if (rect.bottom < 0 || newTop > this.renderer.domElement.clientHeight ||
             rect.right < 0 || rect.left > this.renderer.domElement.clientWidth) {
           // console.log('skip', areaKN)
           continue
@@ -58,7 +59,7 @@ export const PipeScissor = {
 
         // set the viewport
         var width = rect.right - rect.left
-        var height = rect.bottom - rect.top
+        var height = rect.bottom - newTop
         var left = rect.left
         var bottom = this.renderer.domElement.clientHeight - rect.bottom
 
@@ -81,6 +82,12 @@ export const PipeScissor = {
     this.ready = true
   },
   methods: {
+    // getScrollProgress () {
+    //   return window.scrollY / (document.body.scrollHeight - document.body.offsetHeight)
+    // },
+    // getMaxScrollHeight () {
+    //   return (document.body.scrollHeight - document.body.offsetHeight)
+    // }
   },
   beforeDestroy () {
     this.base.isActiveRender = false

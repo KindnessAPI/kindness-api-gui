@@ -127,6 +127,17 @@ module.exports = {
       },
     },
     spacing: {
+      min10: '10vmin',
+      min20: '20vmin',
+      min30: '30vmin',
+      min40: '40vmin',
+      min50: '50vmin',
+      min60: '60vmin',
+      min70: '70vmin',
+      min80: '80vmin',
+      min90: '90vmin',
+      min100: '100vmin',
+
       px: '1px',
       '0': '0',
       '1': '0.25rem',

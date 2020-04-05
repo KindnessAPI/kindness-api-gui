@@ -1,4 +1,4 @@
-
+import { Clock } from 'three'
 // can scroll how many pages = limit.y
 export const makeScroller = ({ base, mounter, limit = { direction: 'vertical', canRun: true, y: 1000 }, onMove = () => {} }) => {
   let state = {
@@ -15,8 +15,10 @@ export const makeScroller = ({ base, mounter, limit = { direction: 'vertical', c
       this.maxY = limit.y
       this.latestVal = v
       this.dampedVal = v
+      this.clock = new Clock()
       base.onLoop(() => {
-        let diff = (this.latestVal - this.dampedVal) * (60 / 1000)
+        let delta = this.clock.getDelta()
+        let diff = (this.latestVal - this.dampedVal) * (delta * 1000 / 60 * 0.5)
         this.dampedVal += diff
       })
     }

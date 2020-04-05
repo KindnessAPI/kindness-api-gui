@@ -26,8 +26,16 @@ export default {
     let el = this.lookup('element')
     let damperX = new Damper(0, this.lookup('base'))
     let damperY = new Damper(0, this.lookup('base'))
+    let vm = this
     let h = {
-      isDown: false,
+      _isDown: false,
+      set isDown (v) {
+        h._isDown = v
+        vm.lookup('scrollerConfig').canRun = !v
+      },
+      get isDown () {
+        return h._isDown
+      },
       tsX: 0,
       tsY: 0,
       tdX: 0,
@@ -37,7 +45,16 @@ export default {
     }
     let scene = this.lookup('scene')
     item.cursor = 'pointer'
+    let moved = 0
     item.on('click', (ev) => {
+      if (moved > 5) { return }
+      console.log('you clicked!!!')
+    })
+    item.on('pointerdown', () => {
+      moved = 0
+    })
+    item.on('pointermove', () => {
+      moved++
     })
     item.on('touchstart', (ev) => {
       try {
@@ -85,6 +102,15 @@ export default {
       // let originalEvent = ev.data.originalEvent
       // console.log(originalEvent)
     })
+    // item.on('mouseover', () => {
+    //   console.log('over')
+    //   mat.color = new Color('#0000ff')
+    // })
+    // item.on('mouseout', () => {
+    //   console.log('out')
+    //   mat.color = new Color('#ff0000')
+    // })
+
     window.addEventListener('mousemove', (ev) => {
       if (hit && h.isDown) {
         h.tdX = ev.movementX
@@ -99,6 +125,7 @@ export default {
     }, { passive: true })
     window.addEventListener('mouseup', (ev) => {
       hit = false
+      h.isDown = false
     }, { passive: true })
 
     let rect = el.getBoundingClientRect()
