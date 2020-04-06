@@ -5,8 +5,17 @@
         Let's Connect People with Prayers & Kindness.
       </div>
       <div class="px-3">
-        Spreading the word of ✞ Gospel, <span class="font-bold text-teal-600">A</span>ssure love, <span class="font-bold text-teal-600">P</span>ray for each other and <span class="font-bold text-teal-600">I</span>nform Kindness.
+        <span class="font-bold text-red-600 bg-red-200 p-1">Assure</span> love, <span class="font-bold text-green-600 bg-green-200 p-1">Pray</span> for each other and <span class="font-bold text-blue-600 bg-blue-200 p-1">Inform</span> Kindness.
       </div>
+      <div class="px-3">
+        Spreading the word of ✞ Gospel via our Global Technology Infrastructure
+      </div>
+
+      <!--
+        <div class="px-3">
+          Made with ✞ love in Hong Kong by @wonglok831
+        </div>
+      -->
     </div>
     <ScissorArea>
       <div slot="dom" class="full">

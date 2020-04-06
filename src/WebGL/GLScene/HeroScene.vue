@@ -1,9 +1,14 @@
 <template>
   <O3D v-if="layouts">
-    <!-- <O3D :animated="true" layout="ball">
-      <Test @click="click"></Test>
-    </O3D> -->
-    <!-- <GradientBG></GradientBG> -->
+    <!--
+      <O3D :animated="true" layout="ball">
+        <Test @click="click"></Test>
+      </O3D> -->
+      <!-- <O3D :animated="true" layout="deep">
+        <GradientBG></GradientBG>
+      </O3D>
+    -->
+
     <O3D :animated="true" layout="cb-inst-1">
       <O3D :animated="true" layout="cb-rot">
         <O3D :animated="true" layout="cb-item">
@@ -114,6 +119,9 @@ export default {
       let cb3or = this.settings['cherry-blossom']['flower3-offfset-rotation']
 
       this.layouts = {
+        'deep': {
+          pz: -100
+        },
         'cb-rot': {
           rx: `${cb1r.x / 100 * Math.PI * 2}`,
           ry: `${cb1r.y / 100 * Math.PI * 2}`,
