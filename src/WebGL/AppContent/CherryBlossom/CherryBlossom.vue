@@ -11,6 +11,9 @@ import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 // import { Refractor } from 'three/examples/jsm/objects/Refractor'
 // import { FastBlurShader } from './FastBlurShader'
 
+let texLoader = new TextureLoader()
+let fbxLoader = new FBXLoader()
+
 let Cache = {}
 
 export default {
@@ -36,8 +39,6 @@ export default {
     }
   },
   mounted () {
-    let texLoader = new TextureLoader()
-    let fbxLoader = new FBXLoader()
     // let cubeLoader = new CubeTextureLoader()
     let load = (loader, url) => {
       return new Promise((resolve) => {
