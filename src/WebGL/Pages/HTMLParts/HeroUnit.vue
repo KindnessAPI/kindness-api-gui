@@ -5,7 +5,7 @@
         Let's Connect People with Prayers & Kindness.
       </div>
       <div class="px-3 mb-2">
-        <span class="inline-block cursor-pointer select-none hover:opacity-75 text-red-600 bg-red-200 px-3 py-2 mx-1 ml-0">Assure love</span> <span class="inline-block cursor-pointer select-none hover:opacity-75 text-green-600 bg-green-200 px-3 py-2 mx-1">Pray for each other</span> <span class="inline-block cursor-pointer select-none hover:opacity-75 text-blue-600 bg-blue-200 px-3 py-2 mx-1">Inform Kindness</span>
+        <span class="inline-block cursor-pointer select-none hover:opacity-75 text-red-600 bg-red-200 px-3 py-2 mr-2 mb-2">Assure love</span> <span class="inline-block cursor-pointer select-none hover:opacity-75 text-green-600 bg-green-200 px-3 py-2 mr-2 mb-2">Pray for each other</span> <span class="inline-block cursor-pointer select-none hover:opacity-75 text-blue-600 bg-blue-200 px-3 py-2 mr-2 mb-2">Inform Kindness</span>
       </div>
       <div class="px-3">
         Spreading the word of ✞ Gospel via global technology infrastructure 👨🏼‍💻 and computer graphics art 🎨.
