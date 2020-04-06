@@ -13,14 +13,6 @@ export default {
   name: 'GradientBG',
   mixins: [Tree],
   props: {
-    depth: {
-      default: 20
-    },
-    blur: {},
-    dudv: {},
-    color: {
-      default: 0x999999
-    }
   },
   components: {
     ...require('../../webgl')

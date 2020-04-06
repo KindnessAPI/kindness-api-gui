@@ -1,6 +1,5 @@
 
-uniform vec2 sceneRect;
-uniform float aspect;
+uniform lowp vec2 sceneRect;
 uniform float time;
 varying vec2 vUv;
 
@@ -34,7 +33,7 @@ float fbm6( vec2 p )
 
 float pattern (vec2 p) {
   float vout = fbm4( p + time + fbm6( p + fbm4( p + time )) );
-  return abs(vout);
+  return clamp(vout, 0.0, 1.0);
 }
 
 void main (void) {
