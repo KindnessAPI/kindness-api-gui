@@ -5,7 +5,7 @@
         Let's Connect People with Prayers & Kindness.
       </div>
       <div class="px-3">
-        Technology is an amazing platform to Spread the word of Gospel, Apply, Practice and Inform Kindness.
+        Spreading the word of ✞ Gospel, <span class="font-bold text-teal-600">A</span>ssure love, <span class="font-bold text-teal-600">P</span>ray for each other and <span class="font-bold text-teal-600">I</span>nform Kindness.
       </div>
     </div>
     <ScissorArea>
