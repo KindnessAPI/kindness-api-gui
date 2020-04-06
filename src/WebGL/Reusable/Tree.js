@@ -142,6 +142,7 @@ export const Tree = {
     //   }
     //   castDown({ lv: this, ev: 'relayout', data: true })
     // },
+
     async getScreen () {
       let scene = this.lookup('scene') || await this.lookupWait('scene')
       let camera = this.lookup('camera') || await this.lookupWait('camera')

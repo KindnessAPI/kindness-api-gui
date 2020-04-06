@@ -6,7 +6,7 @@
 
 <script>
 import { Tree, makePaintCanvas } from '../../Reusable'
-import { MeshBasicMaterial, CubeTexture, DoubleSide, Object3D } from 'three'
+import { MeshMatcapMaterial, MeshBasicMaterial, CubeTexture, DoubleSide, Object3D, TextureLoader } from 'three'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 // import { Refractor } from 'three/examples/jsm/objects/Refractor'
 // import { FastBlurShader } from './FastBlurShader'
@@ -36,6 +36,7 @@ export default {
     }
   },
   mounted () {
+    let texLoader = new TextureLoader()
     let fbxLoader = new FBXLoader()
     // let cubeLoader = new CubeTextureLoader()
     let load = (loader, url) => {
@@ -61,16 +62,17 @@ export default {
     this.lookup('base').onLoop(() => {
       cube.needsUpdate = true
     })
-    let brown = new MeshBasicMaterial({ color: '#4c2a06', side: DoubleSide })
-    let yellow = new MeshBasicMaterial({ color: '#ffd743', side: DoubleSide })
+    let brown = new MeshMatcapMaterial({ color: '#4c2a06', side: DoubleSide, matcap: texLoader.load(require('./matcap/brown.png')) })
+    let yellow = new MeshMatcapMaterial({ color: '#ffd743', side: DoubleSide, matcap: texLoader.load(require('./matcap/bright-yellow.png')) })
     let pedals = new MeshBasicMaterial({ color: 0xffffff, opacity: 1, transparent: true, side: DoubleSide, envMap: cube })
     this.$on('init', async () => {
       // eslint-disable-next-line
-      let root1 = await load(fbxLoader, require('file-loader!./fbx/flower1.fbx').default)
+      Cache.cherryBlossom = Cache.cherryBlossom || await load(fbxLoader, require('file-loader!./fbx/flower1.fbx').default)
+      let root1 = Cache.cherryBlossom
       // console.log(root1)
       root1.traverse((item) => {
         if (item.isMesh) {
-          console.log(item.name)
+          // console.log(item.name)
           if (item.name.indexOf('Plane') !== -1) {
             item.material = pedals
           }
@@ -84,9 +86,9 @@ export default {
       })
 
       this.flower1.add(root1)
-      this.flower1.scale.x = 0.2
-      this.flower1.scale.y = 0.2
-      this.flower1.scale.z = 0.2
+      this.flower1.scale.x = 0.234
+      this.flower1.scale.y = 0.234
+      this.flower1.scale.z = 0.234
       this.o3d.add(this.flower1)
     })
 

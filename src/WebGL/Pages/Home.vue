@@ -1,22 +1,18 @@
 <template>
   <div class="full">
-    <div class="fixed top-0 left-0 full" style="z-index: -1" ref="mounter"></div>
-    <!-- <HappyLayout v-if="ready" @scene="scene = $event" @camera="camera = $event"></HappyLayout> -->
+    <div class="fixed top-0 left-0 full pointer-events-none" style="z-index: -1" ref="mounter"></div>
 
     <div v-show="!openMenu">
-      <ScissorArea>
-        <div slot="dom">
-          <TopNavBar @menu="openMenu = !openMenu"></TopNavBar>
-        </div>
-        <PhantomScene slot="o3d"></PhantomScene>
-      </ScissorArea>
+      <!-- TopNav -->
+      <TopNavBar @menu="openMenu = !openMenu"></TopNavBar>
+      <!-- Hero Unit -->
       <HeroUnit></HeroUnit>
     </div>
 
-    <div v-if="openMenu" class="full absolute top-0 left-0">
+    <div v-show="openMenu" class="h-full md:h-min60 w-full absolute top-0 left-0 z-10">
       <ScissorArea class="full">
         <div slot="dom">
-          <TopMenuBar @close="openMenu = false"></TopMenuBar>
+          <FullMenuBar @close="openMenu = false"></FullMenuBar>
           <div class="px-3 text-white">
             GoGoGo
           </div>
@@ -91,7 +87,7 @@ export default {
   data () {
     return {
       openMenu: false,
-      isMD: false,
+      // isMD: false,
       innerHeight: window.innerHeight,
       scrollHeight: 0,
       scroller: false,
@@ -100,15 +96,13 @@ export default {
     }
   },
   mounted () {
-    let m768 = window.matchMedia('(min-width: 768px)')
-    m768.addListener(() => {
-      this.isMD = m768.matches
+    this.$watch('openMenu', () => {
+      window.dispatchEvent(new Event('resize'))
     })
-    this.isMD = m768.matches
 
-    this.$nextTick(() => {
-      window.scrollTo(0, 0)
-    })
+    // this.$nextTick(() => {
+    //   window.scrollTo(0, 0)
+    // })
 
     let vm = this
     this.scrollerConfig = {

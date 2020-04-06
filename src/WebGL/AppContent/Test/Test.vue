@@ -31,6 +31,9 @@ export default {
       _isDown: false,
       set isDown (v) {
         h._isDown = v
+        if (!vm.lookup('scrollerConfig')) {
+          return
+        }
         vm.lookup('scrollerConfig').canRun = !v
       },
       get isDown () {

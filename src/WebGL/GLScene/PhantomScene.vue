@@ -1,8 +1,10 @@
 <template>
   <O3D v-if="layouts">
-    <!-- <O3D :animated="true" layout="ball">
-      <Test @click="click"></Test>
-    </O3D> -->
+    <!--
+      <O3D :animated="true" layout="ball">
+        <Test @click="click"></Test>
+      </O3D>
+    -->
     <GradientBG></GradientBG>
   </O3D>
 </template>
@@ -36,7 +38,7 @@ export default {
   async mounted () {
     await this.lookupWait('ready')
 
-    this.scene.background = new Color('#baeaba')
+    this.scene.background = new Color('#fafafa')
 
     // prepare camera
     this.camera = new PCamera({ base: this.lookup('base'), element: this.lookup('element') })

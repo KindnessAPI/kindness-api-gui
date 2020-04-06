@@ -615,9 +615,9 @@
       "key": "flower1-offfset-rotation",
       "type": "vec3",
       "value": {
-        "x": 6,
-        "y": 71,
-        "z": 0
+        "x": 14,
+        "y": 32,
+        "z": 4
       },
       "id": "_73391"
     },
@@ -627,10 +627,21 @@
       "type": "vec3",
       "value": {
         "x": 0,
-        "y": 0,
+        "y": 3,
         "z": 0
       },
       "id": "_445782"
+    },
+    {
+      "group": "cherry-blossom",
+      "key": "flower3-offfset-rotation",
+      "type": "vec3",
+      "value": {
+        "x": 0,
+        "y": 0,
+        "z": 1
+      },
+      "id": "_4010"
     }
   ]
 }

@@ -33,7 +33,7 @@ export const PipeScissor = {
     this.touchDom = this.renderer.domElement
 
     // prepare render loop
-    this.base.onLoop(() => {
+    let renderFnc = () => {
       this.renderer.setClearColor(0xffffff, 0.1)
       this.renderer.setScissorTest(false)
       this.renderer.clear()
@@ -46,20 +46,16 @@ export const PipeScissor = {
         var camera = config.camera
         var scene = config.scene
 
-        // get its position relative to the page's viewport
         var rect = element.getBoundingClientRect()
-        var newTop = rect.top
 
-        // check if it's offscreen. If so skip it
-        if (rect.bottom < 0 || newTop > this.renderer.domElement.clientHeight ||
+        if (rect.bottom < 0 || rect.top > this.renderer.domElement.clientHeight ||
             rect.right < 0 || rect.left > this.renderer.domElement.clientWidth) {
-          // console.log('skip', areaKN)
           continue
         }
 
         // set the viewport
         var width = rect.right - rect.left
-        var height = rect.bottom - newTop
+        var height = rect.bottom - rect.top
         var left = rect.left
         var bottom = this.renderer.domElement.clientHeight - rect.bottom
 
@@ -71,7 +67,9 @@ export const PipeScissor = {
       // if (this.scene) {
       //   this.renderer.render(this.scene, this.camera)
       // }
-    })
+    }
+    this.base.onLoop(renderFnc)
+    this.base.onResizeNow(renderFnc)
 
     // statistics
     if (process.env.NODE_ENV === 'development') {

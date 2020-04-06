@@ -11,7 +11,9 @@
 
 <script>
 export default {
-
+  components: {
+    ...require('../../webgl').default
+  }
 }
 </script>
 

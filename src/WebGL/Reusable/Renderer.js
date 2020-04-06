@@ -42,7 +42,7 @@ export class Renderer {
       renderer.setPixelRatio(dpi)
     }
     // resizer()
-    base.onResize(resizer)
+    base.onResizeNow(resizer)
 
     return renderer
   }

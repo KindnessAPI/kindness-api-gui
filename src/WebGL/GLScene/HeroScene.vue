@@ -18,6 +18,13 @@
         </O3D>
       </O3D>
     </O3D>
+    <O3D :animated="true" layout="cb-inst-3">
+      <O3D :animated="true" layout="cb-rot">
+        <O3D :animated="true" layout="cb-item">
+          <CherryBlossom></CherryBlossom>
+        </O3D>
+      </O3D>
+    </O3D>
   </O3D>
 </template>
 
@@ -101,14 +108,16 @@ export default {
     let looper = () => {
       if (!this.settings['cherry-blossom']) { return }
       let time = window.performance.now() * 0.001
-      let cb1 = this.settings['cherry-blossom']['flower1-rotation']
+      let cb1r = this.settings['cherry-blossom']['flower1-rotation']
       let cb1or = this.settings['cherry-blossom']['flower1-offfset-rotation']
       let cb2or = this.settings['cherry-blossom']['flower2-offfset-rotation']
+      let cb3or = this.settings['cherry-blossom']['flower3-offfset-rotation']
+
       this.layouts = {
         'cb-rot': {
-          rx: `${cb1.x / 100 * Math.PI * 2}`,
-          ry: `${cb1.y / 100 * Math.PI * 2}`,
-          rz: `${cb1.z / 100 * Math.PI * 2}`
+          rx: `${cb1r.x / 100 * Math.PI * 2}`,
+          ry: `${cb1r.y / 100 * Math.PI * 2}`,
+          rz: `${cb1r.z / 100 * Math.PI * 2}`
         },
         'cb-item': {
           rx: `${time}`,
@@ -116,20 +125,28 @@ export default {
           rz: ``
         },
         'cb-inst-1': {
-          px: `50`,
+          px: `75`,
           py: ``,
           pz: ``,
-          rx: `${cb1or.x / 100 * Math.PI * 2}`,
-          ry: `${cb1or.y / 100 * Math.PI * 2}`,
-          rz: `${cb1or.z / 100 * Math.PI * 2}`
+          rx: `${(cb1or.x - 50) / 100 * Math.PI * 2}`,
+          ry: `${(cb1or.y - 50) / 100 * Math.PI * 2}`,
+          rz: `${(cb1or.z - 50) / 100 * Math.PI * 2}`
         },
         'cb-inst-2': {
-          px: `-50`,
+          px: `0`,
           py: ``,
           pz: ``,
-          rx: `${cb2or.x / 100 * Math.PI * 2}`,
-          ry: `${cb2or.y / 100 * Math.PI * 2}`,
-          rz: `${cb2or.z / 100 * Math.PI * 2}`
+          rx: `${(cb2or.x - 50) / 100 * Math.PI * 2}`,
+          ry: `${(cb2or.y - 50) / 100 * Math.PI * 2}`,
+          rz: `${(cb2or.z - 50) / 100 * Math.PI * 2}`
+        },
+        'cb-inst-3': {
+          px: `-75`,
+          py: ``,
+          pz: ``,
+          rx: `${(cb3or.x - 50) / 100 * Math.PI * 2}`,
+          ry: `${(cb3or.y - 50) / 100 * Math.PI * 2}`,
+          rz: `${(cb3or.z - 50) / 100 * Math.PI * 2}`
         }
       }
     }

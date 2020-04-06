@@ -31,6 +31,7 @@ export const makeBase = () => {
     _: {
       loop: {},
       resize: {},
+      resizeNow: {},
       clean: {}
     },
     onLoop: async (fn) => {
@@ -47,6 +48,10 @@ export const makeBase = () => {
     onResize: async (fn) => {
       await fn()
       env._.resize[getID()] = fn
+    },
+    onResizeNow: async (fn) => {
+      await fn()
+      env._.resizeNow[getID()] = fn
     },
     onClean: (fn) => {
       env._.clean[getID()] = fn
@@ -91,17 +96,29 @@ export const makeBase = () => {
     if (!env.isActiveRender) {
       return
     }
-    let rect = env.mounter.getBoundingClientRect()
+    // let rect = env.mounter.getBoundingClientRect()
     for (var resizeKN in env._.resize) {
-      await env._.resize[resizeKN](rect)
+      await env._.resize[resizeKN]()
     }
   }
+  let runResizeNow = async () => {
+    if (!env.isActiveRender) {
+      return
+    }
+    // let rect = env.mounter.getBoundingClientRect()
+    for (var resizeKN in env._.resizeNow) {
+      await env._.resizeNow[resizeKN]()
+    }
+  }
+
   let resize = () => {
+    runResizeNow()
     clearTimeout(tout)
     tout = setTimeout(() => {
       runResize()
     }, 100)
   }
+  env.runResize = runResize
   window.addEventListener('resize', resize, false)
   env.onClean(() => {
     window.removeEventListener('resize', resize, false)
