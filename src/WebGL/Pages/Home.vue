@@ -3,14 +3,22 @@
     <div class="fixed top-0 left-0 full" style="z-index: -1" ref="mounter"></div>
     <!-- <HappyLayout v-if="ready" @scene="scene = $event" @camera="camera = $event"></HappyLayout> -->
     <div class="fixed top-0 left-0 full">
-      <div ref="scroll-content" class="full" :style="{ transform: `translateY(${-scroller.value * innerHeight}px)` }">
+      <div ref="scroll-content" class="scroll-content h-full lg:h-auto" :style="{ transform: `translateY(${-scroller.value * innerHeight}px)` }">
+        <ScissorArea class="w-full h-full lg:h-auto">
+          <div slot="dom" class="h-full w-full select-none pointer-events-none flex items-center justify-center lg:block">
+            <div class="text-white p-3 text-4xl">
+              KindnessAPI.com
+            </div>
+          </div>
+          <WelcomeBannerScene slot="o3d"></WelcomeBannerScene>
+        </ScissorArea>
 
-        <ScissorArea class="w-full h-full">
+        <!-- <ScissorArea class="w-full h-screen">
           <div slot="dom" class="h-full w-full select-none pointer-events-none flex items-center justify-center text-white text-4xl">
             KindnessAPI.com
           </div>
           <WelcomeBannerScene slot="o3d"></WelcomeBannerScene>
-        </ScissorArea>
+        </ScissorArea> -->
 
         <!-- <ScissorArea class="h-full w-full">
           <div slot="dom" class="h-full w-full select-none pointer-events-none flex items-center justify-center text-white text-4xl">
@@ -46,7 +54,7 @@ export default {
       scrollHeight: 0,
       scroller: false,
       origColor: '',
-      bgColor: '#bababa'
+      bgColor: '#fafafa'
     }
   },
   mounted () {
@@ -84,5 +92,5 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 </style>
