@@ -4,22 +4,40 @@
       <Test @click="click"></Test>
     </O3D> -->
     <!-- <GradientBG></GradientBG> -->
+    <O3D :animated="true" layout="cb-inst-1">
+      <O3D :animated="true" layout="cb-rot">
+        <O3D :animated="true" layout="cb-item">
+          <CherryBlossom></CherryBlossom>
+        </O3D>
+      </O3D>
+    </O3D>
+    <O3D :animated="true" layout="cb-inst-2">
+      <O3D :animated="true" layout="cb-rot">
+        <O3D :animated="true" layout="cb-item">
+          <CherryBlossom></CherryBlossom>
+        </O3D>
+      </O3D>
+    </O3D>
   </O3D>
 </template>
 
 <script>
 import { Tree, RayPlay, PCamera } from '../Reusable'
 import { Scene, Color } from 'three'
-import { Interaction } from 'three.interaction'
+// import { Interaction } from 'three.interaction'
+// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
 export default {
-  name: 'HappyLayout',
+  name: 'HeroScene',
   components: {
     ...require('../webgl').default
   },
   mixins: [Tree],
   data () {
     return {
+      settings: {},
+      flower1: {},
+
       scene: new Scene(),
       paint2DTex: false,
       paintCubeTex: false,
@@ -36,21 +54,26 @@ export default {
   async mounted () {
     await this.lookupWait('ready')
 
-    this.scene.background = new Color('#baeaba')
+    this.scene.background = new Color('#fafafa')
 
     // prepare camera
     this.camera = new PCamera({ base: this.lookup('base'), element: this.lookup('element') })
     this.camera.position.z = 100
     this.rayplay = new RayPlay({ mounter: this.lookup('element'), base: this.lookup('base'), camera: this.camera })
 
+    // this.controls = new OrbitControls(this.camera, this.lookup('element'))
+    // this.lookup('base').onLoop(() => {
+    //   this.controls.update()
+    // })
+
     this.scene.add(this.o3d)
 
-    this.interaction = new Interaction(this.lookup('renderer'), this.scene, this.camera, {
-      autoAttach: true,
-      autoPreventDefault: false,
-      interactionFrequency: 1
-    })
-    this.interaction.setTargetElement(this.lookup('element'))
+    // this.interaction = new Interaction(this.lookup('renderer'), this.scene, this.camera, {
+    //   autoAttach: true,
+    //   autoPreventDefault: false,
+    //   interactionFrequency: 1
+    // })
+    // this.interaction.setTargetElement(this.lookup('element'))
 
     this.$parent.$emit('scene', this.scene)
     this.$parent.$emit('camera', this.camera)
@@ -61,11 +84,52 @@ export default {
       y: 1
     }
 
-    // this.scroller = makeScroller({ base: this.lookup('base'), mounter: this.lookup('element'), limit: this.limit, onMove: () => { this.$emit('onMove') } })
+    let sdk = this.lookup('sdk')
+    sdk.onStubGroup('cherry-blossom', (stub) => {
+      this.settings['cherry-blossom'] = stub
+    })
+    // this.lookup('base').onLoop(() => {
+    //   let cb1 = this.settings['cherry-blossom']
+    //   if (cb1) {
+    //     // this.flower1.blossom.x = cb1['flower1-position'].x / 100 * Math.PI * 2
+    //     // this.flower1.blossom.y = cb1['flower1-position'].y / 100 * Math.PI * 2
+    //     // this.flower1.blossom.z = cb1['flower1-position'].z / 100 * Math.PI * 2
+    //   }
+    // })
 
+    // this.scroller = makeScroller({ base: this.lookup('base'), mounter: this.lookup('element'), limit: this.limit, onMove: () => { this.$emit('onMove') } })
     let looper = () => {
+      if (!this.settings['cherry-blossom']) { return }
+      let time = window.performance.now() * 0.001
+      let cb1 = this.settings['cherry-blossom']['flower1-rotation']
+      let cb1or = this.settings['cherry-blossom']['flower1-offfset-rotation']
+      let cb2or = this.settings['cherry-blossom']['flower2-offfset-rotation']
       this.layouts = {
-        ball: {
+        'cb-rot': {
+          rx: `${cb1.x / 100 * Math.PI * 2}`,
+          ry: `${cb1.y / 100 * Math.PI * 2}`,
+          rz: `${cb1.z / 100 * Math.PI * 2}`
+        },
+        'cb-item': {
+          rx: `${time}`,
+          ry: ``,
+          rz: ``
+        },
+        'cb-inst-1': {
+          px: `50`,
+          py: ``,
+          pz: ``,
+          rx: `${cb1or.x / 100 * Math.PI * 2}`,
+          ry: `${cb1or.y / 100 * Math.PI * 2}`,
+          rz: `${cb1or.z / 100 * Math.PI * 2}`
+        },
+        'cb-inst-2': {
+          px: `-50`,
+          py: ``,
+          pz: ``,
+          rx: `${cb2or.x / 100 * Math.PI * 2}`,
+          ry: `${cb2or.y / 100 * Math.PI * 2}`,
+          rz: `${cb2or.z / 100 * Math.PI * 2}`
         }
       }
     }

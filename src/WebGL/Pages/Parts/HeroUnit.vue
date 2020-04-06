@@ -1,7 +1,7 @@
 <template>
   <ScissorArea>
     <div slot="dom" class="full">
-      <div class="px-3 py-2 h-64">
+      <div class="px-3 py-2 h-min100">
         Apply, Practice, Inform Kindness for other applications.
       </div>
     </div>

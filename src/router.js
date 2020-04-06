@@ -13,7 +13,7 @@ export default new Router({
       component: () => import('./WebGL/Pages/Home.vue')
     },
     {
-      path: '/2',
+      path: '/about',
       component: () => import('./WebGL/Pages/Lok.vue')
     }
   ]

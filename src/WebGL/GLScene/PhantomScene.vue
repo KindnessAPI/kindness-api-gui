@@ -10,7 +10,7 @@
 <script>
 import { Tree, RayPlay, PCamera } from '../Reusable'
 import { Scene, Color } from 'three'
-import { Interaction } from 'three.interaction'
+// import { Interaction } from 'three.interaction'
 
 export default {
   name: 'HappyLayout',
@@ -45,12 +45,12 @@ export default {
 
     this.scene.add(this.o3d)
 
-    this.interaction = new Interaction(this.lookup('renderer'), this.scene, this.camera, {
-      autoAttach: true,
-      autoPreventDefault: false,
-      interactionFrequency: 1
-    })
-    this.interaction.setTargetElement(this.lookup('element'))
+    // this.interaction = new Interaction(this.lookup('renderer'), this.scene, this.camera, {
+    //   autoAttach: true,
+    //   autoPreventDefault: false,
+    //   interactionFrequency: 1
+    // })
+    // this.interaction.setTargetElement(this.lookup('element'))
 
     this.$parent.$emit('scene', this.scene)
     this.$parent.$emit('camera', this.camera)

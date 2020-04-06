@@ -10,7 +10,7 @@ import { PlaneBufferGeometry, Vector2, Mesh, ShaderMaterial } from 'three'
 // import { Refractor } from 'three/examples/jsm/objects/Refractor'
 // import { FastBlurShader } from './FastBlurShader'
 export default {
-  name: 'RefactorArea',
+  name: 'GradientBG',
   mixins: [Tree],
   props: {
     depth: {

@@ -567,6 +567,70 @@
         "fsz": "10"
       },
       "id": "_150543"
+    },
+    {
+      "group": "flower-pedals",
+      "key": "hue-spread",
+      "type": "number",
+      "value": 0,
+      "id": "_348355"
+    },
+    {
+      "group": "flower-pedals",
+      "key": "canvas-texture-dot",
+      "type": "color",
+      "value": {
+        "r": 255,
+        "g": 255,
+        "b": 255,
+        "a": 0.74
+      },
+      "id": "_619111"
+    },
+    {
+      "group": "flower-pedals",
+      "key": "canvas-texture-bg",
+      "type": "color",
+      "value": {
+        "r": 255,
+        "g": 208,
+        "b": 207,
+        "a": 0.74
+      },
+      "id": "_965135"
+    },
+    {
+      "group": "cherry-blossom",
+      "key": "flower1-rotation",
+      "type": "vec3",
+      "value": {
+        "x": 8,
+        "y": 41,
+        "z": 33
+      },
+      "id": "_528197"
+    },
+    {
+      "group": "cherry-blossom",
+      "key": "flower1-offfset-rotation",
+      "type": "vec3",
+      "value": {
+        "x": 6,
+        "y": 71,
+        "z": 0
+      },
+      "id": "_73391"
+    },
+    {
+      "group": "cherry-blossom",
+      "key": "flower2-offfset-rotation",
+      "type": "vec3",
+      "value": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "id": "_445782"
     }
   ]
 }
