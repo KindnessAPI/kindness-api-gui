@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="13px" viewBox="0 0 24 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 64 (93537) - https://sketch.com -->
+    <title>Page 1</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop-HD" transform="translate(-708.000000, -506.000000)">
+            <g id="Group" transform="translate(708.000000, 506.000000)" fill="#FFFFFF">
+                <path d="M24,12 L24,13 L0,13 L0,12 L24,12 Z M24,6 L24,7 L0,7 L0,6 L24,6 Z M24,0 L24,1 L0,1 L0,0 L24,0 Z" id="Shape"></path>
+                <path d="M24,13 L0,13 L0,12 L24,12 L24,13 Z M24,7 L0,7 L0,6 L24,6 L24,7 Z M24,1 L0,1 L0,0 L24,0 L24,1 Z" id="Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>

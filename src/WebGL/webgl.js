@@ -27,5 +27,6 @@ async function importAll (r, type) {
 importAll(require.context('./Layout', true, /\.vue$/, 'sync'), 'sync')
 importAll(require.context('./AppContent', true, /\.vue$/, 'sync'), 'sync')
 importAll(require.context('./Reusable', true, /\.vue$/, 'sync'), 'sync')
+importAll(require.context('./Pages/Parts', true, /\.vue$/, 'sync'), 'sync')
 
 export default exporter

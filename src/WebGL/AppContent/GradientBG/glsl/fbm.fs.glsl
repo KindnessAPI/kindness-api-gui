@@ -33,18 +33,19 @@ float fbm6( vec2 p )
 }
 
 float pattern (vec2 p) {
-  return fbm4( p + time + fbm6( p + fbm4( p + time )) );
+  float vout = fbm4( p + time + fbm6( p + fbm4( p + time )) );
+  return vout;
 }
 
 void main (void) {
   vec3 outColor = vec3(0.0);
   vec2 pt = vUv.xy;
   pt.y = pt.y * (sceneRect.y / sceneRect.x);
-  pt.xy = pt.xy * 2.0;
+  pt.xy = pt.xy * 3.0;
 
-  outColor.x = pattern(pt.xy + -0.1);
-  outColor.y = pattern(pt.xy + 0.0);
-  outColor.z = pattern(pt.xy + 0.1);
+  outColor.r = pattern(pt.xy + -0.1);
+  outColor.g = pattern(pt.xy + 0.0);
+  outColor.b = pattern(pt.xy + 0.1);
 
-  gl_FragColor = vec4(outColor.xyz, 1.0);
+  gl_FragColor = vec4(clamp(outColor.rgb, 0.0, 1.0), 1.0);
 }

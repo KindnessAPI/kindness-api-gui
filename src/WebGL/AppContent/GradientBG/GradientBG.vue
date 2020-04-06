@@ -42,9 +42,9 @@ export default {
       }
       let mat = new ShaderMaterial({
         // eslint-disable-next-line
-        vertexShader: require('raw-loader!./glsl/gradient.vs.glsl').default,
+        vertexShader: require('raw-loader!./glsl/fbm.vs.glsl').default,
         // eslint-disable-next-line
-        fragmentShader: require('raw-loader!./glsl/gradient.fs.glsl').default,
+        fragmentShader: require('raw-loader!./glsl/fbm.fs.glsl').default,
         uniforms,
         transparent: true
       })
