@@ -3,24 +3,29 @@
     <div class="fixed top-0 left-0 full" style="z-index: -1" ref="mounter"></div>
     <!-- <HappyLayout v-if="ready" @scene="scene = $event" @camera="camera = $event"></HappyLayout> -->
 
-    <ScissorArea v-show="!openMenu">
-      <div slot="dom">
-        <TopNavBar @menu="openMenu = !openMenu"></TopNavBar>
-      </div>
-      <WelcomeBannerScene slot="o3d"></WelcomeBannerScene>
-    </ScissorArea>
+    <div v-show="!openMenu">
+      <ScissorArea>
+        <div slot="dom">
+          <TopNavBar @menu="openMenu = !openMenu"></TopNavBar>
+        </div>
+        <PhantomScene slot="o3d"></PhantomScene>
+      </ScissorArea>
+      <HeroUnit></HeroUnit>
+    </div>
 
     <div v-if="openMenu" class="full absolute top-0 left-0">
       <ScissorArea class="full">
         <div slot="dom">
-          <div class="text-white" @click="openMenu = false" @touchend="openMenu = false">
-            asd
+          <TopMenuBar @close="openMenu = false"></TopMenuBar>
+          <div class="px-3 text-white">
+            GoGoGo
           </div>
         </div>
-        <WelcomeBannerScene slot="o3d"></WelcomeBannerScene>
+        <PhantomScene slot="o3d"></PhantomScene>
       </ScissorArea>
     </div>
 
+    <!--  -->
     <!-- <MenuBG v-show="openMenu" class="fixed top-0 left-0 full"></MenuBG> -->
     <!--  -->
 
