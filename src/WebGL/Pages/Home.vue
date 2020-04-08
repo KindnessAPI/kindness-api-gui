@@ -1,6 +1,6 @@
 <template>
   <div class="full">
-    <div class="fixed top-0 left-0 full pointer-events-none" style="z-index: -1" ref="mounter"></div>
+    <div class="fixed top-0 left-0 full pointer-events-none" :style="{ zIndex: -1 }" ref="mounter"></div>
 
     <div v-show="!openMenu">
       <TopNavBar @menu="openMenu = !openMenu"></TopNavBar>

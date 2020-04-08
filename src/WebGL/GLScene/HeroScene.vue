@@ -96,12 +96,14 @@ export default {
       y: 1
     }
 
+    let cherrySettingName = 'cherry-blossom'
     let sdk = this.lookup('sdk')
-    sdk.onStubGroup('cherry-blossom', (stub) => {
-      this.settings['cherry-blossom'] = stub
+    sdk.onStubGroup(cherrySettingName, (stub) => {
+      this.settings[cherrySettingName] = stub
     })
+
     // this.lookup('base').onLoop(() => {
-    //   let cb1 = this.settings['cherry-blossom']
+    //   let cb1 = this.settings[cherrySettingName]
     //   if (cb1) {
     //     // this.flower1.blossom.x = cb1['flower1-position'].x / 100 * Math.PI * 2
     //     // this.flower1.blossom.y = cb1['flower1-position'].y / 100 * Math.PI * 2
@@ -111,12 +113,13 @@ export default {
 
     // this.scroller = makeScroller({ base: this.lookup('base'), mounter: this.lookup('element'), limit: this.limit, onMove: () => { this.$emit('onMove') } })
     let looper = () => {
-      if (!this.settings['cherry-blossom']) { return }
+      if (!this.settings[cherrySettingName]) { return }
       let time = window.performance.now() * 0.001
-      let cb1r = this.settings['cherry-blossom']['flower1-rotation']
-      let cb1or = this.settings['cherry-blossom']['flower1-offfset-rotation']
-      let cb2or = this.settings['cherry-blossom']['flower2-offfset-rotation']
-      let cb3or = this.settings['cherry-blossom']['flower3-offfset-rotation']
+      let setting = this.settings[cherrySettingName]
+      let cb1r = setting['flower1-rotation']
+      let cb1or = setting['flower1-offfset-rotation']
+      let cb2or = setting['flower2-offfset-rotation']
+      let cb3or = setting['flower3-offfset-rotation']
 
       this.layouts = {
         'deep': {

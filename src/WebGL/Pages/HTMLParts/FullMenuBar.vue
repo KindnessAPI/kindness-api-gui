@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full md:h-min60 w-full absolute top-0 left-0 z-10">
+  <div class="h-full w-full absolute top-0 left-0 z-10">
     <ScissorArea class="full">
       <div slot="dom">
         <div class="flex w-full justify-between items-center">

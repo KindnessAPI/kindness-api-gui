@@ -1,3 +1,4 @@
+precision highp float;
 
 uniform lowp vec2 sceneRect;
 uniform float time;

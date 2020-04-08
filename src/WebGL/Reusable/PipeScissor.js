@@ -47,7 +47,10 @@ export const PipeScissor = {
         var scene = config.scene
 
         var rect = element.getBoundingClientRect()
-
+        if (rect.height === 0 && rect.width === 0) {
+          // console.log(123)
+          continue
+        }
         if (rect.bottom < 0 || rect.top > this.renderer.domElement.clientHeight ||
             rect.right < 0 || rect.left > this.renderer.domElement.clientWidth) {
           continue

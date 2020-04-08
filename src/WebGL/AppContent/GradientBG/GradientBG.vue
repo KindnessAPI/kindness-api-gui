@@ -6,7 +6,7 @@
 
 <script>
 import { Tree } from '../../Reusable'
-import { PlaneBufferGeometry, Vector2, Mesh, ShaderMaterial } from 'three'
+import { PlaneBufferGeometry, Vector2, Mesh, RawShaderMaterial } from 'three'
 // import { Refractor } from 'three/examples/jsm/objects/Refractor'
 // import { FastBlurShader } from './FastBlurShader'
 export default {
@@ -32,7 +32,7 @@ export default {
         time: { value: 0 },
         sceneRect: { value: new Vector2() }
       }
-      let mat = new ShaderMaterial({
+      let mat = new RawShaderMaterial({
         // eslint-disable-next-line
         vertexShader: require('raw-loader!./glsl/fbm.vs.glsl').default,
         // eslint-disable-next-line
