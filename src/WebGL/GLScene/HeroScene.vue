@@ -80,21 +80,8 @@ export default {
 
     this.scene.add(this.o3d)
 
-    // this.interaction = new Interaction(this.lookup('renderer'), this.scene, this.camera, {
-    //   autoAttach: true,
-    //   autoPreventDefault: false,
-    //   interactionFrequency: 1
-    // })
-    // this.interaction.setTargetElement(this.lookup('element'))
-
     this.$parent.$emit('scene', this.scene)
     this.$parent.$emit('camera', this.camera)
-
-    this.limit = {
-      direction: 'horizontal',
-      canRun: true,
-      y: 1
-    }
 
     let cherrySettingName = 'cherry-blossom'
     let sdk = this.lookup('sdk')
@@ -102,17 +89,10 @@ export default {
       this.settings[cherrySettingName] = stub
     })
 
-    // this.lookup('base').onLoop(() => {
-    //   let cb1 = this.settings[cherrySettingName]
-    //   if (cb1) {
-    //     // this.flower1.blossom.x = cb1['flower1-position'].x / 100 * Math.PI * 2
-    //     // this.flower1.blossom.y = cb1['flower1-position'].y / 100 * Math.PI * 2
-    //     // this.flower1.blossom.z = cb1['flower1-position'].z / 100 * Math.PI * 2
-    //   }
-    // })
+    let parentScrollBox = this.lookup('scrollBox')
 
-    // this.scroller = makeScroller({ base: this.lookup('base'), mounter: this.lookup('element'), limit: this.limit, onMove: () => { this.$emit('onMove') } })
     let looper = () => {
+      if (!parentScrollBox) { return }
       if (!this.settings[cherrySettingName]) { return }
       let time = window.performance.now() * 0.001
       let setting = this.settings[cherrySettingName]
@@ -140,7 +120,7 @@ export default {
           py: ``,
           pz: ``,
           rx: `${(cb1or.x - 50) / 100 * Math.PI * 2}`,
-          ry: `${(cb1or.y - 50) / 100 * Math.PI * 2}`,
+          ry: `${(cb1or.y - 50) / 100 * Math.PI * 2} + ${Math.PI * 0.5} * ${parentScrollBox.value}`,
           rz: `${(cb1or.z - 50) / 100 * Math.PI * 2}`
         },
         'cb-inst-2': {
@@ -148,7 +128,7 @@ export default {
           py: ``,
           pz: ``,
           rx: `${(cb2or.x - 50) / 100 * Math.PI * 2}`,
-          ry: `${(cb2or.y - 50) / 100 * Math.PI * 2}`,
+          ry: `${(cb2or.y - 50) / 100 * Math.PI * 2} + ${Math.PI * 0.5} * ${parentScrollBox.value}`,
           rz: `${(cb2or.z - 50) / 100 * Math.PI * 2}`
         },
         'cb-inst-3': {
@@ -156,7 +136,7 @@ export default {
           py: ``,
           pz: ``,
           rx: `${(cb3or.x - 50) / 100 * Math.PI * 2}`,
-          ry: `${(cb3or.y - 50) / 100 * Math.PI * 2}`,
+          ry: `${(cb3or.y - 50) / 100 * Math.PI * 2} + ${Math.PI * 0.5} * ${parentScrollBox.value}`,
           rz: `${(cb3or.z - 50) / 100 * Math.PI * 2}`
         }
       }

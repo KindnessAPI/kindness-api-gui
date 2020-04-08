@@ -47,8 +47,8 @@ export default {
         })
       })
     }
-
-    Cache.painter = Cache.painter || makePaintCanvas({ pixel: 64, sdk: this.lookup('sdk'), setting: 'flower-pedals', domElement: this.lookup('element'), base: this.lookup('base') })
+    let div = document.createElement('div')
+    Cache.painter = Cache.painter || makePaintCanvas({ pixel: 64, sdk: this.lookup('sdk'), setting: 'flower-pedals', domElement: div, base: this.lookup('base') })
     let painter = Cache.painter
     Cache.painterCube = Cache.painterCube || new CubeTexture([
       painter.canvas,

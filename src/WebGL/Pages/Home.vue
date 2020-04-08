@@ -28,7 +28,7 @@ export default {
     this.$watch('openMenu', () => {
       window.dispatchEvent(new Event('resize'))
     })
-    this.scrollBox = makeScrollBox({ dom: document.body, base: this.base })
+    this.scrollBox = makeScrollBox({ dom: window, base: this.base })
 
     this.origColor = document.body.style.backgroundColor
     document.body.style.backgroundColor = this.bgColor
