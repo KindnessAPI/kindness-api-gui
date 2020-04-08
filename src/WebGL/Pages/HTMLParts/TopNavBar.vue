@@ -8,7 +8,7 @@
         <div class="mr-6 flex cursor-pointer">
           <div class="hidden md:inline-flex">
             <div class="text-2xl text-white p-3">
-                Work in Progress
+                Love Work in Progress
             </div>
           </div>
           <img @click="$emit('menu')" src="../icon/menu.svg" alt="">

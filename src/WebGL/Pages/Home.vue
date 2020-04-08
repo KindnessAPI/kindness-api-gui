@@ -5,6 +5,7 @@
     <div v-show="!openMenu">
       <TopNavBar @menu="openMenu = !openMenu"></TopNavBar>
       <HeroUnit></HeroUnit>
+      <HowUnit></HowUnit>
     </div>
 
     <FullMenuBar v-show="openMenu" @close="openMenu = false"></FullMenuBar>
@@ -19,10 +20,6 @@ export default {
   data () {
     return {
       openMenu: false,
-      // isMD: false,
-      innerHeight: window.innerHeight,
-      scrollHeight: 0,
-      scroller: false,
       origColor: '',
       bgColor: '#fafafa'
     }
@@ -36,24 +33,23 @@ export default {
     //   window.scrollTo(0, 0)
     // })
 
-    let vm = this
-    this.scrollerConfig = {
-      direction: 'vertical',
-      canRun: true,
-      get y () {
-        return vm.scrollHeight / window.innerHeight
-      }
-    }
+    // let vm = this
+    // this.scrollerConfig = {
+    //   direction: 'vertical',
+    //   canRun: true,
+    //   get y () {
+    //     return vm.scrollHeight / window.innerHeight
+    //   }
+    // }
 
-    //
-    this.base.onResize(() => {
-      this.innerHeight = window.innerHeight
-      // this.scrollHeight = -(window.innerHeight - this.$refs['scroll-content'].clientHeight)
-      this.$nextTick(() => {
-        this.innerHeight = window.innerHeight
-        // this.scrollHeight = -(window.innerHeight - this.$refs['scroll-content'].clientHeight)
-      })
-    })
+    // this.base.onResize(() => {
+    //   this.innerHeight = window.innerHeight
+    //   // this.scrollHeight = -(window.innerHeight - this.$refs['scroll-content'].clientHeight)
+    //   this.$nextTick(() => {
+    //     this.innerHeight = window.innerHeight
+    //     // this.scrollHeight = -(window.innerHeight - this.$refs['scroll-content'].clientHeight)
+    //   })
+    // })
 
     // this.scroller = makeScroller({ base: this.base, mounter: document.body, limit: this.scrollerConfig, onMove: () => { this.$emit('onMove') } })
 

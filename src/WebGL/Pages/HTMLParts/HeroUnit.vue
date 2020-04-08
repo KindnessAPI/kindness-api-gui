@@ -6,13 +6,13 @@
       </div>
       <div class="px-3 mb-2 text-xl lg:flex">
         <div class="mr-2">
-          Authentic Community Building,
+          <span class="font-bold lg:font-normal">A</span>uthentic Community Building,
         </div>
         <div class="mr-2">
-          Pray for each other,
+          <span class="font-bold lg:font-normal">P</span>lenty of Love,
         </div>
         <div class="mr-2">
-          Inspired by Gospel
+          <span class="font-bold lg:font-normal">I</span>nspired by Gospel ✞
         </div>
       </div>
     </div>
@@ -24,13 +24,6 @@
       </div>
       <HeroScene slot="o3d"></HeroScene>
     </ScissorArea>
-
-    <div class="px-3 mb-2 text-2xl font-bold">
-      How do we do that?
-    </div>
-    <div class="px-3 mb-2">
-      We got Computer Graphics, Realtime Interactions and Data Queries inside our toolbox.
-    </div>
   </div>
 </template>
 
@@ -43,5 +36,4 @@ export default {
 </script>
 
 <style>
-
 </style>
