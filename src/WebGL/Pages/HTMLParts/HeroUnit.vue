@@ -6,7 +6,7 @@
       </div>
       <div class="px-3 mb-2 text-xl lg:flex">
         <div class="mr-2">
-          Authentic Communities,
+          Authentic Community Building,
         </div>
         <div class="mr-2">
           Pray for each other,
@@ -29,7 +29,7 @@
       How do we do that?
     </div>
     <div class="px-3 mb-2">
-      Computer Graphics, Realtime Interactions and Data Queries
+      We got Computer Graphics, Realtime Interactions and Data Queries inside our toolbox.
     </div>
   </div>
 </template>
