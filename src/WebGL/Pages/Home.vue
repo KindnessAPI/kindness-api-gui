@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { PipeScissor } from '../Reusable'
+import { PipeScissor, makeScrollBox } from '../Reusable'
 export default {
   name: 'Home',
   mixins: [PipeScissor],
@@ -28,30 +28,7 @@ export default {
     this.$watch('openMenu', () => {
       window.dispatchEvent(new Event('resize'))
     })
-
-    // this.$nextTick(() => {
-    //   window.scrollTo(0, 0)
-    // })
-
-    // let vm = this
-    // this.scrollerConfig = {
-    //   direction: 'vertical',
-    //   canRun: true,
-    //   get y () {
-    //     return vm.scrollHeight / window.innerHeight
-    //   }
-    // }
-
-    // this.base.onResize(() => {
-    //   this.innerHeight = window.innerHeight
-    //   // this.scrollHeight = -(window.innerHeight - this.$refs['scroll-content'].clientHeight)
-    //   this.$nextTick(() => {
-    //     this.innerHeight = window.innerHeight
-    //     // this.scrollHeight = -(window.innerHeight - this.$refs['scroll-content'].clientHeight)
-    //   })
-    // })
-
-    // this.scroller = makeScroller({ base: this.base, mounter: document.body, limit: this.scrollerConfig, onMove: () => { this.$emit('onMove') } })
+    this.scrollBox = makeScrollBox({ dom: document.body, base: this.base })
 
     this.origColor = document.body.style.backgroundColor
     document.body.style.backgroundColor = this.bgColor
