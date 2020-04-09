@@ -120,7 +120,7 @@ export default {
           py: ``,
           pz: ``,
           rx: `${(cb1or.x - 50) / 100 * Math.PI * 2}`,
-          ry: `${(cb1or.y - 50) / 100 * Math.PI * 2} + ${Math.PI * 0.5} * ${parentScrollBox.value}`,
+          ry: `${(cb1or.y - 50) / 100 * Math.PI * 2} + ${Math.PI * 1.5} * ${parentScrollBox.page}`,
           rz: `${(cb1or.z - 50) / 100 * Math.PI * 2}`
         },
         'cb-inst-2': {
@@ -128,7 +128,7 @@ export default {
           py: ``,
           pz: ``,
           rx: `${(cb2or.x - 50) / 100 * Math.PI * 2}`,
-          ry: `${(cb2or.y - 50) / 100 * Math.PI * 2} + ${Math.PI * 0.5} * ${parentScrollBox.value}`,
+          ry: `${(cb2or.y - 50) / 100 * Math.PI * 2} + ${Math.PI * 1.5} * ${parentScrollBox.page}`,
           rz: `${(cb2or.z - 50) / 100 * Math.PI * 2}`
         },
         'cb-inst-3': {
@@ -136,7 +136,7 @@ export default {
           py: ``,
           pz: ``,
           rx: `${(cb3or.x - 50) / 100 * Math.PI * 2}`,
-          ry: `${(cb3or.y - 50) / 100 * Math.PI * 2} + ${Math.PI * 0.5} * ${parentScrollBox.value}`,
+          ry: `${(cb3or.y - 50) / 100 * Math.PI * 2} + ${Math.PI * 1.5} * ${parentScrollBox.page}`,
           rz: `${(cb3or.z - 50) / 100 * Math.PI * 2}`
         }
       }

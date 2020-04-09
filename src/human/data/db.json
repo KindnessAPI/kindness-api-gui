@@ -24,9 +24,9 @@
       "key": "canvas-texture-bg",
       "type": "color",
       "value": {
-        "r": 0,
-        "g": 58,
-        "b": 138,
+        "r": 41,
+        "g": 24,
+        "b": 136,
         "a": 0.74
       },
       "id": "_959545"
@@ -642,6 +642,83 @@
         "z": 1
       },
       "id": "_4010"
+    },
+    {
+      "group": "parametric-rain",
+      "key": "maxLines",
+      "type": "number",
+      "value": 14.27,
+      "id": "_14393"
+    },
+    {
+      "group": "parametric-rain",
+      "key": "spread",
+      "type": "number",
+      "value": 13.83,
+      "id": "_452955"
+    },
+    {
+      "group": "parametric-rain",
+      "key": "thickness",
+      "type": "number",
+      "value": 13.29,
+      "id": "_823439"
+    },
+    {
+      "group": "parametric-rain",
+      "key": "baseOpacity",
+      "type": "number",
+      "value": 100,
+      "id": "_149217"
+    },
+    {
+      "group": "parametric-rain",
+      "key": "displacement",
+      "type": "vec3",
+      "value": {
+        "x": 10,
+        "y": 15,
+        "z": 0
+      },
+      "id": "_407648"
+    },
+    {
+      "group": "parametric-rain",
+      "key": "width",
+      "type": "number",
+      "value": 71.61,
+      "id": "_388454"
+    },
+    {
+      "group": "paint-rain",
+      "key": "hue-spread",
+      "type": "number",
+      "value": 55.59,
+      "id": "_49731"
+    },
+    {
+      "group": "paint-rain",
+      "key": "canvas-texture-dot",
+      "type": "color",
+      "value": {
+        "r": 75,
+        "g": 200,
+        "b": 255,
+        "a": 0.74
+      },
+      "id": "_540885"
+    },
+    {
+      "group": "paint-rain",
+      "key": "canvas-texture-bg",
+      "type": "color",
+      "value": {
+        "r": 101,
+        "g": 0,
+        "b": 232,
+        "a": 0.74
+      },
+      "id": "_562413"
     }
   ]
 }

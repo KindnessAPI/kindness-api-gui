@@ -2,7 +2,7 @@
   <div>
     <div class="pt-3">
       <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
-        Make Kindness Louder via Web Technologies
+        Making Kindness Louder via Web Technologies
       </div>
       <div class="px-3 mb-2 text-xl lg:flex">
         <div class="mr-2">
