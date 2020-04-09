@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { CylinderGeometry, Vector3, Vector2, InstancedBufferGeometry, BufferAttribute, InstancedBufferAttribute, RawShaderMaterial, Mesh, Object3D } from 'three'
+import { CylinderGeometry, Vector3, Vector2, Color, InstancedBufferGeometry, BufferAttribute, InstancedBufferAttribute, RawShaderMaterial, Mesh, Object3D } from 'three'
 import { Tree } from '../../Reusable'
 /* eslint-disable */
 export const tubeV = require('raw-loader!./tubeV.glsl').default
@@ -110,9 +110,9 @@ export default {
     }
   },
   async mounted () {
-    let count = 100
+    let count = 50
     let numSides = 4
-    let subdivisions = 275
+    let subdivisions = 300
     let openEnded = false
     let geo = await createLineGeo({ count, numSides, subdivisions, openEnded })
 
@@ -129,7 +129,7 @@ export default {
       tDudv: { value: null },
       useDudv: { value: false },
 
-      // baseColor: { value: new Color('#fff') },
+      baseColor: { value: new Color('#fff') },
       thickness: { value: 0.01 },
       spread: { value: 0.01 },
       time: { value: 0 },
@@ -142,12 +142,11 @@ export default {
     this.lookup('base').onLoop(() => {
       geo.maxInstancedCount = Math.floor(group.autoGet('maxLines') / 100.0 * count)
 
-      uniforms.displacement.value = group.autoGet('displacement').multiplyScalar(0.1)
       uniforms.spread.value = group.autoGet('spread')
       uniforms.thickness.value = group.autoGet('thickness') / 1000.0
 
       uniforms.baseOpacity.value = group.autoGet('baseOpacity') / 100.0
-      // uniforms.baseColor.value = group.autoGet('baseColor')
+      uniforms.baseColor.value = group.autoGet('baseColor')
       uniforms.time.value = window.performance.now() * 0.001
     })
 

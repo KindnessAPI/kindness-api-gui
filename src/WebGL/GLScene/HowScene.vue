@@ -9,18 +9,16 @@
       </O3D>
     -->
     <O3D :animated="true" :layout="'rain'">
-      <ParametricRain :tCube="tCube"></ParametricRain>
+      <ParametricRain></ParametricRain>
     </O3D>
   </O3D>
 </template>
 
 <script>
-import { Tree, RayPlay, PCamera, makePaintCanvas } from '../Reusable'
-import { Scene, Color, CubeTexture } from 'three'
+import { Tree, RayPlay, PCamera } from '../Reusable'
+import { Scene, Color } from 'three'
 // import { Interaction } from 'three.interaction'
 // import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-
-const Cache = {}
 
 export default {
   name: 'HeroScene',
@@ -30,7 +28,6 @@ export default {
   mixins: [Tree],
   data () {
     return {
-      tCube: null,
       settings: {},
       flower1: {},
 
@@ -50,30 +47,11 @@ export default {
   async mounted () {
     await this.lookupWait('ready')
 
-    let div = document.createElement('div')
-    Cache.painter = Cache.painter || makePaintCanvas({ pixel: 64, sdk: this.lookup('sdk'), setting: 'paint-rain', domElement: div, base: this.lookup('base') })
-    let painter = Cache.painter
-    Cache.painterCube = Cache.painterCube || new CubeTexture([
-      painter.canvas,
-      painter.canvas,
-      painter.canvas,
-      painter.canvas,
-      painter.canvas,
-      painter.canvas
-    ])
-    let cube = Cache.painterCube
-
-    this.lookup('base').onLoop(() => {
-      cube.needsUpdate = true
-    })
-
-    this.tCube = Cache.painterCube
-
     this.scene.background = new Color('#fafafa')
 
     // prepare camera
     this.camera = new PCamera({ base: this.lookup('base'), element: this.lookup('element') })
-    this.camera.position.z = 800
+    this.camera.position.z = 200
     this.rayplay = new RayPlay({ mounter: this.lookup('element'), base: this.lookup('base'), camera: this.camera })
 
     // let OrbitControls = require('three/examples/jsm/controls/OrbitControls').OrbitControls

@@ -10,7 +10,7 @@ precision highp float;
 // uniform float animateStrength;
 
 
-// uniform vec3 baseColor;
+uniform vec3 baseColor;
 uniform float baseOpacity;
 
 // varying vec3 vPos;
@@ -19,53 +19,55 @@ uniform samplerCube tCube;
 // uniform sampler2D tDudv;
 uniform float time;
 
-varying vec3 vReflect;
-varying vec3 vRefract[3];
-varying float vReflectionFactor;
-// varying vec2 vUv;
+// varying vec3 vReflect;
+// varying vec3 vRefract[3];
+// varying float vReflectionFactor;
+// // varying vec2 vUv;
 
 uniform bool useDudv;
 
 varying vec3 vColor;
 
 void main (void) {
-  vec3 tRefract0 = vRefract[0];
-  vec3 tRefract1 = vRefract[1];
-  vec3 tRefract2 = vRefract[2];
+  // vec3 tRefract0 = vRefract[0];
+  // vec3 tRefract1 = vRefract[1];
+  // vec3 tRefract2 = vRefract[2];
 
-  // if (useDudv) {
-  //   float waveStrength = 0.12;
+  // // if (useDudv) {
+  // //   float waveStrength = 0.12;
 
-  //   // simple distortion (ripple) via dudv map (see https://www.youtube.com/watch?v=6B7IF6GOu7s)
-  //   vec2 distortedUv = texture2D( tDudv, vec2( vUv.x, vUv.y ) ).rg * waveStrength;
-  //   distortedUv = vUv.xy + vec2( distortedUv.x, distortedUv.y );
-  //   vec2 distortion = ( texture2D( tDudv, distortedUv * 0.25 ).rg * 2.0 - 1.0 ) * waveStrength;
+  // //   // simple distortion (ripple) via dudv map (see https://www.youtube.com/watch?v=6B7IF6GOu7s)
+  // //   vec2 distortedUv = texture2D( tDudv, vec2( vUv.x, vUv.y ) ).rg * waveStrength;
+  // //   distortedUv = vUv.xy + vec2( distortedUv.x, distortedUv.y );
+  // //   vec2 distortion = ( texture2D( tDudv, distortedUv * 0.25 ).rg * 2.0 - 1.0 ) * waveStrength;
 
-  //   tRefract0.xy += distortion;
-  //   tRefract1.xy += distortion;
-  //   tRefract2.xy += distortion;
-  // }
+  // //   tRefract0.xy += distortion;
+  // //   tRefract1.xy += distortion;
+  // //   tRefract2.xy += distortion;
+  // // }
 
-  vec4 reflectedColor = vec4(1.0);// textureCube( tCube, vec3( -vReflect.x, vReflect.yz ) );
-  // vec4 reflectedColor = textureCube( tCube, vec3( -vReflect.x, vReflect.yz ) );
-  vec4 refractedColor = vec4(1.0);
+  // vec4 reflectedColor = vec4(1.0);// textureCube( tCube, vec3( -vReflect.x, vReflect.yz ) );
+  // // vec4 reflectedColor = textureCube( tCube, vec3( -vReflect.x, vReflect.yz ) );
+  // vec4 refractedColor = vec4(1.0);
 
-  // refractedColor.r = textureCube( tCube, vec3( tRefract0.x, tRefract0.yz ) ).r;
-  // refractedColor.g = textureCube( tCube, vec3( tRefract1.x, tRefract1.yz ) ).g;
-  // refractedColor.b = textureCube( tCube, vec3( tRefract2.x, tRefract2.yz ) ).b;
+  // // refractedColor.r = textureCube( tCube, vec3( tRefract0.x, tRefract0.yz ) ).r;
+  // // refractedColor.g = textureCube( tCube, vec3( tRefract1.x, tRefract1.yz ) ).g;
+  // // refractedColor.b = textureCube( tCube, vec3( tRefract2.x, tRefract2.yz ) ).b;
 
-  refractedColor.rgb = textureCube( tCube, vec3( tRefract2.x, tRefract2.yz ) ).rgb;
+  // refractedColor.rgb = textureCube( tCube, vec3( tRefract2.x, tRefract2.yz ) ).rgb;
 
-  // reflectedColor.rgb = refractedColor.rgb;
+  // // reflectedColor.rgb = refractedColor.rgb;
 
-  // refractedColor.r = textureCube( tCube, vec3( -tRefract0.x, tRefract0.yz ) ).r;
-  // refractedColor.g = textureCube( tCube, vec3( -tRefract1.x, tRefract1.yz ) ).g;
-  // refractedColor.b = textureCube( tCube, vec3( -tRefract2.x, tRefract2.yz ) ).b;
+  // // refractedColor.r = textureCube( tCube, vec3( -tRefract0.x, tRefract0.yz ) ).r;
+  // // refractedColor.g = textureCube( tCube, vec3( -tRefract1.x, tRefract1.yz ) ).g;
+  // // refractedColor.b = textureCube( tCube, vec3( -tRefract2.x, tRefract2.yz ) ).b;
 
-  // vec4 mixedColor = vec4(baseColor, baseOpacity);
-  gl_FragColor = mix( reflectedColor , refractedColor , clamp( vReflectionFactor, 0.0, 1.0 ) );
-  // gl_FragColor += 0.1 * mixedColor;
-  // gl_FragColor.rgb = vColor;
+  // // vec4 mixedColor = vec4(baseColor, baseOpacity);
+  // gl_FragColor = mix( reflectedColor , refractedColor , clamp( vReflectionFactor, 0.0, 1.0 ) );
+  // // gl_FragColor += 0.1 * mixedColor;
+  // // gl_FragColor.rgb = vColor;
+
+  gl_FragColor.rgb = baseColor;
   gl_FragColor.a = baseOpacity;
 
   //p----

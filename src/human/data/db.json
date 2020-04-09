@@ -647,21 +647,21 @@
       "group": "parametric-rain",
       "key": "maxLines",
       "type": "number",
-      "value": 14.27,
+      "value": 23.55,
       "id": "_14393"
     },
     {
       "group": "parametric-rain",
       "key": "spread",
       "type": "number",
-      "value": 13.83,
+      "value": 7.51,
       "id": "_452955"
     },
     {
       "group": "parametric-rain",
       "key": "thickness",
       "type": "number",
-      "value": 13.29,
+      "value": 4.78,
       "id": "_823439"
     },
     {
@@ -670,24 +670,6 @@
       "type": "number",
       "value": 100,
       "id": "_149217"
-    },
-    {
-      "group": "parametric-rain",
-      "key": "displacement",
-      "type": "vec3",
-      "value": {
-        "x": 10,
-        "y": 15,
-        "z": 0
-      },
-      "id": "_407648"
-    },
-    {
-      "group": "parametric-rain",
-      "key": "width",
-      "type": "number",
-      "value": 71.61,
-      "id": "_388454"
     },
     {
       "group": "paint-rain",
@@ -719,6 +701,18 @@
         "a": 0.74
       },
       "id": "_562413"
+    },
+    {
+      "group": "parametric-rain",
+      "key": "baseColor",
+      "type": "color",
+      "value": {
+        "r": 115,
+        "g": 33,
+        "b": 222,
+        "a": 0
+      },
+      "id": "_880020"
     }
   ]
 }

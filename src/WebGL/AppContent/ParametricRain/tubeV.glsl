@@ -28,16 +28,18 @@ uniform vec3 displacement;
 // varying vec3 vNormal;
 
 // -----
-uniform float mRefractionRatio;
-uniform float mFresnelBias;
-uniform float mFresnelScale;
-uniform float mFresnelPower;
+// uniform float mRefractionRatio;
+// uniform float mFresnelBias;
+// uniform float mFresnelScale;
+// uniform float mFresnelPower;
 
-uniform vec3 cameraPosition;
+// uniform vec3 cameraPosition;
 
-varying vec3 vReflect;
-varying vec3 vRefract[3];
-varying float vReflectionFactor;
+// varying vec3 vReflect;
+// varying vec3 vRefract[3];
+// varying float vReflectionFactor;
+// -----
+
 // varying vec2 vUv;
 
 // varying vec3 vPos;
@@ -225,7 +227,7 @@ vec2 defineVoume (float t) {
 vec3 defineCurve (float t) {
   float x = t * 2.0 - 1.0;
   float y = (offset.x * 2.0 - 1.0) * (spread * 0.1);
-  x *= 15.0;
+  x *= 5.0;
 
   float tik = time * 0.3;
   vec3 pos = vec3(x, y, 0.0);
@@ -233,7 +235,6 @@ vec3 defineCurve (float t) {
   pos.y += sin(pos.x + time);
 
   pos = rotateX(pos.x * 1.5) * pos;
-
 
   return
     pos;
@@ -322,16 +323,16 @@ void main (void) {
   // vViewPosition = -mvPosition.xyz;
   gl_Position = projectionMatrix * mvPosition;
 
-  vec3 newNormal = transformedNormal;
-  vec3 worldNormal = normalize(mat3( modelMatrix[0].xyz, modelMatrix[1].xyz, modelMatrix[2].xyz ) * newNormal.xyz );
-  vec4 worldPosition = modelMatrix * newObjPos;
-  vec3 I = worldPosition.xyz - cameraPosition;
+  // vec3 newNormal = transformedNormal;
+  // vec3 worldNormal = normalize(mat3( modelMatrix[0].xyz, modelMatrix[1].xyz, modelMatrix[2].xyz ) * newNormal.xyz );
+  // vec4 worldPosition = modelMatrix * newObjPos;
+  // vec3 I = worldPosition.xyz - cameraPosition;
 
-  vReflect = reflect( I, worldNormal );
-  vRefract[0] = refract( normalize( I ), worldNormal, mRefractionRatio );
-  vRefract[1] = refract( normalize( I ), worldNormal, mRefractionRatio * 0.99 );
-  vRefract[2] = refract( normalize( I ), worldNormal, mRefractionRatio * 0.98 );
-  vReflectionFactor = mFresnelBias + mFresnelScale * pow( 1.0 + dot( normalize( I ), worldNormal ), mFresnelPower );
+  // vReflect = reflect( I, worldNormal );
+  // vRefract[0] = refract( normalize( I ), worldNormal, mRefractionRatio );
+  // vRefract[1] = refract( normalize( I ), worldNormal, mRefractionRatio * 0.99 );
+  // vRefract[2] = refract( normalize( I ), worldNormal, mRefractionRatio * 0.98 );
+  // vReflectionFactor = mFresnelBias + mFresnelScale * pow( 1.0 + dot( normalize( I ), worldNormal ), mFresnelPower );
 
   // vPos = normalize(gl_Position.xyz);
 }
