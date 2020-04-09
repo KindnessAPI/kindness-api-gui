@@ -55,7 +55,7 @@ export default {
 
     // prepare camera
     this.camera = new PCamera({ base: this.lookup('base'), element: this.lookup('element') })
-    this.camera.position.z = 200
+    this.camera.position.z = 600
     this.rayplay = new RayPlay({ mounter: this.lookup('element'), base: this.lookup('base'), camera: this.camera })
 
     // let OrbitControls = require('three/examples/jsm/controls/OrbitControls').OrbitControls
