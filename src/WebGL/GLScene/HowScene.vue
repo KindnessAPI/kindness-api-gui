@@ -8,6 +8,10 @@
         <GradientBG></GradientBG>
       </O3D>
     -->
+    <O3D :animated="true" :layout="'bglayer'">
+      <GradientBG></GradientBG>
+    </O3D>
+
     <O3D :animated="true" :layout="'rain'">
       <ParametricRain></ParametricRain>
     </O3D>
@@ -65,20 +69,23 @@ export default {
     this.$parent.$emit('scene', this.scene)
     this.$parent.$emit('camera', this.camera)
 
-    let cherrySettingName = 'cherry-blossom'
+    let cheery = 'cherry-blossom'
     let sdk = this.lookup('sdk')
-    sdk.onStubGroup(cherrySettingName, (stub) => {
-      this.settings[cherrySettingName] = stub
+    sdk.onStubGroup(cheery, (stub) => {
+      this.settings[cheery] = stub
     })
 
     let parentScrollBox = this.lookup('scrollBox')
 
     let looper = () => {
       if (!parentScrollBox) { return }
-      if (!this.settings[cherrySettingName]) { return }
+      if (!this.settings[cheery]) { return }
       // let time = window.performance.now() * 0.001
-      // let setting = this.settings[cherrySettingName]
+      // let setting = this.settings[cheery]
       this.layouts = {
+        'bglayer': {
+          pz: '-1000'
+        },
         'rain': {
           rx: `${Math.PI * 8.5} * ${parentScrollBox.page}`
         }

@@ -647,21 +647,21 @@
       "group": "parametric-rain",
       "key": "maxLines",
       "type": "number",
-      "value": 23.55,
+      "value": 36.72,
       "id": "_14393"
     },
     {
       "group": "parametric-rain",
       "key": "spread",
       "type": "number",
-      "value": 7.51,
+      "value": 3.87,
       "id": "_452955"
     },
     {
       "group": "parametric-rain",
       "key": "thickness",
       "type": "number",
-      "value": 4.78,
+      "value": 4.66,
       "id": "_823439"
     },
     {
@@ -707,9 +707,9 @@
       "key": "baseColor",
       "type": "color",
       "value": {
-        "r": 115,
-        "g": 33,
-        "b": 222,
+        "r": 241,
+        "g": 241,
+        "b": 241,
         "a": 0
       },
       "id": "_880020"

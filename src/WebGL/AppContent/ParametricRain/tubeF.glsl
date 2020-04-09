@@ -26,7 +26,9 @@ uniform float time;
 
 uniform bool useDudv;
 
-varying vec3 vColor;
+varying float vOffset;
+
+// varying vec3 vColor;
 
 void main (void) {
   // vec3 tRefract0 = vRefract[0];
@@ -68,6 +70,7 @@ void main (void) {
   // // gl_FragColor.rgb = vColor;
 
   gl_FragColor.rgb = baseColor;
+
   gl_FragColor.a = baseOpacity;
 
   //p----

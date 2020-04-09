@@ -18,8 +18,8 @@ uniform mat3 normalMatrix;
 uniform float time;
 uniform float thickness;
 uniform float spread;
-uniform float scroller;
-uniform vec3 displacement;
+
+varying float vOffset;
 // uniform float maxLines;
 
 // // pass a few things along to the vertex shader
@@ -226,16 +226,14 @@ vec2 defineVoume (float t) {
 
 vec3 defineCurve (float t) {
   float x = t * 2.0 - 1.0;
-  float y = (offset.x * 2.0 - 1.0) * (spread * 0.1);
-  x *= 5.0;
-
-  float tik = time * 0.3;
+  x *= 10.0;
+  float tick = time * 0.3;
+  float y = sin(t + tick + t * offset.x * spread);
   vec3 pos = vec3(x, y, 0.0);
-
-  pos.y += sin(pos.x + time);
-
-  pos = rotateX(pos.x * 1.5) * pos;
-
+  pos = rotateX(tick + pos.z) * pos;
+  pos = rotateX(tick + pos.y) * pos;
+  pos = rotateX(tick + pos.x) * pos;
+  // pos += offset.x * 0.6 * pos;
   return
     pos;
 }
@@ -305,6 +303,7 @@ void main (void) {
   //   gl_Position = vec4(0.0);
   //   return;
   // }
+  vOffset = offset.x;
 
   float t = (position * 2.0) * 0.5 + 0.5;
   vec2 volume = defineVoume(t);
