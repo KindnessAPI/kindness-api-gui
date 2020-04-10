@@ -16,9 +16,9 @@
       <LensArea></LensArea>
     </O3D> -->
 
-    <O3D :animated="true" :layout="'rain'">
+    <!-- <O3D :animated="true" :layout="'rain'">
       <ParametricRain></ParametricRain>
-    </O3D>
+    </O3D> -->
   </O3D>
 </template>
 
