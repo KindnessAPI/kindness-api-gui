@@ -3,7 +3,7 @@
     <ScissorArea class="full">
       <div slot="dom">
         <div class="flex w-full justify-between items-center mx-auto max-w-6xl">
-          <div class="text-4xl text-white p-3 cursor-pointer">
+          <div class="text-4xl text-black p-3 cursor-pointer">
             KindnessAPI
           </div>
           <div class="inline-block mr-6 cursor-pointer">
@@ -11,7 +11,7 @@
           </div>
         </div>
         <div class="mx-auto max-w-6xl">
-          <div class="px-3 text-white ">
+          <div class="px-3 text-black">
             GoGoGo
           </div>
         </div>

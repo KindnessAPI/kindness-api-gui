@@ -2,12 +2,12 @@
   <ScissorArea>
     <div slot="dom">
       <div class="flex w-full justify-between items-center mx-auto max-w-6xl">
-        <div class="text-4xl text-white p-3 cursor-pointer">
+        <div class="text-4xl text-black p-3 cursor-pointer">
           KindnessAPI
         </div>
         <div class="mr-6 flex cursor-pointer">
           <div class="hidden md:inline-flex">
-            <div class="text-2xl text-white p-3">
+            <div class="text-2xl text-black p-3">
                 Love Work in Progress
             </div>
           </div>

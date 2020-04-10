@@ -31,10 +31,11 @@ module.exports = {
         '40': '10rem',
         '48': '12rem',
         '56': '14rem',
-        '64': '16rem',
+        '64': '16rem'
       },
       fontFamily: {
         sans: [
+          'Inter',
           'Avenir',
           '-apple-system',
           'BlinkMacSystemFont',
@@ -48,6 +49,23 @@ module.exports = {
           '"Segoe UI Emoji"',
           '"Segoe UI Symbol"',
           '"Noto Color Emoji"'
+        ],
+        serif: [
+          'Inter',
+          'Inter',
+          'Georgia',
+          'Cambria',
+          '"Times New Roman"',
+          'Times',
+          'serif'
+        ],
+        mono: [
+          'Menlo',
+          'Monaco',
+          'Consolas',
+          '"Liberation Mono"',
+          '"Courier New"',
+          'monospace'
         ]
       }
     }
