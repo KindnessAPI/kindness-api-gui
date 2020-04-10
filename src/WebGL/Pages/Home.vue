@@ -14,6 +14,7 @@
 
 <script>
 import { PipeScissor, makeScrollBox } from '../Reusable'
+import axios from 'axios'
 export default {
   name: 'Home',
   mixins: [PipeScissor],
@@ -29,6 +30,10 @@ export default {
       window.dispatchEvent(new Event('resize'))
     })
     this.scrollBox = makeScrollBox({ dom: window, base: this.base })
+
+    axios.get('https://a5ebea76.jp-tok.apigw.appdomain.cloud/api?name=lok')
+      .then(r => r.data)
+      .then(console.log)
 
     this.origColor = document.body.style.backgroundColor
     document.body.style.backgroundColor = this.bgColor
