@@ -15,10 +15,8 @@ export default {
 @import './tw.postcss';
 
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #171f27;
 }
 #app, body, html{
   width: 100%;
