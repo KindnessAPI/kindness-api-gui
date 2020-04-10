@@ -112,7 +112,7 @@ export default {
   async mounted () {
     let count = 50
     let numSides = 4
-    let subdivisions = 300
+    let subdivisions = 500
     let openEnded = false
     let geo = await createLineGeo({ count, numSides, subdivisions, openEnded })
 
@@ -133,6 +133,7 @@ export default {
       thickness: { value: 0.01 },
       spread: { value: 0.01 },
       time: { value: 0 },
+      speed: { value: 0 },
       displacement: { value: new Vector3() }
     }
 
@@ -147,6 +148,7 @@ export default {
 
       uniforms.baseOpacity.value = group.autoGet('baseOpacity') / 100.0
       uniforms.baseColor.value = group.autoGet('baseColor')
+      uniforms.speed.value = group.autoGet('speed') / 100.0
       uniforms.time.value = window.performance.now() * 0.001
     })
 

@@ -48,7 +48,7 @@ export default {
       })
     }
     let div = document.createElement('div')
-    Cache.painter = Cache.painter || makePaintCanvas({ pixel: 64, sdk: this.lookup('sdk'), setting: 'flower-pedals', domElement: div, base: this.lookup('base') })
+    Cache.painter = Cache.painter || makePaintCanvas({ pixel: 16, sdk: this.lookup('sdk'), setting: 'flower-pedals', domElement: div, base: this.lookup('base') })
     let painter = Cache.painter
     Cache.painterCube = Cache.painterCube || new CubeTexture([
       painter.canvas,
@@ -63,9 +63,10 @@ export default {
     this.lookup('base').onLoop(() => {
       cube.needsUpdate = true
     })
-    let brown = new MeshMatcapMaterial({ color: '#4c2a06', side: DoubleSide, matcap: texLoader.load(require('./matcap/brown.png')) })
-    let yellow = new MeshMatcapMaterial({ color: '#ffd743', side: DoubleSide, matcap: texLoader.load(require('./matcap/bright-yellow.png')) })
-    let pedals = new MeshBasicMaterial({ color: 0xffffff, opacity: 1, transparent: true, side: DoubleSide, envMap: cube })
+    Cache.brown = Cache.brown || new MeshMatcapMaterial({ color: '#4c2a06', side: DoubleSide, matcap: texLoader.load(require('./matcap/brown.png')) })
+    Cache.yellow = Cache.yellow || new MeshMatcapMaterial({ color: '#ffd743', side: DoubleSide, matcap: texLoader.load(require('./matcap/bright-yellow.png')) })
+    Cache.pedals = Cache.pedals || new MeshBasicMaterial({ color: 0xffffff, opacity: 1, transparent: true, side: DoubleSide, envMap: cube })
+
     this.$on('init', async () => {
       // eslint-disable-next-line
       Cache.cherryBlossom = Cache.cherryBlossom || await load(fbxLoader, require('file-loader!./fbx/flower1.fbx').default)
@@ -75,13 +76,13 @@ export default {
         if (item.isMesh) {
           // console.log(item.name)
           if (item.name.indexOf('Plane') !== -1) {
-            item.material = pedals
+            item.material = Cache.pedals
           }
           if (item.name.indexOf('Sphere') !== -1) {
-            item.material = yellow
+            item.material = Cache.yellow
           }
           if (item.name.indexOf('Circle') !== -1) {
-            item.material = brown
+            item.material = Cache.brown
           }
         }
       })

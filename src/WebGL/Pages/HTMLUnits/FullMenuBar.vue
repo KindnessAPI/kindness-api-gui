@@ -2,7 +2,7 @@
   <div class="h-full w-full absolute top-0 left-0 z-10">
     <ScissorArea class="full">
       <div slot="dom">
-        <div class="flex w-full justify-between items-center">
+        <div class="flex w-full justify-between items-center mx-auto max-w-6xl">
           <div class="text-4xl text-white p-3 cursor-pointer">
             KindnessAPI
           </div>
@@ -10,8 +10,10 @@
             <img @click="$emit('close')" src="../icon/close.svg" alt="">
           </div>
         </div>
-        <div class="px-3 text-white">
-          GoGoGo
+        <div class="mx-auto max-w-6xl">
+          <div class="px-3 text-white ">
+            GoGoGo
+          </div>
         </div>
       </div>
       <PhantomScene slot="o3d"></PhantomScene>

@@ -4,8 +4,10 @@
 
     <div v-show="!openMenu">
       <TopNavBar @menu="openMenu = !openMenu"></TopNavBar>
-      <HeroUnit></HeroUnit>
-      <HowUnit></HowUnit>
+      <div class="max-w-6xl mx-auto">
+        <HeroUnit></HeroUnit>
+        <HowUnit></HowUnit>
+      </div>
     </div>
 
     <FullMenuBar v-show="openMenu" @close="openMenu = false"></FullMenuBar>

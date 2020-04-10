@@ -9,8 +9,12 @@
       </O3D>
     -->
     <O3D :animated="true" :layout="'bglayer'">
-      <GradientBG></GradientBG>
+      <FBM2BG></FBM2BG>
     </O3D>
+
+    <!-- <O3D :animated="true" :layout="'lensArea'">
+      <LensArea></LensArea>
+    </O3D> -->
 
     <O3D :animated="true" :layout="'rain'">
       <ParametricRain></ParametricRain>
@@ -55,7 +59,7 @@ export default {
 
     // prepare camera
     this.camera = new PCamera({ base: this.lookup('base'), element: this.lookup('element') })
-    this.camera.position.z = 600
+    this.camera.position.z = 260
     this.rayplay = new RayPlay({ mounter: this.lookup('element'), base: this.lookup('base'), camera: this.camera })
 
     // let OrbitControls = require('three/examples/jsm/controls/OrbitControls').OrbitControls
@@ -83,11 +87,14 @@ export default {
       // let time = window.performance.now() * 0.001
       // let setting = this.settings[cheery]
       this.layouts = {
+        'lensArea': {
+          pz: '-200'
+        },
         'bglayer': {
           pz: '-1000'
         },
         'rain': {
-          rx: `${Math.PI * 8.5} * ${parentScrollBox.page}`
+          rz: `${Math.PI * 2} * ${parentScrollBox.page}`
         }
       }
     }

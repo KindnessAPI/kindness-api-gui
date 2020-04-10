@@ -18,6 +18,7 @@ uniform mat3 normalMatrix;
 uniform float time;
 uniform float thickness;
 uniform float spread;
+uniform float speed;
 
 varying float vOffset;
 // uniform float maxLines;
@@ -128,51 +129,88 @@ mat3 rotateZ (float rad) {
 }
 
 
-mat4 rotationX( in float angle ) {
-  return mat4(	1.0,		0,			0,			0,
-          0, 	cos(angle),	-sin(angle),		0,
-          0, 	sin(angle),	 cos(angle),		0,
-          0, 			0,			  0, 		1);
-}
+// mat4 rotationX( in float angle ) {
+//   return mat4(	1.0,		0,			0,			0,
+//           0, 	cos(angle),	-sin(angle),		0,
+//           0, 	sin(angle),	 cos(angle),		0,
+//           0, 			0,			  0, 		1);
+// }
 
-mat4 rotationY( in float angle ) {
-  return mat4(	cos(angle),		0,		sin(angle),	0,
-              0,		1.0,			 0,	0,
-          -sin(angle),	0,		cos(angle),	0,
-              0, 		0,				0,	1);
-}
+// mat4 rotationY( in float angle ) {
+//   return mat4(	cos(angle),		0,		sin(angle),	0,
+//               0,		1.0,			 0,	0,
+//           -sin(angle),	0,		cos(angle),	0,
+//               0, 		0,				0,	1);
+// }
 
-mat4 rotationZ( in float angle ) {
-  return mat4(	cos(angle),		-sin(angle),	0,	0,
-          sin(angle),		cos(angle),		0,	0,
-              0,				0,		1,	0,
-              0,				0,		0,	1);
-}
-mat4 scale(float x, float y, float z){
-    return mat4(
-        vec4(x,   0.0, 0.0, 0.0),
-        vec4(0.0, y,   0.0, 0.0),
-        vec4(0.0, 0.0, z,   0.0),
-        vec4(0.0, 0.0, 0.0, 1.0)
-    );
-}
+// mat4 rotationZ( in float angle ) {
+//   return mat4(	cos(angle),		-sin(angle),	0,	0,
+//           sin(angle),		cos(angle),		0,	0,
+//               0,				0,		1,	0,
+//               0,				0,		0,	1);
+// }
+// mat4 scale(float x, float y, float z){
+//     return mat4(
+//         vec4(x,   0.0, 0.0, 0.0),
+//         vec4(0.0, y,   0.0, 0.0),
+//         vec4(0.0, 0.0, z,   0.0),
+//         vec4(0.0, 0.0, 0.0, 1.0)
+//     );
+// }
 
-mat4 translate(float x, float y, float z){
-    return mat4(
-        vec4(1.0, 0.0, 0.0, 0.0),
-        vec4(0.0, 1.0, 0.0, 0.0),
-        vec4(0.0, 0.0, 1.0, 0.0),
-        vec4(x,   y,   z,   1.0)
-    );
-}
+// mat4 translate(float x, float y, float z){
+//     return mat4(
+//         vec4(1.0, 0.0, 0.0, 0.0),
+//         vec4(0.0, 1.0, 0.0, 0.0),
+//         vec4(0.0, 0.0, 1.0, 0.0),
+//         vec4(x,   y,   z,   1.0)
+//     );
+// }
 
-vec3 spherical (float r, float phi, float theta) {
-  return vec3(
-    r * cos(phi) * cos(theta),
-    r * cos(phi) * sin(theta),
-    r * sin(phi)
-  );
-}
+// const mat2 m = mat2( 0.80,  0.60, -0.60,  0.80 );
+
+// float noise( in vec2 p ) {
+// 	return sin(p.x)*sin(p.y);
+// }
+
+// float fbm4( vec2 p )
+// {
+//     float f = 0.0;
+//     f += 0.5000 * noise( p ); p = m * p * 2.02;
+//     f += 0.2500 * noise( p ); p = m * p * 2.03;
+//     f += 0.1250 * noise( p ); p = m * p * 2.01;
+//     f += 0.0625 * noise( p );
+//     return f / 0.9375;
+// }
+
+// float fbm6( vec2 p )
+// {
+//     float f = 0.0;
+//     f += 0.500000*(0.5+0.5*noise( p )); p = m*p*2.02;
+//     f += 0.250000*(0.5+0.5*noise( p )); p = m*p*2.03;
+//     f += 0.125000*(0.5+0.5*noise( p )); p = m*p*2.01;
+//     f += 0.062500*(0.5+0.5*noise( p )); p = m*p*2.04;
+//     f += 0.031250*(0.5+0.5*noise( p )); p = m*p*2.01;
+//     f += 0.015625*(0.5+0.5*noise( p ));
+//     return f/0.96875;
+// }
+
+// // #define numOctaves 8
+// // float fbm(vec2 x) {
+// //   float H = 1.0 + 0.1 * sin(time);
+// //   float t = 0.0;
+// //   for(int i=0; i < numOctaves; i++) {
+// //     float f = pow( 2.0, float(i) );
+// //     float a = pow( f, -H );
+// //     t += a * noise(f * x);
+// //   }
+// //   return t;
+// // }
+
+// float pattern (vec2 p) {
+//   float vout = fbm4( p + time + fbm6( p + fbm4( p + time )) );
+//   return clamp(vout, 0.0, 1.0);
+// }
 
 // line
 // vec3 defineCurve (float t) {
@@ -224,18 +262,51 @@ vec2 defineVoume (float t) {
 //     pos;
 // }
 
+vec3 spherical (float r, float phi, float theta) {
+  return vec3(
+    r * cos(phi) * cos(theta),
+    r * cos(phi) * sin(theta),
+    r * sin(phi)
+  );
+}
+
+vec2 circle (float t) {
+  float angle = t * 2.0 * PI;
+  vec2 rot = vec2(cos(angle), sin(angle));
+  return rot;
+}
+
 vec3 defineCurve (float t) {
-  float x = t * 2.0 - 1.0;
-  x *= 10.0;
-  float tick = time * 0.3;
-  float y = sin(t + tick + t * offset.x * spread);
-  vec3 pos = vec3(x, y, 0.0);
-  pos = rotateX(tick + pos.z) * pos;
-  pos = rotateX(tick + pos.y) * pos;
-  pos = rotateX(tick + pos.x) * pos;
-  // pos += offset.x * 0.6 * pos;
-  return
-    pos;
+  vec3 pos = vec3((t - 0.5) * 2500.0);
+  float pX = pos.x;
+  float pY = pos.y;
+  float pZ = pos.y;
+  float small = 0.001 * 2.0 * 3.14159265;
+
+  float stime = time * speed;
+
+  pos.xyz = rotateQ(normalize(vec3(1.0, pY * small, 1.0)), stime + pY * small) * rotateY(stime + pZ * small) * pos.xyz;
+  pos.xyz = rotateQ(normalize(vec3(1.0, pZ * small, 1.0)), stime + pY * small) * rotateZ(stime + pZ * small) * pos.xyz;
+  pos.xyz = rotateQ(normalize(vec3(1.0, pZ * small, 1.0)), stime + pX * small) * rotateY(stime + pY * small) * pos.xyz;
+
+  // pos.z += sin(stime  + pX * piz * 0.333) * pos.y;
+
+  pos.xyz *= 0.00055;
+
+  float ttTime = stime * 0.5;
+
+  pos.xyz *= rotateX(length(pos.xyz) + ttTime);
+  pos.xyz *= rotateY(length(pos.xyz) + ttTime);
+  pos.xyz *= rotateZ(length(pos.xyz) + ttTime);
+
+  pos.xyz += ballify(pos.xyz, length(pos.xyz) * 0.25 + 0.75 * length(pos.xyz) * sin(ttTime));
+
+  return rotateZ(spread / 10.0 * offset.x * PI * 2.0) * rotateY(spread / 10.0 * offset.x * PI * 2.0) * pos.xyz;
+
+  // float angle = t * 2.0 * PI;// * 0.5 + (offset.x) * spread + time * speed * 10.0;
+  // vec2 rot = vec2(cos(angle), sin(angle));
+  // float z = t * 2.0 - 1.0;
+  // return vec3(rot, z * 1.0) * rotateY(PI * 0.5);
 }
 
 vec4 defineTube (vec3 pos) {
@@ -304,6 +375,8 @@ void main (void) {
   //   return;
   // }
   vOffset = offset.x;
+
+  // vUv = uv.xy;
 
   float t = (position * 2.0) * 0.5 + 0.5;
   vec2 volume = defineVoume(t);

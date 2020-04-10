@@ -10,14 +10,15 @@ import { PlaneBufferGeometry, TextureLoader, Vector2 } from 'three'
 import { Refractor } from 'three/examples/jsm/objects/Refractor'
 import { FastBlurShader } from './FastBlurShader'
 export default {
-  name: 'RefactorArea',
+  name: 'LensArea',
   mixins: [Tree],
   props: {
-    depth: {
-      default: 20
+    blur: {
+      default: 0.0
     },
-    blur: {},
-    dudv: {},
+    dudv: {
+      default: 'cross-2'
+    },
     color: {
       default: 0x999999
     }
@@ -35,7 +36,7 @@ export default {
     this.$on('init', () => {
       let camera = this.lookup('camera')
       let screen = this.getScreen()
-      let geo = new PlaneBufferGeometry(screen.width, screen.height, 20, 20)
+      let geo = new PlaneBufferGeometry(screen.width, screen.height, 4, 4)
       let item = new Refractor(geo, {
         color: this.color,
         textureWidth: RES_SIZE,
@@ -72,6 +73,8 @@ export default {
         }
         item.material.uniforms['time'].value = window.performance.now() * 0.001
       })
+
+      console.log('added LensArea')
     })
     this.lookup('base').onResize(() => {
       this.$emit('init')
