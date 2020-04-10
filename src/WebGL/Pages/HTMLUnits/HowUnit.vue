@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="relative py-12">
+    <div class="relative pt-12">
 
       <ScissorArea class="absolute top-0 left-0 right-0 bottom-0">
         <div slot="dom" class="full">
@@ -14,7 +14,7 @@
         </div>
 
         <div class="block lg:flex">
-          <div class="py-12 lg:w-1/3 lg:pr-6">
+          <div class="pb-12 lg:w-1/3 lg:pr-6">
             <div class="px-3 mb-2 text-3xl lg:text-xl font-bold">
               Pastor or Thought Leader
             </div>
@@ -25,7 +25,7 @@
               We can also help you organize tons of micro-content using hashtags or folders.
             </div>
           </div>
-          <div class="py-12 lg:w-1/3 lg:pr-6">
+          <div class="pb-12 lg:w-1/3 lg:pr-6">
             <div class="px-3 mb-2 text-3xl lg:text-xl font-bold">
               Day to day folks
             </div>
@@ -33,7 +33,7 @@
               You can help out humanity by embedding a Kindness Essential Message Box into your website so that you have a wider reach of audience to Kindness and contents from the Bible.
             </div>
           </div>
-          <div class="py-12 lg:w-1/3">
+          <div class="pb-12 lg:w-1/3">
             <div class="px-3 mb-2 text-3xl lg:text-xl font-bold">
               Developer...
             </div>
