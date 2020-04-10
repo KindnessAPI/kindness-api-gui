@@ -11,7 +11,7 @@
         Why do we make KindessAPI, when there's social media?
       </div>
       <div class="px-3 text-lg mb-2">
-        It's easy to encourage others on social media, but the amount of audience of Kindness essential message is quite low due to attention fatigue with the excessive amount of content in social media feed.
+        It's easy to encourage others on social media, but the amount of audience is quite low due to attention fatigue and the excessive amount of content in social media feed.
         API is a good way to spread kindness because it doesn't have ads or unrelated content and the Kindness content can be integrated to other websites or apps.
       </div>
     </div>
@@ -26,21 +26,21 @@
 
     <div class="pb-3">
       <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
-        If you're a Encourager, Pastor or a Thought Leader...
+        If you want to encourage others...
       </div>
       <div class="px-3 text-lg mb-2">
-        We can help you to distribute your kindness essential messages or bible verses with automation to different places via Website and Apps coding APIs, SEO optiomised website.
+        We can help you distirubte your essential message through our system to different places such as different websites, platforms or apps which integrated with KindnessAPI.
       </div>
       <div class="px-3 text-lg mb-2">
-        We can also help you organise tons of content with our relational hashtags.
+        We can also help you organise tons of micro-content with hashtags or folders.
       </div>
     </div>
     <div class="pb-3">
       <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
-        If you're a website owner...
+        If you want to Spread the Kindness to a wider audience....
       </div>
       <div class="px-3 text-lg mb-2">
-        You can help out humanity by embeding a Kindness Essential Message Box into your website, so that viewers gets encouraged by kindness.
+        You can help out humanity by embeding a Kindness Essential Message Box into your website, so that we have a wider reach of audience of Kindness and Bible.
       </div>
     </div>
     <div class="pb-3">
