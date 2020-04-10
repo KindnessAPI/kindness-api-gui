@@ -32,25 +32,9 @@ float fbm6( vec2 p )
     return f/0.96875;
 }
 
-#define numOctaves 7
-float fbm ( in vec2 x ) {
-    float H = 0.99;
-    float G = exp2(-H);
-    float f = 1.0;
-    float a = 1.0;
-    float t = 0.0;
-    for( int i=0; i<numOctaves; i++ )
-    {
-        t += a*noise(f*x);
-        f *= 2.0;
-        a *= G;
-    }
-    return t;
-}
-
 float pattern (vec2 p) {
   float vout = fbm4( p + time + fbm6( p + fbm4( p + time )) );
-  return clamp(vout, 0.0, 1.0);
+  return abs(vout);
 }
 
 void main (void) {
@@ -59,9 +43,9 @@ void main (void) {
   pt.y = pt.y * (sceneRect.y / sceneRect.x);
   pt.xy = pt.xy * 3.0;
 
-  outColor.r = pattern(pt.xy + -0.15 * cos(time));
-  outColor.g = pattern(pt.xy + 0.0);
-  outColor.b = pattern(pt.xy + 0.15 * cos(time));
+  outColor.r = 0.7 - pattern(pt.xy + -0.15 * cos(time));
+  outColor.g = 0.7 - pattern(pt.xy + 0.0);
+  outColor.b = 0.7 - pattern(pt.xy + 0.15 * cos(time));
 
-  gl_FragColor = vec4(clamp(outColor.rgb, 0.0, 1.0), 1.0);
+  gl_FragColor = vec4(clamp(outColor.rgb, 0.0, 1.0), outColor.r);
 }
