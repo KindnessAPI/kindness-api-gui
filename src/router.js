@@ -13,8 +13,8 @@ export default new Router({
       component: () => import('./WebGL/Pages/Home.vue')
     },
     {
-      path: '/about',
-      component: () => import('./WebGL/Pages/Lok.vue')
+      path: '/*',
+      redirect: '/'
     }
   ]
 })
