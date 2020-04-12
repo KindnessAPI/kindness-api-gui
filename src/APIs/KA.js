@@ -14,6 +14,22 @@ export const getWS = () => {
   return testing
 }
 
+export const getRESTURL = () => {
+  let testing = 'http://localhost:3333'
+  let staging = 'https://api-staging.kindnessapi.com'
+  let production = 'https://api.kindnessapi.com'
+  if (process.env.NODE_ENV === 'development') {
+    return testing
+  }
+  if (process.env.NODE_ENV === 'staging') {
+    return staging
+  }
+  if (process.env.NODE_ENV === 'production') {
+    return production
+  }
+  return testing
+}
+
 /*
 let getID = () => {
   return '_' + Math.random().toString(36).substr(2, 9)
@@ -204,3 +220,141 @@ export class LamdaClient extends EventEmitter {
     })
   }
 }
+
+export var Store = {
+  NS: getRESTURL() + '@STORE-Profiles',
+  Profiles: []
+}
+
+export class Auth {
+  static Store = Store
+  static get profiles () {
+    return Store.Profiles
+  }
+  static async loadProfiles () {
+    let str = localStorage.getItem(Store.NS)
+    if (str) {
+      let profiles = []
+      try {
+        profiles = JSON.parse(str)
+        Store.Profiles = profiles
+      } catch (e) {
+        Store.Profiles = []
+        localStorage.removeItem(Store.NS)
+        // console.log(e)
+      }
+    }
+  }
+  static async saveProfiles () {
+    localStorage.setItem(Store.NS, JSON.stringify(Store.Profiles))
+  }
+  static async addProfle ({ profile }) {
+    try {
+      if (!Store.Profiles.some(e => {
+        if (profile && e) {
+          // console.log('profile', profile, e)
+          return e.user.userID === profile.user.userID
+        } else {
+          return false
+        }
+      })) {
+        Store.Profiles.map(e => {
+          e.active = false
+          return e
+        })
+        profile.active = true
+        Store.Profiles.push(profile)
+        Auth.saveProfiles()
+      }
+    } catch (e) {
+      Store.Profiles = []
+      localStorage.removeItem(Store.NS)
+    }
+  }
+  static async removeProfileByUserID (userID) {
+    let index = Store.Profiles.findIndex(e => e.user.userID === userID)
+    Store.Profiles.splice(index, 1)
+    if (Store.Profiles.length > 0) {
+      Auth.setActiveProfileByUserID(Store.Profiles[0].user.userID)
+    }
+    Auth.saveProfiles()
+  }
+
+  static get currentProfile () {
+    return Store.Profiles.find(e => e.active) || false
+  }
+  static setActiveProfileByUserID (userID) {
+    Store.Profiles.map(e => {
+      e.active = false
+      return e
+    })
+    let user = Store.Profiles.find(e => e.user.userID === userID)
+    if (user) {
+      user.active = true
+    }
+  }
+  static get isLoggedIn () {
+    return Store.Profiles.length > 0
+  }
+  static async checkUsername (auth) {
+    let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/checkUsername',
+      data: {
+        identity: auth.identity
+      }
+    })
+    return resp.then((r) => {
+      return true
+    }, () => {
+      return false
+    })
+  }
+
+  static async register (auth) {
+    let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/register',
+      data: {
+        username: auth.username,
+        password: auth.password,
+        email: auth.email
+      }
+    })
+    return resp.then((r) => {
+      let profile = r.data
+      Auth.addProfle({ profile })
+      Auth.saveProfiles()
+      return profile
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+
+  static async login (auth) {
+    let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/login',
+      data: {
+        identity: auth.identity,
+        password: auth.password
+      }
+    })
+    return resp.then((r) => {
+      let profile = r.data
+      Auth.addProfle({ profile })
+      Auth.saveProfiles()
+      return r.data
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+}
+
+Auth.loadProfiles()

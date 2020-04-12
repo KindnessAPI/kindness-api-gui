@@ -28,5 +28,6 @@ importAll(require.context('./GLScene', true, /\.vue$/, 'sync'), 'sync')
 importAll(require.context('./AppContent', true, /\.vue$/, 'sync'), 'sync')
 importAll(require.context('./Reusable', true, /\.vue$/, 'sync'), 'sync')
 importAll(require.context('./Pages/HTMLUnits', true, /\.vue$/, 'sync'), 'sync')
+importAll(require.context('./Pages/AuthUnits', true, /\.vue$/, 'sync'), 'sync')
 
 export default exporter

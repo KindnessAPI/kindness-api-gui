@@ -13,6 +13,22 @@ export default new Router({
       component: () => import('./WebGL/Pages/Home.vue')
     },
     {
+      path: '/login',
+      component: () => import('./WebGL/Pages/Login.vue')
+    },
+    {
+      path: '/register',
+      component: () => import('./WebGL/Pages/Register.vue')
+    },
+    {
+      path: '/logout',
+      component: () => import('./WebGL/Pages/Logout.vue')
+    },
+    {
+      path: '/dashboard',
+      component: () => import('./WebGL/Pages/Dashboard.vue')
+    },
+    {
       path: '/*',
       redirect: '/'
     }

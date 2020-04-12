@@ -63,13 +63,13 @@ export default {
     this.lookup('base').onLoop(() => {
       cube.needsUpdate = true
     })
-    Cache.brown = Cache.brown || new MeshMatcapMaterial({ color: '#4c2a06', side: DoubleSide, matcap: texLoader.load(require('./matcap/brown.png')) })
-    Cache.yellow = Cache.yellow || new MeshMatcapMaterial({ color: '#ffd743', side: DoubleSide, matcap: texLoader.load(require('./matcap/bright-yellow.png')) })
-    Cache.pedals = Cache.pedals || new MeshBasicMaterial({ color: 0xffffff, opacity: 1, transparent: true, side: DoubleSide, envMap: cube })
+    Cache.brown = new MeshMatcapMaterial({ color: '#4c2a06', side: DoubleSide, matcap: texLoader.load(require('./matcap/brown.png')) })
+    Cache.yellow = new MeshMatcapMaterial({ color: '#ffd743', side: DoubleSide, matcap: texLoader.load(require('./matcap/bright-yellow.png')) })
+    Cache.pedals = new MeshBasicMaterial({ color: 0xffffff, opacity: 1, transparent: true, side: DoubleSide, envMap: cube })
 
     this.$on('init', async () => {
       // eslint-disable-next-line
-      Cache.cherryBlossom = Cache.cherryBlossom || await load(fbxLoader, require('file-loader!./fbx/flower1.fbx').default)
+      Cache.cherryBlossom = await load(fbxLoader, require('file-loader!./fbx/flower1.fbx').default)
       let root1 = Cache.cherryBlossom
       // console.log(root1)
       root1.traverse((item) => {

@@ -11,8 +11,22 @@
           </div>
         </div>
         <div class="mx-auto max-w-6xl">
-          <div class="px-3 text-black">
-            GoGoGo
+          <div class="mb-3 px-3 text-black text-2xl" v-if="Auth.currentProfile">
+            Welcome back! @{{ Auth.currentProfile.user.username }}
+          </div>
+          <div class="mb-3 px-3 text-black text-2xl">
+            <router-link exact-active-class="underline" to="/">Home Page</router-link>
+          </div>
+          <div class="mb-3 px-3 text-black text-2xl" v-if="Auth.currentProfile">
+            <router-link exact-active-class="underline" to="/dashboard">Dashboard</router-link>
+          </div>
+          <div class="mb-3 px-3 text-black text-2xl" v-if="!Auth.isLoggedIn">
+            <router-link exact-active-class="underline" class="block mb-3 hover:opacity-50" to="/login">Login</router-link>
+            <router-link exact-active-class="underline" class="block mb-3 hover:opacity-50" to="/register">Register</router-link>
+          </div>
+          <div class="mb-3 px-3 text-black text-2xl" v-if="Auth.isLoggedIn">
+            <router-link exact-active-class="underline" class="block mb-3 hover:opacity-50" to="/login">Login more accounts</router-link>
+            <router-link exact-active-class="underline" class="block mb-3 hover:opacity-50" to="/logout">Logout</router-link>
           </div>
         </div>
       </div>
@@ -22,11 +36,22 @@
 </template>
 
 <script>
+import { Auth } from '../../../APIs/KA.js'
 export default {
   props: {
   },
   components: {
     ...require('../../webgl').default
+  },
+  data () {
+    return {
+      Auth
+    }
+  },
+  methods: {
+    auth () {
+
+    }
   }
 }
 </script>
