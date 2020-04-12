@@ -34,7 +34,6 @@
                 </div>
                 <div>
                   <button v-if="profile.user.userID !== Auth.currentProfile.user.userID" class="px-3 py-2 bg-blue-300 border-blue-400 text-white shadow-lg rounded-lg hover:opacity-50" @click="setActiveUID(profile.user.userID)">Use this account</button>
-                  <button v-if="profile.user.userID !== Auth.currentProfile.user.userID" class="px-3 py-2 bg-blue-300 border-blue-400 text-white shadow-lg rounded-lg hover:opacity-50" @click="logoutByUID(profile.user.userID)">Logout</button>
                 </div>
               </div>
             </li>
@@ -88,7 +87,6 @@ export default {
   methods: {
     setActiveUID (uid) {
       Auth.setActiveProfileByUserID(uid)
-      window.location.reload()
     }
   },
   beforeDestroy () {
