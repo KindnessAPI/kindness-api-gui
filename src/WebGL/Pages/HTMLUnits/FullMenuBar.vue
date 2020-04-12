@@ -10,7 +10,7 @@
             <img @click="$emit('close')" src="../icon/close.svg" alt="">
           </div>
         </div>
-        <div class="mx-auto max-w-6xl">
+        <div class="mx-auto max-w-6xl mt-3">
           <div class="mb-3 px-3 text-black text-2xl" v-if="Auth.currentProfile">
             Welcome back! @{{ Auth.currentProfile.user.username }}
           </div>
