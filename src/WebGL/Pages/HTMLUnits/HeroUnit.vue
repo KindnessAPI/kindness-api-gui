@@ -12,20 +12,18 @@
 
       <div class="max-w-6xl mx-auto">
         <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
-          Making Kindness Louder
+          Make Kindness Louder 📣
         </div>
         <div class="px-3 text-lg mb-2 pb-12">
-          At such an unprecedented and unfamiliar time as we are going through today, many people are not only dealing with depression and anxiety, but also grieving the loss of loved ones to Co-VID-19. Moreover, many have lost their jobs or businesses. Now, more than ever, people need love and kindness from each other, and encouragement from The Christ community as well.
+          At such an unprecedented and unfamiliar time as we are going through today, many people are not only dealing with depression and anxiety, but also grieving the loss of loved ones to Co-VID-19. Moreover, many have lost their jobs or businesses. Now, more than ever, people need love and kindness from each other as much as they need from Dear God and Dear Jesus.
         </div>
-        <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
-          Why do we make KindessAPI, when there's social media?
+        <!-- <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
+          What's KindnessAPI? 👨🏼‍💻
         </div>
         <div class="px-3 text-lg mb-2 pb-12">
-          It is easy to encourage others on social media, but the audience limited, due to attention fatigue and the bombardment of negative content on the social media feed.
-          API is a good way to spread kindness because it doesn't have ads or unrelated content, and also because the Kindness content can be integrated into other websites or apps.
-        </div>
+          KindnessAPI is like an online Church and... it can also spread Kindness and the Gosepl digitally in API formats. APIs are good for sharing information for other publishing machines scuh as a WebSite and Apps Server. People who want to share their favourite bibles quotes, testimonals across websites / apps are now possible when developers connect their website / apps with KindnessAPI.
+        </div> -->
       </div>
-
     </div>
   </div>
 </template>

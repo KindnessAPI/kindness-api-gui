@@ -4,7 +4,7 @@
       <div class="flex w-full justify-between items-center mx-auto max-w-6xl">
         <router-link to="/">
           <div class="text-4xl text-black p-3 cursor-pointer">
-            KindnessAPI
+            ✞ KindnessAPI
           </div>
         </router-link>
         <div class="mr-6 flex cursor-pointer">
@@ -16,7 +16,7 @@
             <router-link v-if="!Auth.isLoggedIn" exact-active-class="underline" class="text-xl text-black py-2 pr-3" to="/register">Register</router-link>
             <router-link v-if="Auth.isLoggedIn" exact-active-class="underline" class="text-xl text-black py-2 pr-3" to="/dashboard">Dashboard</router-link>
           </div>
-          <img @click="$emit('menu')" src="../icon/menu.svg" alt="">
+          <img @click="$emit('menu')" style="min-width:24px;" src="../icon/menu.svg" alt="">
         </div>
       </div>
       <!-- <TopNavBar @open="openMenu = true" @close="openMenu = false" @menu="openMenu = !openMenu"></TopNavBar> -->
