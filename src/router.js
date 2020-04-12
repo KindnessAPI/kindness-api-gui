@@ -25,6 +25,10 @@ export default new Router({
       component: () => import('./WebGL/Pages/Logout.vue')
     },
     {
+      path: '/switch-profiles',
+      component: () => import('./WebGL/Pages/SwitchProfiles.vue')
+    },
+    {
       path: '/dashboard',
       component: () => import('./WebGL/Pages/Dashboard.vue')
     },

@@ -17,18 +17,31 @@
           </div>
         </div>
 
-        <div class="px-3 text-center" v-if="Auth.profiles.length > 0">
-          <div class="px-3 text-center text-2xl" v-if="Auth.profiles.length === 1">
-            You're logged in as:
-          </div>
-          <div class="px-3 text-center text-2xl" v-if="Auth.profiles.length > 1">
-            Here are the profiles you logged in:
-          </div>
+        <div class="px-3 text-3xl">
+          Welcome Back! @{{ Auth.currentProfile.user.username }}
+        </div>
+
+        <div class="px-3 text-xl mb-3">
+          You can manage logged in profiles below:
+        </div>
+        <div class="px-3" v-if="Auth.profiles.length > 0">
           <ul>
-            <li :key="profile.user.userID" v-for="profile in Auth.profiles" class=" mb-2">
+            <li :key="profile.user.userID" v-for="profile in Auth.profiles" class=" list-disc mb-2">
+              <div v-if="profile && Auth.currentProfile">
+                <div>
+                  @{{ profile.user.username }}
+                  <span v-if="profile.user.userID === Auth.currentProfile.user.userID">(You're using this profile.)</span>
+                </div>
+                <div>
+                  <button v-if="profile.user.userID !== Auth.currentProfile.user.userID" class="px-3 py-2 bg-blue-300 border-blue-400 text-white shadow-lg rounded-lg hover:opacity-50" @click="setActiveUID(profile.user.userID)">Use this account</button>
+                  <button v-if="profile.user.userID !== Auth.currentProfile.user.userID" class="px-3 py-2 bg-blue-300 border-blue-400 text-white shadow-lg rounded-lg hover:opacity-50" @click="logoutByUID(profile.user.userID)">Logout</button>
+                </div>
+              </div>
+            </li>
+            <!-- <li :key="profile.user.userID" v-for="profile in Auth.profiles" class=" mb-2">
               @{{ profile.user.username }}
               <button class="px-3 py-2 bg-blue-300 border-blue-400 text-white shadow-lg rounded-lg hover:opacity-50" @click="Auth.removeProfileByUserID(profile.user.userID)">Logout</button>
-            </li>
+            </li> -->
           </ul>
         </div>
       </div>
@@ -71,6 +84,12 @@ export default {
 
     this.origColor = document.body.style.backgroundColor
     document.body.style.backgroundColor = this.bgColor
+  },
+  methods: {
+    setActiveUID (uid) {
+      Auth.setActiveProfileByUserID(uid)
+      window.location.reload()
+    }
   },
   beforeDestroy () {
     document.body.style.backgroundColor = this.origColor

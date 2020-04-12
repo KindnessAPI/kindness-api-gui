@@ -25,7 +25,8 @@
             <router-link exact-active-class="underline" class="block mb-3 hover:opacity-50" to="/register">Register</router-link>
           </div>
           <div class="mb-3 px-3 text-black text-2xl" v-if="Auth.isLoggedIn">
-            <router-link exact-active-class="underline" class="block mb-3 hover:opacity-50" to="/login">Login more accounts</router-link>
+            <router-link exact-active-class="underline" class="block mb-3 hover:opacity-50" to="/login">Login More Profiles</router-link>
+            <router-link exact-active-class="underline" class="block mb-3 hover:opacity-50" to="/switch-profiles">Switch Profiles</router-link>
             <router-link exact-active-class="underline" class="block mb-3 hover:opacity-50" to="/logout">Logout</router-link>
           </div>
         </div>
