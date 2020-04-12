@@ -28,13 +28,9 @@
           <ul>
             <li :key="profile.user.userID" v-for="profile in Auth.profiles" class=" list-disc mb-2">
               <div v-if="profile && Auth.currentProfile">
-                <div>
-                  @{{ profile.user.username }}
-                  <span v-if="profile.user.userID === Auth.currentProfile.user.userID">(You're using this profile.)</span>
-                </div>
-                <div>
-                  <button v-if="profile.user.userID !== Auth.currentProfile.user.userID" class="px-3 py-2 bg-blue-300 border-blue-400 text-white shadow-lg rounded-lg hover:opacity-50" @click="setActiveUID(profile.user.userID)">Use this account</button>
-                </div>
+                @{{ profile.user.username }}
+                <span v-if="profile.user.userID === Auth.currentProfile.user.userID">(You're using this profile.)</span>
+                <button v-if="profile.user.userID !== Auth.currentProfile.user.userID" class="px-3 py-2 bg-blue-300 border-blue-400 text-white shadow-lg rounded-lg hover:opacity-50 inline" @click="setActiveUID(profile.user.userID)">Use this account</button>
               </div>
             </li>
             <!-- <li :key="profile.user.userID" v-for="profile in Auth.profiles" class=" mb-2">

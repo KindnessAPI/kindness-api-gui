@@ -21,7 +21,7 @@
           Why do we make KindessAPI, when there's social media?
         </div>
         <div class="px-3 text-lg mb-2 pb-12">
-          It is easy to encourage others on social media, but the audience limited, due to attention fatigue due to the bombardment of negative content on the social media feed.
+          It is easy to encourage others on social media, but the audience limited, due to attention fatigue and the bombardment of negative content on the social media feed.
           API is a good way to spread kindness because it doesn't have ads or unrelated content, and also because the Kindness content can be integrated into other websites or apps.
         </div>
       </div>
