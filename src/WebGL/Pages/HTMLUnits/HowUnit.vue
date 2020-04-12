@@ -19,7 +19,7 @@
         <div class="block lg:flex">
           <div class="pb-10 lg:w-1/3 lg:pr-6">
             <div class="px-3 mb-2 text-3xl lg:text-xl font-bold">
-              Why make KindnessAPI? 😇
+              Why KindnessAPI? 😇
             </div>
             <div class="px-3 text-lg mb-2">
               Thank you Gospel 🥰 Thank you Dear God and Dear Jesus. Thank you for your Love and Grace! We love you!
@@ -35,7 +35,7 @@
           </div>
           <div class="pb-10 lg:w-1/3 lg:pr-6">
             <div class="px-3 mb-2 text-3xl lg:text-xl font-bold">
-              How do we achieve it? 📱 🖥
+              How do we achieve it? 📱
             </div>
             <div class="px-3 text-lg mb-2">
               Building christ community has always been a treasure for Chrisitans. Let's do this online too.
