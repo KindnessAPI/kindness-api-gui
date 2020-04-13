@@ -7,11 +7,12 @@
 <script>
 import { Tree } from '../../Reusable'
 // import { Points, Color, Scene, Camera, Vector2, ClampToEdgeWrapping, LinearFilter, RGBAFormat, WebGLRenderTarget, BufferAttribute, BufferGeometry, PlaneBufferGeometry, MeshBasicMaterial, Mesh, Vector3, ShaderMaterial } from 'three'
-import { ShaderMaterial, Color, Points, BufferGeometry, BufferAttribute, Vector2 } from 'three'
-import { GPUComputationRenderer } from 'three/examples/jsm/misc/GPUComputationRenderer.js'
+import { MeshBasicMaterial, PlaneBufferGeometry, Mesh, RGBAFormat, WebGLRenderTarget, LinearFilter, ClampToEdgeWrapping, ShaderMaterial, Color, Scene, Camera, Points, BufferGeometry, BufferAttribute, Vector2 } from 'three'
+import { GPUComputationRenderer } from './GPGPU'
+
+// import { GPUComputationRenderer } from 'three/examples/jsm/misc/GPUComputationRenderer.js'
 /* eslint-disable import/no-webpack-loader-syntax */
 
-// import { GPUComputationRenderer } from './GPGPU'
 // import { Refractor } from 'three/examples/jsm/objects/Refractor'
 // import { FastBlurShader } from './FastBlurShader'
 export default {
@@ -30,12 +31,12 @@ export default {
     this.$on('init', async () => {
       let screen = await this.getScreen()
 
-      let SCREEN_X = window.innerWidth >= 1024 ? 1024 : 512
-      let SCREEN_Y = window.innerWidth >= 1024 ? 1024 : 512
+      let SCREEN_X = 512
+      let SCREEN_Y = 512
 
       let renderer = this.lookup('renderer')
-      let scene = this.lookup('scene')
-      scene.background = new Color('#fafafa')
+      // let scene = this.lookup('scene')
+      // scene.background = new Color('#fafafa')
 
       let gpuCompute = new GPUComputationRenderer(SCREEN_X, SCREEN_Y, renderer)
       var error = gpuCompute.init()
@@ -57,11 +58,11 @@ export default {
 
       let computeUniforms = {
         time: { value: 0 },
-        lastValue: { value: 0 },
-        u_speed_factor: { value: 5.0 },
+        lastValue: { value: null },
+        u_speed_factor: { value: 30.0 },
         u_drop_rate: { value: 38.25 / 500.0 },
         u_drop_rate_bump: { value: 36.18 / 500.0 },
-        u_tail_amount: { value: 81.21 / 100.0 }
+        u_tail_amount: { value: 25.21 / 100.0 }
       }
       loop(() => {
         computeUniforms.time.value = window.performance.now() * 0.001
@@ -101,7 +102,7 @@ export default {
               value: 0
             },
             color: {
-              value: new Color('hsl(130,50%,80%)')
+              value: new Color('hsl(130,0%,70%)')
             }
           },
           transparent: true,
@@ -134,13 +135,14 @@ export default {
               idx++
             }
           }
-          console.log(idx)
+          console.log('total points', idx)
           return new Float32Array(newArr)
         }
         var geometry = new BufferGeometry()
         geometry.setAttribute('position', new BufferAttribute(getUVandPosition(), 3))
         return geometry
       }
+
       let pts = new Points(makeGeo(), undefined)
       pts.material = makeDisplayMaterial()
 
@@ -152,7 +154,111 @@ export default {
         }
       })
 
-      this.o3d.add(pts)
+      // this.o3d.add(pts)
+
+      var craeteScreenRenderTarget = (sizeX, sizeY) => {
+        var wrapS = ClampToEdgeWrapping
+        var wrapT = ClampToEdgeWrapping
+
+        var minFilter = LinearFilter
+        var magFilter = LinearFilter
+
+        var renderTarget = new WebGLRenderTarget(sizeX, sizeY, {
+          wrapS: wrapS,
+          wrapT: wrapT,
+          minFilter: minFilter,
+          magFilter: magFilter,
+          format: RGBAFormat,
+          // type: FloatType,
+          stencilBuffer: false,
+          depthBuffer: false
+        })
+        return renderTarget
+      }
+
+      let dpi = 1
+      let el = this.lookup('element')
+      let rect = el.getBoundingClientRect()
+      var tScreenA = craeteScreenRenderTarget(dpi * rect.width, dpi * rect.height)
+      var tScreenB = craeteScreenRenderTarget(dpi * rect.width, dpi * rect.height)
+
+      let ppScene = new Scene()
+      // ppScene.background = new Color('#bababa')
+      ppScene.add(pts)
+      let ppCamera = new Camera()
+      let pingpongCode = require('raw-loader!./glsl-field/ping-pong.frag').default
+
+      let pingPongMaterial = gpuCompute.createShaderMaterial(pingpongCode, {
+        time: { value: 0.0 },
+        u_opacity: { value: 90.49 / 100.0 },
+        res: { value: new Vector2(rect.width, rect.height) },
+        tScreen: { value: null }
+      })
+      var plane = new Mesh(
+        new PlaneBufferGeometry(screen.width, screen.height, 2, 2),
+        new MeshBasicMaterial({
+          transparent: true
+        })
+      )
+      this.o3d.add(plane)
+
+      // let THREE = {
+      //   ...require('three/examples/jsm/postprocessing/EffectComposer.js'),
+      //   ...require('three/examples/jsm/postprocessing/RenderPass.js'),
+      //   ...require('three/examples/jsm/postprocessing/ShaderPass.js'),
+      //   ...require('three/examples/jsm/postprocessing/UnrealBloomPass.js')
+      // }
+
+      resizer(async () => {
+        let el = this.lookup('element')
+        let rect = el.getBoundingClientRect()
+        tScreenA = craeteScreenRenderTarget(dpi * rect.width, dpi * rect.height)
+        tScreenB = craeteScreenRenderTarget(dpi * rect.width, dpi * rect.height)
+        pingPongMaterial.uniforms.res.value.x = rect.width
+        pingPongMaterial.uniforms.res.value.y = rect.height
+        this.screen = await this.getScreen()
+        plane.geometry = new PlaneBufferGeometry(this.screen.width, this.screen.height, 2, 2)
+      })
+
+      loop(() => {
+        renderer.setScissorTest(false)
+        let orig = renderer.getRenderTarget()
+        // renderer.scissorTest = false
+        renderer.autoClear = false
+        if (i % 2 === 0.0) {
+          renderer.setRenderTarget(tScreenA)
+          renderer.render(ppScene, ppCamera)
+        } else {
+          renderer.setRenderTarget(tScreenB)
+          renderer.render(ppScene, ppCamera)
+        }
+        renderer.setRenderTarget(orig)
+        renderer.autoClear = true
+        renderer.setScissorTest(true)
+        // renderer.scissorTest = true
+      })
+
+      loop(() => {
+        pingPongMaterial.uniforms.time.value += 60 / 1000
+        pingPongMaterial.uniforms.time.value %= 10.0
+        if (i % 2 === 0) {
+          // console.log(tScreenA.texture)
+          pingPongMaterial.uniforms.tScreen.value = tScreenA.texture
+          gpuCompute.doRenderTarget(pingPongMaterial, tScreenB)
+        } else {
+          pingPongMaterial.uniforms.tScreen.value = tScreenB.texture
+          gpuCompute.doRenderTarget(pingPongMaterial, tScreenA)
+        }
+      })
+
+      loop(() => {
+        if (i % 2 === 0) {
+          plane.material.map = tScreenA.texture
+        } else {
+          plane.material.map = tScreenB.texture
+        }
+        plane.material.needsUpdate = true
+      })
 
       // test preview
       // let screen = await this.getScreen()

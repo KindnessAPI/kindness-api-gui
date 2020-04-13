@@ -1,7 +1,4 @@
-import { ClampToEdgeWrapping, DataTexture, ShaderMaterial, RGBAFormat, WebGLRenderTarget, FloatType, Scene, Camera, Mesh, PlaneBufferGeometry, NearestFilter, HalfFloatType } from 'three'
-/* eslint-disable semi */
-/* eslint-disable space-before-function-paren, comma-spacing, padded-blocks, quotes */
-
+/* eslint-disable */
 /**
  * @author yomboprime https://github.com/yomboprime
  *
@@ -53,7 +50,7 @@ import { ClampToEdgeWrapping, DataTexture, ShaderMaterial, RGBAFormat, WebGLRend
  * // Check for completeness
  * var error = gpuCompute.init();
  * if ( error !== null ) {
- * console.error( error );
+ *		console.error( error );
   * }
  *
  *
@@ -101,320 +98,351 @@ import { ClampToEdgeWrapping, DataTexture, ShaderMaterial, RGBAFormat, WebGLRend
  * @param {WebGLRenderer} renderer The renderer
   */
 
-export function GPUComputationRenderer (sizeX, sizeY, renderer) {
+ import {
+	Camera,
+	ClampToEdgeWrapping,
+	DataTexture,
+	FloatType,
+	HalfFloatType,
+	Mesh,
+	NearestFilter,
+	PlaneBufferGeometry,
+	RGBAFormat,
+	Scene,
+	ShaderMaterial,
+	WebGLRenderTarget
+} from "three/build/three.module.js";
 
-  this.variables = [];
+var GPUComputationRenderer = function ( sizeX, sizeY, renderer ) {
 
-  this.currentTextureIndex = 0;
+  // this.defaultTextureType = FloatType
+  // this.testFloatRenderTarget = function() {
 
-  this.defaultTextureType = FloatType;
+  //   let createRenderTarget = () => {
+  //     // sizeXTexture = sizeXTexture || sizeX;
+  //     // sizeYTexture = sizeYTexture || sizeY;
 
-  var scene = new Scene();
+  //     // wrapS = wrapS || ClampToEdgeWrapping;
+  //     // wrapT = wrapT || ClampToEdgeWrapping;
 
-  var camera = new Camera();
-  camera.position.z = 1;
+  //     // minFilter = minFilter || NearestFilter;
+  //     // magFilter = magFilter || NearestFilter;
+  //     var renderTarget = new WebGLRenderTarget( sizeX, sizeY, {
+  //       wrapS: ClampToEdgeWrapping,
+  //       wrapT: ClampToEdgeWrapping,
+  //       minFilter: NearestFilter,
+  //       magFilter: NearestFilter,
+  //       format: RGBAFormat,
+  //       type: FloatType,
+  //       // type: ( /(iPad|iPhone|iPod)/g.test( navigator.userAgent ) ) ? HalfFloatType : FloatType,
+  //       stencilBuffer: false,
+  //       depthBuffer: false
+  //     } );
 
-  var passThruUniforms = {
-    texture: {
-      value: null
-    }
-  };
+  //     return renderTarget
+  //   }
 
-  var passThruShader = createShaderMaterial(getPassThroughFragmentShader(), passThruUniforms);
+  //   // Tests if rendering to float render targets is available
 
-  var mesh = new Mesh(new PlaneBufferGeometry(2,2),passThruShader);
-  scene.add(mesh);
+	// 	var renderTarget = createRenderTarget( 16, 16, undefined, undefined, undefined, undefined, FloatType );
+	// 	this.renderTexture( null, renderTarget );
+	// 	var gl = renderer.getContext();
+	// 	var status = gl.checkFramebufferStatus( gl.FRAMEBUFFER );
+	// 	renderTarget.dispose();
+	// 	if (status !== gl.FRAMEBUFFER_COMPLETE) {
+	// 		return false;
+	// 	}
 
-  this.addVariable = function(variableName, computeFragmentShader, initialValueTexture) {
+	// 	return true;
+  // };
 
-    var material = this.createShaderMaterial(computeFragmentShader);
 
-    var variable = {
-      name: variableName,
-      initialValueTexture: initialValueTexture,
-      material: material,
-      dependencies: null,
-      renderTargets: [],
-      wrapS: null,
-      wrapT: null,
-      minFilter: NearestFilter,
-      magFilter: NearestFilter
-    };
+	this.variables = [];
 
-    this.variables.push(variable);
+	this.currentTextureIndex = 0;
 
-    return variable;
+	var scene = new Scene();
 
-  }
-  ;
+	var camera = new Camera();
+	camera.position.z = 1;
 
-  this.setVariableDependencies = function(variable, dependencies) {
+	var passThruUniforms = {
+		passThruTexture: { value: null }
+	};
 
-    variable.dependencies = dependencies;
+	var passThruShader = createShaderMaterial( getPassThroughFragmentShader(), passThruUniforms );
 
-  }
-  ;
+	var mesh = new Mesh( new PlaneBufferGeometry( 2, 2 ), passThruShader );
+	scene.add( mesh );
 
-  this.init = function() {
 
-    if (!renderer.extensions.get("OES_texture_float")) {
+	this.addVariable = function ( variableName, computeFragmentShader, initialValueTexture ) {
 
-      return "No OES_texture_float support for float textures.";
+		var material = this.createShaderMaterial( computeFragmentShader );
 
-    }
+		var variable = {
+			name: variableName,
+			initialValueTexture: initialValueTexture,
+			material: material,
+			dependencies: null,
+			renderTargets: [],
+			wrapS: null,
+			wrapT: null,
+			minFilter: NearestFilter,
+			magFilter: NearestFilter
+		};
 
-    if (renderer.capabilities.maxVertexTextures === 0) {
+		this.variables.push( variable );
 
-      return "No support for vertex shader textures.";
+		return variable;
 
-    }
+	};
 
-    // Check for FloatType in render targets. If not found, switch to HalfFloatType
-    if (!this.testFloatRenderTarget()) {
+	this.setVariableDependencies = function ( variable, dependencies ) {
 
-      console.log("FloatType not supported for render targets, switching to HalfFloatType.");
+		variable.dependencies = dependencies;
 
-      this.defaultTextureType = HalfFloatType;
+	};
 
-    }
+	this.init = function () {
 
-    for (var i = 0; i < this.variables.length; i++) {
+		if ( ! renderer.capabilities.isWebGL2 &&
+			 ! renderer.extensions.get( "OES_texture_float" ) ) {
 
-      var variable = this.variables[i];
+			return "No OES_texture_float support for float textures.";
 
-      // Creates rendertargets and initialize them with input texture
-      variable.renderTargets[0] = this.createRenderTarget(sizeX, sizeY, variable.wrapS, variable.wrapT, variable.minFilter, variable.magFilter);
-      variable.renderTargets[1] = this.createRenderTarget(sizeX, sizeY, variable.wrapS, variable.wrapT, variable.minFilter, variable.magFilter);
-      this.renderTexture(variable.initialValueTexture, variable.renderTargets[0]);
-      this.renderTexture(variable.initialValueTexture, variable.renderTargets[1]);
+		}
 
-      // Adds dependencies uniforms to the ShaderMaterial
-      var material = variable.material;
-      var uniforms = material.uniforms;
-      if (variable.dependencies !== null) {
+		if ( renderer.capabilities.maxVertexTextures === 0 ) {
 
-        for (var d = 0; d < variable.dependencies.length; d++) {
-
-          var depVar = variable.dependencies[d];
-
-          if (depVar.name !== variable.name) {
-
-            // Checks if variable exists
-            var found = false;
-            for (var j = 0; j < this.variables.length; j++) {
-
-              if (depVar.name === this.variables[j].name) {
-                found = true;
-                break;
-              }
-
-            }
-            if (!found) {
-              return "Variable dependency not found. Variable=" + variable.name + ", dependency=" + depVar.name;
-            }
-
-          }
-
-          uniforms[depVar.name] = {
-            value: null
-          };
-
-          material.fragmentShader = "\nuniform sampler2D " + depVar.name + ";\n" + material.fragmentShader;
-
-        }
-      }
-    }
-
-    this.currentTextureIndex = 0;
-
-    return null;
-
-  }
-  ;
-
-  this.compute = function() {
-
-    var currentTextureIndex = this.currentTextureIndex;
-    var nextTextureIndex = this.currentTextureIndex === 0 ? 1 : 0;
-
-    for (var i = 0, il = this.variables.length; i < il; i++) {
-
-      var variable = this.variables[i];
-
-      // Sets texture dependencies uniforms
-      if (variable.dependencies !== null) {
-
-        var uniforms = variable.material.uniforms;
-        for (var d = 0, dl = variable.dependencies.length; d < dl; d++) {
-
-          var depVar = variable.dependencies[d];
-
-          uniforms[depVar.name].value = depVar.renderTargets[currentTextureIndex].texture;
-
-        }
-
-      }
-
-      // Performs the computation for this variable
-      this.doRenderTarget(variable.material, variable.renderTargets[nextTextureIndex]);
+			return "No support for vertex shader textures.";
 
     }
 
-    this.currentTextureIndex = nextTextureIndex;
-  }
-  ;
+    // if (!this.testFloatRenderTarget()) {
+    //   console.log( "FloatType not supported for render targets, switching to HalfFloatType." );
+    //   this.defaultTextureType = HalfFloatType;
+    // }
 
-  this.getCurrentRenderTarget = function(variable) {
 
-    return variable.renderTargets[this.currentTextureIndex];
+		for ( var i = 0; i < this.variables.length; i ++ ) {
 
-  }
-  ;
+			var variable = this.variables[ i ];
 
-  this.getAlternateRenderTarget = function(variable) {
+			// Creates rendertargets and initialize them with input texture
+			variable.renderTargets[ 0 ] = this.createRenderTarget( sizeX, sizeY, variable.wrapS, variable.wrapT, variable.minFilter, variable.magFilter );
+			variable.renderTargets[ 1 ] = this.createRenderTarget( sizeX, sizeY, variable.wrapS, variable.wrapT, variable.minFilter, variable.magFilter );
+			this.renderTexture( variable.initialValueTexture, variable.renderTargets[ 0 ] );
+			this.renderTexture( variable.initialValueTexture, variable.renderTargets[ 1 ] );
 
-    return variable.renderTargets[this.currentTextureIndex === 0 ? 1 : 0];
+			// Adds dependencies uniforms to the ShaderMaterial
+			var material = variable.material;
+			var uniforms = material.uniforms;
+			if ( variable.dependencies !== null ) {
 
-  }
-  ;
+				for ( var d = 0; d < variable.dependencies.length; d ++ ) {
 
-  function addResolutionDefine(materialShader) {
+					var depVar = variable.dependencies[ d ];
 
-    materialShader.defines.resolution = 'vec2( ' + sizeX.toFixed(1) + ', ' + sizeY.toFixed(1) + " )";
+					if ( depVar.name !== variable.name ) {
 
-  }
-  ;this.addResolutionDefine = addResolutionDefine;
+						// Checks if variable exists
+						var found = false;
+						for ( var j = 0; j < this.variables.length; j ++ ) {
 
-  // The following functions can be used to compute things manually
+							if ( depVar.name === this.variables[ j ].name ) {
 
-  function createShaderMaterial(computeFragmentShader, uniforms) {
+								found = true;
+								break;
 
-    uniforms = uniforms || {};
+							}
 
-    var material = new ShaderMaterial({
-      uniforms: uniforms,
-      vertexShader: getPassThroughVertexShader(),
-      fragmentShader: computeFragmentShader
-    });
+						}
+						if ( ! found ) {
 
-    addResolutionDefine(material);
+							return "Variable dependency not found. Variable=" + variable.name + ", dependency=" + depVar.name;
 
-    return material;
-  }
-  ;this.createShaderMaterial = createShaderMaterial;
+						}
 
-  this.createRenderTarget = function(sizeXTexture, sizeYTexture, wrapS, wrapT, minFilter, magFilter, textureType) {
+					}
 
-    sizeXTexture = sizeXTexture || sizeX;
-    sizeYTexture = sizeYTexture || sizeY;
+					uniforms[ depVar.name ] = { value: null };
 
-    wrapS = wrapS || ClampToEdgeWrapping;
-    wrapT = wrapT || ClampToEdgeWrapping;
+					material.fragmentShader = "\nuniform sampler2D " + depVar.name + ";\n" + material.fragmentShader;
 
-    minFilter = minFilter || NearestFilter;
+				}
+
+			}
+
+		}
+
+		this.currentTextureIndex = 0;
+
+		return null;
+
+	};
+
+	this.compute = function () {
+
+		var currentTextureIndex = this.currentTextureIndex;
+		var nextTextureIndex = this.currentTextureIndex === 0 ? 1 : 0;
+
+		for ( var i = 0, il = this.variables.length; i < il; i ++ ) {
+
+			var variable = this.variables[ i ];
+
+			// Sets texture dependencies uniforms
+			if ( variable.dependencies !== null ) {
+
+				var uniforms = variable.material.uniforms;
+				for ( var d = 0, dl = variable.dependencies.length; d < dl; d ++ ) {
+
+					var depVar = variable.dependencies[ d ];
+
+					uniforms[ depVar.name ].value = depVar.renderTargets[ currentTextureIndex ].texture;
+
+				}
+
+			}
+
+			// Performs the computation for this variable
+			this.doRenderTarget( variable.material, variable.renderTargets[ nextTextureIndex ] );
+
+		}
+
+		this.currentTextureIndex = nextTextureIndex;
+
+	};
+
+	this.getCurrentRenderTarget = function ( variable ) {
+
+		return variable.renderTargets[ this.currentTextureIndex ];
+
+	};
+
+	this.getAlternateRenderTarget = function ( variable ) {
+
+		return variable.renderTargets[ this.currentTextureIndex === 0 ? 1 : 0 ];
+
+	};
+
+	function addResolutionDefine( materialShader ) {
+
+		materialShader.defines.resolution = 'vec2( ' + sizeX.toFixed( 1 ) + ', ' + sizeY.toFixed( 1 ) + " )";
+
+	}
+	this.addResolutionDefine = addResolutionDefine;
+
+
+	// The following functions can be used to compute things manually
+
+	function createShaderMaterial( computeFragmentShader, uniforms ) {
+
+		uniforms = uniforms || {};
+
+		var material = new ShaderMaterial( {
+			uniforms: uniforms,
+			vertexShader: getPassThroughVertexShader(),
+			fragmentShader: computeFragmentShader
+		} );
+
+		addResolutionDefine( material );
+
+		return material;
+
+	}
+
+	this.createShaderMaterial = createShaderMaterial;
+
+
+
+	this.createRenderTarget = function ( sizeXTexture, sizeYTexture, wrapS, wrapT, minFilter, magFilter ) {
+
+		sizeXTexture = sizeXTexture || sizeX;
+		sizeYTexture = sizeYTexture || sizeY;
+
+		wrapS = wrapS || ClampToEdgeWrapping;
+		wrapT = wrapT || ClampToEdgeWrapping;
+
+		minFilter = minFilter || NearestFilter;
     magFilter = magFilter || NearestFilter;
-
-    textureType = textureType || this.defaultTextureType;
-
-    var renderTarget = new WebGLRenderTarget(sizeXTexture,sizeYTexture,{
-      wrapS: wrapS,
-      wrapT: wrapT,
-      minFilter: minFilter,
-      magFilter: magFilter,
+    // alert(navigator.userAgent)
+		var renderTarget = new WebGLRenderTarget( sizeXTexture, sizeYTexture, {
+			wrapS: wrapS,
+			wrapT: wrapT,
+			minFilter: minFilter,
+			magFilter: magFilter,
       format: RGBAFormat,
-      type: textureType,
-      stencilBuffer: false
-    });
+      // type: this.defaultTextureType,
+			type: ( /(iPad|iPhone|iPod|Apple)/g.test( navigator.userAgent ) ) ? HalfFloatType : FloatType,
+			stencilBuffer: false,
+			depthBuffer: false
+		} );
 
-    return renderTarget;
+		return renderTarget;
 
-  }
-  ;
+	};
 
-  this.createTexture = function(sizeXTexture, sizeYTexture) {
+	this.createTexture = function () {
 
-    sizeXTexture = sizeXTexture || sizeX;
-    sizeYTexture = sizeYTexture || sizeY;
+		var data = new Float32Array( sizeX * sizeY * 4 );
+		return new DataTexture( data, sizeX, sizeY, RGBAFormat, FloatType );
 
-    var a = new Float32Array(sizeXTexture * sizeYTexture * 4);
-    var texture = new DataTexture(a,sizeX,sizeY,RGBAFormat,FloatType);
-    texture.needsUpdate = true;
+	};
 
-    return texture;
+	this.renderTexture = function ( input, output ) {
 
-  }
-  ;
+		// Takes a texture, and render out in rendertarget
+		// input = Texture
+		// output = RenderTarget
 
-  this.renderTexture = function(input, output) {
+		passThruUniforms.passThruTexture.value = input;
 
-    // Takes a texture, and render out in rendertarget
-    // input = Texture
-    // output = RenderTarget
+		this.doRenderTarget( passThruShader, output );
 
-    passThruUniforms.texture.value = input;
+		passThruUniforms.passThruTexture.value = null;
 
-    this.doRenderTarget(passThruShader, output);
+	};
 
-    passThruUniforms.texture.value = null;
+	this.doRenderTarget = function ( material, output ) {
 
-  }
-  ;
+		var currentRenderTarget = renderer.getRenderTarget();
 
-  this.doRenderTarget = function(material, output) {
-    mesh.material = material;
-    renderer.setRenderTarget(output)
-    renderer.render(scene, camera);
-    mesh.material = passThruShader;
-  }
-  ;
+		mesh.material = material;
+		renderer.setRenderTarget( output );
+		renderer.render( scene, camera );
+		mesh.material = passThruShader;
 
-  this.testFloatRenderTarget = function() {
+		renderer.setRenderTarget( currentRenderTarget );
 
-    // Tests if rendering to float render targets is available
+	};
 
-    var renderTarget = this.createRenderTarget(16, 16, undefined, undefined, undefined, undefined, FloatType);
-    this.renderTexture(null, renderTarget);
-    var gl = renderer.getContext();
-    var status = gl.checkFramebufferStatus(gl.FRAMEBUFFER);
-    renderTarget.dispose();
-    if (status !== gl.FRAMEBUFFER_COMPLETE) {
+	// Shaders
 
-      return false;
+	function getPassThroughVertexShader() {
 
-    }
+		return	"void main()	{\n" +
+				"\n" +
+				"	gl_Position = vec4( position, 1.0 );\n" +
+				"\n" +
+				"}\n";
 
-    return true;
+	}
 
-  }
-  ;
+	function getPassThroughFragmentShader() {
 
-  // Shaders
+		return	"uniform sampler2D passThruTexture;\n" +
+				"\n" +
+				"void main() {\n" +
+				"\n" +
+				"	vec2 uv = gl_FragCoord.xy / resolution.xy;\n" +
+				"\n" +
+				"	gl_FragColor = texture2D( passThruTexture, uv );\n" +
+				"\n" +
+				"}\n";
 
-  function getPassThroughVertexShader() {
+	}
 
-    return `
-    void main() {
-      gl_Position = vec4( position, 1.0 );
-    }
-    `
-    // return "void main() {\n" + "\n" + " gl_Position = vec4( position, 1.0 );\n" + "\n" + "}\n";
+};
 
-  }
-
-  function getPassThroughFragmentShader() {
-
-    return `
-
-    uniform sampler2D texture;
-    void main() {
-      vec2 uv = gl_FragCoord.xy / resolution.xy;
-      gl_FragColor = texture2D( texture, uv );
-    }
-
-    `
-
-    // "uniform sampler2D texture;\n" + "\n" + "void main() {\n" + "\n" + " vec2 uv = gl_FragCoord.xy / resolution.xy;\n" + "\n" + " gl_FragColor = texture2D( texture, uv );\n" + "\n" + "}\n";
-
-  }
-
-}
+export { GPUComputationRenderer };

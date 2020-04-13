@@ -1,12 +1,12 @@
 <template>
-  <div class="pt-32">
+  <div class="py-32 relative">
+    <ScissorArea class="w-full h-full absolute top-0 left-0" style="z-index: -1">
+      <div slot="dom">
+      </div>
+      <CTARegisterScene slot="o3d"></CTARegisterScene>
+    </ScissorArea>
     <div class="w-full max-w-xs mx-auto ">
-      <form class="shadow-lg rounded-lg px-8 pt-6 pb-8 mb-4 relative bg-gray-200" @submit.prevent="onSubmit">
-        <!-- <ScissorArea class="w-full h-full absolute top-0 left-0" style="z-index: -1">
-          <div slot="dom">
-          </div>
-          <PhantomScene slot="o3d"></PhantomScene>
-        </ScissorArea> -->
+      <form class="shadow-lg rounded-lg px-8 pt-6 pb-6 mb-4 relative bg-gray-200" @submit.prevent="onSubmit">
         <div class="mb-4">
           <label class="block text-teal-800 text-sm font-bold mb-2" for="username">
             Username
@@ -35,10 +35,10 @@
         </div>
         <p class="text-red-500 text-xs italic" :key="i" v-for="(err, i) in errs">{{ err }}</p>
         <p class="text-green-500 text-xs italic" :key="'m' + ii" v-for="(msg, ii) in msgs">{{ msg }}</p>
+        <p class="text-center text-gray-500 text-xs pt-6">
+          Made with love by @wonglok831
+        </p>
       </form>
-      <p class="text-center text-gray-500 text-xs">
-        &copy;2020 KindnessAPI. All rights reserved.
-      </p>
     </div>
   </div>
 </template>
