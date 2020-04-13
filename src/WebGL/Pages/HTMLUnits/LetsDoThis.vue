@@ -31,15 +31,15 @@
               Practice Kindness 🎹
             </div>
             <div class="px-3 text-lg mb-2">
-              Love is what we do, not what we say. Share it with the community.
+              Love is what we do, not what we say. Personal encouragement experience is dope.
             </div>
           </div>
-          <div class="pb-10 lg:w-1/3 lg:pr-6">
+          <div class="pb-10 lg:w-1/3">
             <div class="px-3 mb-2 text-3xl lg:text-xl font-bold">
               Inspired by Gospel 💒
             </div>
             <div class="px-3 text-lg mb-2">
-              Gospel taught us so many wise lessons. Shairng it with others is super nice and helpful.
+              Gospel taught us so many wise lessons. Shairng wise life tips.
             </div>
           </div>
         </div>

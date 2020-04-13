@@ -202,7 +202,7 @@ export default {
       // scene.background = new Color('#fafafa')
 
       let ppScene = new Scene()
-      ppScene.background = new Color()
+      ppScene.background = new Color('#fafafa')
       if (scene.background && scene.background.clone) {
         ppScene.background = scene.background.clone()
       }
