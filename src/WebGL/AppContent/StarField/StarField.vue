@@ -27,12 +27,11 @@ export default {
     }
   },
   mounted () {
-    // -
     this.$on('init', async () => {
       let screen = await this.getScreen()
 
-      let SCREEN_X = window.innerWidth > 1024 ? 1024 : 512
-      let SCREEN_Y = window.innerWidth > 1024 ? 1024 : 512
+      let SCREEN_X = window.innerWidth >= 1024 ? 1024 : 512
+      let SCREEN_Y = window.innerWidth >= 1024 ? 1024 : 512
 
       let renderer = this.lookup('renderer')
       let scene = this.lookup('scene')
@@ -45,6 +44,7 @@ export default {
       }
       let i = 0
       let onLoop = this.lookup('base').onLoop
+      let resizer = this.lookup('base').onResize
       let fns = {}
       onLoop(() => {
         for (var kn in fns) {
@@ -109,11 +109,14 @@ export default {
           vertexShader,
           fragmentShader
         })
-
         loop(() => {
           material.uniforms.time.value = window.performance.now() * 0.0001
         })
-
+        resizer(async () => {
+          let screen = await this.getScreen()
+          material.uniforms.screen.value.x = screen.width
+          material.uniforms.screen.value.y = screen.height
+        })
         return material
       }
       let makeGeo = () => {
@@ -151,7 +154,7 @@ export default {
 
       this.o3d.add(pts)
 
-      // // test preview
+      // test preview
       // let screen = await this.getScreen()
       // let previewPlane = new PlaneBufferGeometry(screen.width, screen.height, 2, 2)
       // let previewMaterial = new MeshBasicMaterial({ color: 0xffffff })

@@ -157,7 +157,7 @@ vec2 passWave (vec2 pp) {
 }
 
 vec2 get_vel (vec2 pp) {
-  return river(pp);
+  return passWave(pp);
 }
 
 void main (void) {
