@@ -13,7 +13,7 @@
           Let's do this! 💖
         </div>
         <div class="px-3 text-lg mb-10">
-
+          Let's Go!!!
         </div>
 
         <div class="block lg:flex">
