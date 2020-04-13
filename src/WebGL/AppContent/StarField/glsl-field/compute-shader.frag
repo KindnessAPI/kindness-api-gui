@@ -161,7 +161,6 @@ vec2 get_vel (vec2 pp) {
 }
 
 void main (void) {
-
   vec2 uv = gl_FragCoord.xy / resolution.xy;
 
   vec4 oldPos = texture2D(lastValue, uv);
