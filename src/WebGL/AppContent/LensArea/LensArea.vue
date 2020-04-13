@@ -58,6 +58,8 @@ export default {
         item.material.uniforms['tDudv'].value = new TextureLoader().load(require('./tex/flower.jpg'))
       } else if (this.dudv === 'cube-2') {
         item.material.uniforms['tDudv'].value = new TextureLoader().load(require('./tex/cube-2.png'))
+      } else {
+        item.material.uniforms['tDudv'].value = new TextureLoader().load(require('./tex/waterdudv.jpg'))
       }
 
       item.material.uniforms['resolution'].value = new Vector2(RES_SIZE, RES_SIZE * camera.aspect)
@@ -73,8 +75,6 @@ export default {
         }
         item.material.uniforms['time'].value = window.performance.now() * 0.001
       })
-
-      console.log('added LensArea')
     })
     this.lookup('base').onResize(() => {
       this.$emit('init')

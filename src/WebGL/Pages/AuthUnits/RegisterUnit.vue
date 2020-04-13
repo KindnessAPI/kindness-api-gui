@@ -1,11 +1,11 @@
 <template>
-  <div class="py-12 lg:py-24 relative">
+  <div class="py-12 lg:py-24 relative" ref="formarea">
     <ScissorArea class="w-full h-full absolute top-0 left-0" style="z-index: -1">
       <div slot="dom">
       </div>
-      <CTARegisterScene slot="o3d"></CTARegisterScene>
+      <StarFlowScene slot="o3d"></StarFlowScene>
     </ScissorArea>
-    <div class="w-full max-w-xs mx-auto ">
+    <div class="w-full max-w-xs mx-auto">
       <form class="shadow-lg rounded-lg px-8 pt-6 pb-6 mb-4 relative bgcolor" @submit.prevent="onSubmit">
         <div class="mb-4">
           <label class="block text-teal-800 text-sm font-bold mb-2" for="username">
@@ -60,6 +60,8 @@ export default {
       msgs: [],
       errs: []
     }
+  },
+  mounted () {
   },
   methods: {
     async onSubmit () {

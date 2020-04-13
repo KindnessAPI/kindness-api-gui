@@ -6,7 +6,7 @@
       <TopNavBar @menu="openMenu = !openMenu"></TopNavBar>
       <HeroUnit></HeroUnit>
       <HowUnit></HowUnit>
-      <CTARegisterUnit></CTARegisterUnit>
+      <LetsDoThis></LetsDoThis>
     </div>
     <FullMenuBar v-show="openMenu" @close="openMenu = false"></FullMenuBar>
   </div>

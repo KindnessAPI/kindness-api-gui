@@ -14,6 +14,7 @@ float rand(const vec2 co) {
 uniform float u_speed_factor;
 uniform float u_tail_amount;
 uniform float u_drop_rate;
+uniform float u_mode;
 uniform float u_drop_rate_bump;
 
 
@@ -157,7 +158,35 @@ vec2 passWave (vec2 pp) {
 }
 
 vec2 get_vel (vec2 pp) {
-  return converge(pp).yx + passWave(pp);
+  // galaxy
+  if (u_mode == 0.0) {
+    if (fract(time) < 0.5) {
+      return galaxy(-pp * 2.0);
+    } else {
+      return galaxy(pp * 2.0);
+    }
+  // gucci
+  } else if (u_mode == 1.0) {
+    if (fract(time) < 0.5) {
+      return funSwirl(pp);
+    } else {
+      return funSwirl(-pp);
+    }
+  // boxedSwirl
+  } else if (u_mode == 2.0) {
+    if (fract(time) < 0.5) {
+      return boxedSwirl(pp);
+    } else {
+      return boxedSwirl(-pp);
+    }
+  // flow
+  } else if (u_mode == 3.0) {
+    if (fract(time) < 0.5) {
+      return passWave(pp);
+    } else {
+      return passWave(-pp);
+    }
+  }
 }
 
 void main (void) {

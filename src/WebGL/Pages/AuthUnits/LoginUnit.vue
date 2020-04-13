@@ -3,9 +3,9 @@
     <ScissorArea class="w-full h-full absolute top-0 left-0" style="z-index: -1">
       <div slot="dom">
       </div>
-      <CTARegisterScene slot="o3d"></CTARegisterScene>
+      <StarFlowScene slot="o3d"></StarFlowScene>
     </ScissorArea>
-    <div class="w-full max-w-xs mx-auto ">
+    <div class="w-full max-w-xs mx-auto">
       <form class="shadow-lg rounded-lg px-8 pt-6 pb-6 mb-4 relative bgcolor" @submit.prevent="onSubmit">
 
         <div class="mb-4">
@@ -81,5 +81,8 @@ export default {
 <style scoped>
 .bgcolor{
   background-color: rgba(255,255,255,0.8);
+}
+.overlaybg{
+  background-color: rgba(0, 0, 0, 0.589);
 }
 </style>

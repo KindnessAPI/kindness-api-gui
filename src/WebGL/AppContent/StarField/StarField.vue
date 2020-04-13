@@ -19,6 +19,7 @@ export default {
   name: 'StarField',
   mixins: [Tree],
   props: {
+    mode: {}
   },
   components: {
     ...require('../../webgl')
@@ -34,9 +35,28 @@ export default {
       let SIM_X = 512
       let SIM_Y = 512
 
+      let settings = {
+        u_mode: { value: 0 },
+        u_opacity: { value: 99.49 / 100.0 },
+        u_speed_factor: { value: 70.0 },
+        u_drop_rate: { value: 38.25 / 500.0 },
+        u_drop_rate_bump: { value: 36.18 / 500.0 },
+        u_tail_amount: { value: 100.0 / 100.0 },
+        color: { value: new Color('hsl(130, 0%, 50%)') }
+      }
+
+      let modes = {
+        'galaxy': 0.0,
+        'dotted': 1.0,
+        'boxes': 2.0,
+        'flow': 3.0
+      }
+      settings.u_mode.value = modes[this.mode]
+      this.$watch('mode', () => {
+        settings.u_mode.value = modes[this.mode] || 0
+      })
+
       let renderer = this.lookup('renderer')
-      // let scene = this.lookup('scene')
-      // scene.background = new Color('#fafafa')
 
       let gpuCompute = new GPUComputationRenderer(SIM_X, SIM_Y, renderer)
       var error = gpuCompute.init()
@@ -59,10 +79,7 @@ export default {
       let computeUniforms = {
         time: { value: 0 },
         lastValue: { value: null },
-        u_speed_factor: { value: 35.0 },
-        u_drop_rate: { value: 38.25 / 500.0 },
-        u_drop_rate_bump: { value: 36.18 / 500.0 },
-        u_tail_amount: { value: 25.21 / 100.0 }
+        ...settings
       }
 
       loop(() => {
@@ -102,9 +119,7 @@ export default {
             time: {
               value: 0
             },
-            color: {
-              value: new Color('hsl(130, 50%, 50%)')
-            }
+            color: settings['color']
           },
           transparent: true,
           depthTest: true,
@@ -180,35 +195,31 @@ export default {
 
       // let el = this.lookup('element')
       // let rect = el.getBoundingClientRect()
-      let aspect = 1
+      var tScreenA = false
+      var tScreenB = false
 
-      resizer(() => {
-        aspect = screen.width / screen.height
-        if (screen.height > screen.width) {
-          aspect = screen.height / screen.width
-        }
-      })
-
-      let size1D = 768
-      var tScreenA = craeteScreenRenderTarget(size1D, size1D)
-      var tScreenB = craeteScreenRenderTarget(size1D, size1D)
+      let scene = this.lookup('scene')
+      // scene.background = new Color('#fafafa')
 
       let ppScene = new Scene()
-      // ppScene.background = new Color('#000000')
+      ppScene.background = new Color()
+      if (scene.background && scene.background.clone) {
+        ppScene.background = scene.background.clone()
+      }
       ppScene.add(pts)
       let ppCamera = new Camera()
       let pingpongCode = require('raw-loader!./glsl-field/ping-pong.frag').default
 
       let pingPongMaterial = gpuCompute.createShaderMaterial(pingpongCode, {
         time: { value: 0.0 },
-        u_opacity: { value: 90.49 / 100.0 },
-        res: { value: new Vector2(size1D, size1D * aspect) },
+        u_opacity: settings.u_opacity,
+        res: { value: new Vector2(1, 1) },
         tScreen: { value: null }
       })
       var plane = new Mesh(
         new PlaneBufferGeometry(screen.width, screen.height, 2, 2),
         new MeshBasicMaterial({
-          // transparent: true
+          transparent: true
         })
       )
       this.o3d.add(plane)
@@ -221,14 +232,15 @@ export default {
       // }
 
       resizer(async () => {
-        // let el = this.lookup('element')
-        // let rect = el.getBoundingClientRect()
-        // tScreenA = craeteScreenRenderTarget(size1D, size1D * aspect)
-        // tScreenB = craeteScreenRenderTarget(size1D, size1D * aspect)
-        pingPongMaterial.uniforms.res.value.x = size1D
-        pingPongMaterial.uniforms.res.value.y = size1D
-        this.screen = await this.getScreen()
-        plane.geometry = new PlaneBufferGeometry(this.screen.width, this.screen.height, 2, 2)
+        let dpi = window.devicePixelRatio || 1.0
+        let el = this.lookup('element')
+        let rect = el.getBoundingClientRect()
+        tScreenA = craeteScreenRenderTarget(dpi * rect.width, dpi * rect.height)
+        tScreenB = craeteScreenRenderTarget(dpi * rect.width, dpi * rect.height)
+        pingPongMaterial.uniforms.res.value.x = dpi * rect.width
+        pingPongMaterial.uniforms.res.value.y = dpi * rect.height
+        let screen = await this.getScreen()
+        plane.geometry = new PlaneBufferGeometry(screen.width, screen.height, 2, 2)
       })
 
       loop(() => {

@@ -15,8 +15,9 @@
           Make Kindness Louder 📣
         </div>
         <div class="px-3 text-lg mb-2 pb-12">
-          At such an unprecedented and unfamiliar time as we are going through today, many people are not only dealing with depression and anxiety, but also grieving the loss of loved ones to Co-VID-19. Moreover, many have lost their jobs or businesses. Now, more than ever, people need love and kindness from each other as much as they need from Dear God and Dear Jesus.
+          At such an unprecedented and unfamiliar time as we are going through today, many people are not only dealing with depression and anxiety, but also grieving the loss of loved ones to Co-VID-19. Moreover, many have lost their jobs or businesses. Now, more than ever, people need love and kindness from each other.
         </div>
+
         <!-- <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
           What's KindnessAPI? 👨🏼‍💻
         </div>

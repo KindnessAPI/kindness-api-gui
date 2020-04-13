@@ -9,13 +9,28 @@
       </O3D>
     -->
 
-    <!-- <O3D :animated="true" layout="deep">
-      <GradientBG></GradientBG>
+    <!--  -->
+    <!-- <O3D :animated="true" layout="bglayer">
+      <RadientBG></RadientBG>
     </O3D> -->
 
     <O3D :animated="true" :layout="'bglayer'">
-      <StarField></StarField>
+      <StarField :mode="'dotted'"></StarField>
     </O3D>
+
+    <!--  -->
+
+    <!--
+    -->
+    <!-- <O3D :animated="true" :layout="'rain'">
+      <ParametricRain></ParametricRain>
+    </O3D> -->
+
+    <!-- <div class=""></div> -->
+
+    <!-- <O3D :animated="true" layout="lens">
+      <LensArea dudv="cube-2" :blur="0.0"></LensArea>
+    </O3D> -->
 
     <!-- <O3D :animated="true" :layout="'lensArea'">
       <LensArea></LensArea>
@@ -66,7 +81,8 @@ export default {
   async mounted () {
     await this.lookupWait('ready')
 
-    this.scene.background = new Color('#fafafa')
+    this.scene.background = new Color('#1a1a1a')
+    // this.scene.background = new TextureLoader().load(require('./img/stained-glass.jpg'))
 
     // prepare camera
     this.camera = new PCamera({ base: this.lookup('base'), element: this.lookup('element') })
@@ -84,29 +100,29 @@ export default {
     this.$parent.$emit('scene', this.scene)
     this.$parent.$emit('camera', this.camera)
 
-    let cheery = 'cherry-blossom'
-    let sdk = this.lookup('sdk')
-    sdk.onStubGroup(cheery, (stub) => {
-      this.settings[cheery] = stub
-    })
+    // let cheery = 'cherry-blossom'
+    // let sdk = this.lookup('sdk')
+    // sdk.onStubGroup(cheery, (stub) => {
+    //   this.settings[cheery] = stub
+    // })
 
-    let parentScrollBox = this.lookup('scrollBox')
+    // let parentScrollBox = this.lookup('scrollBox')
 
     let looper = () => {
-      if (!parentScrollBox) { return }
-      if (!this.settings[cheery]) { return }
+      // if (!parentScrollBox) { return }
+      // if (!this.settings[cheery]) { return }
       // let time = window.performance.now() * 0.001
       // let setting = this.settings[cheery]
       this.layouts = {
-        'lensArea': {
-          pz: '0'
-        },
-        'bglayer': {
-          pz: '-1000'
-        },
-        'rain': {
-          rz: `${Math.PI * 2} * ${parentScrollBox.page}`
+        'lens': {
+          pz: '100'
         }
+        // 'rain': {
+        //   pz: `-1000`
+        // }
+        // 'rain': {
+        //   rz: `${Math.PI * 2} * ${parentScrollBox.page}`
+        // }
       }
     }
 
