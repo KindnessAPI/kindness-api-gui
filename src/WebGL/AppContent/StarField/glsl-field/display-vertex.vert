@@ -1,16 +1,14 @@
 precision highp float;
 precision highp sampler2D;
 uniform sampler2D tex;
-uniform vec2 screen;
-
+uniform vec2 resolution;
 // varying vec3 randID;
 void main (void) {
+  vec4 gpuPosition = texture2D(tex, position.xy);
+  // randID = gpuPosition.rgb;
+  vec2 posA = gpuPosition.xy;
 
-  vec4 colorA = texture2D(tex, position.xy);
-  // randID = colorA.rgb;
-  vec2 posA = colorA.xy;
-
-  gl_PointSize = 1.0;
+  gl_PointSize = 1.3;
   gl_Position = vec4(
     2.0 * posA.x - 1.0,
     1.0 - 2.0 * posA.y,
@@ -18,10 +16,10 @@ void main (void) {
     1.0
   );
 
-  if (screen.x > screen.y) {
-    gl_Position.y *= screen.x / screen.y;
+  if (resolution.x > resolution.y) {
+    gl_Position.y *= resolution.x / resolution.y;
   } else {
-    gl_Position.y *= screen.x / screen.y;
-    gl_Position.xy *= screen.y / screen.x;
+    gl_Position.y *= resolution.x / resolution.y;
+    gl_Position.xy *= resolution.y / resolution.x;
   }
 }

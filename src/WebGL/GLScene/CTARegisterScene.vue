@@ -9,17 +9,23 @@
       </O3D>
     -->
 
+    <!-- <O3D :animated="true" layout="deep">
+      <GradientBG></GradientBG>
+    </O3D> -->
+
     <O3D :animated="true" :layout="'bglayer'">
       <StarField></StarField>
     </O3D>
+
+    <!-- <O3D :animated="true" :layout="'lensArea'">
+      <LensArea></LensArea>
+    </O3D> -->
 
     <!-- <StarField></StarField> -->
     <!-- <O3D :animated="true" :layout="'bglayer'">
     </O3D> -->
 
-    <!-- <O3D :animated="true" :layout="'lensArea'">
-      <LensArea></LensArea>
-    </O3D> -->
+    <!--  -->
 
     <!-- <O3D :animated="true" :layout="'rain'">
       <ParametricRain></ParametricRain>
@@ -93,7 +99,7 @@ export default {
       // let setting = this.settings[cheery]
       this.layouts = {
         'lensArea': {
-          pz: '-200'
+          pz: '0'
         },
         'bglayer': {
           pz: '-1000'
