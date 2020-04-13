@@ -37,11 +37,11 @@ export default {
 
       let settings = {
         u_mode: { value: 0 },
-        u_opacity: { value: 99.49 / 100.0 },
-        u_speed_factor: { value: 70.0 },
+        u_opacity: { value: 95.0 / 100.0 },
+        u_speed_factor: { value: 80.0 },
         u_drop_rate: { value: 38.25 / 500.0 },
         u_drop_rate_bump: { value: 36.18 / 500.0 },
-        u_tail_amount: { value: 100.0 / 100.0 },
+        u_tail_amount: { value: 50.0 / 100.0 },
         color: { value: new Color('hsl(130, 0%, 50%)') }
       }
 
@@ -198,14 +198,14 @@ export default {
       var tScreenA = false
       var tScreenB = false
 
-      let scene = this.lookup('scene')
+      // let scene = this.lookup('scene')
       // scene.background = new Color('#fafafa')
 
       let ppScene = new Scene()
-      ppScene.background = new Color('#fafafa')
-      if (scene.background && scene.background.clone) {
-        ppScene.background = scene.background.clone()
-      }
+      // ppScene.background = new Color('#000')
+      // if (scene.background && scene.background.clone) {
+      //   ppScene.background = scene.background.clone()
+      // }
       ppScene.add(pts)
       let ppCamera = new Camera()
       let pingpongCode = require('raw-loader!./glsl-field/ping-pong.frag').default
@@ -232,7 +232,7 @@ export default {
       // }
 
       resizer(async () => {
-        let dpi = window.devicePixelRatio || 1.0
+        let dpi = 1.75
         let el = this.lookup('element')
         let rect = el.getBoundingClientRect()
         tScreenA = craeteScreenRenderTarget(dpi * rect.width, dpi * rect.height)
