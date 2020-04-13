@@ -34,12 +34,10 @@ export const makeBase = () => {
       resizeNow: {},
       clean: {}
     },
-    onLoop: async (fn) => {
+    onLoop: (fn) => {
       let key = getID()
       env._.loop[key] = fn
-
-      await fn()
-
+      fn()
       // cleaner
       return () => {
         env._.loop[key] = () => {}

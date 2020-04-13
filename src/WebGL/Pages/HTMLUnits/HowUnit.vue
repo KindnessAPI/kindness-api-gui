@@ -30,7 +30,7 @@
               Our Goal 🏃🏽‍♂️🏃🏽‍♀️
             </div>
             <div class="px-3 text-lg mb-2">
-              Our main goal is to invite people to Christianity. Spreading Gospel, Love and Kindness.
+              Our main goal is to invite people to Christianity. Spreading Gospel, Love one another and act with Kindness.
             </div>
           </div>
           <div class="pb-10 lg:w-1/3 lg:pr-6">
@@ -57,5 +57,4 @@ export default {
 </script>
 
 <style>
-
 </style>

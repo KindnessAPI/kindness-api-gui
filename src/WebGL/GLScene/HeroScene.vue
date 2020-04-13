@@ -9,6 +9,8 @@
       </O3D>
     -->
 
+    <!-- <StarField></StarField> -->
+
     <O3D :animated="true" layout="cb-inst-1">
       <O3D :animated="true" layout="cb-rot">
         <O3D :animated="true" layout="cb-item">

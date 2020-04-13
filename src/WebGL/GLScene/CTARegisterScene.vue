@@ -10,7 +10,7 @@
     -->
 
     <O3D :animated="true" :layout="'bglayer'">
-      <FBM2BG></FBM2BG>
+      <StarField></StarField>
     </O3D>
 
     <!-- <StarField></StarField> -->
