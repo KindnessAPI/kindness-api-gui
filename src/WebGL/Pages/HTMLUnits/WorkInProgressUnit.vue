@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="relative py-12 lg:py-64">
+    <div class="relative py-64">
 
       <ScissorArea class="absolute top-0 left-0 right-0 bottom-0" style="z-index: -1;">
         <div slot="dom" class="full">
@@ -8,7 +8,7 @@
         <MotherBoardScene slot="o3d"></MotherBoardScene>
       </ScissorArea>
 
-      <div class="max-w-6xl mx-auto text-white py-32 lg:py-54">
+      <div class="max-w-6xl mx-auto text-white">
         <router-link to="/work-in-progress">
           <div class="px-3 mb-2 text-3xl md:text-4xl font-bold text-center cursor-pointer hover:scale-110 hover:underline">
             Work in Progress
