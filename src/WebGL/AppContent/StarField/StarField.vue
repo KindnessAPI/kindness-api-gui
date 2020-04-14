@@ -41,20 +41,9 @@ export default {
         u_speed_factor: { value: 80.0 },
         u_drop_rate: { value: 38.25 / 500.0 },
         u_drop_rate_bump: { value: 36.18 / 500.0 },
-        u_tail_amount: { value: 50.0 / 100.0 },
+        u_tail_amount: { value: 65.0 / 100.0 },
         color: { value: new Color('hsl(130, 0%, 50%)') }
       }
-
-      let modes = {
-        'galaxy': 0.0,
-        'dotted': 1.0,
-        'boxes': 2.0,
-        'flow': 3.0
-      }
-      settings.u_mode.value = modes[this.mode]
-      this.$watch('mode', () => {
-        settings.u_mode.value = modes[this.mode] || 0
-      })
 
       let renderer = this.lookup('renderer')
 
@@ -81,6 +70,18 @@ export default {
         lastValue: { value: null },
         ...settings
       }
+
+      let modes = {
+        'galaxy': 0.0,
+        'dotted': 1.0,
+        'boxes': 2.0,
+        'flow': 3.0
+      }
+
+      computeUniforms.u_mode.value = modes[this.mode]
+      this.$watch('mode', () => {
+        computeUniforms.u_mode.value = modes[this.mode] || 0
+      })
 
       loop(() => {
         computeUniforms.time.value = window.performance.now() * 0.001
@@ -232,7 +233,7 @@ export default {
       // }
 
       resizer(async () => {
-        let dpi = 1.75
+        let dpi = 2
         let el = this.lookup('element')
         let rect = el.getBoundingClientRect()
         tScreenA = craeteScreenRenderTarget(dpi * rect.width, dpi * rect.height)
@@ -283,7 +284,7 @@ export default {
         plane.material.needsUpdate = true
       })
 
-      // test preview
+      // // test preview
       // let screen = await this.getScreen()
       // let previewPlane = new PlaneBufferGeometry(screen.width, screen.height, 2, 2)
       // let previewMaterial = new MeshBasicMaterial({ color: 0xffffff })
