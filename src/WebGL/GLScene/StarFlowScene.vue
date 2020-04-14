@@ -15,10 +15,9 @@
     </O3D> -->
 
     <O3D :animated="true" :layout="'bglayer'">
+      <!-- <RadientBG></RadientBG> -->
       <StarField :mode="'magic'"></StarField>
     </O3D>
-
-    <!--  -->
 
     <!--
     -->

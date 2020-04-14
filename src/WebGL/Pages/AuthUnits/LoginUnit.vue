@@ -1,5 +1,5 @@
 <template>
-  <div class="py-12 lg:py-24 relative">
+  <div class="py-32 lg:py-54 relative">
     <ScissorArea class="w-full h-full absolute top-0 left-0" style="z-index: -1">
       <div slot="dom">
       </div>
@@ -31,7 +31,7 @@
         </div>
         <p class="text-green-500 text-xs italic" :key="'m' + ii" v-for="(msg, ii) in msgs">{{ msg }}</p>
 
-        <p class="text-center text-gray-500 text-xs pt-6">
+        <p class="text-center text-gray-800 text-xs pt-6">
           Made with love by @wonglok831
         </p>
       </form>
