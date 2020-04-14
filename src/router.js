@@ -13,6 +13,10 @@ export default new Router({
       component: () => import('./WebGL/Pages/Home.vue')
     },
     {
+      path: '/work-in-progress',
+      component: () => import('./WebGL/Pages/PlaceHolder.vue')
+    },
+    {
       path: '/login',
       component: () => import('./WebGL/Pages/Login.vue')
     },

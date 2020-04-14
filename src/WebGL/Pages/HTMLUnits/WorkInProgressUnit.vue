@@ -11,7 +11,7 @@
       <div class="max-w-6xl mx-auto text-white py-32 lg:py-54">
         <router-link to="/work-in-progress">
           <div class="px-3 mb-2 text-3xl md:text-4xl font-bold text-center cursor-pointer hover:scale-110 hover:underline">
-            👩🏻‍💻 Developers API 👨🏼‍💻
+            Work in Progress
           </div>
         </router-link>
 
