@@ -15,7 +15,7 @@
     </O3D> -->
 
     <O3D layout="bg" :animated="true">
-      <!-- <RadientBG></RadientBG> -->
+      <RadientBG></RadientBG>
       <MBLines></MBLines>
     </O3D>
     <!-- <O3D layout="core" :animated="true">
