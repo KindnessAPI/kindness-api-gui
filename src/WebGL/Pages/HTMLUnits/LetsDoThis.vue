@@ -34,7 +34,7 @@
               Love is what we do, not what we say. Personal encouragement experience is dope.
             </div>
           </div>
-          <div class="pb-10 lg:w-1/3">
+          <div class="lg:w-1/3">
             <div class="px-3 mb-2 text-3xl lg:text-xl font-bold">
               Inspired by Gospel 💒
             </div>

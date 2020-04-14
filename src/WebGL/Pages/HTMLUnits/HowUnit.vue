@@ -33,7 +33,7 @@
               Building Christ community has always been a treasure for Chrisitans to help and love one another, such as job recommendation. 👩🏻‍🔧
             </div>
           </div>
-          <div class="pb-10 lg:w-1/3 lg:pr-6">
+          <div class="lg:w-1/3 lg:pr-6">
             <div class="px-3 mb-2 text-3xl lg:text-xl font-bold">
               Share Your Story 💎
             </div>
