@@ -647,7 +647,7 @@
       "group": "parametric-rain",
       "key": "maxLines",
       "type": "number",
-      "value": 50.19,
+      "value": 67.28,
       "id": "_14393"
     },
     {
@@ -707,9 +707,9 @@
       "key": "baseColor",
       "type": "color",
       "value": {
-        "r": 80,
-        "g": 80,
-        "b": 80,
+        "r": 248,
+        "g": 255,
+        "b": 0,
         "a": 0
       },
       "id": "_880020"

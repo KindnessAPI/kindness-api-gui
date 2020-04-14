@@ -31,10 +31,10 @@ export default new Router({
     {
       path: '/dashboard',
       component: () => import('./WebGL/Pages/Dashboard.vue')
-    },
-    {
-      path: '/*',
-      redirect: '/'
     }
+    // {
+    //   path: '/*',
+    //   redirect: '/'
+    // }
   ]
 })

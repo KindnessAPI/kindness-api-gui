@@ -14,10 +14,13 @@
       <RadientBG></RadientBG>
     </O3D> -->
 
-    <O3D :animated="true" :layout="'bglayer'">
+    <O3D layout="bg" :animated="true">
       <!-- <RadientBG></RadientBG> -->
-      <StarField :mode="'magic'"></StarField>
+      <MBLines></MBLines>
     </O3D>
+    <!-- <O3D layout="core" :animated="true">
+      <ParametricRain></ParametricRain>
+    </O3D> -->
 
     <!--
     -->
@@ -54,7 +57,7 @@ import { Scene, Color } from 'three'
 // import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
 export default {
-  name: 'StarFlowScene',
+  name: 'HeroScene',
   components: {
     ...require('../webgl').default
   },
@@ -80,7 +83,7 @@ export default {
   async mounted () {
     await this.lookupWait('ready')
 
-    this.scene.background = new Color('#1a1a1a')
+    this.scene.background = new Color('#333')
     // this.scene.background = new TextureLoader().load(require('./img/stained-glass.jpg'))
 
     // prepare camera
@@ -88,11 +91,11 @@ export default {
     this.camera.position.z = 300
     // this.rayplay = new RayPlay({ mounter: this.lookup('element'), base: this.lookup('base'), camera: this.camera })
 
-    // let OrbitControls = require('three/examples/jsm/controls/OrbitControls').OrbitControls
-    // this.controls = new OrbitControls(this.camera, this.lookup('element'))
-    // this.lookup('base').onLoop(() => {
-    //   this.controls.update()
-    // })
+    let OrbitControls = require('three/examples/jsm/controls/OrbitControls').OrbitControls
+    this.controls = new OrbitControls(this.camera, this.lookup('element'))
+    this.lookup('base').onLoop(() => {
+      this.controls.update()
+    })
 
     this.scene.add(this.o3d)
 
@@ -113,9 +116,19 @@ export default {
       // let time = window.performance.now() * 0.001
       // let setting = this.settings[cheery]
       this.layouts = {
-        'lens': {
-          pz: '100'
+        core: {
+          sx: 0.3,
+          sy: 0.3,
+          sz: 0.3
+        },
+        bg: {
+          sx: '5',
+          sy: '5',
+          pz: '-1000'
         }
+        // 'lens': {
+        //   pz: '100'
+        // }
         // 'rain': {
         //   pz: `-1000`
         // }

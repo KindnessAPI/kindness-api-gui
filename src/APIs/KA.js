@@ -1,5 +1,5 @@
 export const getWS = () => {
-  let testing = 'ws://localhost:3333'
+  let testing = 'ws://' + location.hostname + ':3333'
   let staging = 'wss://ws-staging.kindnessapi.com'
   let production = 'wss://ws.kindnessapi.com'
   if (process.env.NODE_ENV === 'development') {
@@ -15,7 +15,7 @@ export const getWS = () => {
 }
 
 export const getRESTURL = () => {
-  let testing = 'http://localhost:3333'
+  let testing = 'http://' + location.hostname + ':3333'
   let staging = 'https://api-staging.kindnessapi.com'
   let production = 'https://api.kindnessapi.com'
   if (process.env.NODE_ENV === 'development') {
@@ -34,6 +34,7 @@ export const getRESTURL = () => {
 let getID = () => {
   return '_' + Math.random().toString(36).substr(2, 9)
 }
+
 let socket = new LamdaClient({
   url: getWS(),
   roomId: 'room-test',
@@ -51,6 +52,7 @@ socket.on('online', ({ detail }) => {
   let html = `<pre>me: ${socket.nickname} - ${JSON.stringify(detail)}</pre>`
   console.log(html)
 })
+
 */
 
 let isFunction = function (obj) {

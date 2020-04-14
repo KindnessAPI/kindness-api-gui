@@ -7,6 +7,7 @@
       <HeroUnit></HeroUnit>
       <HowUnit></HowUnit>
       <LetsDoThis></LetsDoThis>
+      <MotherBoardUnit></MotherBoardUnit>
     </div>
     <FullMenuBar v-show="openMenu" @close="openMenu = false"></FullMenuBar>
   </div>
