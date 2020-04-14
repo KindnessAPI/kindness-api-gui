@@ -8,7 +8,7 @@ void main (void) {
   // randID = gpuPosition.rgb;
   vec2 posA = gpuPosition.xy;
 
-  gl_PointSize = 1.0;
+  gl_PointSize = 2.0;
   gl_Position = vec4(
     2.0 * posA.x - 1.0,
     1.0 - 2.0 * posA.y,

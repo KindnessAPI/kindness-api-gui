@@ -78,7 +78,7 @@ vec2 squares (vec2 pp) {
 }
 
 
-vec2 funSwirl (vec2 pp) {
+vec2 dotted (vec2 pp) {
   vec2 p = vec2(pp);
   vec2 v = vec2(0.0);
 
@@ -133,7 +133,7 @@ vec2 converge (vec2 pp) {
   return v;
 }
 
-vec2 boxedSwirl (vec2 pp) {
+vec2 boxes (vec2 pp) {
   vec2 p = vec2(pp);
   vec2 v = vec2(0.0);
 
@@ -165,26 +165,41 @@ vec2 get_vel (vec2 pp) {
     } else {
       return galaxy(pp * 2.0);
     }
-  // gucci
+  // dotted
   } else if (u_mode == 1.0) {
     if (fract(time) < 0.5) {
-      return funSwirl(pp);
+      return dotted(-pp);
     } else {
-      return funSwirl(-pp);
+      return dotted(pp);
     }
-  // boxedSwirl
+  // magic
+  } else if (u_mode == 4.0) {
+    if (fract(time) < 0.5) {
+      if (length(pp) < 0.5) {
+        return circle(pp * 3.0);
+      } else {
+        return dotted(pp) + circle(pp);
+      }
+    } else {
+      if (length(pp) < 0.5) {
+        return circle(-pp * 3.0);
+      } else {
+        return dotted(-pp) + circle(-pp);
+      }
+    }
+  // boxes
   } else if (u_mode == 2.0) {
     if (fract(time) < 0.5) {
-      return boxedSwirl(pp);
+      return boxes(pp);
     } else {
-      return boxedSwirl(-pp);
+      return boxes(-pp);
     }
   // flow
   } else if (u_mode == 3.0) {
     if (fract(time) < 0.5) {
-      return passWave(pp);
+      return converge(pp);
     } else {
-      return passWave(-pp);
+      return converge(-pp);
     }
   }
 }

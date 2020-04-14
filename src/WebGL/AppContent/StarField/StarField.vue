@@ -15,6 +15,7 @@ import { GPUComputationRenderer } from './GPGPU'
 
 // import { Refractor } from 'three/examples/jsm/objects/Refractor'
 // import { FastBlurShader } from './FastBlurShader'
+
 export default {
   name: 'StarField',
   mixins: [Tree],
@@ -75,7 +76,8 @@ export default {
         'galaxy': 0.0,
         'dotted': 1.0,
         'boxes': 2.0,
-        'flow': 3.0
+        'flow': 3.0,
+        'magic': 4.0
       }
 
       computeUniforms.u_mode.value = modes[this.mode]
@@ -138,6 +140,7 @@ export default {
         })
         return material
       }
+
       let makeGeo = () => {
         let getUVandPosition = () => {
           let newArr = []
@@ -236,6 +239,12 @@ export default {
         let dpi = 2
         let el = this.lookup('element')
         let rect = el.getBoundingClientRect()
+        if (tScreenA) {
+          tScreenA.dispose()
+        }
+        if (tScreenB) {
+          tScreenB.dispose()
+        }
         tScreenA = craeteScreenRenderTarget(dpi * rect.width, dpi * rect.height)
         tScreenB = craeteScreenRenderTarget(dpi * rect.width, dpi * rect.height)
         pingPongMaterial.uniforms.res.value.x = dpi * rect.width
