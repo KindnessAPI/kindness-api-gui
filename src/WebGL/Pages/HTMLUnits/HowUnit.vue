@@ -24,6 +24,9 @@
             <div class="px-3 text-lg mb-2">
               Our system can help people to share and find their extra food 🍎 resources, toilet papers 🧻 and more.
             </div>
+            <div class="px-3 text-lg mb-2">
+              (Under development)
+            </div>
           </div>
           <div class="pb-10 lg:w-1/3 lg:pr-6">
             <div class="px-3 mb-2 text-3xl lg:text-xl font-bold">
@@ -32,6 +35,9 @@
             <div class="px-3 text-lg mb-2">
               Building Christ community has always been a treasure for Chrisitans to love one another, to heal each other's depression and loneiness. 🤗
             </div>
+            <div class="px-3 text-lg mb-2">
+              (Under development)
+            </div>
           </div>
           <div class="lg:w-1/3 lg:pr-6">
             <div class="px-3 mb-2 text-3xl lg:text-xl font-bold">
@@ -39,6 +45,9 @@
             </div>
             <div class="px-3 text-lg mb-2">
               Life is better when we have each other to share our tears and joy, hope, your mental health recovery journey, and praise. 😍
+            </div>
+            <div class="px-3 text-lg mb-2">
+              (Under development)
             </div>
           </div>
         </div>

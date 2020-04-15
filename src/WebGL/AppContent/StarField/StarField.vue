@@ -43,7 +43,7 @@ export default {
         u_drop_rate: { value: 38.25 / 500.0 },
         u_drop_rate_bump: { value: 36.18 / 500.0 },
         u_tail_amount: { value: 65.0 / 100.0 },
-        color: { value: new Color('hsl(130, 0%, 50%)') }
+        color: { value: new Color('hsl(230, 50%, 70%)') }
       }
 
       let renderer = this.lookup('renderer')
@@ -120,6 +120,9 @@ export default {
             tex: {
               value: null
             },
+            tex2: {
+              value: null
+            },
             time: {
               value: 0
             },
@@ -171,8 +174,10 @@ export default {
       loop(() => {
         if (i % 2 === 0) {
           pts.material.uniforms.tex.value = rtts[0].texture
+          pts.material.uniforms.tex2.value = rtts[1].texture
         } else {
           pts.material.uniforms.tex.value = rtts[1].texture
+          pts.material.uniforms.tex2.value = rtts[0].texture
         }
       })
 

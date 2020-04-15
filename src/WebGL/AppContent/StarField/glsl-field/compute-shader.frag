@@ -174,8 +174,9 @@ vec2 get_vel (vec2 pp) {
     }
   // magic
   } else if (u_mode == 4.0) {
-    float signv = sin(time * 3.0) * 1.5;
-    if (length(pp) < abs(signv) * 0.25) {
+    float signv = sin(time * 3.0);
+    // return dotted(signv * pp) + circle(signv * pp);
+    if (length(pp) < 0.4 * signv) {
       return circle(signv * pp * 5.0);
     } else {
       return dotted(signv * pp) + circle(signv * pp);
