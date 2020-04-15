@@ -11,7 +11,7 @@
       <div class="max-w-6xl mx-auto text-white">
         <router-link to="/work-in-progress">
           <div class="px-3 mb-2 text-3xl md:text-4xl font-bold text-center cursor-pointer hover:scale-110 hover:underline">
-            Work in Progress
+            Love Work <br/> in Progress
           </div>
         </router-link>
 

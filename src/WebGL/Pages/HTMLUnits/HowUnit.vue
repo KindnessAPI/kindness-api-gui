@@ -13,7 +13,7 @@
           KindnessAPI ? 🤔
         </div>
         <div class="px-3 text-lg mb-10">
-          KindnessAPI is an Gospel Church 💒 with an API. ⚙️ It's a place for you to share your Kindness, God's Grace ✝️ and Testimonals with others. Other website's developer 👨🏼‍💻 can use our APIs to connect and spread Gospel to a wider audience.
+          KindnessAPI is ✝️ a Gospel Church 💒 . It's a place for 💁🏼‍♂️YOU💁🏼‍♀️ to share your Kindness, God's Grace and Testimonals with others. We also have an API for 👩🏻‍💻 developers 👨🏼‍💻 to connect and spread Kindness and Gospel to a much wider audience. 📲
         </div>
 
         <div class="block lg:flex">
@@ -27,18 +27,18 @@
           </div>
           <div class="pb-10 lg:w-1/3 lg:pr-6">
             <div class="px-3 mb-2 text-3xl lg:text-xl font-bold">
-              Helping each other Network 🖥
+              Community Healing 😻
             </div>
             <div class="px-3 text-lg mb-2">
-              Building Christ community has always been a treasure for Chrisitans to help and love one another, such as job recommendation. 👩🏻‍🔧
+              Building Christ community has always been a treasure for Chrisitans to love one another, to heal each other's depression and loneiness. 🤗
             </div>
           </div>
           <div class="lg:w-1/3 lg:pr-6">
             <div class="px-3 mb-2 text-3xl lg:text-xl font-bold">
-              Share Your Story 💎
+              Voice Your Kind Story 💎
             </div>
             <div class="px-3 text-lg mb-2">
-              Life is better when we have each other to share our tears and joy, testimonals and praise. 😍
+              Life is better when we have each other to share our tears and joy, hope, your mental health recovery journey, and praise. 😍
             </div>
           </div>
         </div>

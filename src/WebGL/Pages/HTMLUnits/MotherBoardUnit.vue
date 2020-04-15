@@ -11,7 +11,7 @@
       <div class="max-w-6xl mx-auto text-white">
         <router-link to="/work-in-progress">
           <div class="px-3 mb-2 text-3xl md:text-4xl font-bold text-center cursor-pointer hover:scale-110 hover:underline">
-            👩🏻‍💻 Developers API 👨🏼‍💻
+            👩🏻‍💻 KindnessAPI 👨🏼‍💻
           </div>
         </router-link>
 
@@ -45,7 +45,7 @@
           </div>
           <div class="lg:w-1/3">
             <div class="px-3 mb-2 text-3xl lg:text-xl font-bold">ho
-              Inspired by Gospel 💒
+            Inspired by Gospel 💒
             </div>
             <div class="px-3 text-lg mb-2">
               Gospel taught us so many wise lessons. Shairng wise life tips.

@@ -62,6 +62,7 @@ export default {
           fns[kn]()
         }
       })
+
       let loop = (v) => {
         fns[Math.random() + ''] = v
       }
