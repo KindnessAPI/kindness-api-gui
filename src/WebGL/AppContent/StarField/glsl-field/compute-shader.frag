@@ -174,13 +174,14 @@ vec2 get_vel (vec2 pp) {
     }
   // magic
   } else if (u_mode == 4.0) {
-    float signv = sin(time * 3.0);
-    // return dotted(signv * pp) + circle(signv * pp);
-    if (length(pp) < 0.4 * signv) {
-      return circle(signv * pp * 5.0);
-    } else {
-      return dotted(signv * pp) + circle(signv * pp);
-    }
+    float signv = sin(time * 3.0) * cos(time);
+    return dotted(signv * pp) + circle(signv * pp);
+
+    // if (length(pp) < 0.5 * abs(signv)) {
+    //   return converge(signv * -pp);
+    // } else {
+    //   return dotted(signv * pp) + circle(signv * pp);
+    // }
   // boxes
   } else if (u_mode == 2.0) {
     if (fract(time) < 0.5) {
