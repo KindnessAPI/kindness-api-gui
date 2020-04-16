@@ -8,6 +8,7 @@
       <HowUnit></HowUnit>
       <LetsDoThis></LetsDoThis>
       <MotherBoardUnit></MotherBoardUnit>
+      <LoveUnit></LoveUnit>
     </div>
     <FullMenuBar v-show="openMenu" @close="openMenu = false"></FullMenuBar>
   </div>

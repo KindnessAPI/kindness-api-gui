@@ -84,6 +84,9 @@ export default {
     })
   },
   beforeDestroy () {
+    this.o3d.children.forEach((v) => {
+      this.o3d.remove(v)
+    })
   }
 }
 </script>

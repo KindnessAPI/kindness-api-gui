@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "deploy-both": "npm run deploy; npm run deploy-prod;",
+    "deploy-both": "npm run deploy-test; npm run deploy-prod;",
     "dev": "vue-cli-service serve",
     "devs": "vue-cli-service serve --https",
     "build": "vue-cli-service build",
@@ -11,7 +11,7 @@
     "lint": "vue-cli-service lint",
     "git": "git add .; git commit -am \"git backup\"; git push -u origin master",
     "deploy-prod": "npm run build; npm run netlify; npm run git; ",
-    "deploy": "npm run build-staging; npm run netlify-staging; npm run git; ",
+    "deploy-test": "npm run build-staging; npm run netlify-staging; npm run git; ",
     "netlify": "netlify deploy --dir=\"./dist\" --prod",
     "netlify-staging": "netlify deploy --dir=\"./dist\"  --prod -s \"359600f8-c97e-4ba2-a561-2a67850474db\"",
     "tunnel": "ssh -f -N -T -R 9000:127.0.0.1:8080 lok@157.230.247.60",
