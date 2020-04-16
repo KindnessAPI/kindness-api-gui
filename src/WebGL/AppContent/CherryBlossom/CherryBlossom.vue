@@ -63,9 +63,34 @@ export default {
     this.lookup('base').onLoop(() => {
       cube.needsUpdate = true
     })
-    Cache.brown = new MeshMatcapMaterial({ color: '#4c2a06', side: DoubleSide, matcap: texLoader.load(require('./matcap/brown.png')) })
-    Cache.yellow = new MeshMatcapMaterial({ color: '#ffd743', side: DoubleSide, matcap: texLoader.load(require('./matcap/bright-yellow.png')) })
+    Cache.brown = new MeshMatcapMaterial({ color: 0xffffff, side: DoubleSide, matcap: texLoader.load(require('./matcap/brown.png')) })
+    Cache.yellow = new MeshMatcapMaterial({ color: 0xffd743, side: DoubleSide, matcap: texLoader.load(require('./matcap/bright-yellow.png')) })
     Cache.pedals = new MeshBasicMaterial({ color: 0xffffff, opacity: 1, transparent: true, side: DoubleSide, envMap: cube })
+
+    // let uniforms = {
+    //   matcap: { value: texLoader.load(require('./matcap/brown.png')) },
+    //   time: { value: 0 },
+    //   sceneRect: { value: new Vector2() }
+    // }
+    // let rainbowCloudMaterial = new RawShaderMaterial({
+    //   // eslint-disable-next-line
+    //   vertexShader: require('raw-loader!./glsl/matcap-fbm.vs.glsl').default,
+    //   // eslint-disable-next-line
+    //   fragmentShader: require('raw-loader!./glsl/matcap-fbm.fs.glsl').default,
+    //   uniforms,
+    //   transparent: true
+    // })
+    // this.lookup('base').onLoop(() => {
+    //   uniforms.time.value = window.performance.now() * 0.001
+    // })
+    // this.lookup('base').onResize(async () => {
+    //   let element = this.lookup('element')
+    //   let elRect = element.getBoundingClientRect()
+    //   uniforms.sceneRect.value = new Vector2(elRect.width, elRect.height)
+    //   // let screen = await this.getScreen()
+    //   // let geo = new PlaneBufferGeometry(screen.width, screen.height, 20, 20)
+    //   // mesh.geometry = geo
+    // })
 
     this.$on('init', async () => {
       // eslint-disable-next-line
