@@ -9,6 +9,7 @@ import { Tree } from '../../Reusable'
 import { PlaneBufferGeometry, TextureLoader, Vector2 } from 'three'
 import { Refractor } from 'three/examples/jsm/objects/Refractor'
 import { FastBlurShader } from './FastBlurShader'
+import { LensBlurShader } from './LensBlurShader'
 export default {
   name: 'LensArea',
   mixins: [Tree],
@@ -28,19 +29,23 @@ export default {
   },
   data () {
     return {
+      FastBlurShader,
+      LensBlurShader
     }
   },
   mounted () {
     let RES_SIZE = 1024
 
-    this.$on('init', () => {
+    this.$on('init', async () => {
+      let element = this.lookup('element') || this.lookup('renderer').domElement
+      let box = element.getBoundingClientRect()
       let camera = this.lookup('camera')
-      let screen = this.getScreen()
+      let screen = await this.getScreen()
       let geo = new PlaneBufferGeometry(screen.width, screen.height, 4, 4)
       let item = new Refractor(geo, {
         color: this.color,
-        textureWidth: RES_SIZE,
-        textureHeight: RES_SIZE * camera.aspect,
+        textureWidth: box.width * 2.0,
+        textureHeight: box.height * 2.0, // * camera.aspect,
         shader: FastBlurShader
       })
 
@@ -70,6 +75,10 @@ export default {
       this.o3d.add(item)
 
       this.lookup('base').onLoop(() => {
+        // item.rotation.x += 0.01
+        // item.rotation.y += 0.01
+        // item.rotation.z += 0.01
+
         if (item.material.uniforms['blur']) {
           item.material.uniforms['blur'].value = this.blur
         }

@@ -128,7 +128,7 @@ let fragmentShader = glsl`
   }
 `
 
-var BlurShader = {
+var LensBlurShader = {
 
   uniforms: {
 
@@ -166,4 +166,4 @@ var BlurShader = {
   fragmentShader: fragmentShader
 }
 
-export { BlurShader }
+export { LensBlurShader }

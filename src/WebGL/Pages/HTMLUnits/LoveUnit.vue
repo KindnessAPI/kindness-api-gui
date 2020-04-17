@@ -1,17 +1,17 @@
 <template>
   <div>
-    <div class="relative py-12">
+    <div class="relative lg:py-12">
 
-      <ScissorArea class="absolute top-0 left-0 scissor-left" style="z-index: -1;">
+      <ScissorArea class="scissor-right" style="z-index: -1;">
         <div slot="dom" class="full">
         </div>
         <GospelScene slot="o3d"></GospelScene>
       </ScissorArea>
 
-      <div class="scissor-right scissor-text py-32">
-        <div class="lg:pl-12  max-w-xl">
+      <div class="scissor-left scissor-text py-12">
+        <div class="lg:pr-12 max-w-xl ml-auto">
           <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
-            Gospel within our hearts
+            Gospel within our hearts.
           </div>
           <div class="px-3 text-lg mb-10">
             Thank you! Thank you!
@@ -21,22 +21,23 @@
             What is Lorem Ipsum?
           </div>
           <div class="px-3 text-lg mb-2">
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
           </div>
 
           <div class="px-3 mb-2 text-3xl lg:text-xl font-bold">
             What is Lorem Ipsum?
           </div>
           <div class="px-3 text-lg mb-2">
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
           </div>
 
           <div class="px-3 mb-2 text-3xl lg:text-xl font-bold">
             What is Lorem Ipsum?
           </div>
           <div class="px-3 text-lg mb-2">
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
           </div>
+
         </div>
 
       </div>
@@ -54,11 +55,10 @@ export default {
 
 <style scoped lang="postcss">
 .scissor-text{
-  color: white;
 }
 .scissor-right{
-  width: 100%;
-  height: 100%;
+  width: 100vmin;
+  height: 100vmin;
 }
 .scissor-left{
   width: 100%;
@@ -70,11 +70,17 @@ export default {
     color: black;
   }
   .scissor-right{
+    position: absolute;
+    top: 0px;
+    left: 0px;
     width: 50%;
     height: 100%;
     margin-left: 50%;
   }
   .scissor-left{
+    /* position: absolute;
+    top: 0px;
+    left: 0px; */
     width: 50%;
     height: 100%;
   }

@@ -720,6 +720,37 @@
       "type": "number",
       "value": 55.65,
       "id": "_426899"
+    },
+    {
+      "group": "parametric-cluster-canvas",
+      "key": "hue-spread",
+      "type": "number",
+      "value": 100,
+      "id": "_40842"
+    },
+    {
+      "group": "parametric-cluster-canvas",
+      "key": "canvas-texture-dot",
+      "type": "color",
+      "value": {
+        "r": 255,
+        "g": 0,
+        "b": 0,
+        "a": 0.74
+      },
+      "id": "_26611"
+    },
+    {
+      "group": "parametric-cluster-canvas",
+      "key": "canvas-texture-bg",
+      "type": "color",
+      "value": {
+        "r": 173,
+        "g": 255,
+        "b": 254,
+        "a": 0.74
+      },
+      "id": "_617143"
     }
   ]
 }

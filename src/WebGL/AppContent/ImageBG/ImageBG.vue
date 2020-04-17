@@ -13,6 +13,7 @@ export default {
   name: 'GradientBG',
   mixins: [Tree],
   props: {
+    image: {}
   },
   components: {
     ...require('../../webgl')
@@ -27,10 +28,11 @@ export default {
     this.$on('init', async () => {
       // let camera = this.lookup('camera')
       let screen = await this.getScreen()
-      let geo = new PlaneBufferGeometry(screen.width, screen.height, 2, 2)
+      let geo = new PlaneBufferGeometry(screen.max, screen.max, 20, 20)
       let uniforms = {
         time: { value: 0 },
-        sceneRect: { value: new Vector2() }
+        tex: { value: this.image },
+        sceneRect: { value: new Vector2(1.0, 1.0) }
       }
       let mat = new RawShaderMaterial({
         // eslint-disable-next-line
@@ -46,11 +48,16 @@ export default {
       this.lookup('base').onResize(async () => {
         let element = this.lookup('element')
         let elRect = element.getBoundingClientRect()
-        uniforms.sceneRect.value = new Vector2(elRect.width, elRect.height)
+        let maxVP = Math.max(elRect.width, elRect.height)
+        uniforms.sceneRect.value = new Vector2(maxVP, maxVP)
         let screen = await this.getScreen()
-        let geo = new PlaneBufferGeometry(screen.width, screen.height, 2, 2)
+        let geo = new PlaneBufferGeometry(screen.max, screen.max, 20, 20)
         mesh.geometry = geo
       })
+
+      mesh.scale.x = 1.1
+      mesh.scale.y = 1.1
+      mesh.scale.z = 1.1
 
       this.o3d.children.forEach((v) => {
         this.o3d.remove(v)

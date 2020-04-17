@@ -9,7 +9,7 @@
       </ScissorArea>
 
       <div class="scissor-right scissor-text py-32">
-        <div class="lg:pl-12">
+        <div class="lg:pl-12 max-w-xl">
           <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
             Let's do this! 🥰
           </div>

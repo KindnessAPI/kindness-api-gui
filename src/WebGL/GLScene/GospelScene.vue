@@ -10,14 +10,17 @@
     -->
 
     <!--  -->
-    <!-- <O3D :animated="true" layout="bglayer">
-      <RadientBG></RadientBG>
-    </O3D> -->
+    <!--  -->
 
-    <O3D :animated="true" :layout="'bglayer'">
+    <!-- -->
+    <O3D :animated="true" layout="bglayer">
+      <ImageBG v-if="image" :image="image"></ImageBG>
       <!-- <RadientBG></RadientBG> -->
-      <ParametricRain :mode="'magic'"></ParametricRain>
     </O3D>
+
+    <!-- <O3D :animated="true" :layout="'cluster'">
+      <ParametricCluster :tCube="tCube" :mode="'magic'"></ParametricCluster>
+    </O3D> -->
 
     <!--
     -->
@@ -27,13 +30,15 @@
 
     <!-- <div class=""></div> -->
 
-    <O3D :animated="true" :layout="'lens'">
+    <!-- <O3D :animated="true" :layout="'lens'">
       <LensArea :dudv="'cross-2'" :blur="0.0"></LensArea>
+    </O3D> -->
+
+    <O3D :animated="true" :layout="'lensArea'">
+      <LensArea></LensArea>
     </O3D>
 
-    <!-- <O3D :animated="true" :layout="'lensArea'">
-      <LensArea></LensArea>
-    </O3D> -->
+    <!--  -->
 
     <!-- <StarField></StarField> -->
     <!-- <O3D :animated="true" :layout="'bglayer'">
@@ -49,9 +54,11 @@
 
 <script>
 import { Tree, PCamera } from '../Reusable'
-import { Scene, Color } from 'three'
+import { Scene, Color, TextureLoader } from 'three'
 // import { Interaction } from 'three.interaction'
 // import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+
+// let Cache = {}
 
 export default {
   name: 'GospelScene',
@@ -63,10 +70,9 @@ export default {
     return {
       settings: {},
       flower1: {},
-
+      image: false,
       scene: new Scene(),
-      paint2DTex: false,
-      paintCubeTex: false,
+      tCube: false,
       layouts: false,
       blur: 0,
       socket: false
@@ -80,12 +86,33 @@ export default {
   async mounted () {
     await this.lookupWait('ready')
 
-    this.scene.background = new Color('#a1a1a1')
+    // let div = document.createElement('div')
+    // Cache.painter = Cache.painter || makePaintCanvas({ pixel: 16, sdk: this.lookup('sdk'), setting: 'parametric-cluster-canvas', domElement: div, base: this.lookup('base') })
+    // let painter = Cache.painter
+    // Cache.painterCube = Cache.painterCube || new CubeTexture([
+    //   painter.canvas,
+    //   painter.canvas,
+    //   painter.canvas,
+    //   painter.canvas,
+    //   painter.canvas,
+    //   painter.canvas
+    // ])
+    // let cube = Cache.painterCube
+
+    // this.lookup('base').onLoop(() => {
+    //   cube.needsUpdate = true
+    // })
+
+    // // this.tCube = cube
+
+    this.image = new TextureLoader().load(require('./img/stained-glass.jpg'))
+
+    this.scene.background = new Color('#121212')
     // this.scene.background = new TextureLoader().load(require('./img/stained-glass.jpg'))
 
     // prepare camera
     this.camera = new PCamera({ base: this.lookup('base'), element: this.lookup('element') })
-    this.camera.position.z = 300
+    this.camera.position.z = 500
     // this.rayplay = new RayPlay({ mounter: this.lookup('element'), base: this.lookup('base'), camera: this.camera })
 
     // let OrbitControls = require('three/examples/jsm/controls/OrbitControls').OrbitControls
@@ -110,13 +137,19 @@ export default {
     let looper = () => {
       // if (!parentScrollBox) { return }
       // if (!this.settings[cheery]) { return }
-      // let time = window.performance.now() * 0.001
+      let time = window.performance.now() * 0.001
       // let setting = this.settings[cheery]
       this.layouts = {
-        'bglayer': {
+        'cluster': {
           rz: `${Math.PI * 0.5}`,
-          // ry: `${parentScrollBox.page * Math.PI * 2}`,
-          pz: '-500'
+          pz: '-250',
+          sx: '0.75',
+          sy: '0.75',
+          sz: '0.75'
+        },
+        'bglayer': {
+          pz: '-500',
+          rz: `${time * 0.03}`
         },
         'lens': {
           pz: '500'

@@ -7,20 +7,22 @@
     <O3D :animated="true" layout="cluster">
       <ParametricBall v-if="paintCubeTex" :tCube="paintCubeTex"></ParametricBall>
     </O3D>
+
     <O3D :animated="true" layout="dome">
       <SkyDome v-if="paint2DTex" :texture="paint2DTex"></SkyDome>
     </O3D>
+
     <O3D :animated="true" layout="crossLayer">
-      <RefactorArea dudv="cube-2" :blur="0.0"></RefactorArea>
+      <LensArea dudv="cube-2" :blur="0.0"></LensArea>
 
       <O3D :animated="true" layout="mainMessage">
         <GridLayout></GridLayout>
         <!-- <TextureText :canplay="true" font="Arial" align="left" :clicked="goMini" :text="mainMessage"></TextureText> -->
       </O3D>
 
-      <O3D :animated="true" layout="ctaButton">
+      <!-- <O3D :animated="true" layout="ctaButton">
         <TextureText :canplay="true" font="Arial" align="left" :clicked="nextPage" :text="ctaButton"></TextureText>
-      </O3D>
+      </O3D> -->
     </O3D>
   </O3D>
 </template>
@@ -89,7 +91,7 @@ export default {
 
     this.scroller = makeScroller({ base: this.lookup('base'), mounter: this.lookup('mounter'), limit: this.limit, onMove: () => { this.$emit('onMove') } })
     let looper = () => {
-      this.lookup('renderer').domElement.style.opacity = this.fader.value
+      // this.lookup('renderer').domElement.style.opacity = this.fader.value
 
       // this.blur = 1.0 - this.scroller.value
 
@@ -101,19 +103,19 @@ export default {
       this.layouts = {
         crossLayer: {
           // visible: this.blur > 0.1,
-          pz: 20,
-          py: ((1.0 - this.scroller.value) * -(this.screen.height))
+          pz: 20
+          // py: ((1.0 - this.scroller.value) * -(this.screen.height))
         },
         cluster: {
-          pz: -250,
-          rz: this.scroller.value * (Math.PI * 2)
+          pz: -250
+          // rz: this.scroller.value * (Math.PI * 2)
         },
         mainMessage: {
           pz: 1
         },
         ctaButton: {
-          pz: 0.1,
-          py: `${this.screen.height * -0.5} + child.height * 2.5`
+          pz: 0.1
+          // py: `${this.screen.height * -0.5} + child.height * 2.5`
         }
       }
     }

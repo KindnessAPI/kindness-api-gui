@@ -191,11 +191,16 @@ export const Tree = {
         try {
           fnc()
         } catch (e) {
-          console.log(this.$option.name, e)
+          if (this.$option) {
+            console.log(this.$option.name, e)
+          } else {
+            console.log(e)
+          }
         }
       }
 
       let layout = this.getLayout()
+
       if (typeof layout.visible !== 'undefined') {
         run(() => { this.o3d.visible = Parser.evaluate('' + (layout.visible), this) })
       }

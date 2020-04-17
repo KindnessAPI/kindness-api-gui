@@ -9,6 +9,10 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
+      path: '/lok',
+      component: () => import('./WebGL/Pages/Lok.vue')
+    },
+    {
       path: '/',
       component: () => import('./WebGL/Pages/Home.vue')
     },
