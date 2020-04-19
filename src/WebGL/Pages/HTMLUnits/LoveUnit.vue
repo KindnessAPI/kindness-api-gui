@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="relative lg:py-12">
+    <div class="relative">
 
       <ScissorArea class="scissor-right" style="z-index: -1;">
         <div slot="dom" class="full">
@@ -8,8 +8,8 @@
         <GospelScene slot="o3d"></GospelScene>
       </ScissorArea>
 
-      <div class="scissor-left scissor-text py-12">
-        <div class="lg:pr-12 max-w-xl ml-auto">
+      <div class="scissor-left scissor-text py-32">
+        <div class="lg:px-4 max-w-xl mx-auto lg:ml-auto">
           <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
             Gospel within our hearts.
           </div>

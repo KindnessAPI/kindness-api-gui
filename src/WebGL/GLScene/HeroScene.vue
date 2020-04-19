@@ -9,8 +9,6 @@
       </O3D>
     -->
 
-    <!-- <StarField></StarField> -->
-
     <O3D :animated="true" layout="cb-inst-1">
       <O3D :animated="true" layout="cb-rot">
         <O3D :animated="true" layout="cb-item">
@@ -32,6 +30,11 @@
         </O3D>
       </O3D>
     </O3D>
+
+    <!-- <O3D :animated="true" layout="lensarea">
+      <LensArea></LensArea>
+    </O3D> -->
+
   </O3D>
 </template>
 
@@ -72,7 +75,7 @@ export default {
 
     // prepare camera
     this.camera = new PCamera({ base: this.lookup('base'), element: this.lookup('element') })
-    this.camera.position.z = 100
+    this.camera.position.z = 120
     this.rayplay = new RayPlay({ mounter: this.lookup('element'), base: this.lookup('base'), camera: this.camera })
 
     // this.controls = new OrbitControls(this.camera, this.lookup('element'))
@@ -104,6 +107,9 @@ export default {
       let cb3or = setting['flower3-offfset-rotation']
 
       this.layouts = {
+        lensarea: {
+          pz: 100
+        },
         'deep': {
           pz: -100
         },

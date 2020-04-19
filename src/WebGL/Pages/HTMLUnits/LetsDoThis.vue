@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="relative py-12">
+    <div class="relative">
 
       <ScissorArea class="absolute top-0 left-0 scissor-left" style="z-index: -1;">
         <div slot="dom" class="full">
@@ -9,7 +9,7 @@
       </ScissorArea>
 
       <div class="scissor-right scissor-text py-32">
-        <div class="lg:pl-12 max-w-xl">
+        <div class="lg:px-4 max-w-xl mx-auto">
           <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
             Let's do this! 🥰
           </div>
