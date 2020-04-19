@@ -5,7 +5,7 @@
 
     </div>
 
-    <div class="relative">
+    <div class="relative border-b border-black">
 
       <ScissorArea class="scissor-right" style="z-index: -1;">
         <div slot="dom" class="full">
@@ -21,7 +21,7 @@
       </div>
     </div>
 
-    <div class="relative">
+    <div class="relative border-b border-black">
 
       <ScissorArea class="scissor-right" style="z-index: -1;">
         <div slot="dom" class="full">
@@ -50,7 +50,7 @@
       </div>
     </div>
 
-    <div class="relative">
+    <div class="relative border-b border-black">
 
       <ScissorArea class="scissor-right" style="z-index: -1;">
         <div slot="dom" class="full">
@@ -82,7 +82,7 @@
       </div>
     </div>
 
-    <div class="relative">
+    <div class="relative border-b border-black">
 
       <ScissorArea class="scissor-right" style="z-index: -1;">
         <div slot="dom" class="full">
@@ -97,7 +97,7 @@
             Rise Back Up!
           </div>
           <div class="px-3 pb-2 text-3xl lg:text-xl font-bold">
-            2015-10 to Present
+            2015-12 to Present
           </div>
 
           <div class="px-3 text-lg pb-8">
