@@ -8,7 +8,7 @@
         <GospelScene slot="o3d"></GospelScene>
       </ScissorArea>
 
-      <div class="scissor-left scissor-text py-32">
+      <div class="scissor-left scissor-text py-12 lg:py-32">
         <div class="lg:px-4 max-w-xl mx-auto lg:ml-auto">
           <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
             Gospel within our hearts.
