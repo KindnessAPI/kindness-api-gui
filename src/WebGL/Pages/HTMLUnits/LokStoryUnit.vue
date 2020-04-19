@@ -31,8 +31,11 @@
 
       <div class="scissor-left scissor-text py-8 lg:py-24">
         <div class="lg:px-4 max-w-xl mx-auto lg:ml-auto">
+          <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
+            The Fall
+          </div>
           <div class="px-3 pb-2 text-3xl lg:text-xl font-bold">
-            2014-08 to 2014-10 - The Fall
+            2014-08 to 2014-10
           </div>
 
           <div class="px-3 text-lg pb-8">
@@ -58,8 +61,11 @@
       <div class="scissor-left scissor-text py-8 lg:py-24">
         <div class="lg:px-4 max-w-xl mx-auto lg:ml-auto">
 
+          <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
+            The Reset
+          </div>
           <div class="px-3 pb-2 text-3xl lg:text-xl font-bold">
-            2014-10 to 2015-10 - The Reset
+            2014-10 to 2015-12
           </div>
 
           <div class="px-3 text-lg pb-8">
@@ -87,8 +93,11 @@
       <div class="scissor-left scissor-text py-8 lg:py-24">
         <div class="lg:px-4 max-w-xl mx-auto lg:ml-auto">
 
+          <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
+            Rise Back Up!
+          </div>
           <div class="px-3 pb-2 text-3xl lg:text-xl font-bold">
-            2015-10 to Present - Rise Back Up!
+            2015-10 to Present
           </div>
 
           <div class="px-3 text-lg pb-8">
