@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <div class="relative border-b border-black">
+    <div class="relative lg:border-b lg:border-black">
 
       <ScissorArea class="scissor-right" style="z-index: -1;">
         <div slot="dom" class="full">
@@ -17,7 +17,7 @@
       </div>
     </div>
 
-    <div class="relative border-b border-black">
+    <div class="relative lg:border-b lg:border-black">
 
       <ScissorArea class="scissor-right" style="z-index: -1;">
         <div slot="dom" class="full">
@@ -46,7 +46,7 @@
       </div>
     </div>
 
-    <div class="relative border-b border-black">
+    <div class="relative lg:border-b lg:border-black">
 
       <ScissorArea class="scissor-right" style="z-index: -1;">
         <div slot="dom" class="full">
@@ -78,7 +78,7 @@
       </div>
     </div>
 
-    <div class="relative border-b border-black">
+    <div class="relative lg:border-b lg:border-black">
 
       <ScissorArea class="scissor-right" style="z-index: -1;">
         <div slot="dom" class="full">
@@ -105,11 +105,12 @@
               <li class="pb-1">Lok and Bryant became best coding buddies.</li>
               <li class="pb-1">Bryant invited Lok to be an ambassador of PeacePrzie.org</li>
               <li class="pb-1">Lok practiced a lot of creative computer graphics coding.</li>
+              <li class="pb-1">Lok's dear friend, John, come back to HK from Germany.</li>
               <li class="pb-1">Lok worked for free at K2 to learn design for free and got a NIKE & Cle De Peau freelance project.</li>
               <li class="pb-1">Lok joined a PolyU Hackathon and won it using Effect Node prototype version 2.</li>
               <li class="pb-1">Lok won $300K grant of PolyU startup fund.</li>
               <li class="pb-1">Lok got discovered by PolyU Educational Development Centre.</li>
-              <li class="pb-1">Lok joined the PolyU PALMS Team in early 2018.</li>
+              <li class="pb-1">Lok joined the PolyU PALMS Team in early 2018 and the salary is very good.</li>
               <li class="pb-1">Lok applied Webbys Awards and got a nomination in 2019 for his Effect Node version 3.</li>
               <li class="pb-1">Lok got invited to become a Judge at Webbys Awards.</li>
               <li class="pb-1">Lok saved a lot of cash for his dream startup.</li>
