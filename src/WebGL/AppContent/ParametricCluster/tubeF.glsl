@@ -57,8 +57,8 @@ void main (void) {
   // gl_FragColor = mix( reflectedColor , refractedColor , clamp( vReflectionFactor, 0.0, 1.0 ) );
   // gl_FragColor.a = baseOpacity;
 
-  gl_FragColor.r = 1.0;
-  gl_FragColor.g = 1.0;
-  gl_FragColor.b = 1.0;
+  gl_FragColor.r = 0.5;
+  gl_FragColor.g = 0.5;
+  gl_FragColor.b = 0.5;
   gl_FragColor.a = vRefract[1].r * vRefract[0].r;
 }

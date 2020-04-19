@@ -4,29 +4,31 @@
       <O3D :animated="true" layout="ball">
         <Test @click="click"></Test>
       </O3D> -->
-      <!-- <O3D :animated="true" layout="deep">
-        <GradientBG></GradientBG>
-      </O3D>
+      <!--
     -->
+
+    <!-- <O3D :animated="true" layout="deep" v-if="!ready">
+      <ParametricCluster></ParametricCluster>
+    </O3D> -->
 
     <O3D :animated="true" layout="cb-inst-1">
       <O3D :animated="true" layout="cb-rot">
         <O3D :animated="true" layout="cb-item">
-          <CherryBlossom></CherryBlossom>
+          <CherryBlossom @ready="onReady"></CherryBlossom>
         </O3D>
       </O3D>
     </O3D>
     <O3D :animated="true" layout="cb-inst-2">
       <O3D :animated="true" layout="cb-rot">
         <O3D :animated="true" layout="cb-item">
-          <CherryBlossom></CherryBlossom>
+          <CherryBlossom @ready="onReady"></CherryBlossom>
         </O3D>
       </O3D>
     </O3D>
     <O3D :animated="true" layout="cb-inst-3">
       <O3D :animated="true" layout="cb-rot">
         <O3D :animated="true" layout="cb-item">
-          <CherryBlossom></CherryBlossom>
+          <CherryBlossom @ready="onReady"></CherryBlossom>
         </O3D>
       </O3D>
     </O3D>
@@ -52,6 +54,7 @@ export default {
   mixins: [Tree],
   data () {
     return {
+      ready: false,
       settings: {},
       flower1: {},
 
@@ -66,6 +69,12 @@ export default {
   methods: {
     click () {
       console.log('123')
+    },
+    onReady () {
+      // this.ready = true
+      // setTimeout(() => {
+      //   this.scene.background = new Color('#fafafa')
+      // }, 1000)
     }
   },
   async mounted () {
@@ -111,7 +120,7 @@ export default {
           pz: 100
         },
         'deep': {
-          pz: -100
+          pz: -500
         },
         'cb-rot': {
           rx: `${cb1r.x / 100 * Math.PI * 2}`,

@@ -117,6 +117,8 @@ export default {
       this.flower1.scale.y = 0.234
       this.flower1.scale.z = 0.234
       this.o3d.add(this.flower1)
+
+      this.$emit('ready')
     })
 
     this.$emit('init')
