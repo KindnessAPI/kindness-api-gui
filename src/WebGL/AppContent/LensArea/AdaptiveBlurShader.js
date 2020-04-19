@@ -130,8 +130,6 @@ let fragmentShader = glsl`
       }
     }
 
-
-
     // base += 0.25 * blurProj5(tDiffuse, uv, vec4(resolution.x, resolution.y, resolution.x, resolution.y), vec4(amount, -amount, amount, -amount));
     // base += 0.25 * blurProj5(tDiffuse, uv, vec4(resolution.x, resolution.y, resolution.x, resolution.y), vec4(-amount, amount, -amount, amount));
     // base += 0.25 * blurProj5(tDiffuse, uv, vec4(resolution.x, resolution.y, resolution.x, resolution.y), vec4(amount, -amount, amount, -amount));
@@ -142,7 +140,7 @@ let fragmentShader = glsl`
   }
 `
 
-var FastBlurShader = {
+var AdaptiveBlurShader = {
 
   uniforms: {
 
@@ -180,4 +178,4 @@ var FastBlurShader = {
   fragmentShader: fragmentShader
 }
 
-export { FastBlurShader }
+export { AdaptiveBlurShader }

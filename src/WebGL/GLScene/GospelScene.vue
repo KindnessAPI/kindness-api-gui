@@ -34,8 +34,8 @@
       <LensArea :dudv="'cross-2'" :blur="0.0"></LensArea>
     </O3D> -->
 
-    <O3D :animated="true" :layout="'lensArea'">
-      <LensArea></LensArea>
+    <O3D :animated="true" :layout="'lens'">
+      <LensArea :blur="layouts.lens.blur" :dudv="'cross-2'"></LensArea>
     </O3D>
 
     <!--  -->
@@ -68,6 +68,7 @@ export default {
   mixins: [Tree],
   data () {
     return {
+      Math,
       settings: {},
       flower1: {},
       image: false,
@@ -152,7 +153,8 @@ export default {
           rz: `${time * 0.03}`
         },
         'lens': {
-          pz: '500'
+          blur: 0.0, // Math.abs(Math.sin(time)),
+          pz: this.camera.position.z - this.camera.position.z * 0.3333
         }
         // 'rain': {
         //   pz: `-1000`

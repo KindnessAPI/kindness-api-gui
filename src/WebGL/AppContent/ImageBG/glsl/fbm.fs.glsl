@@ -45,9 +45,9 @@ void main (void) {
   pt.y = pt.y * (sceneRect.y / sceneRect.x);
   pt.xy = pt.xy * 3.0;
 
-  outColor.r = 0.9 * imgColor.r + imgColor.r * 3.0 * pattern(pt.xy + -0.5 * cos(time));
-  outColor.g = 0.9 * imgColor.g + imgColor.g * 3.0 * pattern(pt.xy + 0.0);
-  outColor.b = 0.9 * imgColor.b + imgColor.b * 3.0 * pattern(pt.xy + 0.5 * cos(time));
+  outColor.r = 1.0 * imgColor.r + imgColor.r * 4.5 * pattern(pt.xy + -0.75 * cos(time));
+  outColor.g = 1.0 * imgColor.g + imgColor.g * 4.5 * pattern(pt.xy + 0.0);
+  outColor.b = 1.0 * imgColor.b + imgColor.b * 4.5 * pattern(pt.xy + 0.75 * cos(time));
 
   gl_FragColor = vec4(clamp(outColor.rgb, 0.0, 1.0), outColor.r);
 }
