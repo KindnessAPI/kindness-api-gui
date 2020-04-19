@@ -34,7 +34,7 @@
             2014-08 to 2014-10
           </div>
 
-          <div class="px-3 text-lg pb-8">
+          <div class="px-3 text-lg pb-3">
             Lok Lok got diagnosed mania mental illness because he talked too much about <strong>World Peace</strong> and <strong>Inner Peace</strong>. They said he got delusion and gradiose thinking.
             He lost almost all of his friends. It was his lowest point of his life.
             Thank God, he got discharged two months after the hospitalization.
@@ -64,7 +64,7 @@
             2014-10 to 2015-12
           </div>
 
-          <div class="px-3 text-lg pb-8">
+          <div class="px-3 text-lg pb-3">
             Lok Lok was resting at home for like a year. Dear mom and his brother bring him to differnet plaes to travel.
             However the brain chemical medicine is too strong, he was unable to be functional at a normal level.
             He had anxiety constantly. Mom worried sick about his life. So she forced him to study a Computer Science masters degree.
@@ -96,7 +96,7 @@
             2015-12 to Present
           </div>
 
-          <div class="px-3 text-lg pb-8">
+          <div class="px-3 text-lg pb-3">
             <p class="pb-3">Thank you Dear God for all your blessings.</p>
             <ul class="pl-5 list-disc">
               <li class="pb-1">Lok met Bryant McGill and Jenni Young McGill and joined their Royal community</li>
@@ -113,7 +113,7 @@
               <li class="pb-1">Lok joined the PolyU PALMS Team in early 2018 and the salary is very good.</li>
               <li class="pb-1">Lok applied Webbys Awards and got a nomination in 2019 for his Effect Node version 3.</li>
               <li class="pb-1">Lok got invited to become a Judge at Webbys Awards.</li>
-              <li class="pb-1">Lok saved a lot of cash for his dream startup.</li>
+              <li class="pb-1">Lok saved a lot of cash for his dream projects.</li>
             </ul>
           </div>
         </div>
