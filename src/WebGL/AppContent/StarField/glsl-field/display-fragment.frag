@@ -4,6 +4,7 @@ uniform vec3 color;
 uniform float time;
 // varying vec3 randID;
 uniform vec2 resolution;
+varying float state;
 
 // const mat2 m = mat2( 0.80,  0.60, -0.60,  0.80 );
 
@@ -41,7 +42,7 @@ uniform vec2 resolution;
 void main (void) {
   if (length(gl_PointCoord.xy - 0.5) < 0.5) {
     vec2 muv = gl_FragCoord.xy / resolution.xy;
-    gl_FragColor.a = 1.0;
+    gl_FragColor.a = 1.0 * state;
     gl_FragColor.r = color.r + 0.5 * sin(time + muv.y);
     gl_FragColor.g = color.g;
     gl_FragColor.b = color.b + 0.5 * sin(time + muv.x);

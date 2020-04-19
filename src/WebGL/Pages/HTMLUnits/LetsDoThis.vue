@@ -14,7 +14,7 @@
             Let's do this! 🥰
           </div>
           <div class="px-3 text-lg mb-10">
-            Woop Woop! 🙌🏼
+            Be Kind, Woop Woop! 🙌🏼
           </div>
 
           <div class="px-3 mb-2 text-3xl lg:text-xl  font-bold">

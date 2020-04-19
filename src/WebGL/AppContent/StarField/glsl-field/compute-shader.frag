@@ -207,6 +207,7 @@ void main (void) {
   vec4 nPos = vec4(oldPos);
 
   vec2 pos = nPos.xy;
+  float opacity = oldPos.z;
 
   const vec2 u_min = vec2(0.0);
   const vec2 u_max = vec2(0.1);
@@ -239,15 +240,17 @@ void main (void) {
 
   vec2 random_pos = vec2(
     rand(seed + 0.2),
-    rand(seed + 2.1)
+    rand(seed + 0.1)
   );
 
   pos = mix(pos, random_pos, drop);
 
+  opacity = 1.0 - length(velocity.xy) * 10.0;
+
   if (length(uv) > u_tail_amount) {
-    gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
+    gl_FragColor = vec4(0.0, 0.0, opacity, 1.0);
   } else {
-    gl_FragColor = vec4(pos.xy, 0.0, 1.0);
+    gl_FragColor = vec4(pos.xy, opacity, 1.0);
   }
 
 }

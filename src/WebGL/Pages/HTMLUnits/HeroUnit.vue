@@ -4,7 +4,7 @@
 
       <ScissorArea>
         <div slot="dom" class="full">
-          <div class="h-min90 lg:h-min70 xl:h-min-30">
+          <div class="h-min90 lg:h-min50">
           </div>
         </div>
         <HeroScene slot="o3d"></HeroScene>

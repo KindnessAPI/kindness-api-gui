@@ -84,7 +84,7 @@ export default {
 
     // prepare camera
     this.camera = new PCamera({ base: this.lookup('base'), element: this.lookup('element') })
-    this.camera.position.z = 120
+    this.camera.position.z = 60
     this.rayplay = new RayPlay({ mounter: this.lookup('element'), base: this.lookup('base'), camera: this.camera })
 
     // this.controls = new OrbitControls(this.camera, this.lookup('element'))
@@ -133,9 +133,12 @@ export default {
           rz: ``
         },
         'cb-inst-1': {
-          px: `75`,
+          px: `50`,
           py: ``,
           pz: ``,
+          sx: 0.6,
+          sy: 0.6,
+          sz: 0.6,
           rx: `${(cb1or.x - 50) / 100 * Math.PI * 2}`,
           ry: `${(cb1or.y - 50) / 100 * Math.PI * 2}`,
           rz: `${(cb1or.z - 50) / 100 * Math.PI * 2}`
@@ -144,17 +147,20 @@ export default {
           px: `0`,
           py: ``,
           pz: ``,
+          sx: 0.6 * 1.15,
+          sy: 0.6 * 1.15,
+          sz: 0.6 * 1.15,
           rx: `${(cb2or.x - 50) / 100 * Math.PI * 2}`,
           ry: `${(cb2or.y - 50) / 100 * Math.PI * 2}`,
-          rz: `${(cb2or.z - 50) / 100 * Math.PI * 2}`,
-          sx: `${1.15}`,
-          sy: `${1.15}`,
-          sz: `${1.15}`
+          rz: `${(cb2or.z - 50) / 100 * Math.PI * 2}`
         },
         'cb-inst-3': {
-          px: `-75`,
+          px: `-50`,
           py: ``,
           pz: ``,
+          sx: 0.6,
+          sy: 0.6,
+          sz: 0.6,
           rx: `${(cb3or.x - 50) / 100 * Math.PI * 2}`,
           ry: `${(cb3or.y - 50) / 100 * Math.PI * 2}`,
           rz: `${(cb3or.z - 50) / 100 * Math.PI * 2}`
