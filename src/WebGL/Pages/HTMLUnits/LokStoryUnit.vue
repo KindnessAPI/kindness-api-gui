@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <div class="relative lg:border-b lg:border-black">
+    <div class="relative lg:border-b lg:border-black lg:border-t">
 
       <ScissorArea class="scissor-right" style="z-index: -1;">
         <div slot="dom" class="full">
@@ -119,6 +119,7 @@
         </div>
 
       </div>
+
     </div>
 
   </div>
