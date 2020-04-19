@@ -31,8 +31,8 @@
       <LensArea dudv="cube-2" :blur="0.0"></LensArea>
     </O3D> -->
 
-    <!-- <O3D :animated="true" :layout="'lensArea'">
-      <LensArea></LensArea>
+    <!-- <O3D :animated="true" :layout="'lens'">
+      <LensArea dudv="cross"></LensArea>
     </O3D> -->
 
     <!-- <StarField></StarField> -->
@@ -50,6 +50,7 @@
 <script>
 import { Tree, PCamera } from '../Reusable'
 import { Scene, Color } from 'three'
+
 // import { Interaction } from 'three.interaction'
 // import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
@@ -114,7 +115,7 @@ export default {
       // let setting = this.settings[cheery]
       this.layouts = {
         'lens': {
-          pz: '100'
+          pz: '200'
         }
         // 'rain': {
         //   pz: `-1000`

@@ -91,8 +91,8 @@ let fragmentShader = glsl`
 
     vec4 uv = vec4(vUvRefraction);
     vec2 dlookup = vUv.xy - time * myspeed;
-    dlookup.y *= resolution.x / resolution.y;
-
+    dlookup.y *= resolution.y / resolution.x;
+    dlookup.xy /= resolution.y / resolution.x;
 
     vec2 distortion = ( texture2D( tDudv, vec2(fract(dlookup.x), fract(dlookup.y)) ).rg * 2.0 - 1.0 );
     uv.xy += distortion;

@@ -10,6 +10,9 @@ import { PlaneBufferGeometry, TextureLoader, Vector2 } from 'three'
 import { Refractor } from 'three/examples/jsm/objects/Refractor'
 import { FastBlurShader } from './FastBlurShader'
 import { LensBlurShader } from './LensBlurShader'
+
+let loader = new TextureLoader()
+
 export default {
   name: 'LensArea',
   mixins: [Tree],
@@ -34,12 +37,12 @@ export default {
     }
   },
   mounted () {
-    let RES_SIZE = 1024
+    // let RES_SIZE = 1024
 
     this.$on('init', async () => {
       let element = this.lookup('element') || this.lookup('renderer').domElement
       let box = element.getBoundingClientRect()
-      let camera = this.lookup('camera')
+      // let camera = this.lookup('camera')
       let screen = await this.getScreen()
       let geo = new PlaneBufferGeometry(screen.width, screen.height, 4, 4)
       let item = new Refractor(geo, {
@@ -50,24 +53,24 @@ export default {
       })
 
       if (this.dudv === 'diamond') {
-        item.material.uniforms['tDudv'].value = new TextureLoader().load(require('./tex/diamond.jpg'))
+        item.material.uniforms['tDudv'].value = loader.load(require('./tex/diamond.jpg'))
       } else if (this.dudv === 'water') {
-        item.material.uniforms['tDudv'].value = new TextureLoader().load(require('./tex/waterdudv.jpg'))
+        item.material.uniforms['tDudv'].value = loader.load(require('./tex/waterdudv.jpg'))
       } else if (this.dudv === 'cube') {
-        item.material.uniforms['tDudv'].value = new TextureLoader().load(require('./tex/cube.jpg'))
+        item.material.uniforms['tDudv'].value = loader.load(require('./tex/cube.jpg'))
       } else if (this.dudv === 'cross') {
-        item.material.uniforms['tDudv'].value = new TextureLoader().load(require('./tex/cross.jpg'))
+        item.material.uniforms['tDudv'].value = loader.load(require('./tex/cross.jpg'))
       } else if (this.dudv === 'cross-2') {
-        item.material.uniforms['tDudv'].value = new TextureLoader().load(require('./tex/cross-2.jpg'))
+        item.material.uniforms['tDudv'].value = loader.load(require('./tex/cross-2.jpg'))
       } else if (this.dudv === 'flower') {
-        item.material.uniforms['tDudv'].value = new TextureLoader().load(require('./tex/flower.jpg'))
+        item.material.uniforms['tDudv'].value = loader.load(require('./tex/flower.jpg'))
       } else if (this.dudv === 'cube-2') {
-        item.material.uniforms['tDudv'].value = new TextureLoader().load(require('./tex/cube-2.png'))
+        item.material.uniforms['tDudv'].value = loader.load(require('./tex/cube-2.png'))
       } else {
-        item.material.uniforms['tDudv'].value = new TextureLoader().load(require('./tex/waterdudv.jpg'))
+        item.material.uniforms['tDudv'].value = loader.load(require('./tex/waterdudv.jpg'))
       }
 
-      item.material.uniforms['resolution'].value = new Vector2(RES_SIZE, RES_SIZE * camera.aspect)
+      item.material.uniforms['resolution'].value = new Vector2(box.width, box.height)
 
       this.o3d.children.forEach((v) => {
         this.o3d.remove(v)

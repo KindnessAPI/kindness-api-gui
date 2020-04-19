@@ -49,7 +49,9 @@ export default {
     }
     let div = document.createElement('div')
     Cache.painter = Cache.painter || makePaintCanvas({ pixel: 16, sdk: this.lookup('sdk'), setting: 'flower-pedals', domElement: div, base: this.lookup('base') })
+
     let painter = Cache.painter
+
     Cache.painterCube = Cache.painterCube || new CubeTexture([
       painter.canvas,
       painter.canvas,
@@ -58,6 +60,7 @@ export default {
       painter.canvas,
       painter.canvas
     ])
+
     let cube = Cache.painterCube
 
     this.lookup('base').onLoop(() => {
