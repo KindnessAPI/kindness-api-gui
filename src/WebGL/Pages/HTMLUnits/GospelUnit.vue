@@ -8,40 +8,33 @@
         <GospelScene slot="o3d"></GospelScene>
       </ScissorArea>
 
-      <div class="scissor-left scissor-text py-12 lg:py-32">
+      <div class="scissor-left scissor-text">
+        <div class="h-12 lg:h-32"></div>
         <div class="lg:px-4 max-w-xl mx-auto lg:ml-auto">
-          <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
-            Gospel within our hearts.
-          </div>
-          <div class="px-3 text-lg mb-10">
-            Thank you! Thank you!
+          <ThankYouGospelFragment></ThankYouGospelFragment>
+          <div class="px-3 text-lg pb-3 font-bold underline">
+            <router-link to="/thank-you-gospel">Read more...</router-link>
           </div>
 
-          <div class="px-3 mb-2 text-3xl lg:text-xl  font-bold">
-            What is Lorem Ipsum?
-          </div>
-          <div class="px-3 text-lg mb-2">
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-          </div>
+          <!--
+            He couldn't find a job.
+            Even a low entry profile tech support job doesn't hire him.
+            But.
+            Lok Lok started practice his favourite computer graphics coding. -->
 
+          <!--
           <div class="px-3 mb-2 text-3xl lg:text-xl font-bold">
             What is Lorem Ipsum?
           </div>
           <div class="px-3 text-lg mb-2">
             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-          </div>
-
-          <div class="px-3 mb-2 text-3xl lg:text-xl font-bold">
-            What is Lorem Ipsum?
-          </div>
-          <div class="px-3 text-lg mb-2">
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-          </div>
+          </div> -->
 
         </div>
-
+        <div class="h-12 lg:h-32"></div>
       </div>
     </div>
+
   </div>
 </template>
 

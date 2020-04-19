@@ -40,6 +40,7 @@ export default {
     // let RES_SIZE = 1024
 
     this.$on('init', async () => {
+      let dpi = ((/(iPad|iPhone|iPod|Apple)/g).test(navigator.userAgent)) && window.innerWidth > 767 ? 1 : 2
       let element = this.lookup('element') || this.lookup('renderer').domElement
       let box = element.getBoundingClientRect()
       // let camera = this.lookup('camera')
@@ -47,8 +48,8 @@ export default {
       let geo = new PlaneBufferGeometry(screen.width, screen.height, 4, 4)
       let item = new Refractor(geo, {
         color: this.color,
-        textureWidth: box.width * 2.0,
-        textureHeight: box.height * 2.0, // * camera.aspect,
+        textureWidth: box.width * dpi,
+        textureHeight: box.height * dpi, // * camera.aspect,
         shader: FastBlurShader
       })
 

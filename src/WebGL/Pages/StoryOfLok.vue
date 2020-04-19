@@ -4,11 +4,8 @@
 
     <div v-show="!openMenu">
       <TopNavBar @menu="openMenu = !openMenu"></TopNavBar>
-      <HeroUnit></HeroUnit>
-      <HowUnit></HowUnit>
-      <LetsDoThis></LetsDoThis>
-      <GospelUnit></GospelUnit>
       <!-- <MotherBoardUnit></MotherBoardUnit> -->
+      <LokStoryUnit></LokStoryUnit>
     </div>
     <FullMenuBar v-show="openMenu" @close="openMenu = false"></FullMenuBar>
   </div>
@@ -28,6 +25,7 @@ export default {
     }
   },
   mounted () {
+    window.scrollTo(0, 0)
     this.$watch('openMenu', () => {
       window.dispatchEvent(new Event('resize'))
     })

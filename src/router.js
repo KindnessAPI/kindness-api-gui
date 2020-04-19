@@ -17,6 +17,10 @@ export default new Router({
       component: () => import('./WebGL/Pages/Home.vue')
     },
     {
+      path: '/thank-you-gospel',
+      component: () => import('./WebGL/Pages/StoryOfLok.vue')
+    },
+    {
       path: '/work-in-progress',
       component: () => import('./WebGL/Pages/PlaceHolder.vue')
     },
