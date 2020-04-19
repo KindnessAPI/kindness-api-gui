@@ -1,10 +1,6 @@
 <template>
   <div>
 
-    <div>
-
-    </div>
-
     <div class="relative border-b border-black">
 
       <ScissorArea class="scissor-right" style="z-index: -1;">
