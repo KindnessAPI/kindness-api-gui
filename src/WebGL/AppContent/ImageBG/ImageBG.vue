@@ -55,9 +55,9 @@ export default {
         mesh.geometry = geo
       })
 
-      mesh.scale.x = 1.1
-      mesh.scale.y = 1.1
-      mesh.scale.z = 1.1
+      mesh.scale.x = 1.0
+      mesh.scale.y = 1.0
+      mesh.scale.z = 1.0
 
       this.o3d.children.forEach((v) => {
         this.o3d.remove(v)

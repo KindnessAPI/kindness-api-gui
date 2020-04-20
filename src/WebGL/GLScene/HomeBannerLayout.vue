@@ -13,7 +13,7 @@ import { Scene, Color } from 'three'
 import { Interaction } from 'three.interaction'
 
 export default {
-  name: 'HappyLayout',
+  name: 'HomeBannerLayout',
   components: {
     ...require('../webgl').default
   },

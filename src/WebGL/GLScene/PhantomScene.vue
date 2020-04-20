@@ -15,7 +15,7 @@ import { Scene, Color } from 'three'
 // import { Interaction } from 'three.interaction'
 
 export default {
-  name: 'HappyLayout',
+  name: 'PhantomScene',
   components: {
     ...require('../webgl').default
   },

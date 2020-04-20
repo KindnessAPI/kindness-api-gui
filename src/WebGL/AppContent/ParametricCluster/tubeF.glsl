@@ -19,9 +19,9 @@ uniform samplerCube tCube;
 // uniform sampler2D tDudv;
 uniform float time;
 
-varying vec3 vReflect;
+// varying vec3 vReflect;
 varying vec3 vRefract[3];
-varying float vReflectionFactor;
+// varying float vReflectionFactor;
 // varying vec2 vUv;
 
 uniform bool useDudv;

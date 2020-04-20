@@ -92,14 +92,14 @@
         <div class="lg:px-4 max-w-xl mx-auto lg:ml-auto">
 
           <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
-            Rise Back Up!
+            Rise Up!
           </div>
           <div class="px-3 pb-2 text-xl lg:text-xl font-bold">
             2015-12 to Present
           </div>
 
           <div class="px-3 text-lg pb-3">
-            <p class="pb-3">Thank you Dear God for all your blessings that overflowing the cup. I'm indeed very Loved. </p>
+            <p class="pb-3">Thank you Dear God for all your blessings. I'm grateful and I'm very loved by you. </p>
             <ul class="pl-5 list-disc">
               <li class="pb-1">Lok met Bryant McGill and Jenni Young McGill and joined their Royal community</li>
               <li class="pb-1">Lok met a ton of new, close and dear friends wihtin the community.</li>
