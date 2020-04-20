@@ -99,23 +99,23 @@
           </div>
 
           <div class="px-3 text-lg pb-3">
-            <p class="pb-8">Thank you Dear God for all your blessings. </p>
+            <p class="pb-8">Thank you Dear God for all your blessings. ✨ It's like a magical carpet ride with the best people that you send to me. 🎩</p>
             <ul class="pl-5 list-disc">
-              <li class="pb-1">Lok met Bryant McGill and Jenni Young McGill and joined their Royal community</li>
-              <li class="pb-1">Lok met a ton of new, close and dear friends wihtin the community.</li>
-              <li class="pb-1">Bryant removed a lot of BS mindset within Lok.</li>
-              <li class="pb-1">Lok and Bryant became best coding buddies.</li>
-              <li class="pb-1">Bryant invited Lok to be an ambassador of PeacePrzie.org</li>
-              <li class="pb-1">Lok practiced a lot of creative computer graphics coding.</li>
-              <li class="pb-1">Lok's dear friend, John, come back to HK from Germany.</li>
-              <li class="pb-1">Lok worked for free at K2 to learn design for free and got a NIKE & Cle De Peau freelance project.</li>
-              <li class="pb-1">Lok joined a PolyU Hackathon and won it using Effect Node prototype version 2.</li>
-              <li class="pb-1">Lok won the grant of PolyU startup fund.</li>
-              <li class="pb-1">Lok got discovered by PolyU Educational Development Centre.</li>
-              <li class="pb-1">Lok joined the PolyU PALMS Team in early 2018 and the salary is very good.</li>
-              <li class="pb-1">Lok applied Webbys Awards and got a nomination in 2019 for his Effect Node version 3.</li>
-              <li class="pb-1">Lok got invited to become a Judge at Webbys Awards.</li>
-              <li class="pb-1">Lok saved a lot of cash for his dream projects.</li>
+              <li class="pb-3">I met Bryant McGill and Jenni Young McGill on facebook live video and joined their Royal FB Community. 📱</li>
+              <li class="pb-3">I made a ton of new, close and dear friends wihtin the community. ❤️</li>
+              <li class="pb-3">Bryant removed a lot of BS attitude and bad mindset within me. 😅</li>
+              <li class="pb-3">Bryant and I became best coding buddies. 👨🏼‍💻</li>
+              <li class="pb-3">Bryant invited me to be an ambassador of PeacePrzie.org 🤯</li>
+              <li class="pb-3">I practiced a lot of creative computer graphics coding. 🍭</li>
+              <li class="pb-3">My bestie John come back to HK from Germany after 4 years. 💁🏼‍♂️ </li>
+              <li class="pb-3">I code for free at K2 to learn design for free and got a NIKE & Clê De Peau freelance project. 😻</li>
+              <li class="pb-3">I joined a PolyU Hackathon and won using Effect Node prototype version 2. 😊</li>
+              <li class="pb-3">I won the grant of PolyU startup fund. ☺️</li>
+              <li class="pb-3">I got discovered by PolyU Educational Development Centre. 😁</li>
+              <li class="pb-3">I joined the PolyU PALMS Team in early 2018 and the salary is very good. 😆</li>
+              <li class="pb-3">I applied Webbys Awards and got a nomination in 2019 for his Effect Node version 4. 😝</li>
+              <li class="pb-3">I got invited to become a Judge at Webbys Awards. 🥳</li>
+              <li class="pb-3">I saved a lot of cash for my dream projects. 😎</li>
             </ul>
           </div>
         </div>

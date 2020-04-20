@@ -33,7 +33,7 @@ float fbm6( vec2 p )
 }
 
 float pattern (vec2 p) {
-  float vout = fbm4( p + time + fbm6( p + fbm4( p + time )) );
+  float vout = fbm4( p + time * 0.601 + fbm6( p + fbm4( p + time * 0.601 )) );
   return abs(vout);
 }
 
@@ -43,9 +43,9 @@ void main (void) {
   pt.y = pt.y * (sceneRect.y / sceneRect.x);
   pt.xy = pt.xy * 3.0;
 
-  outColor.r = 0.7 - pattern(pt.xy + -0.15 * cos(time));
+  outColor.r = 0.7 - pattern(pt.xy + -0.15 * cos(time * 0.601));
   outColor.g = 0.7 - pattern(pt.xy + 0.0);
-  outColor.b = 0.7 - pattern(pt.xy + 0.15 * cos(time));
+  outColor.b = 0.7 - pattern(pt.xy + 0.15 * cos(time * 0.601));
 
   gl_FragColor = vec4(clamp(outColor.rgb, 0.0, 1.0), outColor.r);
 }

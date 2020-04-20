@@ -32,6 +32,7 @@ export default {
         time: { value: 0 },
         sceneRect: { value: new Vector2() }
       }
+
       let mat = new RawShaderMaterial({
         // eslint-disable-next-line
         vertexShader: require('raw-loader!./glsl/fbm.vs.glsl').default,
