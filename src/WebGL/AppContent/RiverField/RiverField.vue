@@ -42,7 +42,7 @@ export default {
         u_drop_rate: { value: 10.25 / 500.0 },
         u_drop_rate_bump: { value: 36.18 / 500.0 },
         u_tail_amount: { value: 50.0 / 100.0 },
-        color: { value: new Color('#00bbff') }
+        color: { value: new Color('#00ffff') }
       }
 
       let renderer = this.lookup('renderer')

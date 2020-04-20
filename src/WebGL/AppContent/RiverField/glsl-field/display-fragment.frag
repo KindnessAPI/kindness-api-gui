@@ -43,7 +43,7 @@ void main (void) {
   if (length(gl_PointCoord.xy - 0.5) < 0.5) {
     vec2 muv = gl_FragCoord.xy / resolution.xy;
 
-    gl_FragColor.a = 0.35 + state * 0.1;
+    gl_FragColor.a = 0.4;// + state * 0.1;
 
     gl_FragColor.r = color.r;
     gl_FragColor.g = color.g;
