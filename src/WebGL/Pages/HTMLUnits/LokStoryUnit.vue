@@ -99,7 +99,7 @@
           </div>
 
           <div class="px-3 text-lg pb-3">
-            <p class="pb-3">Thank you Dear God for all your blessings. I'm grateful and I'm very loved by you. </p>
+            <p class="pb-8">Thank you Dear God for all your blessings. </p>
             <ul class="pl-5 list-disc">
               <li class="pb-1">Lok met Bryant McGill and Jenni Young McGill and joined their Royal community</li>
               <li class="pb-1">Lok met a ton of new, close and dear friends wihtin the community.</li>
@@ -110,7 +110,7 @@
               <li class="pb-1">Lok's dear friend, John, come back to HK from Germany.</li>
               <li class="pb-1">Lok worked for free at K2 to learn design for free and got a NIKE & Cle De Peau freelance project.</li>
               <li class="pb-1">Lok joined a PolyU Hackathon and won it using Effect Node prototype version 2.</li>
-              <li class="pb-1">Lok won $300K grant of PolyU startup fund.</li>
+              <li class="pb-1">Lok won the grant of PolyU startup fund.</li>
               <li class="pb-1">Lok got discovered by PolyU Educational Development Centre.</li>
               <li class="pb-1">Lok joined the PolyU PALMS Team in early 2018 and the salary is very good.</li>
               <li class="pb-1">Lok applied Webbys Awards and got a nomination in 2019 for his Effect Node version 3.</li>

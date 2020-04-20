@@ -154,7 +154,9 @@ export default {
         },
         'lens': {
           blur: 0.0, // Math.abs(Math.sin(time)),
-          pz: this.camera.position.z - this.camera.position.z * 0.3333
+          sx: 1.75,
+          sy: 1.75,
+          pz: this.camera.position.z - this.camera.position.z * 0.23333
         }
         // 'rain': {
         //   pz: `-1000`
