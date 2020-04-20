@@ -9,7 +9,7 @@
       </ScissorArea>
       <div class="max-w-xl lg:max-w-4xl xl:max-w-5xl mx-auto">
         <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
-          KindnessAPI ? 🤔
+          KindnessAPI 🤔
         </div>
 
         <div class="px-3 text-lg mb-10">
@@ -19,10 +19,10 @@
         <div class="block lg:flex">
           <div class="lg:w-1/3 lg:pr-6">
             <div class="px-3 pb-3 text-3xl lg:text-xl font-bold">
-              Star River of Kindness 💧
+              <router-link class="hover:underline" to="/kindness-river">Kindness River💧✨</router-link>
             </div>
             <div class="px-3 text-lg pb-3">
-              Kindness is like water. Water is life. We need it everyday to stay mentally healthy. With massive amount of stories, we can make a flowing river of Kindness. 🏄🏻‍♂️
+              Kindness is like water. Water is life. We need it everyday to stay mentally healthy. With massive amount of stories, we can make a flowing river of Kindness. 🏄🏻‍♂️ 😆
             </div>
             <div class="px-3 text-lg pb-3">
               (Under development)
@@ -32,7 +32,7 @@
 
           <div class="lg:w-1/3 lg:pr-6">
             <div class="px-3 pb-3 text-3xl lg:text-xl font-bold">
-              Community Healing 😻
+              Community Healing ⛪️ 😻
             </div>
             <div class="px-3 text-lg pb-3">
               Building Christ community has always been a treasure for Chrisitans to love one another, to pray and be there for each other's depression and loneiness. 🤗

@@ -17,6 +17,10 @@ export default new Router({
       component: () => import('./WebGL/Pages/Home.vue')
     },
     {
+      path: '/kindness-river',
+      component: () => import('./WebGL/Pages/KindnessRiver.vue')
+    },
+    {
       path: '/thank-you-gospel',
       component: () => import('./WebGL/Pages/StoryOfLok.vue')
     },

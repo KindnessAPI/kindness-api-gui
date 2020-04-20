@@ -6,7 +6,6 @@
 
 <script>
 import { Tree } from '../../Reusable'
-// import { Points, Color, Scene, Camera, Vector2, ClampToEdgeWrapping, LinearFilter, RGBAFormat, WebGLRenderTarget, BufferAttribute, BufferGeometry, PlaneBufferGeometry, MeshBasicMaterial, Mesh, Vector3, ShaderMaterial } from 'three'
 import { MeshBasicMaterial, PlaneBufferGeometry, Mesh, RGBAFormat, WebGLRenderTarget, LinearFilter, ClampToEdgeWrapping, ShaderMaterial, Color, Scene, Camera, Points, BufferGeometry, BufferAttribute, Vector2 } from 'three'
 import { GPUComputationRenderer } from './GPGPU'
 
@@ -39,11 +38,11 @@ export default {
       let settings = {
         u_mode: { value: 0 },
         u_opacity: { value: 95.0 / 100.0 },
-        u_speed_factor: { value: 80.0 },
-        u_drop_rate: { value: 38.25 / 500.0 },
+        u_speed_factor: { value: 100.0 },
+        u_drop_rate: { value: 10.25 / 500.0 },
         u_drop_rate_bump: { value: 36.18 / 500.0 },
-        u_tail_amount: { value: 65.0 / 100.0 },
-        color: { value: new Color('hsl(230, 50%, 70%)') }
+        u_tail_amount: { value: 50.0 / 100.0 },
+        color: { value: new Color('#00bbff') }
       }
 
       let renderer = this.lookup('renderer')
@@ -251,30 +250,14 @@ export default {
         if (tScreenB) {
           tScreenB.dispose()
         }
-        let resolutionX = dpi * 512
-        let resolutionY = dpi * 512 * rect.height / rect.width
+        let resolutionX = dpi * 1280
+        let resolutionY = dpi * 1280 * rect.height / rect.width
         tScreenA = craeteScreenRenderTarget(resolutionX, resolutionY)
         tScreenB = craeteScreenRenderTarget(resolutionX, resolutionY)
         pingPongMaterial.uniforms.res.value.x = resolutionX // dpi * rect.width
         pingPongMaterial.uniforms.res.value.y = resolutionY /// dpi * rect.height
         let screen = await this.getScreen()
         plane.geometry = new PlaneBufferGeometry(screen.width, screen.height, 2, 2)
-
-        // let dpi = 2
-        // let el = this.lookup('element')
-        // let rect = el.getBoundingClientRect()
-        // if (tScreenA) {
-        //   tScreenA.dispose()
-        // }
-        // if (tScreenB) {
-        //   tScreenB.dispose()
-        // }
-        // tScreenA = craeteScreenRenderTarget(dpi * rect.width, dpi * rect.height)
-        // tScreenB = craeteScreenRenderTarget(dpi * rect.width, dpi * rect.height)
-        // pingPongMaterial.uniforms.res.value.x = dpi * rect.width
-        // pingPongMaterial.uniforms.res.value.y = dpi * rect.height
-        // let screen = await this.getScreen()
-        // plane.geometry = new PlaneBufferGeometry(screen.width, screen.height, 2, 2)
       })
 
       loop(() => {
