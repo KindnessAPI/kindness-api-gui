@@ -13,16 +13,16 @@
         </div>
 
         <div class="px-3 text-lg mb-10">
-          KindnessAPI is ✝️ a Gospel Church 💒 . It's a place for 💁🏼‍♂️YOU💁🏼‍♀️ to share your Kindness, God's Grace and Testimonals with others. We also have an API for 👩🏻‍💻 developers 👨🏼‍💻 to connect and spread Kindness and Gospel to a much wider audience. 📲
+          KindnessAPI is ✝️ a Gospel Church 💒 . It's a place for 💁🏼‍♂️ YOU 💁🏼‍♀️ to share your Kindness, God's Grace and Testimonals with others. We also have an API for 👩🏻‍💻 developers 👨🏼‍💻 to connect and spread Kindness and Gospel to a much wider audience. 📲
         </div>
 
         <div class="block lg:flex">
           <div class="pb-10 lg:w-1/3 lg:pr-6">
             <div class="px-3 mb-2 text-3xl lg:text-xl font-bold">
-              Food & Supply Sharing Network 🥰
+              Voice Your Kind Story 💎
             </div>
             <div class="px-3 text-lg mb-2">
-              Our system can help people to share and find their extra food 🍎 resources, toilet papers 🧻 and more.
+              Life is better when we have each other to share our tears and joy, hope, your mental health recovery journey, and praise. 😍
             </div>
             <div class="px-3 text-lg mb-2">
               (Under development)
