@@ -37,11 +37,11 @@ export default {
 
       let settings = {
         u_mode: { value: 0 },
-        u_opacity: { value: 95.0 / 100.0 },
+        u_opacity: { value: 96.0 / 100.0 },
         u_speed_factor: { value: 100.0 },
         u_drop_rate: { value: 10.25 / 500.0 },
         u_drop_rate_bump: { value: 36.18 / 500.0 },
-        u_tail_amount: { value: 50.0 / 100.0 },
+        u_tail_amount: { value: 75.0 / 100.0 },
         color: { value: new Color('#00ffff') }
       }
 
@@ -250,8 +250,8 @@ export default {
         if (tScreenB) {
           tScreenB.dispose()
         }
-        let resolutionX = dpi * 1280
-        let resolutionY = dpi * 1280 * rect.height / rect.width
+        let resolutionX = dpi * 1400
+        let resolutionY = dpi * 1400 * rect.height / rect.width
         tScreenA = craeteScreenRenderTarget(resolutionX, resolutionY)
         tScreenB = craeteScreenRenderTarget(resolutionX, resolutionY)
         pingPongMaterial.uniforms.res.value.x = resolutionX // dpi * rect.width
