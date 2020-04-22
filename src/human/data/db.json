@@ -751,6 +751,92 @@
         "a": 0.74
       },
       "id": "_617143"
+    },
+    {
+      "group": "star-river-texts",
+      "key": "pt-0",
+      "type": "vec3",
+      "value": {
+        "x": 50,
+        "y": 50,
+        "z": 45
+      },
+      "id": "_963092"
+    },
+    {
+      "group": "star-river-texts",
+      "key": "pt-1",
+      "type": "vec3",
+      "value": {
+        "x": 50,
+        "y": 50,
+        "z": 71
+      },
+      "id": "_461539"
+    },
+    {
+      "group": "star-river-texts",
+      "key": "pt-2",
+      "type": "vec3",
+      "value": {
+        "x": 50,
+        "y": 50,
+        "z": 50
+      },
+      "id": "_637839"
+    },
+    {
+      "group": "star-river-texts",
+      "key": "pt-3",
+      "type": "vec3",
+      "value": {
+        "x": 50,
+        "y": 50,
+        "z": 50
+      },
+      "id": "_974550"
+    },
+    {
+      "group": "star-river-texts",
+      "key": "pt-4",
+      "type": "vec3",
+      "value": {
+        "x": 50,
+        "y": 0,
+        "z": 50
+      },
+      "id": "_219460"
+    },
+    {
+      "group": "star-river-canvas",
+      "key": "hue-spread",
+      "type": "number",
+      "value": 100,
+      "id": "_159004"
+    },
+    {
+      "group": "star-river-canvas",
+      "key": "canvas-texture-dot",
+      "type": "color",
+      "value": {
+        "r": 0,
+        "g": 0,
+        "b": 255,
+        "a": 0.74
+      },
+      "id": "_480815"
+    },
+    {
+      "group": "star-river-canvas",
+      "key": "canvas-texture-bg",
+      "type": "color",
+      "value": {
+        "r": 255,
+        "g": 255,
+        "b": 255,
+        "a": 0.563
+      },
+      "id": "_875568"
     }
   ]
 }

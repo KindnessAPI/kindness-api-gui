@@ -63,7 +63,7 @@ export default {
       })
 
       let loop = (v) => {
-        fns[Math.random() + ''] = v
+        fns[Math.random() + '@river-field'] = v
       }
 
       let computeUniforms = {
@@ -250,8 +250,14 @@ export default {
         if (tScreenB) {
           tScreenB.dispose()
         }
-        let resolutionX = dpi * 1400
-        let resolutionY = dpi * 1400 * rect.height / rect.width
+        // let resolutionX = dpi * 1400
+        // let resolutionY = dpi * 1400 * rect.height / rect.width
+        let resolutionX = dpi * rect.width
+        let resolutionY = dpi * rect.height
+
+        resolutionX = resolutionX > 1280 * 2 ? 1280 * 2 : resolutionX
+        resolutionY = resolutionY > 1280 * 2 ? 1280 * 2 : resolutionY
+
         tScreenA = craeteScreenRenderTarget(resolutionX, resolutionY)
         tScreenB = craeteScreenRenderTarget(resolutionX, resolutionY)
         pingPongMaterial.uniforms.res.value.x = resolutionX // dpi * rect.width

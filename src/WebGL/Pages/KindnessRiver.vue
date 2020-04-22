@@ -2,11 +2,12 @@
   <div class="full">
     <div class="fixed top-0 left-0 full pointer-events-none" :style="{ zIndex: -1 }" ref="mounter"></div>
 
-    <div v-show="!openMenu">
+    <div v-show="!openMenu" class="full">
       <TopNavBar @menu="openMenu = !openMenu"></TopNavBar>
       <!-- <MotherBoardUnit></MotherBoardUnit> -->
       <RiverUnit></RiverUnit>
     </div>
+
     <FullMenuBar v-show="openMenu" @close="openMenu = false"></FullMenuBar>
   </div>
 </template>

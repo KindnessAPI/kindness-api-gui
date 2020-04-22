@@ -14,11 +14,11 @@
       <RadientBG></RadientBG>
     </O3D> -->
 
+    <!-- <RadientBG></RadientBG> -->
     <O3D :animated="true" :layout="'bglayer'">
-      <!-- <RadientBG></RadientBG> -->
       <RiverField :mode="'magic'"></RiverField>
-      <!-- <RiverBeam :mode="'magic'"></RiverBeam> -->
     </O3D>
+    <StarKindness :mode="'magic'"></StarKindness>
 
     <!--
     -->
@@ -56,7 +56,7 @@ import { Scene, Color } from 'three'
 // import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
 export default {
-  name: 'StarFlowScene',
+  name: 'RiverScene',
   components: {
     ...require('../webgl').default
   },
@@ -82,19 +82,21 @@ export default {
   async mounted () {
     await this.lookupWait('ready')
 
-    this.scene.background = new Color('#000000')
+    this.scene.background = new Color('#1b1b1b')
     // this.scene.background = new TextureLoader().load(require('./img/stained-glass.jpg'))
 
     // prepare camera
     this.camera = new PCamera({ base: this.lookup('base'), element: this.lookup('element') })
-    this.camera.position.z = 300
+    this.camera.position.z = 400
     // this.rayplay = new RayPlay({ mounter: this.lookup('element'), base: this.lookup('base'), camera: this.camera })
 
-    // let OrbitControls = require('three/examples/jsm/controls/OrbitControls').OrbitControls
-    // this.controls = new OrbitControls(this.camera, this.lookup('element'))
-    // this.lookup('base').onLoop(() => {
-    //   this.controls.update()
-    // })
+    //
+    let OrbitControls = require('three/examples/jsm/controls/OrbitControls').OrbitControls
+    this.lookup('element').style.outline = 'none'
+    this.controls = new OrbitControls(this.camera, this.lookup('element'))
+    this.lookup('base').onLoop(() => {
+      this.controls.update()
+    })
 
     this.scene.add(this.o3d)
 
@@ -115,8 +117,8 @@ export default {
       // let time = window.performance.now() * 0.001
       // let setting = this.settings[cheery]
       this.layouts = {
-        'lens': {
-          pz: '200'
+        'bglayer': {
+          pz: '-600'
         }
         // 'rain': {
         //   pz: `-1000`

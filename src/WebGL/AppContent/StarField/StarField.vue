@@ -245,18 +245,26 @@ export default {
         let dpi = 2
         let el = this.lookup('element')
         let rect = el.getBoundingClientRect()
+
         if (tScreenA) {
           tScreenA.dispose()
         }
+
         if (tScreenB) {
           tScreenB.dispose()
         }
-        let resolutionX = dpi * 512
-        let resolutionY = dpi * 512 * rect.height / rect.width
+
+        let resolutionX = dpi * rect.width
+        let resolutionY = dpi * rect.height// * rect.height / rect.width
+
+        resolutionX = resolutionX > 1280 * 2 ? 1280 * 2 : resolutionX
+        resolutionY = resolutionY > 1280 * 2 ? 1280 * 2 : resolutionY
+
         tScreenA = craeteScreenRenderTarget(resolutionX, resolutionY)
         tScreenB = craeteScreenRenderTarget(resolutionX, resolutionY)
         pingPongMaterial.uniforms.res.value.x = resolutionX // dpi * rect.width
         pingPongMaterial.uniforms.res.value.y = resolutionY /// dpi * rect.height
+
         let screen = await this.getScreen()
         plane.geometry = new PlaneBufferGeometry(screen.width, screen.height, 2, 2)
 

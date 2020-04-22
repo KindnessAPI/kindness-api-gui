@@ -1,18 +1,23 @@
 <template>
-  <div>
-    <div class="relative">
-
-      <ScissorArea class="h-min100 lg:h-min70 w-full">
+  <div class="item-box">
+    <div class="relative h-full w-full">
+      <ScissorArea class="w-full h-full">
         <div slot="dom" class="full">
         </div>
         <RiverScene slot="o3d"></RiverScene>
       </ScissorArea>
 
-      <div class="max-w-xl lg:max-w-4xl xl:max-w-5xl mx-auto  py-12 lg:py-24">
+      <!-- <ScissorArea class="w-full h-full">
+        <div slot="dom" class="full">
+        </div>
+        <RiseScene slot="o3d"></RiseScene>
+      </ScissorArea> -->
+
+      <!-- <div class="max-w-xl lg:max-w-4xl xl:max-w-5xl mx-auto  py-12 lg:py-12">
         <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
           Kindness River
         </div>
-      </div>
+      </div> -->
 
     </div>
   </div>
@@ -26,5 +31,10 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.item-box{
+  display: block;
+  width: 100%;
+  height: calc(100% - 78px);
+}
 </style>
