@@ -132,7 +132,7 @@ export default {
 
           mesh.position.x *= 35
           mesh.position.y *= 35
-          mesh.position.z = 30 * Math.sin(time + x * 0.1 + y * 0.1)
+          mesh.position.z = 40 * Math.sin(time + x * 0.13 + y * 0.13)
 
           if (rayhit === mesh.uuid) {
             mesh.scale.x = 20
