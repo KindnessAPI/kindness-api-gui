@@ -57,7 +57,7 @@ export default {
       red: new Color(0xff0000),
       yellow: new Color(0xffff00),
       white: new Color('#ffffff'),
-      grey: new Color('#1a1a1a')
+      gray: new Color('#bababa')
     }
 
     let cursorMesh = new Mesh(
@@ -102,7 +102,7 @@ export default {
     })
 
     let cx = 25
-    let cy = 20
+    let cy = 25
     let total = cx * cy
 
     let geo = heartGeo
