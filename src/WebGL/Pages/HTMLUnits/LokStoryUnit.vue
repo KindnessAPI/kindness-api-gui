@@ -42,7 +42,6 @@
             Thank God, he got discharged two months after the hospitalization.
             Some people never made it out there but thank you Dear God, I can come back home.
           </div>
-
         </div>
 
       </div>
