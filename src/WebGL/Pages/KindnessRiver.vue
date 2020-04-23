@@ -5,7 +5,7 @@
     <div v-show="!openMenu" class="full">
       <TopNavBar @menu="openMenu = !openMenu"></TopNavBar>
       <!-- <MotherBoardUnit></MotherBoardUnit> -->
-      <KindnessRiverUnit></KindnessRiverUnit>
+      <KindnessRiverUnit class="border-b border-black border-t"></KindnessRiverUnit>
       <!-- <HeartGridUnit></HeartGridUnit> -->
     </div>
 
