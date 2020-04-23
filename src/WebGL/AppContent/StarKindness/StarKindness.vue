@@ -211,9 +211,9 @@ export default {
             }
             this.hit = idx
           } else if (hoverID === mesh.uuid) {
-            mesh.scale.x = 20
-            mesh.scale.y = 20
-            mesh.scale.z = 20
+            mesh.scale.x = 4.0 + 10 * Math.abs(wavy)
+            mesh.scale.y = 4.0 + 10 * Math.abs(wavy)
+            mesh.scale.z = 4.0 + 10 * Math.abs(wavy)
             if (matcaps.pink) {
               mesh.material = matcaps.pink
             }
