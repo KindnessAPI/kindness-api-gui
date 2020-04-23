@@ -41,6 +41,10 @@ export default {
   },
   methods: {
     onHit (v) {
+      if (v === false) {
+        this.hit = false
+        return
+      }
       this.hit = Math.abs(Math.sin(v) * Math.sin(-v))
     }
   }
