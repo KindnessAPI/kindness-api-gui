@@ -10,7 +10,7 @@
         <GospelScene slot="o3d"></GospelScene>
       </ScissorArea>
 
-      <div class="scissor-left scissor-text py-8 lg:py-24">
+      <div class="scissor-left scissor-text py-8 lg:py-24 xl:py-64">
         <div class="lg:px-4 max-w-xl mx-auto lg:ml-auto">
           <ThankYouGospelFragment></ThankYouGospelFragment>
         </div>
@@ -25,7 +25,7 @@
         <FallScene slot="o3d"></FallScene>
       </ScissorArea>
 
-      <div class="scissor-left scissor-text py-8 lg:py-24">
+      <div class="scissor-left scissor-text py-8 lg:py-24 xl:py-64">
         <div class="lg:px-4 max-w-xl mx-auto lg:ml-auto">
 
           <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
@@ -56,7 +56,7 @@
         <ResetScene slot="o3d"></ResetScene>
       </ScissorArea>
 
-      <div class="scissor-left scissor-text py-8 lg:py-24">
+      <div class="scissor-left scissor-text py-8 lg:py-24 xl:py-64">
         <div class="lg:px-4 max-w-xl mx-auto lg:ml-auto">
 
           <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
@@ -88,7 +88,7 @@
         <RiseScene slot="o3d"></RiseScene>
       </ScissorArea>
 
-      <div class="scissor-left scissor-text py-8 lg:py-24">
+      <div class="scissor-left scissor-text py-8 lg:py-24 xl:py-64">
         <div class="lg:px-4 max-w-xl mx-auto lg:ml-auto">
 
           <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">

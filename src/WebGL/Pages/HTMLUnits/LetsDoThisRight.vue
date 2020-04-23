@@ -8,7 +8,7 @@
         <StarFlowScene slot="o3d"></StarFlowScene>
       </ScissorArea>
 
-      <div class="scissor-right scissor-text py-12 lg:py-32">
+      <div class="scissor-right scissor-text py-12 lg:py-32 xl:py-64">
         <div class="lg:px-4 max-w-xl mx-auto">
           <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
             Let's do this! 🥰

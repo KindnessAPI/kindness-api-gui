@@ -9,7 +9,7 @@
       </ScissorArea>
 
       <div class="scissor-left scissor-text">
-        <div class="h-12 lg:h-32"></div>
+        <div class="h-12 lg:h-32 xl:h-64"></div>
         <div class="lg:px-4 max-w-xl mx-auto lg:ml-auto">
           <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
             <span>Kindness River</span>
@@ -29,7 +29,7 @@
             <router-link to="/kindness-river">Read more...</router-link>
           </div>
         </div>
-        <div class="h-12 lg:h-32"></div>
+        <div class="h-12 lg:h-32 xl:h-64"></div>
       </div>
     </div>
   </div>

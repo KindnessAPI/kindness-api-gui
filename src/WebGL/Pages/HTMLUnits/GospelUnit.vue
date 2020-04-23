@@ -9,7 +9,7 @@
       </ScissorArea>
 
       <div class="scissor-left scissor-text">
-        <div class="h-12 lg:h-32"></div>
+        <div class="h-12 lg:h-32 xl:h-64"></div>
         <div class="lg:px-4 max-w-xl mx-auto lg:ml-auto">
           <ThankYouGospelFragment></ThankYouGospelFragment>
           <div class="px-3 text-lg pb-3 font-bold underline">
@@ -31,7 +31,7 @@
           </div> -->
 
         </div>
-        <div class="h-12 lg:h-32"></div>
+        <div class="h-12 lg:h-32 xl:h-64"></div>
       </div>
     </div>
 
