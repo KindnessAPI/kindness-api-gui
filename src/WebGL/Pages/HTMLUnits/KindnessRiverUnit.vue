@@ -31,7 +31,6 @@
         <div class="h-12 lg:h-32"></div>
       </div>
     </div>
-
   </div>
 </template>
 
