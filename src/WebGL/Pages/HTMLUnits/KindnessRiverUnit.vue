@@ -24,6 +24,7 @@
           <div class="px-3 text-lg pb-8">
             Kindness is like water. Water is life. We need it everyday to stay mentally healthy. With massive amount of stories, we can make a flowing river of Kindness. 🏄🏻‍♂️ 😆
           </div>
+
           <div class="px-3 text-lg pb-3 font-bold underline" v-if="$route.fullPath === '/'" >
             <router-link to="/kindness-river">Read more...</router-link>
           </div>
