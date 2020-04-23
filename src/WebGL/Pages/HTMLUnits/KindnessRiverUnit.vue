@@ -15,7 +15,7 @@
             <span>Kindness River</span>
           </div>
           <div class="px-3 text-lg mb-10">
-            Kindness River is my 💓💒
+            Your story matters
           </div>
 
           <div class="px-3 mb-2 text-3xl lg:text-xl  font-bold">
@@ -27,7 +27,6 @@
           <div class="px-3 text-lg pb-3 font-bold underline">
             <router-link to="/kindness-river">Read more...</router-link>
           </div>
-
         </div>
         <div class="h-12 lg:h-32"></div>
       </div>

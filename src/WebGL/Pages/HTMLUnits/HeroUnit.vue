@@ -10,7 +10,7 @@
         <HeroScene slot="o3d"></HeroScene>
       </ScissorArea>
 
-      <div class="max-w-xl lg:max-w-4xl xl:max-w-5xl mx-auto">
+      <div class="max-w-xl lg:max-w-6xl xl:max-w-6xl mx-auto">
         <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
           Make Kindness Louder 📣
         </div>

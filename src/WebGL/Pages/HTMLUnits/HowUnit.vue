@@ -7,19 +7,19 @@
         </div>
         <HowScene slot="o3d"></HowScene>
       </ScissorArea>
-      <div class="max-w-xl lg:max-w-4xl xl:max-w-5xl mx-auto">
+      <div class="max-w-xl lg:max-w-6xl xl:max-w-6xl mx-auto">
         <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
           KindnessAPI 🤔
         </div>
 
         <div class="px-3 text-lg mb-10">
-          KindnessAPI is ✝️ a Gospel Church 💒 . It's a place for 💁🏼‍♂️ YOU 💁🏼‍♀️ to share your Kindness, God's Grace and Testimonals with others. We also have an API for 👩🏻‍💻 developers 👨🏼‍💻 to connect and spread Kindness and Gospel to a much wider audience. 📲
+          KindnessAPI is ✝️ a Christian Church 💒 . It's a place for 💁🏼‍♂️ YOU 💁🏼‍♀️ to share your Kindness, God's Grace and Testimonals with others. We also have an API for 👩🏻‍💻 developers 👨🏼‍💻 to connect and spread Kindness and Gospel to a much wider audience. 📲
         </div>
 
         <div class="block lg:flex">
           <div class="lg:w-1/3 lg:pr-6">
             <div class="px-3 pb-3 text-3xl lg:text-xl font-bold">
-              <router-link class="hover:underline" to="/kindness-river">Kindness 💧✨</router-link>
+              <router-link class="hover:underline" to="/kindness-river">Kindness River💧✨</router-link>
             </div>
             <div class="px-3 text-lg pb-3">
               Kindness is like water. Water is life. We need it everyday to stay mentally healthy. With massive amount of stories, we can make a flowing river of Kindness. 🏄🏻‍♂️ 😆

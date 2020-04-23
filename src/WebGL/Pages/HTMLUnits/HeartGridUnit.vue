@@ -5,7 +5,7 @@
         <div slot="dom" class="full">
           Kindness River {{ hit }}
         </div>
-        <RiverHeartsScene @hit="$emit('hit', $event); onHit($event)" slot="o3d"></RiverHeartsScene>
+        <HeartGridScene @hit="$emit('hit', $event); onHit($event)" slot="o3d"></HeartGridScene>
       </ScissorArea>
 
       <!-- <ScissorArea class="w-full h-full">

@@ -20,7 +20,7 @@
     <O3D :animated="true" :layout="'frontlayer'">
       <!-- <RadientBG></RadientBG> -->
     </O3D>
-    <StarKindness @hit="$emit('hit', $event)"></StarKindness>
+    <HeartGrid @hit="$emit('hit', $event)"></HeartGrid>
 
     <!--
     -->

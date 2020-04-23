@@ -39,7 +39,7 @@ export default {
       // eslint-disable-next-line
       loader.load(require('file-loader!./fbx/heart.fbx').default, (obj) => {
         let geo = obj.children[0].geometry
-        geo.rotateY(Math.PI)
+        geo.rotateX(Math.PI * -0.5)
         resolve(geo)
       })
     })
@@ -61,7 +61,7 @@ export default {
     }
 
     let cursorMesh = new Mesh(
-      new IcosahedronBufferGeometry(0.5, 0),
+      new IcosahedronBufferGeometry(0.6, 0),
       cursorMatcap
     )
     cursorMesh.visible = false
@@ -251,8 +251,8 @@ export default {
             }
           }
 
-          mesh.rotation.z = time + wavy // + 0.1 * time * x / cx * y / cy
-          mesh.rotation.x = Math.PI * 0.5
+          mesh.rotation.y = time + wavy
+          // mesh.rotation.x = Math.PI * 0.5
           idx++
         }
       }

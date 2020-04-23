@@ -4,7 +4,7 @@ uniform vec3 color;
 uniform float time;
 // varying vec3 randID;
 uniform vec2 resolution;
-varying float state;
+// varying float state;
 
 // const mat2 m = mat2( 0.80,  0.60, -0.60,  0.80 );
 
