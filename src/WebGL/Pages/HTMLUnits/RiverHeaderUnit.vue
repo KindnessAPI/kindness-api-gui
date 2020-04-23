@@ -14,19 +14,17 @@
           <span>Kindness River</span>
         </div>
         <div class="px-3 text-lg mb-10">
-            Testing...
-          </div>
-          <div class="px-3 mb-2 text-3xl lg:text-xl  font-bold">
-            title
-          </div>
-          <div class="px-3 text-lg pb-8">
-            text
-          </div>
+          Testing...
+        </div>
+        <div class="px-3 mb-2 text-3xl lg:text-xl  font-bold">
+          Kindness is like water. Water is life. We need it everyday to stay mentally healthy. With massive amount of stories, we can make a flowing river of Kindness. 🏄🏻‍♂️ 😆
+        </div>
+        <div class="px-3 text-lg pb-8">
+          text
+        </div>
       </div>
       <div class="h-12 lg:h-24"></div>
-
     </div>
-
   </div>
 </template>
 

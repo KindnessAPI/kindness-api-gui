@@ -15,14 +15,14 @@
             <span>Kindness River</span>
           </div>
           <div class="px-3 text-lg mb-10">
-            Your story matters
+            Your life story matters.
           </div>
 
           <div class="px-3 mb-2 text-3xl lg:text-xl  font-bold">
-            title
+            What's Kindness River?
           </div>
           <div class="px-3 text-lg pb-8">
-            text
+            Kindness is like water. Water is life. We need it everyday to stay mentally healthy. With massive amount of stories, we can make a flowing river of Kindness. 🏄🏻‍♂️ 😆
           </div>
           <div class="px-3 text-lg pb-3 font-bold underline">
             <router-link to="/kindness-river">Read more...</router-link>

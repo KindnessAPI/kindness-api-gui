@@ -9,7 +9,7 @@
       <KindnessRiverUnit></KindnessRiverUnit>
       <LetsDoThis></LetsDoThis>
       <GospelUnit></GospelUnit>
-
+      <!-- <RegisterUnit></RegisterUnit> -->
       <!-- <MotherBoardUnit></MotherBoardUnit> -->
     </div>
     <FullMenuBar v-show="openMenu" @close="openMenu = false"></FullMenuBar>

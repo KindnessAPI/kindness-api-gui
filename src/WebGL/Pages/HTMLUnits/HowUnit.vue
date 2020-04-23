@@ -13,10 +13,17 @@
         </div>
 
         <div class="px-3 text-lg mb-10">
-          KindnessAPI is ✝️ a Christian Church 💒 . It's a place for 💁🏼‍♂️ YOU 💁🏼‍♀️ to share your Kindness, God's Grace and Testimonals with others. We also have an API for 👩🏻‍💻 developers 👨🏼‍💻 to connect and spread Kindness and Gospel to a much wider audience. 📲
+          KindnessAPI is ✝️ a digital Christian Church 💒 . It's a place for 💁🏼‍♂️ YOU 💁🏼‍♀️ to share your Kindness, God's Grace and Testimonals with others. We also have an API for 👩🏻‍💻 developers 👨🏼‍💻 to connect and spread Kindness and Gospel to a much wider audience. 📲
         </div>
 
-        <div class="block lg:flex">
+        <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
+          Make Kindness Louder 📣
+        </div>
+        <div class="px-3 text-lg">
+          At such an unprecedented and unfamiliar time as we are going through today, 🏠 many people are not only dealing with depression and anxiety, but also grieving the loss of loved ones to Co-VID-19. 😢 Moreover, many have lost their jobs or businesses. 🧳 Now, more than ever, people need love and kindness from each other. 😊
+        </div>
+
+        <!-- <div class="block lg:flex">
           <div class="lg:w-1/3 lg:pr-6">
             <div class="px-3 pb-3 text-3xl lg:text-xl font-bold">
               <router-link class="hover:underline" to="/kindness-river">Kindness River💧✨</router-link>
@@ -41,7 +48,7 @@
               (Under development)
             </div>
           </div>
-        </div>
+        </div> -->
 
       </div>
     </div>
