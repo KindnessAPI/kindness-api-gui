@@ -6,7 +6,7 @@
       <TopNavBar @menu="openMenu = !openMenu"></TopNavBar>
       <HeroUnit></HeroUnit>
       <HowUnit></HowUnit>
-      <!-- <RiverUnit></RiverUnit> -->
+      <KindnessRiverUnit></KindnessRiverUnit>
       <LetsDoThis></LetsDoThis>
       <GospelUnit></GospelUnit>
 

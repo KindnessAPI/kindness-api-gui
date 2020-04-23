@@ -14,11 +14,10 @@
       <RadientBG></RadientBG>
     </O3D> -->
 
-    <!-- <RadientBG></RadientBG> -->
     <O3D :animated="true" :layout="'bglayer'">
+      <!-- <RadientBG></RadientBG> -->
       <RiverField :mode="'magic'"></RiverField>
     </O3D>
-    <StarKindness :mode="'magic'"></StarKindness>
 
     <!--
     -->
@@ -33,7 +32,7 @@
     </O3D> -->
 
     <!-- <O3D :animated="true" :layout="'lens'">
-      <LensArea dudv="water"></LensArea>
+      <LensArea dudv="cross"></LensArea>
     </O3D> -->
 
     <!-- <StarField></StarField> -->
@@ -56,7 +55,7 @@ import { Scene, Color } from 'three'
 // import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
 export default {
-  name: 'RiverScene',
+  name: 'StarFlowScene',
   components: {
     ...require('../webgl').default
   },
@@ -82,21 +81,19 @@ export default {
   async mounted () {
     await this.lookupWait('ready')
 
-    this.scene.background = new Color('#1b1b1b')
+    this.scene.background = new Color('#1a1a1a')
     // this.scene.background = new TextureLoader().load(require('./img/stained-glass.jpg'))
 
     // prepare camera
     this.camera = new PCamera({ base: this.lookup('base'), element: this.lookup('element') })
-    this.camera.position.z = 400
+    this.camera.position.z = 300
     // this.rayplay = new RayPlay({ mounter: this.lookup('element'), base: this.lookup('base'), camera: this.camera })
 
-    //
-    let OrbitControls = require('three/examples/jsm/controls/OrbitControls').OrbitControls
-    this.lookup('element').style.outline = 'none'
-    this.controls = new OrbitControls(this.camera, this.lookup('element'))
-    this.lookup('base').onLoop(() => {
-      this.controls.update()
-    })
+    // let OrbitControls = require('three/examples/jsm/controls/OrbitControls').OrbitControls
+    // this.controls = new OrbitControls(this.camera, this.lookup('element'))
+    // this.lookup('base').onLoop(() => {
+    //   this.controls.update()
+    // })
 
     this.scene.add(this.o3d)
 
@@ -117,8 +114,8 @@ export default {
       // let time = window.performance.now() * 0.001
       // let setting = this.settings[cheery]
       this.layouts = {
-        'bglayer': {
-          pz: '-600'
+        'lens': {
+          pz: '200'
         }
         // 'rain': {
         //   pz: `-1000`

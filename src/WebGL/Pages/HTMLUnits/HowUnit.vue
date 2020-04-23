@@ -19,7 +19,7 @@
         <div class="block lg:flex">
           <div class="lg:w-1/3 lg:pr-6">
             <div class="px-3 pb-3 text-3xl lg:text-xl font-bold">
-              <router-link class="hover:underline" to="/kindness-river">Kindness River💧✨</router-link>
+              <router-link class="hover:underline" to="/kindness-river">Kindness 💧✨</router-link>
             </div>
             <div class="px-3 text-lg pb-3">
               Kindness is like water. Water is life. We need it everyday to stay mentally healthy. With massive amount of stories, we can make a flowing river of Kindness. 🏄🏻‍♂️ 😆

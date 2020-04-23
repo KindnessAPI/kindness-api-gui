@@ -16,7 +16,7 @@
 import { PipeScissor, makeScrollBox } from '../Reusable'
 // import axios from 'axios'
 export default {
-  name: 'Home',
+  name: 'KindnessRiver',
   mixins: [PipeScissor],
   data () {
     return {
@@ -31,15 +31,6 @@ export default {
       window.dispatchEvent(new Event('resize'))
     })
     this.scrollBox = makeScrollBox({ dom: window, base: this.base })
-
-    // let axios = require('axios').default
-    // axios.post('http://localhost:3333/login', {
-    //   username: 'lok',
-    //   email: 'lok@lok.com',
-    //   password: 'loklok-test'
-    // })
-    //   .then(r => r.data)
-    //   .then(console.log)
 
     this.origColor = document.body.style.backgroundColor
     document.body.style.backgroundColor = this.bgColor

@@ -6,7 +6,7 @@
 
 <script>
 import { Tree } from '../../Reusable'
-import { Mesh, Object3D, MeshMatcapMaterial, TextureLoader, Vector2, Raycaster } from 'three'
+import { Mesh, Object3D, MeshMatcapMaterial, TextureLoader, Vector2, Raycaster, Color } from 'three'
 
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 
@@ -26,6 +26,7 @@ export default {
   },
   data () {
     return {
+      hit: false,
       open: false
     }
   },
@@ -55,7 +56,7 @@ export default {
       })
     })
 
-    let cx = 40
+    let cx = 25
     let cy = 20
     let total = cx * cy
 
@@ -64,20 +65,20 @@ export default {
 
     let idx = 0
     let mapper = new Map()
-    var offsetX = (cx - 1) / 2
-    var offsetY = (cy - 1) / 2
+    let offsetX = (cx - 1) / 2
+    let offsetY = (cy - 1) / 2
     let raycasterList = []
     let group = new Object3D()
     this.o3d.add(group)
-    for (var y = 0; y < cy; y++) {
-      for (var x = 0; x < cx; x++) {
+    for (let y = 0; y < cy; y++) {
+      for (let x = 0; x < cx; x++) {
         let mesh = new Mesh(
           geo,
           undefined
         )
         // mesh.instanceMatrix.setUsage(DynamicDrawUsage)
         group.add(mesh)
-
+        let color = new Color('#ffffff')
         raycasterList.push(mesh)
         mapper.set(idx, {
           offsetX,
@@ -88,7 +89,8 @@ export default {
           cy,
           idx,
           total,
-          mesh
+          mesh,
+          color
         })
         console.log(x, y)
         idx++
@@ -114,39 +116,49 @@ export default {
 
       raycaster.setFromCamera(mouse, this.lookup('camera'))
 
-      var intersection = raycaster.intersectObjects(raycasterList)
-      var rayhit = false
+      let intersection = raycaster.intersectObjects(raycasterList)
+      let rayhitID = false
       document.documentElement.style.cursor = ''
       if (intersection[0]) {
         document.documentElement.style.cursor = 'pointer'
-        rayhit = intersection[0].object.uuid
+        rayhitID = intersection[0].object.uuid
       }
 
+      this.$watch('hit', (nv, ov) => {
+        if (nv !== ov) {
+          this.$emit('hit', nv)
+        }
+      })
+
       let idx = 0
-      for (var y = 0; y < cy; y++) {
-        for (var x = 0; x < cx; x++) {
-          let { mesh } = mapper.get(idx)
+      for (let y = 0; y < cy; y++) {
+        for (let x = 0; x < cx; x++) {
+          let { mesh, color } = mapper.get(idx)
 
           mesh.position.x = offsetX - x
           mesh.position.y = offsetY - y
 
+          let wavy = Math.sin(time + x * 0.13 + y * 0.13)
           mesh.position.x *= 35
           mesh.position.y *= 35
-          mesh.position.z = 40 * Math.sin(time + x * 0.13 + y * 0.13)
+          mesh.position.z = 40 * wavy
 
-          if (rayhit === mesh.uuid) {
+          if (rayhitID === mesh.uuid) {
             mesh.scale.x = 20
             mesh.scale.y = 20
             mesh.scale.z = 20
             if (matcaps.yellow) {
               mesh.material = matcaps.yellow
             }
+            this.hit = idx
           } else {
-            mesh.scale.x = 10
-            mesh.scale.y = 10
-            mesh.scale.z = 10
+            mesh.scale.x = 2.5 + 10 * Math.abs(wavy)
+            mesh.scale.y = 2.5 + 10 * Math.abs(wavy)
+            mesh.scale.z = 2.5 + 10 * Math.abs(wavy)
             if (matcaps.red) {
               mesh.material = matcaps.red
+              // color.setHSL(offsetX - x + Math.sin(x * 3.14 * 2.0 + time * 0.5), 0.65, 0.65)
+              mesh.material.color = color
             }
           }
 
