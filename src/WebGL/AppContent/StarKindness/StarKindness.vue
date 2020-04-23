@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import { Tree } from '../../Reusable'
-import { Mesh, Object3D, MeshMatcapMaterial, TextureLoader, Vector2, Raycaster, Color, CircleGeometry, MeshBasicMaterial } from 'three'
+import { Tree, getScreen } from '../../Reusable'
+import { Mesh, Object3D, MeshMatcapMaterial, TextureLoader, Vector2, Raycaster, Color, SphereBufferGeometry } from 'three'
 
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 
@@ -38,33 +38,53 @@ export default {
       let loader = new FBXLoader()
       // eslint-disable-next-line
       loader.load(require('file-loader!./fbx/heart.fbx').default, (obj) => {
-        resolve(obj.children[0].geometry)
+        let geo = obj.children[0].geometry
+        geo.rotateX(Math.PI * -0.5)
+        resolve(geo)
+      })
+    })
+
+    let cursorMatcap = await new Promise((resolve) => {
+      let loader = new TextureLoader()
+      // eslint-disable-next-line
+      loader.load(require('./matcap/silver.png'), (obj) => {
+        let matcap = new MeshMatcapMaterial({ transparent: true, opacity: 1.0, color: 0xffffff, matcap: obj })
+        resolve(matcap)
       })
     })
 
     let colors = {
       red: new Color(0xff0000),
-      yellow: new Color(0xffff00)
+      yellow: new Color(0xffff00),
+      white: new Color('#ffffff'),
+      grey: new Color('#1a1a1a')
     }
 
     let cursorMesh = new Mesh(
-      new CircleGeometry(15, 32),
-      new MeshBasicMaterial({ color: 0xbababa })
+      new SphereBufferGeometry(0.5, 32, 32),
+      cursorMatcap
     )
+    cursorMesh.visible = false
+    cursorMesh.scale.x = 0.4
+    cursorMesh.scale.y = 0.4
+    cursorMesh.scale.z = 0.4
     this.o3d.add(cursorMesh)
 
     document.documentElement.style.cursor = 'none'
     this.lookup('element').addEventListener('mouseover', () => {
-      document.documentElement.style.cursor = ''
+      document.documentElement.style.cursor = 'none'
     })
     this.lookup('element').addEventListener('mouseleave', () => {
       document.documentElement.style.cursor = ''
     })
 
+    let camera = this.lookup('camera')
     this.lookup('base').onLoop(async () => {
-      let screen = await this.getScreen()
+      let screen = getScreen({ camera, depth: 390 })
       cursorMesh.position.x = mouse.x * screen.width * 0.5
       cursorMesh.position.y = mouse.y * screen.height * 0.5
+      cursorMesh.position.z = 390
+      cursorMesh.rotation.y += 0.01
     })
 
     let matcaps = {}
@@ -86,7 +106,6 @@ export default {
     let total = cx * cy
 
     let geo = heartGeo
-    geo.rotateX(Math.PI * -0.5)
 
     let idx = 0
     let mapper = new Map()
@@ -137,6 +156,7 @@ export default {
     this.lookup('element').addEventListener('mousemove', (evt) => {
       evt.preventDefault()
       onUpdateMouse(evt)
+      cursorMesh.visible = true
     }, { passive: false })
 
     this.lookup('element').addEventListener('touchmove', (evt) => {
@@ -171,15 +191,16 @@ export default {
         this.$emit('hit', nv)
       }
     })
+
     this.lookup('base').onLoop(() => {
       let time = window.performance.now() * 0.001
 
       raycaster.setFromCamera(mouse, this.lookup('camera'))
       let intersection = raycaster.intersectObjects(raycasterList)
       // document.documentElement.style.cursor = 'none'
-      cursorMesh.material.color = colors.yellow
+      cursorMesh.material.color = colors.white
       if (intersection[0]) {
-        cursorMesh.material.color = colors.red
+        cursorMesh.material.color = colors.gray
         // document.documentElement.style.cursor = 'pointer'
         hoverID = intersection[0].object.uuid
         if (mouseDown) {
@@ -211,9 +232,6 @@ export default {
             }
             this.hit = idx
           } else if (hoverID === mesh.uuid) {
-            mesh.scale.x = 4.0 + 10 * Math.abs(wavy)
-            mesh.scale.y = 4.0 + 10 * Math.abs(wavy)
-            mesh.scale.z = 4.0 + 10 * Math.abs(wavy)
             if (matcaps.pink) {
               mesh.material = matcaps.pink
             }
