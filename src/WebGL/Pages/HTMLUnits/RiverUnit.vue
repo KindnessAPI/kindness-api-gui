@@ -45,7 +45,7 @@ export default {
         this.hit = false
         return
       }
-      this.hit = Math.abs(Math.sin(v) * Math.sin(-v))
+      this.hit = v
     }
   }
 }

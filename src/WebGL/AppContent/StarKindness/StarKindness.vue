@@ -6,7 +6,7 @@
 
 <script>
 import { Tree, getScreen } from '../../Reusable'
-import { Mesh, Object3D, MeshMatcapMaterial, TextureLoader, Vector2, Raycaster, Color, SphereBufferGeometry } from 'three'
+import { Mesh, Object3D, MeshMatcapMaterial, TextureLoader, Vector2, Raycaster, Color, IcosahedronBufferGeometry } from 'three'
 
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 
@@ -39,7 +39,7 @@ export default {
       // eslint-disable-next-line
       loader.load(require('file-loader!./fbx/heart.fbx').default, (obj) => {
         let geo = obj.children[0].geometry
-        geo.rotateX(Math.PI * -0.5)
+        geo.rotateY(Math.PI)
         resolve(geo)
       })
     })
@@ -54,14 +54,14 @@ export default {
     })
 
     let colors = {
-      red: new Color(0xff0000),
-      yellow: new Color(0xffff00),
+      red: new Color('#ff0000'),
+      yellow: new Color('#ffff00'),
       white: new Color('#ffffff'),
       gray: new Color('#bababa')
     }
 
     let cursorMesh = new Mesh(
-      new SphereBufferGeometry(0.5, 32, 32),
+      new IcosahedronBufferGeometry(0.5, 0),
       cursorMatcap
     )
     cursorMesh.visible = false
@@ -84,7 +84,9 @@ export default {
       cursorMesh.position.x = mouse.x * screen.width * 0.5
       cursorMesh.position.y = mouse.y * screen.height * 0.5
       cursorMesh.position.z = 390
+      cursorMesh.rotation.x += 0.01
       cursorMesh.rotation.y += 0.01
+      cursorMesh.rotation.z += 0.01
     })
 
     let matcaps = {}
@@ -101,8 +103,8 @@ export default {
       })
     })
 
-    let cx = 25
-    let cy = 25
+    let cx = 10
+    let cy = 10
     let total = cx * cy
 
     let geo = heartGeo
@@ -140,8 +142,8 @@ export default {
         idx++
       }
     }
-
-    group.rotation.x = Math.PI * 0.5 * -0.85
+    // group.rotation.y = Math.PI
+    // group.rotation.x = Math.PI * 0.5 * -0.85
     let mouseDown = false
     let rayhitID = false
     let hoverID = false
@@ -188,7 +190,7 @@ export default {
 
     this.$watch('hit', (nv, ov) => {
       if (nv !== ov) {
-        this.$emit('hit', nv)
+        this.$emit('hit', { index: nv, length: total })
       }
     })
 
@@ -219,14 +221,17 @@ export default {
           mesh.position.y = offsetY - y
 
           let wavy = Math.sin(time + x * 0.13 + y * 0.13)
-          mesh.position.x *= 35
-          mesh.position.y *= 35
-          mesh.position.z = 40 * wavy
+          mesh.position.x *= -50
+          mesh.position.y *= 50
+          mesh.position.z = 40// * wavy
+
+          // lowers platform
+          mesh.position.z -= 150
 
           if (rayhitID === mesh.uuid) {
-            mesh.scale.x = 20
-            mesh.scale.y = 20
-            mesh.scale.z = 20
+            mesh.scale.x = 30
+            mesh.scale.y = 30
+            mesh.scale.z = 30
             if (matcaps.yellow) {
               mesh.material = matcaps.yellow
             }
@@ -236,9 +241,9 @@ export default {
               mesh.material = matcaps.pink
             }
           } else {
-            mesh.scale.x = 2.5 + 10 * Math.abs(wavy)
-            mesh.scale.y = 2.5 + 10 * Math.abs(wavy)
-            mesh.scale.z = 2.5 + 10 * Math.abs(wavy)
+            mesh.scale.x = 20
+            mesh.scale.y = 20
+            mesh.scale.z = 20
             if (matcaps.red) {
               mesh.material = matcaps.red
               // color.setHSL(offsetX - x + Math.sin(x * 3.14 * 2.0 + time * 0.5), 0.65, 0.65)
@@ -246,7 +251,7 @@ export default {
             }
           }
 
-          mesh.rotation.y = time + wavy // + 0.1 * time * x / cx * y / cy
+          mesh.rotation.z = time + wavy // + 0.1 * time * x / cx * y / cy
           mesh.rotation.x = Math.PI * 0.5
           idx++
         }
