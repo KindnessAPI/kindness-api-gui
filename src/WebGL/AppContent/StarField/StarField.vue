@@ -33,8 +33,8 @@ export default {
     this.$on('init', async () => {
       let screen = await this.getScreen()
 
-      let SIM_X = 512
-      let SIM_Y = 512
+      let SIM_X = 256
+      let SIM_Y = 256
 
       let settings = {
         u_mode: { value: 0 },
@@ -242,7 +242,7 @@ export default {
       // }
 
       resizer(async () => {
-        let dpi = 2
+        let dpi = 1
         let el = this.lookup('element')
         let rect = el.getBoundingClientRect()
 
@@ -257,8 +257,8 @@ export default {
         let resolutionX = dpi * rect.width
         let resolutionY = dpi * rect.height// * rect.height / rect.width
 
-        resolutionX = resolutionX > 1280 * 2 ? 1280 * 2 : resolutionX
-        resolutionY = resolutionY > 1280 * 2 ? 1280 * 2 : resolutionY
+        // resolutionX = resolutionX > 1280 * 2 ? 1280 * 2 : resolutionX
+        // resolutionY = resolutionY > 1280 * 2 ? 1280 * 2 : resolutionY
 
         tScreenA = craeteScreenRenderTarget(resolutionX, resolutionY)
         tScreenB = craeteScreenRenderTarget(resolutionX, resolutionY)

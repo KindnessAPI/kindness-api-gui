@@ -40,7 +40,7 @@ export default {
     // let RES_SIZE = 1024
 
     this.$on('init', async () => {
-      let dpi = ((/(iPad|iPhone|iPod|Apple)/g).test(navigator.userAgent)) && window.innerWidth > 767 ? 1 : 2
+      let dpi = window.devicePixelRatio || 1.0 // ((/(iPad|iPhone|iPod|Apple)/g).test(navigator.userAgent)) && window.innerWidth > 767 ? 1 : 2
       let element = this.lookup('element') || this.lookup('renderer').domElement
       let box = element.getBoundingClientRect()
       // let camera = this.lookup('camera')
