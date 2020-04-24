@@ -1,7 +1,7 @@
 <template>
   <ScissorArea>
     <div slot="dom">
-      <div class="flex w-full justify-between items-center mx-auto max-w-6xl">
+      <div class="flex w-full justify-between items-center px-3">
         <router-link to="/">
           <div class="text-4xl text-black p-3 cursor-pointer">
             ✞ KindnessAPI

@@ -11,13 +11,14 @@
       <ParametricCluster></ParametricCluster>
     </O3D> -->
 
-    <O3D :animated="true" layout="cb-inst-1">
+    <!-- <O3D :animated="true" layout="cb-inst-1">
       <O3D :animated="true" layout="cb-rot">
         <O3D :animated="true" layout="cb-item">
           <CherryBlossom @ready="onReady"></CherryBlossom>
         </O3D>
       </O3D>
-    </O3D>
+    </O3D> -->
+
     <O3D :animated="true" layout="cb-inst-2">
       <O3D :animated="true" layout="cb-rot">
         <O3D :animated="true" layout="cb-item">
@@ -25,13 +26,14 @@
         </O3D>
       </O3D>
     </O3D>
-    <O3D :animated="true" layout="cb-inst-3">
+
+    <!-- <O3D :animated="true" layout="cb-inst-3">
       <O3D :animated="true" layout="cb-rot">
         <O3D :animated="true" layout="cb-item">
           <CherryBlossom @ready="onReady"></CherryBlossom>
         </O3D>
       </O3D>
-    </O3D>
+    </O3D> -->
 
     <!-- <O3D :animated="true" layout="lensarea">
       <LensArea></LensArea>

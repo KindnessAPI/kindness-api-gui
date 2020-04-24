@@ -2,7 +2,7 @@
   <div class="h-full w-full absolute top-0 left-0 z-10">
     <ScissorArea class="full">
       <div slot="dom">
-        <div class="flex w-full justify-between items-center mx-auto max-w-6xl">
+        <div class="flex w-full justify-between items-center px-3">
           <div class="text-4xl text-black p-3 cursor-pointer">
             ✞ KindnessAPI
           </div>
@@ -10,7 +10,7 @@
             <img @click="$emit('close')" src="../icon/close.svg" alt="">
           </div>
         </div>
-        <div class="mx-auto max-w-6xl mt-3">
+        <div class="mx-auto px-3 mt-3">
           <div class="mb-3 px-3 text-black text-2xl" v-if="Auth.currentProfile">
             Welcome back, @{{ Auth.currentProfile.user.username }}!
           </div>

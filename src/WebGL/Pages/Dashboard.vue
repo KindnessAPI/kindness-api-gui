@@ -4,7 +4,7 @@
 
     <div v-show="!openMenu">
       <TopNavBar @menu="openMenu = !openMenu"></TopNavBar>
-      <div class="max-w-6xl mt-3 mx-auto" v-if="Auth.isLoggedIn">
+      <div class="px-3 mt-3 mx-auto" v-if="Auth.isLoggedIn">
         <div class="mb-3 px-3 text-black text-2xl">
           Welcome back, @{{ Auth.currentProfile.user.username }}!
         </div>

@@ -4,7 +4,7 @@
 
     <div v-show="!openMenu">
       <TopNavBar @menu="openMenu = !openMenu"></TopNavBar>
-      <HeroUnit></HeroUnit>
+      <!-- <HeroRight></HeroRight> -->
       <HowUnit></HowUnit>
       <KindnessRiverUnit></KindnessRiverUnit>
       <LetsDoThis></LetsDoThis>
