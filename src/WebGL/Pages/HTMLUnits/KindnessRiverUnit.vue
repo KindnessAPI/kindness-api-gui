@@ -11,23 +11,24 @@
       <div class="scissor-left scissor-text">
         <div class="h-12 lg:h-32 xl:h-64"></div>
         <div class="lg:px-4 max-w-xl mx-auto lg:ml-auto">
+
           <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
-            <span>Kindness River</span>
-          </div>
-          <div class="px-3 text-lg mb-10">
-            Your life story matters.
+            Kindness Life Stories 🤗
           </div>
 
-          <div class="px-3 mb-2 text-3xl lg:text-xl  font-bold">
-            What's Kindness River?
+          <div class="px-3 text-lg mb-3">
+            Everyone's life story matters! 🍭
           </div>
-          <div class="px-3 text-lg pb-8">
-            Kindness is like water. Water is life. We need it everyday to stay mentally healthy. With massive amount of stories, we can make a flowing river of Kindness. 🏄🏻‍♂️ 😆
+
+          <div class="px-3 pb-8">
+            Kindness is like water. Water is life. Water cleanses toxins. We need it everyday to stay mentally healthy. Each life story is like a droplet of water, small but essential.
+            Let's make a <strong>Kindness River</strong> to heal many! 💧 🏞 🏄🏻‍♂️
           </div>
 
           <div class="px-3 text-lg pb-3 font-bold underline" v-if="$route.fullPath === '/'" >
-            <router-link to="/kindness-river">Read more...</router-link>
+            <router-link to="/kindness-river">Learn more...</router-link>
           </div>
+
         </div>
         <div class="h-12 lg:h-32 xl:h-64"></div>
       </div>

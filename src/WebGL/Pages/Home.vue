@@ -7,7 +7,7 @@
       <!-- <HeroRight></HeroRight> -->
       <HowUnit></HowUnit>
       <KindnessRiverUnit></KindnessRiverUnit>
-      <LetsDoThis></LetsDoThis>
+      <CommunityUnit></CommunityUnit>
       <GospelUnit></GospelUnit>
       <!-- <RegisterUnit></RegisterUnit> -->
       <!-- <MotherBoardUnit></MotherBoardUnit> -->

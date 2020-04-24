@@ -13,6 +13,8 @@ module.exports = {
         min90: '90vmin',
         min100: '100vmin',
 
+        t1: `calc(30px + 22 * (100vw - 400px) / 1040)`,
+
         px: '1px',
         '0': '0',
         '1': '0.25rem',

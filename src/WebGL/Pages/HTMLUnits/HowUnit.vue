@@ -23,7 +23,7 @@
                 KindnessAPI 🤔
               </div>
 
-              <div class="px-3 text-lg mb-10">
+              <div class="px-3 mb-3">
                 KindnessAPI is ✝️ a digital Christian Church 💒 . It's a place for 💁🏼‍♂️ YOU 💁🏼‍♀️ to share your Kindness, God's Grace and Testimonals with others. We also have an API for 👩🏻‍💻 developers 👨🏼‍💻 to connect and spread Kindness and Gospel to a much wider audience. 📲
               </div>
 
