@@ -6,7 +6,7 @@
 
 <script>
 import { Tree } from '../../Reusable'
-import { DoubleSide, Object3D, ShaderMaterial, Color, Vector2 } from 'three'
+import { Object3D, Color, Vector2, MeshBasicMaterial } from 'three'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 
 let fbx = new FBXLoader()
@@ -58,7 +58,7 @@ export default {
               value: new Vector2(1024, 1024)
             },
             myColor: {
-              value: new Color(Math.random() * 0xffffff)
+              value: new Color(Math.random() * 0xffffff).offsetHSL(0, -0.2, 0.2)
             }
           }
           this.lookup('base').onLoop(() => {
@@ -68,19 +68,23 @@ export default {
             let rect = this.lookup('element').getBoundingClientRect()
             uniforms.resolution.value = new Vector2(rect.width, rect.height)
           })
-          let coolShade = new ShaderMaterial({
-            side: DoubleSide,
-            uniforms,
-            transparent: true,
-            // eslint-disable-next-line
-            vertexShader: require('raw-loader!./glsl/mb-lines-v.glsl').default,
-            // eslint-disable-next-line
-            fragmentShader: require('raw-loader!./glsl/mb-lines-f.glsl').default
+          // let coolShade = new ShaderMaterial({
+          //   side: DoubleSide,
+          //   uniforms,
+          //   transparent: true,
+          //   // eslint-disable-next-line
+          //   vertexShader: require('raw-loader!./glsl/mb-lines-v.glsl').default,
+          //   // eslint-disable-next-line
+          //   fragmentShader: require('raw-loader!./glsl/mb-lines-f.glsl').default
+          // })
+
+          let matcapShade = new MeshBasicMaterial({
+            color: uniforms.myColor.value
           })
 
-          item.geometry.computeBoundingSphere()
-          uniforms.radius.value = item.geometry.boundingSphere.radius * 100.0
-          item.material = coolShade
+          // item.geometry.computeBoundingSphere()
+          // uniforms.radius.value = item.geometry.boundingSphere.radius * 100.0
+          item.material = matcapShade // coolShade
           item.material.needsUpdate = true
           item.needsUpdate = true
         }

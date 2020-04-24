@@ -2,12 +2,15 @@
   <ScissorArea>
     <div slot="dom">
       <div class="flex w-full justify-between items-center px-3">
-        <router-link to="/">
+        <router-link class="block lg:w-1/3" to="/">
           <div class="text-4xl text-black p-3 cursor-pointer">
-            ✞ KindnessAPI
+            ✞ Kindness API
           </div>
         </router-link>
-        <div class="mr-6 flex cursor-pointer">
+        <div class="lg:w-1/3 hidden lg:flex justify-center text-2xl">
+
+        </div>
+        <div class="lg:w-1/3 flex justify-end cursor-pointer">
           <div class="hidden md:inline-flex">
             <!-- <div class="text-2xl text-black p-3" @click="$router.push('/dash')">
               Love Work in Progress
@@ -16,7 +19,8 @@
             <router-link v-if="!Auth.isLoggedIn" exact-active-class="underline" class="text-xl text-black py-2 pr-3" to="/register">Register</router-link>
             <router-link v-if="Auth.isLoggedIn" exact-active-class="underline" class="text-xl text-black py-2 pr-3" to="/dashboard">Dashboard</router-link>
           </div>
-          <img @click="$emit('menu')" style="min-width:24px;" src="../icon/menu.svg" alt="">
+
+          <img @click="$emit('menu')" style="min-width:24px;" class="mr-6" src="../icon/menu.svg" alt="">
         </div>
       </div>
       <!-- <TopNavBar @open="openMenu = true" @close="openMenu = false" @menu="openMenu = !openMenu"></TopNavBar> -->

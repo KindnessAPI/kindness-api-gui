@@ -27,6 +27,12 @@
       </O3D>
     </O3D>
 
+    <O3D :animated="true" layout="mblines">
+      <MBLinesSVG></MBLinesSVG>
+    </O3D>
+
+    <!-- <MBLines></MBLines> -->
+
     <!-- <O3D :animated="true" layout="cb-inst-3">
       <O3D :animated="true" layout="cb-rot">
         <O3D :animated="true" layout="cb-item">
@@ -69,9 +75,6 @@ export default {
     }
   },
   methods: {
-    click () {
-      console.log('123')
-    },
     onReady () {
       // this.ready = true
       // setTimeout(() => {
@@ -82,7 +85,7 @@ export default {
   async mounted () {
     await this.lookupWait('ready')
 
-    this.scene.background = new Color('#fafafa')
+    this.scene.background = new Color('#4a4a4a')
 
     // prepare camera
     this.camera = new PCamera({ base: this.lookup('base'), element: this.lookup('element') })
@@ -166,6 +169,12 @@ export default {
           rx: `${(cb3or.x - 50) / 100 * Math.PI * 2}`,
           ry: `${(cb3or.y - 50) / 100 * Math.PI * 2}`,
           rz: `${(cb3or.z - 50) / 100 * Math.PI * 2}`
+        },
+        mblines: {
+          sx: 1.0,
+          sy: 1.0,
+          sz: 1.0,
+          pz: -20
         }
       }
     }

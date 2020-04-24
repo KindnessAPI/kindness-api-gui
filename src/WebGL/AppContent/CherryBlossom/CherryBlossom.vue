@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import { Tree, makePaintCanvas } from '../../Reusable'
-import { MeshMatcapMaterial, MeshBasicMaterial, CubeTexture, DoubleSide, Object3D, TextureLoader } from 'three'
+import { Tree } from '../../Reusable'
+import { MeshMatcapMaterial, DoubleSide, Object3D, TextureLoader } from 'three'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 // import { Refractor } from 'three/examples/jsm/objects/Refractor'
 // import { FastBlurShader } from './FastBlurShader'
@@ -47,28 +47,29 @@ export default {
         })
       })
     }
-    let div = document.createElement('div')
-    Cache.painter = Cache.painter || makePaintCanvas({ pixel: 16, sdk: this.lookup('sdk'), setting: 'flower-pedals', domElement: div, base: this.lookup('base') })
+    // let div = document.createElement('div')
+    // Cache.painter = Cache.painter || makePaintCanvas({ pixel: 16, sdk: this.lookup('sdk'), setting: 'flower-pedals', domElement: div, base: this.lookup('base') })
 
-    let painter = Cache.painter
+    // let painter = Cache.painter
 
-    Cache.painterCube = Cache.painterCube || new CubeTexture([
-      painter.canvas,
-      painter.canvas,
-      painter.canvas,
-      painter.canvas,
-      painter.canvas,
-      painter.canvas
-    ])
+    // Cache.painterCube = Cache.painterCube || new CubeTexture([
+    //   painter.canvas,
+    //   painter.canvas,
+    //   painter.canvas,
+    //   painter.canvas,
+    //   painter.canvas,
+    //   painter.canvas
+    // ])
 
-    let cube = Cache.painterCube
+    // let cube = Cache.painterCube
 
-    this.lookup('base').onLoop(() => {
-      cube.needsUpdate = true
-    })
+    // this.lookup('base').onLoop(() => {
+    //   cube.needsUpdate = true
+    // })
     Cache.brown = new MeshMatcapMaterial({ color: 0xffffff, side: DoubleSide, matcap: texLoader.load(require('./matcap/brown.png')) })
     Cache.yellow = new MeshMatcapMaterial({ color: 0xffd743, side: DoubleSide, matcap: texLoader.load(require('./matcap/bright-yellow.png')) })
-    Cache.pedals = new MeshBasicMaterial({ color: 0xffffff, opacity: 1, transparent: true, side: DoubleSide, envMap: cube })
+    // Cache.pedals = new MeshBasicMaterial({ color: 0xffffff, opacity: 1, transparent: true, side: DoubleSide, envMap: cube })
+    Cache.pedals = new MeshMatcapMaterial({ color: 0xffffff, side: DoubleSide, matcap: texLoader.load(require('./matcap/pink.jpg')) })
 
     // let uniforms = {
     //   matcap: { value: texLoader.load(require('./matcap/brown.png')) },
