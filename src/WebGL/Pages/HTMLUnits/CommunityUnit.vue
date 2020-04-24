@@ -18,7 +18,7 @@
           </div>
 
           <div class="px-3 mb-2 text-3xl lg:text-xl  font-bold">
-            Why community is related to canvas?
+            Why community life is related to canvas?
           </div>
           <div class="px-3 mb-2">
             When you live your life. You draw in your canvas. You live your life as a masterpice by being a good artist to yourself and others. When we contribute to each other's canvas with love and kindness, we have a good community.
