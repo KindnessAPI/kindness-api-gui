@@ -28,6 +28,7 @@
     </O3D>
 
     <O3D :animated="true" layout="mblines">
+      <RadientBG></RadientBG>
       <MBLinesSVG></MBLinesSVG>
     </O3D>
 
@@ -171,9 +172,9 @@ export default {
           rz: `${(cb3or.z - 50) / 100 * Math.PI * 2}`
         },
         mblines: {
-          sx: 1.0,
-          sy: 1.0,
-          sz: 1.0,
+          sx: 1.3,
+          sy: 1.3,
+          sz: 1.3,
           pz: -20
         }
       }

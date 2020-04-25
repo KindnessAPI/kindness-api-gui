@@ -6,7 +6,7 @@
 
 <script>
 import { Tree } from '../../Reusable'
-import { PlaneBufferGeometry, Vector2, Mesh, RawShaderMaterial, TextureLoader } from 'three'
+import { PlaneBufferGeometry, Vector2, Mesh, RawShaderMaterial, CanvasTexture } from 'three'
 // import { Refractor } from 'three/examples/jsm/objects/Refractor'
 // import { FastBlurShader } from './FastBlurShader'
 export default {
@@ -23,17 +23,37 @@ export default {
     }
   },
   mounted () {
-    // let RES_SIZE = 1024
-
     let link = require('./media/mb-lines-svg-3.svg')
 
     this.$on('init', async () => {
       // let camera = this.lookup('camera')
       let screen = await this.getScreen()
+      let getTex = async () => {
+        return new Promise((resolve) => {
+          let canvas = document.createElement('canvas')
+          let tex = new CanvasTexture(canvas)
+          let ctx = canvas.getContext('2d')
+          let image = new Image()
+          image.src = link
+          image.onload = () => {
+            let element = this.lookup('element')
+            let elRect = element.getBoundingClientRect()
+            let dpi = elRect.width / image.width * 4
+            ctx.canvas.width = dpi * image.width
+            ctx.canvas.height = dpi * image.height
+            ctx.fillStyle = 'transparent'
+            ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+            ctx.drawImage(image, 0, 0, image.width, image.height, 0, 0, canvas.width, canvas.height)
+            tex.needsUpdate = true
+            resolve(tex)
+          }
+        })
+      }
+
       let geo = new PlaneBufferGeometry(screen.max, screen.max, 20, 20)
       let uniforms = {
         time: { value: 0 },
-        tex: { value: new TextureLoader().load(link) },
+        tex: { value: await getTex() },
         sceneRect: { value: new Vector2(1.0, 1.0) }
       }
       let mat = new RawShaderMaterial({
@@ -50,16 +70,23 @@ export default {
       this.lookup('base').onResize(async () => {
         let element = this.lookup('element')
         let elRect = element.getBoundingClientRect()
+        let iHeight = uniforms.tex.value.image.height
+        let iWidth = uniforms.tex.value.image.width
+        let iAspect = iWidth / iHeight
+        console.log(iWidth, iHeight)
+
         let maxVP = Math.max(elRect.width, elRect.height)
         uniforms.sceneRect.value = new Vector2(maxVP, maxVP)
         let screen = await this.getScreen()
-        let geo = new PlaneBufferGeometry(screen.max, screen.max, 20, 20)
+        let geo = new PlaneBufferGeometry(screen.max * iAspect, screen.max, 20, 20)
         mesh.geometry = geo
       })
 
-      mesh.scale.x = 1.5
-      mesh.scale.y = 1.5
-      mesh.scale.z = 1.5
+      // mesh.scale.x = 1.0
+      // mesh.scale.y = 1.0
+      // mesh.scale.z = 1.0
+
+      mesh.rotation.z = Math.PI
 
       this.o3d.children.forEach((v) => {
         this.o3d.remove(v)

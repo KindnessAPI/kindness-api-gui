@@ -3,7 +3,7 @@
     <ScissorArea class="w-full h-full absolute top-0 left-0" style="z-index: -1;">
       <div slot="dom">
       </div>
-      <StarFlowScene slot="o3d"></StarFlowScene>
+      <MotherBoardScene slot="o3d"></MotherBoardScene>
     </ScissorArea>
     <div class="w-full max-w-xs mx-auto">
       <form class="shadow-lg rounded-lg px-8 pt-6 pb-6 mb-4 relative bgcolor" @submit.prevent="onSubmit">

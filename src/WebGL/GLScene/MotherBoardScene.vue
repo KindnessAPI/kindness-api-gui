@@ -15,8 +15,8 @@
     </O3D> -->
 
     <O3D layout="bg" :animated="true">
-      <GradientBG></GradientBG>
-      <MBLines></MBLines>
+      <RadientBG></RadientBG>
+      <MBLinesSVG></MBLinesSVG>
     </O3D>
     <!-- <O3D layout="core" :animated="true">
       <ParametricRain></ParametricRain>
@@ -122,8 +122,8 @@ export default {
           sz: 0.3
         },
         bg: {
-          sx: '5',
-          sy: '5',
+          sx: '1',
+          sy: '1',
           pz: '-1000'
         }
         // 'lens': {
