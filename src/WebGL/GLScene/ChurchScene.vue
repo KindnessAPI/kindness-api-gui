@@ -26,12 +26,13 @@
       </O3D>
     </O3D> -->
 
-    <O3D :animated="true" layout="mblines">
+    <O3D :animated="true" layout="bgarea">
       <RadientBG></RadientBG>
       <!-- <MBLinesSVG></MBLinesSVG> -->
     </O3D>
     <!-- <O3D :animated="true" layout="cross"> -->
     <HolyCross></HolyCross>
+    <Church></Church>
     <!-- </O3D> -->
 
     <!-- <MBLines></MBLines> -->
@@ -88,13 +89,14 @@ export default {
   async mounted () {
     await this.lookupWait('ready')
 
-    this.scene.background = new Color('#4a4a4a')
+    this.scene.background = new Color('#fafafa')
 
     // prepare camera
     this.camera = new PCamera({ base: this.lookup('base'), element: this.lookup('element') })
-    this.camera.position.z = 60
+    this.camera.position.z = 600
     this.rayplay = new RayPlay({ mounter: this.lookup('element'), base: this.lookup('base'), camera: this.camera })
 
+    // let OrbitControls = require('three/examples/jsm/controls/OrbitControls').OrbitControls
     // this.controls = new OrbitControls(this.camera, this.lookup('element'))
     // this.lookup('base').onLoop(() => {
     //   this.controls.update()
@@ -126,30 +128,11 @@ export default {
       // let cb3or = setting['flower3-offfset-rotation']
 
       this.layouts = {
-        lensarea: {
-          pz: 100
-        },
-        'deep': {
-          pz: -500
-        },
-        // cross: {
-        //   rx: `${rotation.x - 50.0} / 100.0 * ${Math.PI}`,
-        //   ry: `${rotation.y - 50.0} / 100.0 * ${Math.PI}`,
-        //   rz: `${rotation.z - 50.0} / 100.0 * ${Math.PI}`,
-
-        //   px: `${translate.x - 50.0} / 100.0 * screen.min`,
-        //   py: `${translate.y - 50.0} / 100.0 * screen.min`,
-        //   pz: `${translate.z - 50.0} / 100.0 * screen.min`,
-
-        //   sx: `${scale} / 10`,
-        //   sy: `${scale} / 10`,
-        //   sz: `${scale} / 10`
-        // },
-        mblines: {
-          sx: 1.3,
-          sy: 1.3,
-          sz: 1.3,
-          pz: -20
+        bgarea: {
+          sx: 1.0,
+          sy: 1.0,
+          sz: 1.0,
+          pz: -3000
         }
       }
     }

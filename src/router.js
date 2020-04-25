@@ -30,7 +30,7 @@ export default new Router({
     },
     {
       path: '/church',
-      component: () => import('./WebGL/Pages/Church.vue')
+      component: () => import('./WebGL/Pages/ChurchPage.vue')
     },
     {
       path: '/developers',
