@@ -6,7 +6,7 @@
 
 <script>
 import { Tree } from '../../Reusable'
-import { MeshMatcapMaterial, DoubleSide, Object3D, TextureLoader } from 'three'
+import { MeshMatcapMaterial, DoubleSide, Object3D, TextureLoader, IcosahedronBufferGeometry, Mesh } from 'three'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 // import { Refractor } from 'three/examples/jsm/objects/Refractor'
 // import { FastBlurShader } from './FastBlurShader'
@@ -38,7 +38,7 @@ export default {
       flower1: new Object3D()
     }
   },
-  mounted () {
+  async mounted () {
     // let cubeLoader = new CubeTextureLoader()
     let load = (loader, url) => {
       return new Promise((resolve) => {
@@ -70,6 +70,7 @@ export default {
     Cache.yellow = new MeshMatcapMaterial({ color: 0xffd743, side: DoubleSide, matcap: texLoader.load(require('./matcap/bright-yellow.png')) })
     // Cache.pedals = new MeshBasicMaterial({ color: 0xffffff, opacity: 1, transparent: true, side: DoubleSide, envMap: cube })
     Cache.pedals = new MeshMatcapMaterial({ color: 0xffffff, side: DoubleSide, matcap: texLoader.load(require('./matcap/pink.jpg')) })
+    // Cache.silver = new MeshMatcapMaterial({ color: 0xffffff, side: DoubleSide, matcap: texLoader.load(require('./matcap/silver.png')) })
 
     // let uniforms = {
     //   matcap: { value: texLoader.load(require('./matcap/brown.png')) },
@@ -96,6 +97,21 @@ export default {
     //   // mesh.geometry = geo
     // })
 
+    // let cursorMatcap = await new Promise((resolve) => {
+    //   let loader = new TextureLoader()
+    //   // eslint-disable-next-line
+    //   loader.load(require('./matcap/silver.png'), (obj) => {
+    //     let matcap = new MeshMatcapMaterial({ transparent: true, opacity: 1.0, color: 0xffffff, matcap: obj })
+    //     resolve(matcap)
+    //   })
+    // })
+
+    let cursorMesh = new Mesh(
+      new IcosahedronBufferGeometry(25, 0),
+      Cache.pedals
+    )
+    this.o3d.add(cursorMesh)
+
     this.$on('init', async () => {
       // eslint-disable-next-line
       Cache.cherryBlossom = await load(fbxLoader, require('file-loader!./fbx/flower1.fbx').default)
@@ -121,7 +137,7 @@ export default {
       this.flower1.scale.y = 0.234
       this.flower1.scale.z = 0.234
       this.o3d.add(this.flower1)
-
+      this.o3d.remove(cursorMesh)
       this.$emit('ready')
     })
 
