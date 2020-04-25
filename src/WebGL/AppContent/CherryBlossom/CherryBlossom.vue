@@ -108,7 +108,7 @@ export default {
 
     let cursorMesh = new Mesh(
       new IcosahedronBufferGeometry(25, 0),
-      Cache.pedals
+      Cache.yellow
     )
     this.o3d.add(cursorMesh)
 
