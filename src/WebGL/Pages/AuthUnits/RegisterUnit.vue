@@ -61,6 +61,11 @@ export default {
       errs: []
     }
   },
+  watch: {
+    msgs () {
+      window.dispatchEvent(new Event('resize'))
+    }
+  },
   mounted () {
   },
   methods: {

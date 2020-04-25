@@ -57,6 +57,11 @@ export default {
       }
     }
   },
+  watch: {
+    msgs () {
+      window.dispatchEvent(new Event('resize'))
+    }
+  },
   methods: {
     async onSubmit () {
       this.msgs = ['loading']

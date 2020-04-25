@@ -23,7 +23,7 @@ export default {
     }
   },
   mounted () {
-    let link = require('./media/mb-lines-svg-3.svg')
+    let link = require('./media/mb-lines-svg-2.svg')
 
     this.$on('init', async () => {
       // let camera = this.lookup('camera')
@@ -38,7 +38,7 @@ export default {
           image.onload = () => {
             let element = this.lookup('element')
             let elRect = element.getBoundingClientRect()
-            let dpi = elRect.width / image.width * 4
+            let dpi = elRect.width / image.width * 3
             ctx.canvas.width = dpi * image.width
             ctx.canvas.height = dpi * image.height
             ctx.fillStyle = 'transparent'
@@ -73,18 +73,24 @@ export default {
         let iHeight = uniforms.tex.value.image.height
         let iWidth = uniforms.tex.value.image.width
         let iAspect = iWidth / iHeight
+
         console.log(iWidth, iHeight)
 
         let maxVP = Math.max(elRect.width, elRect.height)
         uniforms.sceneRect.value = new Vector2(maxVP, maxVP)
         let screen = await this.getScreen()
-        let geo = new PlaneBufferGeometry(screen.max * iAspect, screen.max, 20, 20)
-        mesh.geometry = geo
+        if (elRect.width > elRect.height) {
+          let geo = new PlaneBufferGeometry(screen.min * iAspect, screen.min, 20, 20)
+          mesh.geometry = geo
+        } else {
+          let geo = new PlaneBufferGeometry(screen.height * iAspect, screen.height, 20, 20)
+          mesh.geometry = geo
+        }
       })
 
-      // mesh.scale.x = 1.0
-      // mesh.scale.y = 1.0
-      // mesh.scale.z = 1.0
+      // mesh.scale.x = 1.65
+      // mesh.scale.y = 1.65
+      // mesh.scale.z = 1.65
 
       mesh.rotation.z = Math.PI
 
