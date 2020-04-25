@@ -12,7 +12,7 @@
         <div class="lg:px-4 max-w-xl mx-auto">
 
           <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
-            Kindness Community
+            Christ Community
           </div>
           <div class="px-3 mb-3">
             Community is like a shared Painting Canvas.
@@ -28,18 +28,17 @@
           </div>
 
           <div class="px-3 mb-2 text-3xl lg:text-xl font-bold">
-            How?
+            How? 🤔
           </div>
           <div class="px-3 mb-5">
-            We need community because we simply need each other.
-            Let's make each other's life awesome!
+            Proverbs taught us so many life lessons. Loving one another, Helping each other, sharing wisdom.
           </div>
 
           <div class="px-3 mb-2 text-3xl lg:text-xl font-bold">
-            What?
+            What? 🤔
           </div>
           <div class="px-3 mb-5">
-            Proverbs taught us so many life lessons. Loving one another, Helping each other, sharing wisdom is what Church is about.
+            Having a Christ Community is what Church is about.
           </div>
 
         </div>

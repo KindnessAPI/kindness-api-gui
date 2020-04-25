@@ -108,7 +108,7 @@ export default {
 
     let cursorMesh = new Mesh(
       new IcosahedronBufferGeometry(25, 0),
-      Cache.yellow
+      Cache.pedals
     )
     this.o3d.add(cursorMesh)
 
@@ -136,9 +136,12 @@ export default {
       this.flower1.scale.x = 0.234
       this.flower1.scale.y = 0.234
       this.flower1.scale.z = 0.234
-      this.o3d.add(this.flower1)
-      this.o3d.remove(cursorMesh)
-      this.$emit('ready')
+
+      setTimeout(() => {
+        this.o3d.add(this.flower1)
+        this.o3d.remove(cursorMesh)
+        this.$emit('ready')
+      }, 500)
     })
 
     this.$emit('init')
