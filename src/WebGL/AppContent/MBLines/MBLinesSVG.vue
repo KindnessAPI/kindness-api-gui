@@ -50,7 +50,7 @@ export default {
         })
       }
 
-      let geo = new PlaneBufferGeometry(screen.max, screen.max, 20, 20)
+      let geo = new PlaneBufferGeometry(screen.max, screen.max, 2, 2)
       let uniforms = {
         time: { value: 0 },
         tex: { value: await getTex() },
@@ -80,10 +80,10 @@ export default {
         uniforms.sceneRect.value = new Vector2(maxVP, maxVP)
         let screen = await this.getScreen()
         if (elRect.width > elRect.height) {
-          let geo = new PlaneBufferGeometry(screen.min * iAspect, screen.min, 20, 20)
+          let geo = new PlaneBufferGeometry(screen.height * iAspect, screen.height, 2, 2)
           mesh.geometry = geo
         } else {
-          let geo = new PlaneBufferGeometry(screen.height * iAspect, screen.height, 20, 20)
+          let geo = new PlaneBufferGeometry(screen.height * iAspect, screen.height, 2, 2)
           mesh.geometry = geo
         }
       })

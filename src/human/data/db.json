@@ -837,6 +837,35 @@
         "a": 0.563
       },
       "id": "_875568"
+    },
+    {
+      "group": "holy-cross",
+      "key": "holy-cross-rotation",
+      "type": "vec3",
+      "value": {
+        "x": 91,
+        "y": 44,
+        "z": 38
+      },
+      "id": "_883375"
+    },
+    {
+      "group": "holy-cross",
+      "key": "holy-cross-translate",
+      "type": "vec3",
+      "value": {
+        "x": 46,
+        "y": 59,
+        "z": 39
+      },
+      "id": "_658358"
+    },
+    {
+      "group": "holy-cross",
+      "key": "holy-cross-scale",
+      "type": "number",
+      "value": 16.41,
+      "id": "_775227"
     }
   ]
 }

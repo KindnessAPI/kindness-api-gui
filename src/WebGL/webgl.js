@@ -6,7 +6,9 @@
 // export const EffortsAndLove = () => import(/* webpackChunkName: "EffortsAndLove" */ './Home/EffortsAndLove.vue')
 
 var path = require('path')
-let exporter = {}
+let exporter = {
+  O3D: require('./Reusable/O3D').default
+}
 
 async function importAll (r, type) {
   r.keys().forEach(key => {
@@ -24,9 +26,9 @@ async function importAll (r, type) {
   return exporter
 }
 
+importAll(require.context('./Reusable', true, /\.vue$/, 'sync'), 'sync')
 importAll(require.context('./GLScene', true, /\.vue$/, 'sync'), 'sync')
 importAll(require.context('./AppContent', true, /\.vue$/, 'sync'), 'sync')
-importAll(require.context('./Reusable', true, /\.vue$/, 'sync'), 'sync')
 importAll(require.context('./Pages/HTMLUnits', true, /\.vue$/, 'sync'), 'sync')
 importAll(require.context('./Pages/AuthUnits', true, /\.vue$/, 'sync'), 'sync')
 

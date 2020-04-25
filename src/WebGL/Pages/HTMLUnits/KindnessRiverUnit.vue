@@ -13,7 +13,7 @@
         <div class="lg:px-4 max-w-xl mx-auto lg:ml-auto">
 
           <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
-            Kindness Life Stories 🤗
+            Life Story River 💧
           </div>
 
           <div class="px-3 text-lg mb-3">

@@ -20,6 +20,7 @@
           <input v-model="auth.password" class="shadow appearance-none border rounded w-full py-2 px-3 text-blue-800 mb-2 leading-tight focus:outline-none focus:shadow-outline" :class="{ 'border-red-500': err.badPW }" id="password" type="password" placeholder="***********">
           <p v-if="err.badPW" class="text-red-500 text-xs italic">Bad credentials.</p>
         </div>
+
         <div class="flex items-center justify-between">
           <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" @click="onSubmit">
             Login
@@ -28,6 +29,7 @@
             Switch to Registration
           </router-link>
         </div>
+
         <p class="text-green-500 text-xs italic" :key="'m' + ii" v-for="(msg, ii) in msgs">{{ msg }}</p>
 
         <p class="text-center text-gray-800 text-xs pt-6">

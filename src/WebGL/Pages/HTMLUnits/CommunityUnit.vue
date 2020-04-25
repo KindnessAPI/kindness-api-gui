@@ -12,18 +12,18 @@
         <div class="lg:px-4 max-w-xl mx-auto">
 
           <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
-            Christ Community
+            Christ, Canvas & Community
           </div>
+
           <div class="px-3 mb-3">
-            Community is like a shared Painting Canvas.
+            You are the art and the artist. - Brynat McGill 👩🏻‍🎤
           </div>
 
           <div class="px-3 mb-2 text-3xl lg:text-xl  font-bold">
             Why? 🤔
           </div>
           <div class="px-3 mb-5">
-            You are the art and the artist. - Brynat McGill 👩🏻‍🎤
-            You live your life by drawing your canvas as an artist.
+            You live your life by drawing on your canvas as an artist.
             A masterpice treats yourself and others well.
           </div>
 

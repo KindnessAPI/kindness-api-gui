@@ -4,10 +4,10 @@
 
     <div v-show="!openMenu">
       <TopNavBar @menu="openMenu = !openMenu"></TopNavBar>
-      <HeroUnit></HeroUnit>
+      <ChurchUnit></ChurchUnit>
       <GospelUnit></GospelUnit>
-      <!-- <CommunityUnit></CommunityUnit>
-      <KindnessRiverUnit></KindnessRiverUnit> -->
+      <CommunityUnit></CommunityUnit>
+      <KindnessRiverUnit></KindnessRiverUnit>
       <!-- <RegisterUnit></RegisterUnit> -->
       <!-- <MotherBoardUnit></MotherBoardUnit> -->
     </div>

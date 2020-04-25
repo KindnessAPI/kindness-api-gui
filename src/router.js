@@ -29,6 +29,14 @@ export default new Router({
       component: () => import('./WebGL/Pages/PlaceHolder.vue')
     },
     {
+      path: '/church',
+      component: () => import('./WebGL/Pages/Church.vue')
+    },
+    {
+      path: '/developers',
+      component: () => import('./WebGL/Pages/PlaceHolder.vue')
+    },
+    {
       path: '/login',
       component: () => import('./WebGL/Pages/Login.vue')
     },

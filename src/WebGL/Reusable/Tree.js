@@ -6,7 +6,9 @@ let parent = (vm) => vm.$parent// || vm.getRootNode().host
 // let getVal = (n, key) => n && n[key]
 
 let lookup = (vm, key) => {
-  if (parent(vm) && parent(vm)[key]) {
+  if (vm[key]) {
+    return vm[key]
+  } else if (parent(vm) && parent(vm)[key]) {
     return parent(vm)[key]
   } else {
     vm = parent(vm)
@@ -83,7 +85,7 @@ export const Tree = {
   },
   async mounted () {
     this.$parent.$emit('add', this.o3d)
-
+    this.$emit('o3d', this.o3d)
     this.$emit('syncFormula')
 
     if (this.animated) {
