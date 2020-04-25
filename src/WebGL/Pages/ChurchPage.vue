@@ -6,8 +6,8 @@
       <TopNavBar @menu="openMenu = !openMenu"></TopNavBar>
       <ChurchUnit></ChurchUnit>
       <GospelUnit></GospelUnit>
-      <CommunityUnit></CommunityUnit>
-      <KindnessRiverUnit></KindnessRiverUnit>
+      <!-- <CommunityUnit></CommunityUnit> -->
+      <!-- <KindnessRiverUnit></KindnessRiverUnit> -->
       <!-- <RegisterUnit></RegisterUnit> -->
       <!-- <MotherBoardUnit></MotherBoardUnit> -->
     </div>

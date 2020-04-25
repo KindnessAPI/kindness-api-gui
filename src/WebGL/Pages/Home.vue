@@ -5,9 +5,11 @@
     <div v-show="!openMenu">
       <TopNavBar @menu="openMenu = !openMenu"></TopNavBar>
       <HeroUnit></HeroUnit>
-      <GospelUnit></GospelUnit>
-      <!-- <CommunityUnit></CommunityUnit>
-      <KindnessRiverUnit></KindnessRiverUnit> -->
+      <!-- <GospelUnit></GospelUnit> -->
+      <KindnessRiverUnit></KindnessRiverUnit>
+      <CommunityUnit></CommunityUnit>
+      <!--
+      -->
       <!-- <RegisterUnit></RegisterUnit> -->
       <!-- <MotherBoardUnit></MotherBoardUnit> -->
     </div>

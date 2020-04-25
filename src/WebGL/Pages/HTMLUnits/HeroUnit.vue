@@ -28,7 +28,7 @@
             It's a place for 💁🏼‍♂️ YOU 💁🏼‍♀️ to share your Kindness, God's Grace and Testimonals with others. 📲
           </div>
           <div class="px-3 text-lg pb-3 mb-10" v-if="$route.fullPath === '/'">
-            <router-link class="font-bold underline inline-block mr-2" to="/church">Go to Church...</router-link>
+            <router-link class="font-bold underline inline-block mr-2" to="/church">About Church...</router-link>
           </div>
 
           <div class="px-3 mb-3">
