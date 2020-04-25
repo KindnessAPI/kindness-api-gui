@@ -12,37 +12,16 @@
         <div class="lg:px-4 max-w-xl mx-auto">
 
           <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
-            Christ, Canvas & Community
+            Community 🥰
           </div>
-
           <div class="px-3 mb-3">
-            You are the art and the artist. - Brynat McGill 👩🏻‍🎤
-          </div>
-
-          <div class="px-3 mb-2 text-3xl lg:text-xl  font-bold">
-            Why? 🤔
+            A Community of encouargment and healing from depressiom & loneliness
           </div>
           <div class="px-3 mb-5">
-            You live your life by drawing on your canvas as an artist.
-            A masterpice treats yourself and others well.
-          </div>
-
-          <div class="px-3 mb-2 text-3xl lg:text-xl font-bold">
-            How? 🤔
-          </div>
-          <div class="px-3 mb-5">
-            Proverbs taught us so many life lessons. Loving one another, Helping each other, sharing wisdom.
-          </div>
-
-          <div class="px-3 mb-2 text-3xl lg:text-xl font-bold">
-            What? 🤔
-          </div>
-          <div class="px-3 mb-5">
-            Having a Christ Community is what Church is about.
+            Proverbs taught us so many life lessons. Loving one another, Helping each other, sharing wisdom within Christ Community.
           </div>
 
         </div>
-
       </div>
     </div>
   </div>
