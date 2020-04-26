@@ -1,7 +1,7 @@
 <template>
   <div class="">
 
-    <ScissorArea class="w-full h-min70" style="z-index: 2;">
+    <ScissorArea class="w-full h-min70 xl:h-min60" style="z-index: 2;">
       <div slot="dom" class="full">
       </div>
       <ChurchScene slot="o3d"></ChurchScene>

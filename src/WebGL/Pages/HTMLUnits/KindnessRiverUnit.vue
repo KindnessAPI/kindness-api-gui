@@ -9,26 +9,34 @@
       </ScissorArea>
 
       <div class="scissor-left scissor-text">
-        <div class="h-12 lg:h-32 xl:h-64"></div>
+        <div class="h-24 lg:h-32 xl:h-64"></div>
         <div class="lg:px-4 max-w-xl mx-auto lg:ml-auto">
 
           <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
-            Kindness Content 💧
+            Kindness InstaPress 💧
           </div>
 
-          <div class="px-3 text-lg mb-3">
-            Let's make each and every droplet of kindness stories merges together to form a whole ocean of Kindness.
+          <div class="px-3 mb-3">
+            Kindness Story is like water. It's vital to sustaining good mental health. 🥰
           </div>
-
-          <div class="px-3 pb-8">
+          <div class="px-3 mb-3">
+            Each Kindness Story is like a droplet of water 💧, small but personally truthful, special, essential, valid, irrevocable and significant. 🍭
           </div>
-
-          <div class="px-3 text-lg pb-3 font-bold underline" v-if="$route.fullPath === '/'" >
-            <router-link to="/kindness-river">Learn more...</router-link>
+          <div class="px-3 mb-3">
+            Each and every of our droplet of Kindness come together, a formation of Kindness Ocean is right wihtin our hearts.
+          </div>
+          <div class="px-3 mb-3">
+            With water flowing, it's a symbol of living being and serving one antoher with love and vitality.
+          </div>
+          <div class="px-3 mb-3">
+            With Developers, an installed API can instantly share information across web sites, platforms and apps.
+          </div>
+          <div class="px-3 mb-3">
+            Pause and remember: Love is avaialbe to you the moment you are avaialbe to love. - Jenni Young McGill
           </div>
 
         </div>
-        <div class="h-12 lg:h-32 xl:h-64"></div>
+        <div class="h-24 lg:h-32 xl:h-64"></div>
       </div>
     </div>
   </div>

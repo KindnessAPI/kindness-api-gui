@@ -12,18 +12,27 @@
         <!--  -->
       </div>
       <div class="lg:w-1/2 relative">
-        <!-- <ScissorArea class="absolute top-0 left-0 right-0 bottom-0" style="z-index: -1;">
+
+        <!--
+        <ScissorArea class="absolute top-0 left-0 right-0 bottom-0" style="z-index: -1;">
           <div slot="dom" class="full">
           </div>
           <HowScene slot="o3d"></HowScene>
-        </ScissorArea> -->
+        </ScissorArea>
+        -->
 
-        <div class="px-3 max-w-xl mx-auto  py-12 lg:py-32 xl:py-64">
-          <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
-            Fostering International Friendship 🥰
+        <div class="px-3 max-w-xl mx-auto  py-24 lg:py-32 xl:py-64">
+          <div class="px-3 mb-3 text-3xl md:text-4xl font-bold">
+            Happiness Research Facility
           </div>
           <div class="px-3 mb-3">
-            A Community of encouargment and healing from depressiom & loneliness
+            What it means to be happy again?
+          </div>
+          <div class="px-3 mb-3">
+            For me it's Fostering International Friendship and Intentionally think about ways to be happier for one another. 🥰
+          </div>
+          <div class="px-3 mb-3">
+            Make International Friends = the World Peace.
           </div>
         </div>
       </div>

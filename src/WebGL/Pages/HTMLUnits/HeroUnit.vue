@@ -18,7 +18,7 @@
           <HowScene slot="o3d"></HowScene>
         </ScissorArea> -->
 
-        <div class="px-3 max-w-xl mx-auto  py-32 lg:py-32 xl:py-64">
+        <div class="px-3 max-w-xl mx-auto  py-24 lg:py-32 xl:py-64">
           <div class="px-3 mb-3 text-3xl md:text-4xl font-bold">
             Kindness API ✨
           </div>
@@ -28,7 +28,7 @@
           </div>
 
           <div class="px-3 mb-3">
-            2. Fostering International Friendship
+            2. International Happiness Research Facility
           </div>
 
           <div class="px-3 mb-3">
@@ -36,7 +36,7 @@
             <router-link class="font-bold underline inline-block" to="/thank-you-gospel">@wonglok831</router-link> 🥰
           </div>
           <div class="px-3 mb-3">
-            Honouring Dear God's and Dear Jesus' Grace and Mercy.
+            Praising Dear God's and Dear Jesus' Grace and Mercy.
           </div>
         </div>
       </div>
