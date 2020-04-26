@@ -172,10 +172,10 @@ export default {
           rz: `${(cb3or.z - 50) / 100 * Math.PI * 2}`
         },
         mblines: {
-          sx: 1.3,
-          sy: 1.3,
-          sz: 1.3,
-          pz: -20
+          sx: 1.0,
+          sy: 1.0,
+          sz: 1.0,
+          pz: -2000
         }
       }
     }
