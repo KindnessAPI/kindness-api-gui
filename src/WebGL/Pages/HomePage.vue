@@ -9,14 +9,7 @@
       <KindnessRiverUnit></KindnessRiverUnit>
       <MakeFriendsUnit></MakeFriendsUnit>
       <ChurchUnit></ChurchUnit>
-      <!-- <FooterUnit></FooterUnit> -->
       <RegisterUnit></RegisterUnit>
-      <!-- <GospelUnit></GospelUnit> -->
-
-      <!--
-      -->
-      <!-- <RegisterUnit></RegisterUnit> -->
-      <!--  -->
     </div>
     <FullMenuBar v-show="openMenu" @close="openMenu = false"></FullMenuBar>
   </div>
