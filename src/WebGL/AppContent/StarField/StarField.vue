@@ -42,7 +42,7 @@ export default {
         u_speed_factor: { value: 80.0 },
         u_drop_rate: { value: 38.25 / 500.0 },
         u_drop_rate_bump: { value: 36.18 / 500.0 },
-        u_tail_amount: { value: 65.0 / 100.0 },
+        u_tail_amount: { value: 100.0 / 100.0 },
         color: { value: new Color('hsl(230, 50%, 70%)') }
       }
 

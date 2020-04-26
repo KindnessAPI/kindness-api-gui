@@ -41,7 +41,7 @@ export default {
         u_speed_factor: { value: 100.0 },
         u_drop_rate: { value: 10.25 / 500.0 },
         u_drop_rate_bump: { value: 36.18 / 500.0 },
-        u_tail_amount: { value: 75.0 / 100.0 },
+        u_tail_amount: { value: 100.0 / 100.0 },
         color: { value: new Color('#00ffff') }
       }
 
@@ -225,12 +225,14 @@ export default {
         res: { value: new Vector2(1, 1) },
         tScreen: { value: null }
       })
+
       var plane = new Mesh(
         new PlaneBufferGeometry(screen.width, screen.height, 2, 2),
         new MeshBasicMaterial({
           transparent: true
         })
       )
+
       this.o3d.add(plane)
 
       // let THREE = {
@@ -250,18 +252,14 @@ export default {
         if (tScreenB) {
           tScreenB.dispose()
         }
-        // let resolutionX = dpi * 1400
-        // let resolutionY = dpi * 1400 * rect.height / rect.width
+
         let resolutionX = dpi * rect.width
         let resolutionY = dpi * rect.height
-
-        // resolutionX = resolutionX > 1280 * 2 ? 1280 * 2 : resolutionX
-        // resolutionY = resolutionY > 1280 * 2 ? 1280 * 2 : resolutionY
 
         tScreenA = craeteScreenRenderTarget(resolutionX, resolutionY)
         tScreenB = craeteScreenRenderTarget(resolutionX, resolutionY)
         pingPongMaterial.uniforms.res.value.x = resolutionX // dpi * rect.width
-        pingPongMaterial.uniforms.res.value.y = resolutionY /// dpi * rect.height
+        pingPongMaterial.uniforms.res.value.y = resolutionY // dpi * rect.height
         let screen = await this.getScreen()
         plane.geometry = new PlaneBufferGeometry(screen.width, screen.height, 2, 2)
       })
