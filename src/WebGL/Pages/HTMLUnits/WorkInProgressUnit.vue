@@ -35,6 +35,7 @@
               We need to make sure each other are well loved by one another.
             </div>
           </div>
+
           <div class="pb-10 lg:w-1/3 lg:pr-6">
             <div class="px-3 mb-2 text-3xl lg:text-xl font-bold">
               Practice Kindness 🎹
