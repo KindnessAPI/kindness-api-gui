@@ -242,7 +242,7 @@ export default {
       // }
 
       resizer(async () => {
-        let dpi = 2
+        let dpi = window.devicePixelRatio < 2 ? 2 : window.devicePixelRatio
         let el = this.lookup('element')
         let rect = el.getBoundingClientRect()
 
