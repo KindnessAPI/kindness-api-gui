@@ -13,16 +13,17 @@
         <div class="lg:px-4 max-w-xl mx-auto lg:ml-auto">
 
           <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
-            Life Story River 💧
+            Life Journey River 💧
           </div>
 
           <div class="px-3 text-lg mb-3">
-            Everyone's life story matters! 🍭
+            Documenting the Joueny to Lok's Inventor Dreams! 🍭
           </div>
 
           <div class="px-3 pb-8">
-            Kindness is like water. Water is life. Water cleanses toxins. We need it everyday to stay mentally healthy. Each life story is like a droplet of water, small but essential.
-            Let's make a <strong>Kindness River</strong> to heal many! 💧 🏞 🏄🏻‍♂️
+            Each step in the Life journey is like a droplet of water, small but essential and significant.
+            I want to share each droplet of story with you all.
+            Let's make a river to inspire many! 💧 🏞 🏄🏻‍♂️
           </div>
 
           <div class="px-3 text-lg pb-3 font-bold underline" v-if="$route.fullPath === '/'" >
