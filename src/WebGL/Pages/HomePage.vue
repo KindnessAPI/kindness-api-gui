@@ -18,6 +18,7 @@
 <script>
 import { PipeScissor, makeScrollBox } from '../Reusable'
 // import axios from 'axios'
+
 export default {
   name: 'Home',
   mixins: [PipeScissor],
