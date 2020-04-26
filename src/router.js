@@ -14,7 +14,7 @@ export default new Router({
     },
     {
       path: '/',
-      component: () => import('./WebGL/Pages/Home.vue')
+      component: () => import('./WebGL/Pages/HomePage.vue')
     },
     {
       path: '/kindness-river',

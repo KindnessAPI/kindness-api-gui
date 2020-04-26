@@ -13,17 +13,14 @@
         <div class="lg:px-4 max-w-xl mx-auto lg:ml-auto">
 
           <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
-            Life Journey River 💧
+            Kindness Content 💧
           </div>
 
           <div class="px-3 text-lg mb-3">
-            Documenting the Joueny to Lok's Inventor Dreams! 🍭
+            Let's make each and every droplet of kindness stories merges together to form a whole ocean of Kindness.
           </div>
 
           <div class="px-3 pb-8">
-            Each step in the Life journey is like a droplet of water, small but essential and significant.
-            I want to share each droplet of story with you all.
-            Let's make a river to inspire many! 💧 🏞 🏄🏻‍♂️
           </div>
 
           <div class="px-3 text-lg pb-3 font-bold underline" v-if="$route.fullPath === '/'" >

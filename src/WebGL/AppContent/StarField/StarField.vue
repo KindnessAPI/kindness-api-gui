@@ -53,6 +53,7 @@ export default {
       if (error !== null) {
         console.error(error)
       }
+
       let i = 0
       let onLoop = this.lookup('base').onLoop
       let resizer = this.lookup('base').onResize

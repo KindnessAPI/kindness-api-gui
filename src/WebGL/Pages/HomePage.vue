@@ -4,14 +4,19 @@
 
     <div v-show="!openMenu">
       <TopNavBar @menu="openMenu = !openMenu"></TopNavBar>
+
       <HeroUnit></HeroUnit>
-      <!-- <GospelUnit></GospelUnit> -->
       <KindnessRiverUnit></KindnessRiverUnit>
-      <CommunityUnit></CommunityUnit>
+      <MakeFriendsUnit></MakeFriendsUnit>
+      <ChurchUnit></ChurchUnit>
+      <!-- <FooterUnit></FooterUnit> -->
+      <RegisterUnit></RegisterUnit>
+      <!-- <GospelUnit></GospelUnit> -->
+
       <!--
       -->
       <!-- <RegisterUnit></RegisterUnit> -->
-      <!-- <MotherBoardUnit></MotherBoardUnit> -->
+      <!--  -->
     </div>
     <FullMenuBar v-show="openMenu" @close="openMenu = false"></FullMenuBar>
   </div>
