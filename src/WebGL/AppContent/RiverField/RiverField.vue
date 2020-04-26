@@ -241,7 +241,7 @@ export default {
       // }
 
       resizer(async () => {
-        let dpi = 1.0
+        let dpi = 2.0
         let el = this.lookup('element')
         let rect = el.getBoundingClientRect()
         if (tScreenA) {

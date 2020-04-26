@@ -242,7 +242,7 @@ export default {
       // }
 
       resizer(async () => {
-        let dpi = 1
+        let dpi = 2
         let el = this.lookup('element')
         let rect = el.getBoundingClientRect()
 
