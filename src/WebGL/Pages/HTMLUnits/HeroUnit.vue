@@ -25,16 +25,20 @@
 
           <div class="px-3 mb-3">
             KindnessAPI is a Digital Christian Church.
-            It's a place for 💁🏼‍♂️ YOU 💁🏼‍♀️ to share your Kindness, God's Grace and Testimonals with others. 📲
           </div>
-          <div class="px-3 text-lg pb-3 mb-10" v-if="$route.fullPath === '/'">
-            <router-link class="font-bold underline inline-block mr-2" to="/church">About Church...</router-link>
+          <div class="px-3 mb-3">
+            KindnessAPI a place for 💁🏼‍♂️ YOU 💁🏼‍♀️ to share your Kindness, God's Grace and Testimonals with others. 📲
+          </div>
+
+          <div class="px-3 text-lg pb-3 mb-3" v-if="$route.fullPath === '/'">
+            <router-link class="font-bold underline inline-block" to="/church">Church</router-link> /
+            <router-link class="font-bold underline inline-block" to="/thank-you-gospel">About Lok</router-link> 🥰
           </div>
 
           <div class="px-3 mb-3">
             If you're a 👩🏻‍💻 developer 👨🏼‍💻 , we also have an API for you to spread Kindness and Gospel to a much wider audience.
           </div>
-          <div class="px-3 text-lg pb-3 " v-if="$route.fullPath === '/'">
+          <div class="px-3 text-lg pb-3 mb-3" v-if="$route.fullPath === '/'">
             <router-link class="font-bold underline inline-block mr-2" to="/developers">Developers Page...</router-link>
           </div>
         </div>

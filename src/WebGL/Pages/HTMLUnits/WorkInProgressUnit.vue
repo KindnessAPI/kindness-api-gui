@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="relative py-64">
+    <div class="relative p-min40">
 
       <ScissorArea class="absolute top-0 left-0 right-0 bottom-0" style="z-index: -1;">
         <div slot="dom" class="full">

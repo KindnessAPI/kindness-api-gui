@@ -20,7 +20,10 @@
           <div class="px-3 mb-5">
             Proverbs taught us so many life lessons. Loving one another, Helping each other, sharing wisdom within Christ Community.
           </div>
-
+          <div class="px-3 text-lg pb-3 mb-3" v-if="$route.fullPath === '/'">
+            <router-link class="font-bold underline inline-block" to="/register">Register</router-link> /
+            <router-link class="font-bold underline inline-block" to="/login">Login</router-link> ✨
+          </div>
         </div>
       </div>
     </div>
