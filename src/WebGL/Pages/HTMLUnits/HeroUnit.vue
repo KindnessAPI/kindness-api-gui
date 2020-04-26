@@ -18,7 +18,7 @@
           <HowScene slot="o3d"></HowScene>
         </ScissorArea> -->
 
-        <div class="px-3 max-w-xl mx-auto  py-12 lg:py-32 xl:py-64">
+        <div class="px-3 max-w-xl mx-auto  py-32 lg:py-32 xl:py-64">
           <div class="px-3 mb-3 text-3xl md:text-4xl font-bold">
             Kindness API ✨
           </div>
