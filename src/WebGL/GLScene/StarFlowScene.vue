@@ -124,6 +124,7 @@ export default {
     this.composer.addPass(renderScene)
     this.composer.addPass(bloomPass)
     this.lookup('base').onResize(() => {
+      let rect = element.getBoundingClientRect()
       let dpi = window.devicePixelRatio || 1
       bloomPass.setSize(rect.width * dpi, rect.height * dpi)
       this.composer.setSize(rect.width * dpi, rect.height * dpi)

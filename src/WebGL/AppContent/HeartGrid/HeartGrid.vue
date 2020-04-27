@@ -34,12 +34,21 @@ export default {
     var raycaster = new Raycaster()
     var mouse = new Vector2(1, 1)
 
-    let heartGeo = await new Promise((resolve) => {
+    let starGeo = await new Promise((resolve) => {
       let loader = new FBXLoader()
       // eslint-disable-next-line
       loader.load(require('file-loader!./fbx/star.fbx').default, (obj) => {
         let geo = obj.children[2].geometry
         geo.rotateX(Math.PI * 0.5)
+        resolve(geo)
+      })
+    })
+    let heartGeo = await new Promise((resolve) => {
+      let loader = new FBXLoader()
+      // eslint-disable-next-line
+      loader.load(require('file-loader!./fbx/heart.fbx').default, (obj) => {
+        let geo = obj.children[0].geometry
+        // geo.rotateX(-Math.PI)
         resolve(geo)
       })
     })
@@ -66,9 +75,9 @@ export default {
     )
     cursorMesh.visible = false
 
-    cursorMesh.scale.x = 2.5
-    cursorMesh.scale.y = 2.5
-    cursorMesh.scale.z = 2.5
+    cursorMesh.scale.x = 3
+    cursorMesh.scale.y = 3
+    cursorMesh.scale.z = 3
 
     this.o3d.add(cursorMesh)
 
@@ -95,24 +104,23 @@ export default {
     setTimeout(async () => {
       let loader = new TextureLoader()
       loader.load(require('./matcap/red-2.jpg'), (obj) => {
-        matcaps.red = new MeshMatcapMaterial({ transparent: true, opacity: 0.5, color: 0xffffff, matcap: obj })
+        matcaps.red = new MeshMatcapMaterial({ transparent: true, opacity: 1.0, color: 0xffffff, matcap: obj })
       })
       loader.load(require('./matcap/pink.jpg'), (obj) => {
-        matcaps.pink1 = new MeshMatcapMaterial({ transparent: true, opacity: 0.5, color: 0xffffff, matcap: obj })
+        matcaps.pink1 = new MeshMatcapMaterial({ transparent: true, opacity: 1.0, color: 0xffffff, matcap: obj })
       })
       loader.load(require('./matcap/pink-2.jpg'), (obj) => {
-        matcaps.pink2 = new MeshMatcapMaterial({ transparent: true, opacity: 0.5, color: 0xffffff, matcap: obj })
+        matcaps.pink2 = new MeshMatcapMaterial({ transparent: true, opacity: 1.0, color: 0xffffff, matcap: obj })
       })
       loader.load(require('./matcap/yellow.jpg'), (obj) => {
-        matcaps.yellow = new MeshMatcapMaterial({ transparent: true, opacity: 0.5, color: 0xffffff, matcap: obj })
+        matcaps.yellow = new MeshMatcapMaterial({ transparent: true, opacity: 1.0, color: 0xffffff, matcap: obj })
       })
     })
-
-    let cx = 20
-    let cy = 20
+    let cx = 10
+    let cy = 15 * this.screen.width / this.screen.height
     let total = cx * cy
 
-    let geo = heartGeo
+    let geo = starGeo
 
     let idx = 0
     let mapper = new Map()
@@ -148,7 +156,11 @@ export default {
       }
     }
     // group.rotation.y = Math.PI
-    // group.rotation.x = Math.PI * 0.5 * -0.85
+    group.rotation.x = Math.PI * -0.35
+    group.rotation.z = Math.PI * 0.5
+    group.position.y = -150
+    group.position.z = -350
+
     let mouseDown = false
     let rayhitID = false
     let hoverID = false
@@ -205,9 +217,9 @@ export default {
       raycaster.setFromCamera(mouse, this.lookup('camera'))
       let intersection = raycaster.intersectObjects(raycasterList)
       // document.documentElement.style.cursor = 'none'
-      cursorMesh.material.color = colors.white
+      cursorMesh.material.color = colors.gray
       if (intersection[0]) {
-        cursorMesh.material.color = colors.gray
+        cursorMesh.material.color = colors.white
         // document.documentElement.style.cursor = 'pointer'
         hoverID = intersection[0].object.uuid
         if (mouseDown) {
@@ -251,15 +263,15 @@ export default {
 
           mesh.position.x *= -80
           mesh.position.y *= 80
-          mesh.position.z = 40// * wavy
+          // mesh.position.z = 40// * wavy
+          mesh.position.z = Math.sin(mesh.position.y * 0.003 + mesh.position.x * 0.003 + time) * 40
 
           // mesh.position.x *= -50
           // mesh.position.y *= 50
           // mesh.position.z = 40// * wavy
 
           // lowers platform
-          mesh.position.z -= 150
-
+          mesh.geometry = starGeo
           if (rayhitID === mesh.uuid) {
             mesh.scale.x = 35
             mesh.scale.y = 35
@@ -267,6 +279,7 @@ export default {
             if (matcaps.pink1) {
               mesh.material = matcaps.pink1
             }
+            mesh.geometry = heartGeo
             this.hit = idx
           } else if (hoverID === mesh.uuid) {
             if (matcaps.pink2) {
@@ -282,10 +295,15 @@ export default {
               mesh.material.color = color
             }
           }
-
-          mesh.rotation.x = time + wavy
-          mesh.rotation.y = time + wavy
-          mesh.rotation.z = time + wavy
+          if (mesh.geometry === starGeo) {
+            mesh.rotation.x = time + Math.sin(mesh.position.z * 0.001) * Math.PI * 2.0
+            mesh.rotation.y = time
+            mesh.rotation.z = time + wavy
+          } else {
+            mesh.rotation.x = 0
+            mesh.rotation.y = 0
+            mesh.rotation.z = time * 2.0 + wavy
+          }
           // mesh.rotation.x = Math.PI * 0.5
           idx++
         }

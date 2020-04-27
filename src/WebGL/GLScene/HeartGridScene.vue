@@ -120,10 +120,11 @@ export default {
     // let parentScrollBox = this.lookup('scrollBox')
     var Params = {
       exposure: 1,
-      bloomStrength: 1.5,
-      bloomThreshold: 0,
-      bloomRadius: 0
+      bloomStrength: 0.7,
+      bloomThreshold: 0.85,
+      bloomRadius: 0.2
     }
+
     let renderer = this.lookup('renderer')
     let element = this.lookup('element')
     let rect = element.getBoundingClientRect()
@@ -138,6 +139,7 @@ export default {
     this.composer.addPass(renderScene)
     this.composer.addPass(bloomPass)
     this.lookup('base').onResize(() => {
+      let rect = element.getBoundingClientRect()
       let dpi = window.devicePixelRatio || 1
       bloomPass.setSize(rect.width * dpi, rect.height * dpi)
       this.composer.setSize(rect.width * dpi, rect.height * dpi)
@@ -154,12 +156,6 @@ export default {
         'bglayer': {
           pz: '-1600'
         }
-        // 'frontlayer': {
-        //   pz: (this.camera.position.z - this.camera.position.z * 0.1),
-        //   sx: 100,
-        //   sy: 100,
-        //   sz: 100
-        // }
         // 'rain': {
         //   pz: `-1000`
         // }
