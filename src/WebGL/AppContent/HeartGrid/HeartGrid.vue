@@ -303,8 +303,8 @@ export default {
             }
           }
           if (mesh.geometry === starGeo) {
-            mesh.rotation.x = time + Math.sin(mesh.position.z * 0.001) * Math.PI * 2.0
-            mesh.rotation.y = time
+            mesh.rotation.x = 0 + Math.sin(mesh.position.z * 0.01) * Math.PI * 0.75
+            mesh.rotation.y = 0
             mesh.rotation.z = time + wavy
           } else {
             mesh.rotation.x = 0
