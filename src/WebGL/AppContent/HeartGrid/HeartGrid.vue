@@ -116,8 +116,14 @@ export default {
         matcaps.yellow = new MeshMatcapMaterial({ transparent: true, opacity: 1.0, color: 0xffffff, matcap: obj })
       })
     })
-    let cx = 10
+    let cx = 15
     let cy = 15 * this.screen.width / this.screen.height
+
+    if (this.screen.width < this.screen.height) {
+      cx = cx * this.screen.height / this.screen.width
+      cy *= 1.5
+    }
+
     let total = cx * cy
 
     let geo = starGeo
@@ -155,6 +161,7 @@ export default {
         idx++
       }
     }
+
     // group.rotation.y = Math.PI
     group.rotation.x = Math.PI * -0.35
     group.rotation.z = Math.PI * 0.5
