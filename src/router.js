@@ -21,6 +21,14 @@ export default new Router({
       component: () => import('./WebGL/Pages/KindnessRiver.vue')
     },
     {
+      path: '/picker',
+      component: () => import('./WebGL/Pages/PickPointPage.vue')
+    },
+    {
+      path: '/heart',
+      component: () => import('./WebGL/Pages/HeartGridPage.vue')
+    },
+    {
       path: '/thank-you-gospel',
       component: () => import('./WebGL/Pages/StoryOfLok.vue')
     },

@@ -37,9 +37,9 @@ export default {
     let heartGeo = await new Promise((resolve) => {
       let loader = new FBXLoader()
       // eslint-disable-next-line
-      loader.load(require('file-loader!./fbx/star.fbx').default, (obj) => {
-        let geo = obj.children[2].geometry
-        geo.rotateX(Math.PI * 0.5)
+      loader.load(require('file-loader!./fbx/heart.fbx').default, (obj) => {
+        let geo = obj.children[0].geometry
+        geo.rotateX(Math.PI * -0.5)
         resolve(geo)
       })
     })
@@ -65,11 +65,9 @@ export default {
       cursorMatcap
     )
     cursorMesh.visible = false
-
-    cursorMesh.scale.x = 2.5
-    cursorMesh.scale.y = 2.5
-    cursorMesh.scale.z = 2.5
-
+    cursorMesh.scale.x = 0.4
+    cursorMesh.scale.y = 0.4
+    cursorMesh.scale.z = 0.4
     this.o3d.add(cursorMesh)
 
     document.documentElement.style.cursor = 'none'
@@ -82,10 +80,10 @@ export default {
 
     let camera = this.lookup('camera')
     this.lookup('base').onLoop(async () => {
-      let screen = getScreen({ camera, depth: camera.position.z * 0.9 })
+      let screen = getScreen({ camera, depth: 390 })
       cursorMesh.position.x = mouse.x * screen.width * 0.5
       cursorMesh.position.y = mouse.y * screen.height * 0.5
-      cursorMesh.position.z = camera.position.z * 0.9
+      cursorMesh.position.z = 390
       cursorMesh.rotation.x += 0.01
       cursorMesh.rotation.y += 0.01
       cursorMesh.rotation.z += 0.01
@@ -97,19 +95,16 @@ export default {
       loader.load(require('./matcap/red-2.jpg'), (obj) => {
         matcaps.red = new MeshMatcapMaterial({ transparent: true, opacity: 1.0, color: 0xffffff, matcap: obj })
       })
-      loader.load(require('./matcap/pink.jpg'), (obj) => {
-        matcaps.pink1 = new MeshMatcapMaterial({ transparent: true, opacity: 1.0, color: 0xffffff, matcap: obj })
-      })
       loader.load(require('./matcap/pink-2.jpg'), (obj) => {
-        matcaps.pink2 = new MeshMatcapMaterial({ transparent: true, opacity: 1.0, color: 0xffffff, matcap: obj })
+        matcaps.pink = new MeshMatcapMaterial({ transparent: true, opacity: 1.0, color: 0xffffff, matcap: obj })
       })
       loader.load(require('./matcap/yellow.jpg'), (obj) => {
         matcaps.yellow = new MeshMatcapMaterial({ transparent: true, opacity: 1.0, color: 0xffffff, matcap: obj })
       })
     })
 
-    let cx = 8
-    let cy = 8
+    let cx = 10
+    let cy = 10
     let total = cx * cy
 
     let geo = heartGeo
@@ -217,10 +212,6 @@ export default {
         hoverID = false
       }
 
-      let PI = Math.PI
-      // let sin = Math.sin
-      // let cos = Math.cos
-      // let tan = Math.tan
       let idx = 0
       for (let y = 0; y < cy; y++) {
         for (let x = 0; x < cx; x++) {
@@ -229,48 +220,32 @@ export default {
           mesh.position.x = offsetX - x
           mesh.position.y = offsetY - y
 
-          let ee = idx / total
-
-          let radius = 350 * (ee) * 3.0
-          let deep = -600
-          let twist = 2.0 + Math.sin(time * 0.01)
-          let wavy = Math.sin(time + ee * PI * 0.5)
-
-          let e = ee * PI * 2.0 * twist + Math.sin(time * PI * 0.01)
-
-          var xx = (0.5 - Math.sin(e) * Math.sin(e)) * radius
-          var yy = (Math.sin(e) * Math.cos(e)) * radius
-          var zz = (0.5 - ee) * deep
-
-          mesh.position.x = xx
-          mesh.position.y = yy
-          mesh.position.z = zz
-
-          // mesh.position.x *= -50
-          // mesh.position.y *= 50
-          // mesh.position.z = 40// * wavy
+          let wavy = Math.sin(time + x * 0.13 + y * 0.13)
+          mesh.position.x *= -50
+          mesh.position.y *= 50
+          mesh.position.z = 40// * wavy
 
           // lowers platform
           mesh.position.z -= 150
 
           if (rayhitID === mesh.uuid) {
-            mesh.scale.x = 35
-            mesh.scale.y = 35
-            mesh.scale.z = 35
-            if (matcaps.pink1) {
-              mesh.material = matcaps.pink1
+            mesh.scale.x = 30
+            mesh.scale.y = 30
+            mesh.scale.z = 30
+            if (matcaps.yellow) {
+              mesh.material = matcaps.yellow
             }
             this.hit = idx
           } else if (hoverID === mesh.uuid) {
-            if (matcaps.pink2) {
-              mesh.material = matcaps.pink2
+            if (matcaps.pink) {
+              mesh.material = matcaps.pink
             }
           } else {
             mesh.scale.x = 20
             mesh.scale.y = 20
             mesh.scale.z = 20
-            if (matcaps.yellow) {
-              mesh.material = matcaps.yellow
+            if (matcaps.red) {
+              mesh.material = matcaps.red
               // color.setHSL(offsetX - x + Math.sin(x * 3.14 * 2.0 + time * 0.5), 0.65, 0.65)
               mesh.material.color = color
             }

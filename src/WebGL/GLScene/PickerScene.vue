@@ -20,7 +20,7 @@
     <O3D :animated="true" :layout="'frontlayer'">
       <!-- <RadientBG></RadientBG> -->
     </O3D>
-    <HeartGrid @hit="$emit('hit', $event)"></HeartGrid>
+    <PointPicker @hit="$emit('hit', $event)"></PointPicker>
 
     <!--
     -->
@@ -89,15 +89,15 @@ export default {
 
     // prepare camera
     this.camera = new PCamera({ base: this.lookup('base'), element: this.lookup('element') })
-    this.camera.position.z = 600
+    this.camera.position.z = 400
     // this.rayplay = new RayPlay({ mounter: this.lookup('element'), base: this.lookup('base'), camera: this.camera })
 
-    // let OrbitControls = require('three/examples/jsm/controls/OrbitControls').OrbitControls
-    // this.lookup('element').style.outline = 'none'
-    // this.controls = new OrbitControls(this.camera, this.lookup('element'))
-    // this.lookup('base').onLoop(() => {
-    //   this.controls.update()
-    // })
+    let OrbitControls = require('three/examples/jsm/controls/OrbitControls').OrbitControls
+    this.lookup('element').style.outline = 'none'
+    this.controls = new OrbitControls(this.camera, this.lookup('element'))
+    this.lookup('base').onLoop(() => {
+      this.controls.update()
+    })
 
     this.scene.add(this.o3d)
 
@@ -120,13 +120,10 @@ export default {
       this.layouts = {
         'bglayer': {
           pz: '-600'
+        },
+        'frontlayer': {
+          pz: '399'
         }
-        // 'frontlayer': {
-        //   pz: (this.camera.position.z - this.camera.position.z * 0.1),
-        //   sx: 100,
-        //   sy: 100,
-        //   sz: 100
-        // }
         // 'rain': {
         //   pz: `-1000`
         // }

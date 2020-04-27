@@ -1,5 +1,5 @@
 <template>
-  <div class="py-32 lg:py-54 relative">
+  <div class="py-32 lg:py-min20 relative">
     <ScissorArea class="w-full h-full absolute top-0 left-0" style="z-index: -1">
       <div slot="dom">
       </div>
