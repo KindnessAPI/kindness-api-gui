@@ -22,6 +22,7 @@ export default {
   },
   data () {
     return {
+      composer: false,
       element: false,
       scene: false,
       camera: false
@@ -36,6 +37,10 @@ export default {
       this.camera = v
       this.tryHook()
     })
+    this.$on('composer', (v) => {
+      this.composer = v
+      this.tryHook()
+    })
   },
   mounted () {
     this.element = this.$refs.dom
@@ -48,7 +53,8 @@ export default {
         aeras[this.area] = {
           element: this.element,
           scene: this.scene,
-          camera: this.camera
+          camera: this.camera,
+          composer: this.composer
         }
       }
     }

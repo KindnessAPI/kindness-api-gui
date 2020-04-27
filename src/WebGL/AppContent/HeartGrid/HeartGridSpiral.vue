@@ -95,21 +95,21 @@ export default {
     setTimeout(async () => {
       let loader = new TextureLoader()
       loader.load(require('./matcap/red-2.jpg'), (obj) => {
-        matcaps.red = new MeshMatcapMaterial({ transparent: true, opacity: 0.5, color: 0xffffff, matcap: obj })
+        matcaps.red = new MeshMatcapMaterial({ transparent: true, opacity: 1.0, color: 0xffffff, matcap: obj })
       })
       loader.load(require('./matcap/pink.jpg'), (obj) => {
-        matcaps.pink1 = new MeshMatcapMaterial({ transparent: true, opacity: 0.5, color: 0xffffff, matcap: obj })
+        matcaps.pink1 = new MeshMatcapMaterial({ transparent: true, opacity: 1.0, color: 0xffffff, matcap: obj })
       })
       loader.load(require('./matcap/pink-2.jpg'), (obj) => {
-        matcaps.pink2 = new MeshMatcapMaterial({ transparent: true, opacity: 0.5, color: 0xffffff, matcap: obj })
+        matcaps.pink2 = new MeshMatcapMaterial({ transparent: true, opacity: 1.0, color: 0xffffff, matcap: obj })
       })
       loader.load(require('./matcap/yellow.jpg'), (obj) => {
-        matcaps.yellow = new MeshMatcapMaterial({ transparent: true, opacity: 0.5, color: 0xffffff, matcap: obj })
+        matcaps.yellow = new MeshMatcapMaterial({ transparent: true, opacity: 1.0, color: 0xffffff, matcap: obj })
       })
     })
 
-    let cx = 20
-    let cy = 20
+    let cx = 8
+    let cy = 8
     let total = cx * cy
 
     let geo = heartGeo
@@ -231,27 +231,20 @@ export default {
 
           let ee = idx / total
 
-          // let radius = 350 * (ee) * 3.0
-          // let deep = -600
-          // let twist = 2.0 + Math.sin(time * 0.01)
+          let radius = 350 * (ee) * 3.0
+          let deep = -600
+          let twist = 2.0 + Math.sin(time * 0.01)
           let wavy = Math.sin(time + ee * PI * 0.5)
 
-          // let e = ee * PI * 2.0 * twist + Math.sin(time * PI * 0.01)
+          let e = ee * PI * 2.0 * twist + Math.sin(time * PI * 0.01)
 
-          // var xx = (0.5 - Math.sin(e) * Math.sin(e)) * radius
-          // var yy = (Math.sin(e) * Math.cos(e)) * radius
-          // var zz = (0.5 - ee) * deep
+          var xx = (0.5 - Math.sin(e) * Math.sin(e)) * radius
+          var yy = (Math.sin(e) * Math.cos(e)) * radius
+          var zz = (0.5 - ee) * deep
 
-          // mesh.position.x = xx
-          // mesh.position.y = yy
-          // mesh.position.z = zz
-
-          mesh.position.x = offsetX - x
-          mesh.position.y = offsetY - y
-
-          mesh.position.x *= -80
-          mesh.position.y *= 80
-          mesh.position.z = 40// * wavy
+          mesh.position.x = xx
+          mesh.position.y = yy
+          mesh.position.z = zz
 
           // mesh.position.x *= -50
           // mesh.position.y *= 50

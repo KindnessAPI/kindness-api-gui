@@ -44,6 +44,7 @@ export const PipeScissor = {
         let element = config.element
         var camera = config.camera
         var scene = config.scene
+        var composer = config.composer
 
         var rect = element.getBoundingClientRect()
         if (rect.height === 0 && rect.width === 0) {
@@ -63,8 +64,11 @@ export const PipeScissor = {
 
         this.renderer.setViewport(left, bottom, width, height)
         this.renderer.setScissor(left, bottom, width, height)
-
-        this.renderer.render(scene, camera)
+        if (composer) {
+          composer.render()
+        } else {
+          this.renderer.render(scene, camera)
+        }
       }
       // if (this.scene) {
       //   this.renderer.render(this.scene, this.camera)

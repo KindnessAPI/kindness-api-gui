@@ -2,14 +2,9 @@
   <div class="full">
     <div class="fixed top-0 left-0 full pointer-events-none" :style="{ zIndex: -1 }" ref="mounter"></div>
 
-    <div v-show="!openMenu">
+    <div v-show="!openMenu" class="full">
       <TopNavBar @menu="openMenu = !openMenu"></TopNavBar>
-      <div class="px-3 mt-3 mx-auto" v-if="Auth.isLoggedIn">
-        <div class="mb-3 px-3 text-black text-2xl">
-          Welcome back, @{{ Auth.currentProfile.user.username }}!
-        </div>
-      </div>
-
+      <DashboardUnit v-if="Auth" :Auth="Auth"></DashboardUnit>
     </div>
     <FullMenuBar v-show="openMenu" @close="openMenu = false"></FullMenuBar>
   </div>

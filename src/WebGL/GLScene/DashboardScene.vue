@@ -15,13 +15,13 @@
     </O3D> -->
 
     <O3D :animated="true" :layout="'bglayer'">
-      <!-- <MBLinesBloom></MBLinesBloom> -->
+      <MBLinesBloom></MBLinesBloom>
       <!-- <BloomBG></BloomBG> -->
       <!-- <RiverField :mode="'magic'"></RiverField> -->
     </O3D>
 
     <O3D :animated="true" :layout="'frontlayer'">
-      <HeartGrid @hit="$emit('hit', $event)"></HeartGrid>
+      <!-- <HeartGrid @hit="$emit('hit', $event)"></HeartGrid> -->
     </O3D>
 
     <!--
