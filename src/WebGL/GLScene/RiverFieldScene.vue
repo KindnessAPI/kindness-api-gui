@@ -49,7 +49,11 @@
 
 <script>
 import { Tree, PCamera } from '../Reusable'
-import { Scene, Color } from 'three'
+import { Scene, Color, Vector2 } from 'three'
+
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
 
 // import { Interaction } from 'three.interaction'
 // import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
@@ -99,6 +103,28 @@ export default {
 
     this.$parent.$emit('scene', this.scene)
     this.$parent.$emit('camera', this.camera)
+
+    var Params = {
+      exposure: 1,
+      bloomStrength: 1.5,
+      bloomThreshold: 0.5,
+      bloomRadius: 0
+    }
+    let renderer = this.lookup('renderer')
+    let element = this.lookup('element')
+    let rect = element.getBoundingClientRect()
+    var renderScene = new RenderPass(this.scene, this.camera)
+
+    var bloomPass = new UnrealBloomPass(new Vector2(rect.width, rect.height), 1.5, 0.4, 0.85)
+    bloomPass.threshold = Params.bloomThreshold
+    bloomPass.strength = Params.bloomStrength
+    bloomPass.radius = Params.bloomRadius
+
+    this.composer = new EffectComposer(renderer)
+    this.composer.addPass(renderScene)
+    this.composer.addPass(bloomPass)
+
+    this.$parent.$emit('composer', this.composer)
 
     // let cheery = 'cherry-blossom'
     // let sdk = this.lookup('sdk')
