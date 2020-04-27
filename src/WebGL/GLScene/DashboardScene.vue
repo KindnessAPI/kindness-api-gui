@@ -118,7 +118,7 @@ export default {
     // })
 
     // let parentScrollBox = this.lookup('scrollBox')
-    var params = {
+    var Params = {
       exposure: 1,
       bloomStrength: 1.5,
       bloomThreshold: 0,
@@ -129,14 +129,19 @@ export default {
     let rect = element.getBoundingClientRect()
     var renderScene = new RenderPass(this.scene, this.camera)
 
-    var bloomPass = new UnrealBloomPass(new Vector2(rect.width, rect.height), 1.5, 0.4, 0.85)
-    bloomPass.threshold = params.bloomThreshold
-    bloomPass.strength = params.bloomStrength
-    bloomPass.radius = params.bloomRadius
+    var bloomPass = new UnrealBloomPass(new Vector2(rect.width * 2, rect.height * 2), 1.5, 0.4, 0.85)
+    bloomPass.threshold = Params.bloomThreshold
+    bloomPass.strength = Params.bloomStrength
+    bloomPass.radius = Params.bloomRadius
 
     this.composer = new EffectComposer(renderer)
     this.composer.addPass(renderScene)
     this.composer.addPass(bloomPass)
+    this.lookup('base').onResize(() => {
+      let dpi = window.devicePixelRatio || 1
+      bloomPass.setSize(rect.width * dpi, rect.height * dpi)
+      this.composer.setSize(rect.width * dpi, rect.height * dpi)
+    })
 
     this.$parent.$emit('composer', this.composer)
 
