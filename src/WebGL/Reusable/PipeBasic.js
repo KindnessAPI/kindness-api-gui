@@ -27,6 +27,8 @@ export const PipeBasic = {
     this.mounter = this.$refs.mounter
     this.base.mounter = this.$refs.mounter
 
+    this.element = this.$refs.mounter
+
     this.renderer = new Renderer({ base: this.base, makeGIF: false })
     this.mounter.appendChild(this.renderer.domElement)
     this.touchDom = this.renderer.domElement

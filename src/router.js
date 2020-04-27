@@ -9,20 +9,12 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/lok',
-      component: () => import('./WebGL/Pages/Lok.vue')
-    },
-    {
       path: '/',
       component: () => import('./WebGL/Pages/HomePage.vue')
     },
     {
       path: '/kindness-river',
       component: () => import('./WebGL/Pages/KindnessRiver.vue')
-    },
-    {
-      path: '/picker',
-      component: () => import('./WebGL/Pages/PickPointPage.vue')
     },
     {
       path: '/heart',
