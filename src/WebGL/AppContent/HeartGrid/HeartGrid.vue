@@ -276,7 +276,7 @@ export default {
             }
           }
 
-          mesh.rotation.y = time + wavy
+          mesh.rotation.z = time + wavy
           // mesh.rotation.x = Math.PI * 0.5
           idx++
         }
