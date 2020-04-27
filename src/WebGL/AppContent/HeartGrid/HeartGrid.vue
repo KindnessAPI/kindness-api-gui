@@ -75,9 +75,9 @@ export default {
     )
     cursorMesh.visible = false
 
-    cursorMesh.scale.x = 3
-    cursorMesh.scale.y = 3
-    cursorMesh.scale.z = 3
+    cursorMesh.scale.x = 2
+    cursorMesh.scale.y = 2
+    cursorMesh.scale.z = 2
 
     this.o3d.add(cursorMesh)
 
