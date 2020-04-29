@@ -3,7 +3,7 @@
     <ScissorArea class="full">
       <div slot="dom">
         <div class="flex w-full justify-between items-center px-3">
-          <div class="text-4xl text-black p-3 cursor-pointer">
+          <div class="text-2xl text-black p-3 cursor-pointer">
             ✞ My Christian Church
           </div>
           <div class="inline-block mr-6 cursor-pointer">
@@ -11,20 +11,20 @@
           </div>
         </div>
         <div class="mx-auto px-3 mt-3">
-          <div class="mb-3 px-3 text-black text-2xl" v-if="Auth.currentProfile">
+          <div class="mb-3 px-3 text-black text-xl" v-if="Auth.currentProfile">
             Welcome back, @{{ Auth.currentProfile.user.username }}!
           </div>
-          <div class="mb-3 px-3 text-black text-2xl">
+          <div class="mb-3 px-3 text-black text-xl">
             <router-link exact-active-class="underline" to="/">Home Page</router-link>
           </div>
-          <div class="mb-3 px-3 text-black text-2xl" v-if="Auth.currentProfile">
+          <div class="mb-3 px-3 text-black text-xl" v-if="Auth.currentProfile">
             <router-link exact-active-class="underline" to="/dashboard">Dashboard</router-link>
           </div>
-          <div class="mb-3 px-3 text-black text-2xl" v-if="!Auth.isLoggedIn">
+          <div class="mb-3 px-3 text-black text-xl" v-if="!Auth.isLoggedIn">
             <router-link exact-active-class="underline" class="block mb-3 hover:opacity-50" to="/login">Login</router-link>
             <router-link exact-active-class="underline" class="block mb-3 hover:opacity-50" to="/register">Register</router-link>
           </div>
-          <div class="mb-3 px-3 text-black text-2xl" v-if="Auth.isLoggedIn">
+          <div class="mb-3 px-3 text-black text-xl" v-if="Auth.isLoggedIn">
             <router-link exact-active-class="underline" class="block mb-3 hover:opacity-50" to="/login">Login More Accounts</router-link>
             <router-link exact-active-class="underline" class="block mb-3 hover:opacity-50" to="/switch-profiles">Switch Accounts</router-link>
             <router-link exact-active-class="underline" class="block mb-3 hover:opacity-50" to="/logout">Logout</router-link>
