@@ -23,22 +23,17 @@
 
         <div class="px-3 max-w-xl mx-auto  py-24 lg:py-32 xl:py-64">
           <div class="px-3 mb-3 text-3xl md:text-4xl font-bold">
-            Happiness Research Facility
+            Christ Community
           </div>
           <div class="px-3 mb-3">
-            What it means to be happy again?
+            Fostering International Christian Friendship
           </div>
           <div class="px-3 mb-3">
-            For me it's Fostering International Friendship and Intentionally think about ways to be happier for one another. 🥰
-          </div>
-          <div class="px-3 mb-3">
-            Make International Friends = the World Peace.
+            Making new Christian friends is always awesome!
           </div>
         </div>
       </div>
     </div>
-
-    <!-- -->
 
   </div>
 </template>

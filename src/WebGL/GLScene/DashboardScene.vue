@@ -16,6 +16,7 @@
 
     <O3D :animated="true" :layout="'bglayer'">
       <MBLinesBloom></MBLinesBloom>
+
       <!-- <BloomBG></BloomBG> -->
       <!-- <RiverField :mode="'magic'"></RiverField> -->
     </O3D>
@@ -56,9 +57,9 @@
 import { Tree, PCamera } from '../Reusable'
 import { Scene, Color, Vector2 } from 'three'
 
-import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
-import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
-import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer'
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass'
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass'
 
 // import { Interaction } from 'three.interaction'
 // import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'

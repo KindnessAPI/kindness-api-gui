@@ -11,10 +11,10 @@
       <div class="scissor-left scissor-text py-12 lg:py-32">
         <div class="lg:px-4 max-w-xl mx-auto lg:ml-auto">
           <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
-            KindnessAPI ? 🤔
+            My Christian Church ? 🤔
           </div>
           <div class="px-3 text-lg mb-10">
-            KindnessAPI is ✝️ a Gospel Church 💒 . It's a place for 💁🏼‍♂️YOU💁🏼‍♀️ to share your Kindness, God's Grace and Testimonals with others. We also have an API for 👩🏻‍💻 developers 👨🏼‍💻 to connect and spread Kindness and Gospel to a much wider audience. 📲
+            My Christian Church is ✝️ a Gospel Church 💒 . It's a place for 💁🏼‍♂️YOU💁🏼‍♀️ to share your Kindness, God's Grace and Testimonals with others. We also have an API for 👩🏻‍💻 developers 👨🏼‍💻 to connect and spread Kindness and Gospel to a much wider audience. 📲
           </div>
 
           <div class="px-3 mb-2 text-3xl lg:text-xl  font-bold">

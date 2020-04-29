@@ -12,17 +12,16 @@
           </div>
 
           <div class="px-3 mb-3">
-            1. Distribute Kindness Content with APIs
+            1. Share your Prayers / Stories (work in progress)
           </div>
 
           <div class="px-3 mb-3">
-            2. International Happiness Research Facility
+            2. International Chrsit Community and Fostering Friendship. (work in progress)
           </div>
         </div>
       </div>
       <DashboardScene slot="o3d"></DashboardScene>
     </ScissorArea>
-
   </div>
 </template>
 

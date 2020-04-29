@@ -11,28 +11,24 @@
       <div class="scissor-left scissor-text">
         <div class="h-24 lg:h-32 xl:h-64"></div>
         <div class="lg:px-4 max-w-xl mx-auto lg:ml-auto">
-
           <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
-            Kindness InstaPress 💧
+            Share your Prayer / Story 💧
           </div>
 
           <div class="px-3 mb-3">
-            Kindness Story is like water. It's vital to sustaining good mental health. 🥰
+            Prayer is like water. It's vital to sustaining good mental health. 🥰
           </div>
           <div class="px-3 mb-3">
-            Each Kindness Story is like a droplet of water 💧, small but personally truthful, special, essential, valid, irrevocable and significant. 🍭
+            Imagine each Prayer is like a droplet of water 💧 truthful, special, essential, valid, irrevocable and significant.
           </div>
           <div class="px-3 mb-3">
-            Each and every of our droplet of Kindness come together, a formation of Kindness Ocean is right wihtin our hearts.
+            Each and every of our droplet of Prayer come together and form a Prayer Ocean.
           </div>
           <div class="px-3 mb-3">
             With water flowing, it's a symbol of living being and serving one antoher with love and vitality.
           </div>
           <div class="px-3 mb-3">
-            With Developers, an installed API can instantly share information across web sites, platforms and apps.
-          </div>
-          <div class="px-3 mb-3">
-            Pause and remember: Love is avaialbe to you the moment you are avaialbe to love. - Jenni Young McGill
+            Let's Spread the Gospel.
           </div>
 
         </div>

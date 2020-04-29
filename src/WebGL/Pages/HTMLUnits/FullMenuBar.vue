@@ -4,7 +4,7 @@
       <div slot="dom">
         <div class="flex w-full justify-between items-center px-3">
           <div class="text-4xl text-black p-3 cursor-pointer">
-            ✞ KindnessAPI
+            ✞ My Christian Church
           </div>
           <div class="inline-block mr-6 cursor-pointer">
             <img @click="$emit('close')" src="../icon/close.svg" alt="">

@@ -20,20 +20,20 @@
 
         <div class="px-3 max-w-xl mx-auto  py-24 lg:py-32 xl:py-64">
           <div class="px-3 mb-3 text-3xl md:text-4xl font-bold">
-            Kindness API ✨
+            My Christian Church ✨
           </div>
 
           <div class="px-3 mb-3">
-            1. Distribute Kindness Content with APIs
+            1. Share your Prayer / Story
           </div>
 
           <div class="px-3 mb-3">
-            2. International Happiness Research Facility
+            2. Fostering International Christian Friendship
           </div>
 
           <div class="px-3 mb-3">
-            Made with love by
-            <router-link class="font-bold underline inline-block" to="/thank-you-gospel">@wonglok831</router-link> 🥰
+            Hi! I'm @wonglok831.
+            <router-link class="font-bold underline inline-block" to="/thank-you-gospel">My testimonal and story</router-link> 🥰
           </div>
           <div class="px-3 mb-3">
             Praising Dear God's and Dear Jesus' Grace and Mercy.
