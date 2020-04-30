@@ -1,11 +1,86 @@
-import { WebGLCubeRenderTarget, Camera, Scene, Mesh, PlaneBufferGeometry, ShaderMaterial, CubeRefractionMapping } from 'three'
+import { WebGLCubeRenderTarget, Camera, Scene, Mesh, PlaneBufferGeometry, ShaderMaterial, CubeRefractionMapping, BackSide, NoBlending, BoxBufferGeometry, CubeCamera } from 'three'
 import { Vector2, MeshBasicMaterial, DoubleSide, RGBFormat, LinearFilter, CubeReflectionMapping, WebGLRenderTarget, EquirectangularReflectionMapping } from 'three/build/three.module'
+import { cloneUniforms } from 'three/src/renderers/shaders/UniformsUtils.js'
+class CustomWebGLCubeRenderTarget extends WebGLCubeRenderTarget {
+  constructor (width, height, options) {
+    super(width, height, options)
+    this.ok = true
+  }
+  setup (renderer, texture) {
+    this.texture.type = texture.type
+    this.texture.format = texture.format
+    this.texture.encoding = texture.encoding
+
+    var scene = new Scene()
+
+    var shader = {
+
+      uniforms: {
+        tEquirect: { value: null }
+      },
+
+      vertexShader: `
+        varying vec3 vWorldDirection;
+        vec3 transformDirection( in vec3 dir, in mat4 matrix ) {
+          return normalize( ( matrix * vec4( dir, 0.0 ) ).xyz );
+        }
+        void main() {
+          vWorldDirection = transformDirection( position, modelMatrix );
+          #include <begin_vertex>
+          #include <project_vertex>
+        }
+      `,
+
+      fragmentShader: `
+        uniform sampler2D tEquirect;
+        varying vec3 vWorldDirection;
+        #define RECIPROCAL_PI 0.31830988618
+        #define RECIPROCAL_PI2 0.15915494
+        void main() {
+          vec3 direction = normalize( vWorldDirection );
+          vec2 sampleUV;
+          sampleUV.y = asin( clamp( direction.y, - 1.0, 1.0 ) ) * RECIPROCAL_PI + 0.5;
+          sampleUV.x = atan( direction.z, direction.x ) * RECIPROCAL_PI2 + 0.5;
+          gl_FragColor = texture2D( tEquirect, sampleUV );
+        }
+      `
+    }
+
+    var material = new ShaderMaterial({
+      type: 'CubemapFromEquirect',
+      uniforms: cloneUniforms(shader.uniforms),
+      vertexShader: shader.vertexShader,
+      fragmentShader: shader.fragmentShader,
+      side: BackSide,
+      blending: NoBlending
+    })
+
+    material.uniforms.tEquirect.value = texture
+
+    var mesh = new Mesh(new BoxBufferGeometry(5, 5, 5), material)
+    scene.add(mesh)
+
+    var camera = new CubeCamera(1, 10, 1)
+
+    camera.renderTarget = this
+    camera.renderTarget.texture.name = 'CubeCameraTexture'
+
+    camera.update(renderer, scene)
+
+    this.compute = () => {
+      camera.update(renderer, scene)
+    }
+
+    // mesh.geometry.dispose()
+    // mesh.material.dispose()
+  }
+}
 
 export class ShaderCube {
   constructor ({ renderer, loop }) {
     this.renderer = renderer
     this.resX = 128
-    this.renderTarget = new WebGLCubeRenderTarget(this.resX, { format: RGBFormat, magFilter: LinearFilter, minFilter: LinearFilter })
+    this.renderTargetCube = new CustomWebGLCubeRenderTarget(this.resX, { format: RGBFormat, magFilter: LinearFilter, minFilter: LinearFilter })
     this.renderTargetPlane = new WebGLRenderTarget(this.resX, this.resX, { format: RGBFormat, magFilter: LinearFilter, minFilter: LinearFilter })
     this.camera = new Camera()
     this.scene = new Scene()
@@ -76,32 +151,29 @@ export class ShaderCube {
       `
     })
     this.renderTargetPlane.texture.mapping = EquirectangularReflectionMapping
+    this.renderTargetCube.texture.mapping = CubeRefractionMapping
+    this.renderTargetCube.texture.mapping = CubeReflectionMapping
 
+    this.renderTargetCube.setup(renderer, this.renderTargetPlane.texture)
     loop(() => {
       uniforms.time.value = window.performance.now() * 0.001
-      this.render()
-      this.renderTarget.fromEquirectangularTexture(renderer, this.renderTargetPlane.texture)
-      this.renderTarget.texture.needsUpdate = true
+      let camera = this.camera
+      let renderer = this.renderer
+      let scene = this.scene
+      // let renderTarget = this.renderTarget
+      // var generateMipmaps = renderTargetCube.texture.generateMipmaps
+      // renderTargetCube.texture.generateMipmaps = false
+
+      renderer.setRenderTarget(this.renderTargetPlane)
+      renderer.render(scene, camera)
+      renderer.setRenderTarget(null)
+
+      this.renderTargetCube.compute()
     })
     this.plane = new Mesh(this.geo, this.mat)
-    this.renderTarget.texture.mapping = CubeRefractionMapping
-    this.renderTarget.texture.mapping = CubeReflectionMapping
     this.out = {
-      material: new MeshBasicMaterial({ color: 0xffffff, envMap: this.renderTarget.texture })
+      material: new MeshBasicMaterial({ color: 0xffffff, envMap: this.renderTargetCube.texture })
     }
     this.scene.add(this.plane)
-  }
-  render () {
-    let camera = this.camera
-    let renderer = this.renderer
-    let scene = this.scene
-    // let renderTarget = this.renderTarget
-    // var generateMipmaps = renderTarget.texture.generateMipmaps
-    // renderTarget.texture.generateMipmaps = false
-
-    renderer.setRenderTarget(this.renderTargetPlane)
-    renderer.render(scene, camera)
-
-    renderer.setRenderTarget(null)
   }
 }

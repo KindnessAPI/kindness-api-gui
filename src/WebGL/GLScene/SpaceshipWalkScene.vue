@@ -99,11 +99,11 @@ export default {
     this.camera.position.z = 600
     this.rayplay = new RayPlay({ mounter: this.lookup('element'), base: this.lookup('base'), camera: this.camera })
 
-    let OrbitControls = require('three/examples/jsm/controls/OrbitControls').OrbitControls
-    this.controls = new OrbitControls(this.camera, this.lookup('element'))
-    this.lookup('base').onLoop(() => {
-      this.controls.update()
-    })
+    // let OrbitControls = require('three/examples/jsm/controls/OrbitControls').OrbitControls
+    // this.controls = new OrbitControls(this.camera, this.lookup('element'))
+    // this.lookup('base').onLoop(() => {
+    //   this.controls.update()
+    // })
 
     this.scene.add(this.o3d)
 

@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { Tree } from '../../Reusable'
+import { Tree, ShaderCube } from '../../Reusable'
 import { MeshMatcapMaterial, DoubleSide, Object3D, TextureLoader } from 'three'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 // import { Refractor } from 'three/examples/jsm/objects/Refractor'
@@ -52,6 +52,7 @@ export default {
           })
         })
       }
+      let shaderCube = new ShaderCube({ renderer: this.lookup('renderer'), loop: this.lookup('base').onLoop })
 
       Matcap.brown = new MeshMatcapMaterial({ color: 0xffffff, side: DoubleSide, matcap: texLoader.load(require('./matcap/white.png')) })
       Matcap.silver = new MeshMatcapMaterial({ color: 0xffffff, side: DoubleSide, matcap: texLoader.load(require('./matcap/silver.png')) })
@@ -96,6 +97,7 @@ export default {
             // console.log(item.name)
             if (item.name.indexOf('Cube') !== -1) {
               item.material = Matcap.silver
+              item.material = shaderCube.out.material
               // item.visible = false
               // let itemnew = new Refractor(item.geometry, {
               //   color: 0xffff99,
@@ -116,7 +118,7 @@ export default {
             //   item.material = Matcap.silver
             // }
             if (item.name.indexOf('BezierCurve') !== -1) {
-              item.material = Matcap.brown
+              item.material = shaderCube.out.material
             }
           }
         })

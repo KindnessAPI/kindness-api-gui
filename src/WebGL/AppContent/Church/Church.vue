@@ -51,6 +51,8 @@ export default {
           })
         })
       }
+      // let shaderCube = new ShaderCube({ renderer: this.lookup('renderer'), loop: this.lookup('base').onLoop })
+
       // Matcap.silver = new MeshMatcapMaterial({ color: 0xffffff, side: DoubleSide, matcap: texLoader.load(require('./matcap/silver.png')) })
       Matcap.floor = new MeshMatcapMaterial({ color: 0xe1c68f, side: DoubleSide, matcap: texLoader.load(require('./matcap/white.png')) })
       Matcap.celing = new MeshMatcapMaterial({ color: 0xffffff, side: DoubleSide, matcap: texLoader.load(require('./matcap/bright-yellow.png')) })
