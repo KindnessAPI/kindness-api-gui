@@ -1,5 +1,5 @@
 <template>
-  <O3D v-if="layouts">
+  <O3D v-if="layouts && shaderCube">
     <!--
       <O3D :animated="true" layout="ball">
         <Test @click="click"></Test>
@@ -34,8 +34,8 @@
     <!-- <HolyCross></HolyCross>
     -->
     <!-- <Church></Church> -->
-    <SpaceshipWalk></SpaceshipWalk>
-    <HolyCross></HolyCross>
+    <SpaceshipWalk :shaderCube="shaderCube"></SpaceshipWalk>
+    <HolyCross :shaderCube="shaderCube"></HolyCross>
     <!-- </O3D> -->
 
     <!-- <MBLines></MBLines> -->
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import { Tree, RayPlay, PCamera } from '../Reusable'
+import { Tree, RayPlay, PCamera, ShaderCube } from '../Reusable'
 import { Scene, Color } from 'three'
 // import { Interaction } from 'three.interaction'
 // import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
@@ -69,6 +69,7 @@ export default {
   mixins: [Tree],
   data () {
     return {
+      shaderCube: false,
       ready: false,
       settings: {},
       flower1: {},
@@ -94,6 +95,7 @@ export default {
 
     this.scene.background = new Color('#fafafa')
 
+    this.shaderCube = new ShaderCube({ renderer: this.lookup('renderer'), loop: this.lookup('base').onLoop })
     // prepare camera
     this.camera = new PCamera({ base: this.lookup('base'), element: this.lookup('element') })
     this.camera.position.z = 600

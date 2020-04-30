@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { Tree, ShaderCube } from '../../Reusable'
+import { Tree } from '../../Reusable'
 import { MeshMatcapMaterial, DoubleSide, Object3D, TextureLoader } from 'three'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 // import { Refractor } from 'three/examples/jsm/objects/Refractor'
@@ -22,6 +22,9 @@ export default {
   name: 'HolyCross',
   mixins: [Tree],
   props: {
+    shaderCube: {
+      default: false
+    },
     depth: {
       default: 20
     },
@@ -52,9 +55,9 @@ export default {
           })
         })
       }
-      let shaderCube = new ShaderCube({ renderer: this.lookup('renderer'), loop: this.lookup('base').onLoop })
 
-      Matcap.brown = new MeshMatcapMaterial({ color: 0xffffff, side: DoubleSide, matcap: texLoader.load(require('./matcap/white.png')) })
+      // let shaderCube = new ShaderCube({ renderer: this.lookup('renderer'), loop: this.lookup('base').onLoop })
+      Matcap.brown = new MeshMatcapMaterial({ color: 0xbababa, side: DoubleSide, matcap: texLoader.load(require('./matcap/white.png')) })
       Matcap.silver = new MeshMatcapMaterial({ color: 0xffffff, side: DoubleSide, matcap: texLoader.load(require('./matcap/silver.png')) })
       // Matcap.pedals = new MeshMatcapMaterial({ color: 0xffffff, side: DoubleSide, matcap: texLoader.load(require('./matcap/pink.jpg')) })
 
@@ -97,7 +100,6 @@ export default {
             // console.log(item.name)
             if (item.name.indexOf('Cube') !== -1) {
               item.material = Matcap.silver
-              item.material = shaderCube.out.material
               // item.visible = false
               // let itemnew = new Refractor(item.geometry, {
               //   color: 0xffff99,
@@ -113,12 +115,16 @@ export default {
               // this.lookup('base').onLoop(() => {
               //   itemnew.material.uniforms['time'].value = window.performance.now() * 0.001
               // })
+              if (this.shaderCube) {
+                console.log(this.shaderCube)
+                item.material = this.shaderCube.out.material
+              }
             }
             // if (item.name.indexOf('Sphere') !== -1) {
             //   item.material = Matcap.silver
             // }
             if (item.name.indexOf('BezierCurve') !== -1) {
-              item.material = shaderCube.out.material
+              item.material = Matcap.brown
             }
           }
         })

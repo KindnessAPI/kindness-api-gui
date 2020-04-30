@@ -15,6 +15,9 @@ export default {
   name: 'SpaceshipWalk',
   mixins: [Tree],
   props: {
+    shaderCube: {
+      default: false
+    },
     mode: {}
   },
   components: {
@@ -65,7 +68,7 @@ export default {
       })
     },
     async loadStuff () {
-      let shaderCube = new ShaderCube({ renderer: this.lookup('renderer'), loop: this.lookup('base').onLoop })
+      let shaderCube = this.shaderCube || new ShaderCube({ renderer: this.lookup('renderer'), loop: this.lookup('base').onLoop })
 
       let all = await Promise.all([
         new Promise((resolve) => {
