@@ -24,6 +24,7 @@
       <HeartGrid @hit="$emit('hit', $event)"></HeartGrid>
     </O3D>
 
+    <!-- <SpaceshipWalk></SpaceshipWalk> -->
     <!--
     -->
     <!-- <O3D :animated="true" :layout="'rain'">

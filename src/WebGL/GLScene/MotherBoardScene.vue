@@ -13,11 +13,13 @@
     <!-- <O3D :animated="true" layout="bglayer">
       <RadientBG></RadientBG>
     </O3D> -->
+    <!-- <SpaceshipWalk></SpaceshipWalk> -->
 
     <O3D layout="bg" :animated="true">
       <RadientBG></RadientBG>
       <MBLinesSVG></MBLinesSVG>
     </O3D>
+
     <!-- <O3D layout="core" :animated="true">
       <ParametricRain></ParametricRain>
     </O3D> -->

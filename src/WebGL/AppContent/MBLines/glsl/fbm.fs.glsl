@@ -52,5 +52,5 @@ void main (void) {
   outColor.rgb *= imgColor.a;
   // }
 
-  gl_FragColor = vec4(clamp(outColor.rgb, 0.0, imgColor.a), outColor.r);
+  gl_FragColor = vec4(clamp(outColor.rgb, 0.0, 1.0), outColor.r);
 }

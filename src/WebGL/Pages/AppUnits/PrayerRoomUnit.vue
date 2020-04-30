@@ -5,22 +5,21 @@
 
         <div class="text-white px-3">
           <div class="px-3 mb-3 text-3xl md:text-4xl font-bold">
-            Welcome back!
+            Prayer Room
           </div>
           <div class="px-3 mb-3 font-bold">
             @{{ Auth.currentProfile.user.username }}!
           </div>
 
-          <div class="px-3 mb-3 underline">
-            <router-link to="/prayer-room">1. Share your Prayers / Stories (work in progress)</router-link>
+          <div class="px-3 mb-3">
           </div>
 
           <div class="px-3 mb-3">
-            2. International Chrsit Community and Fostering Friendship. (work in progress)
           </div>
+
         </div>
       </div>
-      <DashboardScene slot="o3d"></DashboardScene>
+      <SpaceshipWalkScene slot="o3d"></SpaceshipWalkScene>
     </ScissorArea>
   </div>
 </template>
@@ -41,6 +40,6 @@ export default {
   height: calc(100% - 60px);
 }
 .bg-gray{
-  background-color: rgba(0,0,0,0.7);
+  /* background-color: rgba(0,0,0,0.7); */
 }
 </style>
