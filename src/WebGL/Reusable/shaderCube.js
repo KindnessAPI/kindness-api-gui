@@ -113,8 +113,7 @@ export class ShaderCube {
           return sin(p.x)*sin(p.y);
         }
 
-        float fbm4( vec2 p )
-        {
+        float fbm4( vec2 p ) {
             float f = 0.0;
             f += 0.5000 * noise( p ); p = m * p * 2.02;
             f += 0.2500 * noise( p ); p = m * p * 2.03;
@@ -123,8 +122,7 @@ export class ShaderCube {
             return f / 0.9375;
         }
 
-        float fbm6( vec2 p )
-        {
+        float fbm6( vec2 p ) {
             float f = 0.0;
             f += 0.500000*(0.5+0.5*noise( p )); p = m*p*2.02;
             f += 0.250000*(0.5+0.5*noise( p )); p = m*p*2.03;
@@ -143,9 +141,9 @@ export class ShaderCube {
         void main (void) {
           vec2 uv = gl_FragCoord.xy / resolution.xy;
           gl_FragColor = vec4(vec3(
-            1.0 - pattern(uv * 13.333 + -0.15 * cos(time * 0.1)),
+            1.0 - pattern(uv * 13.333 + -0.2 * cos(time * 0.1)),
             1.0 - pattern(uv * 13.333 + 0.0 * cos(time * 0.1)),
-            1.0 - pattern(uv * 13.333 + 0.15 * cos(time * 0.1))
+            1.0 - pattern(uv * 13.333 + 0.2 * cos(time * 0.1))
           ), 1.0);
         }
       `

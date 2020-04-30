@@ -3,8 +3,8 @@
     <ScissorArea class="w-full h-full" style="z-index: -1;">
       <div slot="dom" class="full bg-gray pt-3">
 
-        <div class="text-white px-3">
-          <div class="px-3 mb-3 text-3xl md:text-4xl font-bold">
+        <div class="">
+          <div class="px-3 mb-3 text-3xl md:text-4xl">
             Prayer Room
           </div>
           <div class="px-3 mb-3 font-bold">
