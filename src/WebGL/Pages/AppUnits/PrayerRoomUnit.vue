@@ -8,7 +8,7 @@
             Prayer Room
           </div>
           <div class="px-3 mb-3 font-bold">
-            @{{ Auth.currentProfile.user.username }}!
+            <!-- @{{ Auth.currentProfile.user.username }}! -->
           </div>
 
           <div class="px-3 mb-3">
@@ -27,7 +27,7 @@
 <script>
 export default {
   props: {
-    Auth: {}
+    // Auth: {}
   },
   components: {
     ...require('../../webgl').default
@@ -39,6 +39,7 @@ export default {
 .item-unit{
   height: calc(100% - 60px);
 }
+
 .bg-gray{
   /* background-color: rgba(0,0,0,0.7); */
 }

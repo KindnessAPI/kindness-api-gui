@@ -5,7 +5,7 @@
     <div v-show="!openMenu" class="full">
       <TopNavBar @menu="openMenu = !openMenu"></TopNavBar>
 
-      <PrayerRoomUnit v-if="Auth" :Auth="Auth"></PrayerRoomUnit>
+      <PrayerRoomUnit></PrayerRoomUnit>
     </div>
     <FullMenuBar v-show="openMenu" @close="openMenu = false"></FullMenuBar>
   </div>
