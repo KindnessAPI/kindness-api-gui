@@ -1,7 +1,7 @@
 <template>
   <div class="item-unit h-full w-full">
-    <ScissorArea class="w-full h-full" style="z-index: -1;">
-      <div slot="dom" class="full bg-gray pt-3">
+    <ScissorArea class="w-full h-full focus:outline-none" style="z-index: -1;">
+      <div slot="dom" class="full bg-gray pt-3 focus:outline-none">
 
         <div class="">
           <div class="px-3 mb-3 text-3xl md:text-4xl">
@@ -19,7 +19,7 @@
 
         </div>
       </div>
-      <SpaceshipWalkScene slot="o3d"></SpaceshipWalkScene>
+      <SpaceWalkScene slot="o3d"></SpaceWalkScene>
     </ScissorArea>
   </div>
 </template>

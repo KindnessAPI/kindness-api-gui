@@ -14,6 +14,7 @@ export { RayPlay } from './RayPlay'
 export { Damper } from './Damper'
 
 export { ShaderCube } from './shaderCube'
+export { ShaderCubeRefraction } from './shaderCubeRefraction'
 
 export const getID = () => {
   return '_' + Math.random().toString(36).substr(2, 9)

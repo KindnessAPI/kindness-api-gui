@@ -8,10 +8,11 @@
       <HeroUnit></HeroUnit>
       <KindnessRiverUnit></KindnessRiverUnit>
       <MakeFriendsUnit></MakeFriendsUnit>
-      <ChurchUnit></ChurchUnit>
+      <SpacewalkUnit></SpacewalkUnit>
       <RegisterUnit></RegisterUnit>
     </div>
     <FullMenuBar v-show="openMenu" @close="openMenu = false"></FullMenuBar>
+
   </div>
 </template>
 
