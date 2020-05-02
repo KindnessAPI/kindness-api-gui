@@ -4,7 +4,7 @@
       <div class="flex w-full justify-between items-center px-3">
         <router-link class="block lg:w-1/3" to="/">
           <div class="text-2xl text-black p-3 cursor-pointer">
-            ✞ My Christian Church
+            TogetherTime.me
           </div>
         </router-link>
         <div class="lg:w-1/3 hidden lg:flex justify-center text-2xl">

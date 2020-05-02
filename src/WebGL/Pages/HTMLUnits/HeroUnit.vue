@@ -20,7 +20,7 @@
 
         <div class="px-3 max-w-xl mx-auto  py-24 lg:py-32 xl:py-64">
           <div class="px-3 mb-3 text-3xl md:text-4xl font-bold">
-            My Christian Church ✨
+            TogetherTime.me ✨
           </div>
 
           <div class="px-3 mb-3">
@@ -28,7 +28,7 @@
           </div>
 
           <div class="px-3 mb-3">
-            2. Fostering International Christian Friendship
+            2. Fostering International Friendship
           </div>
 
           <div class="px-3 mb-3">
