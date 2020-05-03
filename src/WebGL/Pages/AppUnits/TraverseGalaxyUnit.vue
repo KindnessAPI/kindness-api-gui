@@ -168,6 +168,7 @@ export default {
           let id = node.id
 
           let imgs = ['cat.jpg', 'dog.jpg', 'eagle.jpg', 'elephant.jpg', 'grasshopper.jpg', 'octopus.jpg', 'owl.jpg', 'panda.jpg', 'squirrel.jpg', 'tiger.jpg', 'whale.jpg']
+
           // add img sprite as child
           let imgURL = imgs[id % (imgs.length - 2)]
           const imgTexture = new TextureLoader().load(`/imgs/${imgURL}`)
