@@ -16,7 +16,7 @@
     <!-- <SpaceshipWalk></SpaceshipWalk> -->
 
     <O3D layout="bg" :animated="true">
-      <RadientBG></RadientBG>
+      <!-- <RadientBG></RadientBG> -->
       <MBLinesSVG></MBLinesSVG>
     </O3D>
 

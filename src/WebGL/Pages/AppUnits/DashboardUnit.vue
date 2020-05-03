@@ -16,7 +16,7 @@
           </div>
 
           <div class="px-3 mb-3">
-            2. International Chrsit Community and Fostering Friendship. (work in progress)
+            <router-link to="/galaxy">2. Traverse Galaxy (work in progress)</router-link>
           </div>
         </div>
       </div>

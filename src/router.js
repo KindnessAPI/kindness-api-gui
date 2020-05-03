@@ -21,6 +21,10 @@ export default new Router({
       component: () => import('./WebGL/Pages/HeartGridPage.vue')
     },
     {
+      path: '/galaxy',
+      component: () => import('./WebGL/Pages/TraverseGalaxyPage.vue')
+    },
+    {
       path: '/prayer-room',
       component: () => import('./WebGL/Pages/PrayerRoomPage.vue')
     },

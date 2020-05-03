@@ -11,7 +11,7 @@
           <label class="block text-teal-800 text-sm font-bold mb-2" for="username">
             Username
           </label>
-          <input v-model="auth.username" class="shadow appearance-none border rounded w-full py-2 px-3 text-teal-800 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username">
+          <input v-model="auth.username" @input="onChnage" class="shadow appearance-none border rounded w-full py-2 px-3 text-teal-800 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username">
         </div>
         <div class="mb-4">
           <label class="block text-teal-800 text-sm font-bold mb-2" for="password">
@@ -45,7 +45,7 @@
 
 <script>
 import { Auth } from '../../../APIs/KA'
-
+import _ from 'lodash'
 export default {
   components: {
     ...require('../../webgl').default
@@ -70,6 +70,12 @@ export default {
   mounted () {
   },
   methods: {
+    onChnage: _.debounce(async function () {
+      this.errs = []
+      if (!await Auth.checkUsername({ identity: this.auth.username })) {
+        this.errs.push('Username is taken')
+      }
+    }, 150),
     async onSubmit () {
       this.msgs = [
         'loading'

@@ -3,7 +3,7 @@
     <div slot="dom">
       <div class="flex w-full justify-between items-center px-3">
         <router-link class="block lg:w-1/3" to="/">
-          <div class="text-2xl text-black p-3 cursor-pointer">
+          <div class="text-2xl text-black py-3 cursor-pointer">
             TogetherTime.me
           </div>
         </router-link>
@@ -20,7 +20,7 @@
             <router-link v-if="Auth.isLoggedIn" exact-active-class="underline" class="text-xl text-black py-2 pr-3" to="/dashboard">Dashboard</router-link>
           </div>
 
-          <img @click="$emit('menu')" style="min-width:24px;" class="mr-6" src="../icon/menu.svg" alt="">
+          <img @click="$emit('menu')" style="min-width:24px;" class="mr-3" src="../icon/menu.svg" alt="">
         </div>
       </div>
       <!-- <TopNavBar @open="openMenu = true" @close="openMenu = false" @menu="openMenu = !openMenu"></TopNavBar> -->
@@ -31,6 +31,7 @@
 
 <script>
 import { Auth } from '../../../APIs/KA'
+
 export default {
   components: {
     ...require('../../webgl').default

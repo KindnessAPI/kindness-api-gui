@@ -26,13 +26,13 @@
             Traverse the Galaxy
           </div>
           <div class="px-3 mb-3">
-            This website could be in cosmic theme, spaceship, futuristic, you can make your own star/planet within the space. We can also add lines to connect with each other 🙂 I call it love lines. ❤
+            This website has a cosmic theme, spaceship and futuristic look. You can decorate your own star/planet within the space. You can also add lines to connect with each other 🙂 I call it love lines. 🥰
           </div>
           <div class="px-3 mb-3">
-            You an explore the galaxy by the love lines. ❤
+            You an traverse the galaxy by the love lines. ❤️
           </div>
           <div class="px-3 mb-3">
-            You can spread kindness and send information with your love lines and your friends can choose to spread it further or not.
+            You can spread kindness and send content using your love lines and your friends can choose to spread it further or not.
           </div>
         </div>
       </div>
