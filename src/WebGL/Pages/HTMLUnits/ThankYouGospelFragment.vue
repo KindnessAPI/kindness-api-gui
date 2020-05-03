@@ -2,7 +2,7 @@
   <div>
     <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
       <router-link to="/thank-you-gospel" v-if="$route.fullPath === '/'" class="hover:underline">Thank you Jesus.</router-link>
-      <span v-if="$route.fullPath !== '/'">Thank you Jesus.</span>
+      <span v-if="$route.fullPath !== '/'">Thank you Jesus 🥰</span>
     </div>
     <div class="px-3 mb-10">
       Thank you Dear God an Dear Jesus for the gift of life and unconditional love. 💓💒
