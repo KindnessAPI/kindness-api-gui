@@ -1,6 +1,12 @@
 <template>
-  <div class="minus-navbar-height h-full w-full focus:outline-none">
+  <div class="relative minus-navbar-height h-full w-full focus:outline-none">
     <div class="w-full h-full focus:outline-none galaxy-bg-image" ref="mounter"></div>
+    <div class="absolute top-0 left-0 pl-5 pt-5">
+      <button @click="toggle3D2D()" class="text-black bg-white w-12 h-12 border-black border rounded-full">
+        <span v-if="view3D">3D</span>
+        <span v-if="!view3D">2D</span>
+      </button>
+    </div>
   </div>
 </template>
 
@@ -19,6 +25,7 @@ export default {
   },
   data () {
     return {
+      view3D: true,
       here: true
     }
   },
@@ -29,10 +36,14 @@ export default {
     this.install()
   },
   methods: {
+    toggle3D2D () {
+      this.view3D = !this.view3D
+      this.$emit('toggle3D2D')
+    },
     install () {
       const N = 50
       const graphData = {
-        nodes: [...Array(N).keys()].map(i => ({ id: i })),
+        nodes: [...Array(N).keys()].map(i => ({ id: i, neighbors: [] })),
         links: [...Array(N).keys()]
           .filter(id => id)
           .map(id => ({
@@ -68,7 +79,14 @@ export default {
         myGraph.width(this.$el.getBoundingClientRect().width)
       })
 
-      myGraph.numDimensions(2)
+      myGraph.numDimensions(3)
+      this.$on('toggle3D2D', () => {
+        if (this.view3D === true) {
+          myGraph.numDimensions(3)
+        } else {
+          myGraph.numDimensions(2)
+        }
+      })
       myGraph.d3Force('link').distance(link => 50)
 
       var instance = myGraph(this.$refs['mounter'])
@@ -79,7 +97,8 @@ export default {
       console.log(oldControl)
 
       // myGraph.scene().rotation.x = Math.PI * 0.5
-      myGraph.camera().position.set(0, 0, 500)
+      myGraph.camera().position.set(0, 0, 750)
+      myGraph.scene().position.z = 250
       instance.enableNodeDrag(true)
 
       let controls = new MapControls(myGraph.camera(), myGraph.renderer().domElement)
@@ -88,7 +107,7 @@ export default {
       controls.dampingFactor = 0.05
       controls.enableRotate = false
       controls.screenSpacePanning = true
-      controls.minDistance = 10
+      controls.minDistance = 100
       controls.maxDistance = 5000
 
       instance.onNodeDrag(() => {
