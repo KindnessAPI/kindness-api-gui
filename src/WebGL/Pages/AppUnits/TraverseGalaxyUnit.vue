@@ -44,7 +44,7 @@ export default {
       var myGraph = ForceGraph3D({ controlType: 'fly', rendererConfig: { antialias: true, alpha: true } })
 
       this.loadData = () => {
-        const N = 150
+        const N = 70
         const graphBase = {
           nodes: [...Array(N).keys()].map(i => ({ id: i, neighbors: [] })),
           links: [...Array(N).keys()]
