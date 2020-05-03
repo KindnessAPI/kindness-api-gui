@@ -2,7 +2,7 @@
   <div class="relative minus-navbar-height h-full w-full focus:outline-none">
     <div class="w-full h-full focus:outline-none galaxy-bg-image" ref="mounter"></div>
     <div class="absolute top-0 left-0 pl-5 pt-5">
-      <button @click="toggle3D2D()" class="text-black bg-white w-12 h-12 border-black border rounded-full">
+      <button @click="toggle3D2D()" class="focus:outline-none text-white bg-black w-12 h-12 border-blue-800 bg-transparent-black border rounded-full shadow-2xl">
         <span v-if="view3D">3D</span>
         <span v-if="!view3D">2D</span>
       </button>
@@ -13,7 +13,7 @@
 <script>
 import ForceGraph3D from '3d-force-graph'
 import SpriteText from 'three-spritetext'
-import { Mesh, CircleBufferGeometry, MeshBasicMaterial, SpriteMaterial, TextureLoader, Sprite, SphereBufferGeometry } from 'three'
+import { Mesh, CircleBufferGeometry, MeshBasicMaterial, SpriteMaterial, TextureLoader, Sprite } from 'three'
 import { MapControls } from 'three/examples/jsm/controls/OrbitControls.js'
 // import { getScreen } from '../../Reusable/index'
 export default {
@@ -25,7 +25,7 @@ export default {
   },
   data () {
     return {
-      view3D: true,
+      view3D: false,
       here: true
     }
   },
@@ -41,45 +41,57 @@ export default {
       this.$emit('toggle3D2D')
     },
     install () {
-      const N = 50
-      const graphData = {
-        nodes: [...Array(N).keys()].map(i => ({ id: i, neighbors: [] })),
-        links: [...Array(N).keys()]
-          .filter(id => id)
-          .map(id => ({
-            source: id,
-            target: Math.round(Math.random() * (id - 1))
-          }))
+      var myGraph = ForceGraph3D({ controlType: 'fly', rendererConfig: { antialias: true, alpha: true } })
+
+      this.loadData = () => {
+        const N = 150
+        const graphBase = {
+          nodes: [...Array(N).keys()].map(i => ({ id: i, neighbors: [] })),
+          links: [...Array(N).keys()]
+            .filter(id => id)
+            .map(id => ({
+              source: id,
+              target: Math.round(Math.random() * (id - 1))
+            }))
+        }
+
+        // cross-link node objects
+        graphBase.links.forEach(link => {
+          const a = graphBase.nodes.find(e => e.id === link.source)
+          const b = graphBase.nodes.find(e => e.id === link.target)
+          !a.neighbors && (a.neighbors = [])
+          !b.neighbors && (b.neighbors = [])
+          a.neighbors.push(b)
+          b.neighbors.push(a)
+
+          !a.links && (a.links = [])
+          !b.links && (b.links = [])
+          a.links.push(link)
+          b.links.push(link)
+        })
+
+        myGraph.graphData(graphBase)
       }
+      this.loadData()
 
-      // cross-link node objects
-      graphData.links.forEach(link => {
-        const a = graphData.nodes[link.source]
-        const b = graphData.nodes[link.target]
-        !a.neighbors && (a.neighbors = [])
-        !b.neighbors && (b.neighbors = [])
-        a.neighbors.push(b)
-        b.neighbors.push(a)
-
-        !a.links && (a.links = [])
-        !b.links && (b.links = [])
-        a.links.push(link)
-        b.links.push(link)
-      })
+      // window.onclick = () => {
+      //   this.loadData()
+      // }
 
       const highlightNodes = new Set()
       const highlightLinks = new Set()
       let hoverNode = null
 
-      var myGraph = ForceGraph3D({ controlType: 'fly', rendererConfig: { antialias: true, alpha: true } })
-      myGraph.height(this.$el.getBoundingClientRect().height)
-      myGraph.width(this.$el.getBoundingClientRect().width)
+      // let rect = this.$el.getBoundingClientRect()
+      // myGraph.height(rect.height)
+      // myGraph.width(rect.width)
       window.addEventListener('resize', () => {
-        myGraph.height(this.$el.getBoundingClientRect().height)
-        myGraph.width(this.$el.getBoundingClientRect().width)
+        let rect = this.$el.getBoundingClientRect()
+        myGraph.height(rect.height)
+        myGraph.width(rect.width)
       })
+      window.dispatchEvent(new Event('resize'))
 
-      myGraph.numDimensions(3)
       this.$on('toggle3D2D', () => {
         if (this.view3D === true) {
           myGraph.numDimensions(3)
@@ -87,7 +99,8 @@ export default {
           myGraph.numDimensions(2)
         }
       })
-      myGraph.d3Force('link').distance(link => 50)
+      this.$emit('toggle3D2D')
+      // myGraph.d3Force('link').distance(link => 50)
 
       var instance = myGraph(this.$refs['mounter'])
 
@@ -97,8 +110,8 @@ export default {
       console.log(oldControl)
 
       // myGraph.scene().rotation.x = Math.PI * 0.5
-      myGraph.camera().position.set(0, 0, 750)
-      myGraph.scene().position.z = 250
+      myGraph.camera().position.set(0, 0, 350)
+
       instance.enableNodeDrag(true)
 
       let controls = new MapControls(myGraph.camera(), myGraph.renderer().domElement)
@@ -107,7 +120,7 @@ export default {
       controls.dampingFactor = 0.05
       controls.enableRotate = false
       controls.screenSpacePanning = true
-      controls.minDistance = 100
+      controls.minDistance = 1
       controls.maxDistance = 5000
 
       instance.onNodeDrag(() => {
@@ -119,7 +132,9 @@ export default {
       })
 
       instance.showNavInfo(false)
+
       instance.backgroundColor('rgba(0,0,0,0)')
+
       // controls.maxPolarAngle = Math.PI / 2
       // let deeper = 20.0
       // let screen = getScreen({ camera: instance.camera(), depth: 500 + deeper * 2 })
@@ -143,27 +158,34 @@ export default {
       }
       window.requestAnimationFrame(rAF)
 
-      let circleGeo = new CircleBufferGeometry(10, 36)
+      let circleGeo = new CircleBufferGeometry(10, 40)
+      let circleBorderGeo = new CircleBufferGeometry(11, 40)
+      circleBorderGeo.translate(0, 0, -0.1)
       circleGeo.computeBoundingSphere()
-      let sphereGeo = new SphereBufferGeometry(10, 4, 4)
+      // let sphereGeo = new SphereBufferGeometry(10, 4, 4)
       let transparentMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0 })
+      let whiteMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 1, color: 0xffffff })
 
       // let map = new Map()
-      instance.graphData(graphData)
 
-        // .nodeColor(node => highlightNodes.has(node) ? node === hoverNode ? 'rgb(255,0,0,1)' : 'rgba(255,150,050.8)' : 'rgba(0,255,255,0.6)')
-        .linkWidth(link => highlightLinks.has(link) ? 5 : 2)
+      // .nodeColor(node => highlightNodes.has(node) ? node === hoverNode ? 'rgb(255,0,0,1)' : 'rgba(255,150,050.8)' : 'rgba(0,255,255,0.6)')
+      instance.linkWidth(link => highlightLinks.has(link) ? 5 : 2)
         .linkDirectionalParticles(link => highlightLinks.has(link) ? 5 : 0)
         .linkDirectionalParticleWidth(2.5)
         .linkResolution(3)
         .nodeResolution(4)
-
         .nodeThreeObject((node) => {
           // use a sphere as a drag handle
           const obj = new Mesh(
-            sphereGeo,
+            circleBorderGeo,
             transparentMat
           )
+
+          const border = new Mesh(
+            circleBorderGeo,
+            whiteMat
+          )
+          obj.add(border)
 
           let id = node.id
 
@@ -176,8 +198,10 @@ export default {
           const sprite = new Sprite(material)
           // sprite.scale.set(1, 1)
           sprite.geometry = circleGeo
-          sprite.position.z = 5
           obj.add(sprite)
+
+          border.position.z = 2.99
+          sprite.position.z = 3
 
           // extend link with text sprite
           let spriteText = new SpriteText(`${imgURL.replace('.jpg', '')}`)
@@ -205,8 +229,12 @@ export default {
           highlightLinks.clear()
           if (node) {
             highlightNodes.add(node)
-            node.neighbors.forEach(neighbor => highlightNodes.add(neighbor))
-            node.links.forEach(link => highlightLinks.add(link))
+            if (node.neighbors) {
+              node.neighbors.forEach(neighbor => highlightNodes.add(neighbor))
+            }
+            if (node.links) {
+              node.links.forEach(link => highlightLinks.add(link))
+            }
           }
 
           hoverNode = node || null
@@ -256,5 +284,8 @@ export default {
   background-color: #251b69;
   background-image: url('./hdri/sky-space-milky-way-stars-110854.jpg');
   @apply bg-center bg-cover;
+}
+.bg-transparent-black{
+  background-color: rgba(0,0,0,0.7);
 }
 </style>
