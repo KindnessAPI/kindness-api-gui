@@ -7,6 +7,7 @@
         <span v-if="!view3D">2D</span>
       </button>
     </div>
+    <Spaceship v-if="ready"></Spaceship>
   </div>
 </template>
 
@@ -15,8 +16,9 @@ import ForceGraph3D from '3d-force-graph'
 import SpriteText from 'three-spritetext'
 import { Mesh, CircleBufferGeometry, MeshBasicMaterial, SpriteMaterial, TextureLoader, Sprite } from 'three'
 import { MapControls } from 'three/examples/jsm/controls/OrbitControls.js'
-// import { getScreen } from '../../Reusable/index'
+import { makeBase, Tree } from '../../Reusable/index'
 export default {
+  mixins: [Tree],
   props: {
     // Auth: {}
   },
@@ -25,20 +27,27 @@ export default {
   },
   data () {
     return {
+      base: false,
+      ready: false,
       view3D: false,
       here: true
     }
   },
   beforeDestroy () {
     this.here = false
+    this.base.onTearDown()
   },
   mounted () {
+    this.prepBase()
     this.install()
   },
   methods: {
+    prepBase () {
+      this.base = makeBase()
+    },
     toggle3D2D () {
       this.view3D = !this.view3D
-      this.$emit('toggle3D2D')
+      this.$emit('snyc3D2D')
     },
     install () {
       var myGraph = ForceGraph3D({ controlType: 'fly', rendererConfig: { antialias: true, alpha: true } })
@@ -51,7 +60,7 @@ export default {
             .filter(id => id)
             .map(id => ({
               source: id,
-              target: Math.round(Math.random() * (id - 1))
+              target: Math.round((id * 0.5 - 1))
             }))
         }
 
@@ -92,17 +101,37 @@ export default {
       })
       window.dispatchEvent(new Event('resize'))
 
-      this.$on('toggle3D2D', () => {
+      this.$on('snyc3D2D', () => {
         if (this.view3D === true) {
           myGraph.numDimensions(3)
         } else {
           myGraph.numDimensions(2)
         }
       })
-      this.$emit('toggle3D2D')
-      // myGraph.d3Force('link').distance(link => 50)
+      myGraph.d3Force('link').distance(link => 50)
+      this.$emit('snyc3D2D')
+      window.addEventListener('blur', () => {
+        if (this.here) {
+          this.$emit('snyc3D2D')
+        }
+      })
+      window.addEventListener('focus', () => {
+        if (this.here) {
+          this.$emit('snyc3D2D')
+        }
+      })
 
       var instance = myGraph(this.$refs['mounter'])
+
+      this.renderer = myGraph.renderer()
+      this.o3d.position.z = -2500
+      this.o3d.scale.x = 5
+      this.o3d.scale.y = 5
+      this.o3d.scale.z = 5
+      myGraph.scene().add(this.o3d)
+
+      this.base.onInit()
+      this.ready = true
 
       let oldControl = myGraph.controls()
       oldControl.enabled = false
@@ -110,7 +139,7 @@ export default {
       console.log(oldControl)
 
       // myGraph.scene().rotation.x = Math.PI * 0.5
-      myGraph.camera().position.set(0, 0, 350)
+      myGraph.camera().position.set(0, 0, 500)
 
       instance.enableNodeDrag(true)
 
@@ -227,6 +256,7 @@ export default {
 
           highlightNodes.clear()
           highlightLinks.clear()
+
           if (node) {
             highlightNodes.add(node)
             if (node.neighbors) {
