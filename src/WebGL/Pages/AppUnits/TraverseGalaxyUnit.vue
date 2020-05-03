@@ -62,8 +62,10 @@ export default {
 
       var myGraph = ForceGraph3D({ controlType: 'fly', rendererConfig: { antialias: true, alpha: true } })
       myGraph.height(this.$el.getBoundingClientRect().height)
+      myGraph.width(this.$el.getBoundingClientRect().width)
       window.addEventListener('resize', () => {
         myGraph.height(this.$el.getBoundingClientRect().height)
+        myGraph.width(this.$el.getBoundingClientRect().width)
       })
 
       myGraph.numDimensions(2)
@@ -161,10 +163,10 @@ export default {
           let spriteText = new SpriteText(`${imgURL.replace('.jpg', '')}`)
           spriteText.color = 'white'
           spriteText.strokeColor = 'black'
-          spriteText.strokeWidth = 2
+          spriteText.strokeWidth = 1.5
           // spriteText.backgroundColor = 'white'
           spriteText.textHeight = 4
-          spriteText.position.y = circleGeo.boundingSphere.radius * -1.5
+          spriteText.position.y = circleGeo.boundingSphere.radius * -1.35
 
           obj.add(spriteText)
 
