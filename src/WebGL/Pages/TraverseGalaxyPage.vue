@@ -46,6 +46,7 @@ export default {
   mixins: [PipeScissor],
   data () {
     return {
+      escFncs: [],
       username: false,
       userID: false,
       overlay: false,
@@ -54,6 +55,15 @@ export default {
       openMenu: false,
       origColor: '',
       bgColor: '#fafafa'
+    }
+  },
+  watch: {
+    'overlay' () {
+      if (this.overlay) {
+        this.escFncs.push(() => {
+          this.overlay = false
+        })
+      }
     }
   },
   methods: {
@@ -65,7 +75,18 @@ export default {
       }
     },
     async onRealod () {
+      await this.downloadGraph()
+    },
+    async downloadGraph () {
       this.graph = await Graph.getBasicGraph()
+      this.graph.nodes.forEach((node) => {
+        if (node.userID === Auth.currentProfile.user.userID) {
+          node.name += ` (me)`
+          node.isMySelf = true
+        } else {
+          node.isMySelf = false
+        }
+      })
     },
     async getMyNode () {
       let mynode = await Graph.getMyNode()
@@ -85,15 +106,7 @@ export default {
       if (!mynode) {
         await this.createMyNode()
       }
-      this.graph = await Graph.getBasicGraph()
-      this.graph.nodes.forEach((node) => {
-        if (node.userID === Auth.currentProfile.user.userID) {
-          node.name += ` (me)`
-          node.isMySelf = true
-        } else {
-          node.isMySelf = false
-        }
-      })
+      await this.downloadGraph()
     }
   },
   async mounted () {
@@ -102,6 +115,19 @@ export default {
     })
     this.scrollBox = makeScrollBox({ dom: window, base: this.base })
     await this.onInit()
+
+    window.addEventListener('keydown', (evt) => {
+      if (evt.keyCode === 27) {
+        this.$emit('esc')
+      }
+    })
+
+    this.$on('esc', () => {
+      let popped = this.escFncs.pop()
+      if (popped) {
+        popped()
+      }
+    })
 
     // let axios = require('axios').default
     // axios.post('http://localhost:3333/login', {
@@ -121,7 +147,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="postcss" scoped>
 .overlay-close {
   position: absolute;
   top: 0px;
@@ -140,11 +166,20 @@ export default {
 }
 .overlay {
   position: absolute;
-  top: 40px;
-  left: 40px;
-  right: 40px;
-  bottom: 40px;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
   z-index: 11;
   background-color: white;
+}
+@screen lg {
+  .overlay {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    right: 50px;
+    bottom: 50px;
+  }
 }
 </style>

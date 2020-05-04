@@ -4,7 +4,7 @@
       <img src="./icon/close.svg" class="cursor-pointer" alt="Close" title="close">
     </div>
     <div class="content px-3 pt-3">
-      <div class="text-3xl">User Profile</div>
+      <div class="text-3xl">Profile Page</div>
       <span>@{{ username }} </span><span v-if="isMyself">(me)</span>
 
       <button v-if="!(isMyself || hasFriendship)" @click="addFriend()">
