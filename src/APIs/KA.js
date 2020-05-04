@@ -30,6 +30,12 @@ export const getRESTURL = () => {
   return testing
 }
 
+export const getHeader = () => {
+  return {
+    'X-Token': Auth.currentProfile.jwt
+  }
+}
+
 /*
 let getID = () => {
   return '_' + Math.random().toString(36).substr(2, 9)
@@ -360,3 +366,139 @@ export class Auth {
 }
 
 Auth.loadProfiles()
+
+export class Graph {
+  static async addUserNode ({ name = 'New User', photo = 'https://picsum.photos/200' }) {
+    let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-node',
+      headers: getHeader(),
+      data: {
+        method: 'create',
+        payload: {
+          name: name,
+          img: photo,
+          type: 'user',
+          tags: [
+            {
+              text: 'early-bird'
+            }
+          ]
+        }
+      }
+    })
+    return resp.then((r) => {
+      return r.data
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+  static async addFriendEdge ({ fromID, toID }) {
+    let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-edge',
+      headers: getHeader(),
+      data: {
+        method: 'create',
+        payload: {
+          source: fromID,
+          target: toID,
+          name: 'make friend',
+          type: 'friend',
+          tags: [
+            {
+              'text': 'early-bird'
+            }
+          ]
+        }
+      }
+    })
+    return resp.then((r) => {
+      return r.data
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+
+  // ----
+  static async listNodes () {
+    let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-node',
+      headers: getHeader(),
+      data: {
+        method: 'query',
+        payload: {
+          type: 'user'
+        }
+      }
+    })
+    return resp.then((r) => {
+      return r.data
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+
+  static async listEdges () {
+    let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-edge',
+      headers: getHeader(),
+      data: {
+        method: 'query',
+        payload: {
+          type: 'friend'
+        }
+      }
+    })
+    return resp.then((r) => {
+      return r.data
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+
+  static async getMyNode () {
+    let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-node',
+      headers: getHeader(),
+      data: {
+        method: 'query',
+        payload: {
+          userID: Auth.currentProfile.user.userID
+        }
+      }
+    })
+    return resp.then((r) => {
+      return r.data[0]
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+
+  static async getBasicGraph () {
+    let [
+      nodes,
+      links
+    ] = await Promise.all([
+      Graph.listNodes(),
+      Graph.listEdges()
+    ])
+
+    return {
+      nodes, links
+    }
+  }
+}

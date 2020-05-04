@@ -4,6 +4,16 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
+let loginGate = async (to, from, next) => {
+  let KA = await import('./APIs/KA')
+  let Auth = KA.Auth
+  if (Auth.isLoggedIn) {
+    next()
+  } else {
+    next('/login?redirect=' + encodeURIComponent(to.path))
+  }
+}
+
 export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
@@ -22,10 +32,12 @@ export default new Router({
     },
     {
       path: '/galaxy',
+      beforeEnter: loginGate,
       component: () => import('./WebGL/Pages/TraverseGalaxyPage.vue')
     },
     {
       path: '/prayer-room',
+      beforeEnter: loginGate,
       component: () => import('./WebGL/Pages/PrayerRoomPage.vue')
     },
     {
@@ -62,6 +74,7 @@ export default new Router({
     },
     {
       path: '/dashboard',
+      beforeEnter: loginGate,
       component: () => import('./WebGL/Pages/Dashboard.vue')
     }
     // {

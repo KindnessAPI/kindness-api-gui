@@ -72,7 +72,11 @@ export default {
       Auth.login({ identity, password })
         .then(profile => {
           this.msgs = []
-          this.$router.push('/dashboard')
+          if (this.$route.query.redirect) {
+            this.$router.push(this.$route.query.redirect)
+          } else {
+            this.$router.push('/dashboard')
+          }
           // console.log(profile)
         }, (e) => {
           this.msgs = []
