@@ -12,17 +12,25 @@
       </button>
       <button v-if="hasFriendship">Friend line Added</button>
 
+      <div v-if="isMyself">
+        <MyNodeEditUnit></MyNodeEditUnit>
+      </div>
+
     </div>
   </div>
 </template>
 
 <script>
 import * as API from '../../../APIs/KA.js'
+
 export default {
   props: {
     graph: {},
     userID: {},
     username: {}
+  },
+  components: {
+    ...require('../../webgl').default
   },
   data () {
     let myUserID = API.Auth.currentProfile.user.userID
@@ -37,6 +45,8 @@ export default {
       isMyself,
       API
     }
+  },
+  mounted () {
   },
   methods: {
     async addFriend () {

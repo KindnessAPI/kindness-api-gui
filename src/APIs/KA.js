@@ -467,6 +467,47 @@ export class Graph {
     })
   }
 
+  /*
+  {
+    "method": "update",
+    "payload": {
+      "_id": "5eaf63f970b250ff6065a001",
+      "edit": {
+        "_id": "5eaf63f970b250ff6065a001",
+        "userID": "5eade068c6207b1008c9eb23",
+        "username": "wonglok831",
+        "name": "Lok17",
+        "img": "https://picsum.photos/200",
+        "type": "user",
+        "created_at": "2020-05-04T00:38:17.684Z",
+        "updated_at": "2020-05-04T00:38:17.684Z",
+        "__v": 0
+      }
+    }
+  }
+  */
+  static async updateMyNode ({ edit }) {
+    let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-node',
+      headers: getHeader(),
+      data: {
+        method: 'update',
+        payload: {
+          _id: edit._id,
+          edit
+        }
+      }
+    })
+    return resp.then((r) => {
+      return r.data[0]
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+
   static async getMyNode () {
     let axios = (await import('axios')).default
     let resp = axios({

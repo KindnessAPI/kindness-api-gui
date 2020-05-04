@@ -163,9 +163,6 @@ export default {
       const highlightLinks = new Set()
       let hoverNode = null
 
-      // let rect = this.$el.getBoundingClientRect()
-      // myGraph.height(rect.height)
-      // myGraph.width(rect.width)
       window.addEventListener('resize', () => {
         let rect = this.$el.getBoundingClientRect()
         myGraph.height(rect.height)
