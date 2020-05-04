@@ -1,8 +1,8 @@
 <template>
   <div class="relative minus-navbar-height h-full w-full focus:outline-none">
     <div class="w-full h-full focus:outline-none galaxy-bg-image" ref="mounter"></div>
-    <div class="absolute top-0 left-0 pl-5 pt-5">
-      <button @click="toggle3D2D()" class="focus:outline-none text-white bg-black w-12 h-12 border-blue-800 bg-transparent-black border rounded-full shadow-2xl m-3">
+    <div class="absolute top-0 left-0">
+      <button @click="toggle3D2D()" class="focus:outline-none text-white bg-black w-12 h-12 border-blue-800 bg-transparent-black border rounded-full shadow-2xl m-4">
         <span v-if="view3D">3D</span>
         <span v-if="!view3D">2D</span>
       </button>
@@ -64,9 +64,9 @@ export default {
       myGraph.warmupTicks(60 * 0.5)
       myGraph.d3AlphaDecay(0.01)
 
-      myGraph.linkDirectionalArrowLength(0.1)
+      myGraph.linkDirectionalArrowLength(5)
       myGraph.linkDirectionalArrowRelPos(5)
-      myGraph.linkCurvature(0.16)
+      myGraph.linkCurvature(0.6)
 
       // myGraph.d3VelocityDecay(0.4)
       // myGraph.dagMode('rl')
@@ -198,7 +198,6 @@ export default {
       let oldControl = myGraph.controls()
       oldControl.enabled = false
       oldControl.dispose()
-      console.log(oldControl)
 
       // myGraph.scene().rotation.x = Math.PI * 0.5
       myGraph.camera().position.set(0, 0, 300)
@@ -297,7 +296,7 @@ export default {
         .linkColor(link => highlightLinks.has(link) ? 'rgb(218, 126, 11)' : 'rgba(255,255,255,1.0)')
         .linkDirectionalParticles(link => highlightLinks.has(link) ? 3 : 2)
         .linkOpacity(1.0)
-        .linkLabel('type')
+        // .linkLabel('type')
         .linkDirectionalParticleWidth(5)
         .linkDirectionalParticleResolution(5)
         .linkResolution(2)
