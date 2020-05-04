@@ -5,10 +5,6 @@
       <textarea class="py-2 px-3 resize-none border border-black" rows="1" cols="30" v-model="myNode.img"></textarea>
     </div>
     <div>
-      <div class="mb-3">My Pic: </div>
-      <textarea class="py-2 px-3 resize-none border border-black" rows="1" cols="30" v-model="myNode.img"></textarea>
-    </div>
-    <div>
       <div class="mb-3">Submit</div>
       <button class="px-3 py-2 border border-black" @click="updateMyNode()">
         <div v-if="loading">Loading...</div>
