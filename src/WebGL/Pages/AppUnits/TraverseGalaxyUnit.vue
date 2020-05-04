@@ -285,8 +285,8 @@ export default {
 
       let transparentMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0 })
       let whiteMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0.8, color: 0xffffff })
-      let blueMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0.5, color: 0x0000ff })
-      let cyanMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0.5, color: 0x00ffff })
+      let blueMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0.45, color: 0xffffff })
+      let limeMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0.65, color: 0x32cd32 })
 
       // let map = new Map()
       // user
@@ -354,7 +354,7 @@ export default {
             border.scale.set(1, 1, 1)
           }
           node.canOpen = (can) => {
-            border.material = can ? cyanMat : blueMat
+            border.material = can ? limeMat : blueMat
           }
 
           return clicker
