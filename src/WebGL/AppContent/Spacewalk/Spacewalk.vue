@@ -7,7 +7,7 @@
 <script>
 import { Tree, ShaderCube } from '../../Reusable'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
-import { MeshMatcapMaterial, TextureLoader } from 'three'
+import { MeshMatcapMaterial, TextureLoader, DoubleSide } from 'three'
 
 let loaderFBX = new FBXLoader()
 let loaderTex = new TextureLoader()
@@ -29,7 +29,7 @@ export default {
       this.o3d.add(fbx)
       fbx.traverse((item) => {
         if (item.isMesh) {
-          console.log(item)
+          // console.log(item)
           item.material = mats.shaderCubeMat
           // 20 , 15, 10
           // foot walker
@@ -64,6 +64,7 @@ export default {
           if (item.name === 'Mesh013') {
             item.material = mats.silver
           }
+          item.material.side = DoubleSide
         }
       })
     },

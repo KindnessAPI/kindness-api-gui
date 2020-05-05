@@ -158,6 +158,7 @@ export class ShaderCubeRefraction {
       let camera = this.camera
       let renderer = this.renderer
       let scene = this.scene
+
       // let renderTarget = this.renderTarget
       // var generateMipmaps = renderTargetCube.texture.generateMipmaps
       // renderTargetCube.texture.generateMipmaps = false

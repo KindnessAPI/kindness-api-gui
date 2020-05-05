@@ -5,32 +5,69 @@
     <div v-show="!openMenu" class="full relative">
       <TopNavBar @menu="openMenu = !openMenu"></TopNavBar>
 
-      <TraverseGalaxyUnit
-      @debug="overlay = 'debug'"
+      <!-- <ScissorArea class="webgl-bg" :style="{
+      }">
+        <div
+          slot="dom"
+          class="full"
+        >
+        </div>
+        <FallScene slot="o3d"></FallScene>
+      </ScissorArea> -->
+
+      <TraverseNodeEdgeUnit
+      :style="{
+        visibility: this.mainArea === 'traverse' ? 'visible' : 'hidden',
+        backgroundColor: `#251b69`,
+        backgroundImage: `url(${require('./AppUnits/hdri/sky-space-milky-way-stars-110854.jpg')})`,
+        backgroundSize: 'cover',
+        backgroundPosition: `center center`
+      }"
+      :btns="btns"
+      @home="onGoHome"
+      @view-user-page="onViewUserPage"
       @node-click="onNodeClick"
-      @me="onMeClick"
       :graph="graph"
       >
-      </TraverseGalaxyUnit>
+        <Spaceship></Spaceship>
+      </TraverseNodeEdgeUnit>
 
       <div v-if="overlay" @click="overlay = false" class="overlay-close"></div>
 
-      <UserProfileUnit
+      <NodeEditorUnit
         @close="overlay = false"
-        :userID="userID"
-        :username="username"
+        @reload="onReload"
+
+        :currentNode="currentNode"
         :graph="graph"
-        @reload="onRealod"
-        v-if="overlay === 'user-profile'"
-      ></UserProfileUnit>
+
+        :userID="queryUserID"
+        :username="queryUsername"
+        v-if="currentNode && graph && overlay === 'node-editor'"
+      ></NodeEditorUnit>
+
+      <AddFriendUnit
+        v-if="overlay === 'add-friend'"
+        @close="overlay = false"
+        @reload="onReload"
+      ></AddFriendUnit>
+
+      <WritePostUnit
+        v-if="overlay === 'write-post'"
+        @close="overlay = false"
+        @reload="onReload"
+      ></WritePostUnit>
 
       <!-- <DebugUnit
         @close="overlay = false"
         :userID="userID"
         :username="username"
-        @reload="onRealod"
+        @reload="onReload"
         v-if="overlay === 'debug'"
       ></DebugUnit> -->
+
+      <div v-if="overlay" @click="overlay = false" class="overlay-close-btn">
+      </div>
 
     </div>
     <FullMenuBar v-show="openMenu" @close="openMenu = false"></FullMenuBar>
@@ -47,6 +84,9 @@ export default {
   mixins: [PipeScissor],
   data () {
     return {
+      currentNode: false,
+      mainArea: 'traverse',
+      btns: [],
       socket: false,
       escFncs: [],
       username: false,
@@ -66,32 +106,106 @@ export default {
           this.overlay = false
         })
       }
+    },
+    'queryUserID' () {
+      this.onReset()
+      this.onInit()
+    }
+  },
+  computed: {
+    queryUserID () {
+      return this.$route.params.userID
+    },
+    queryUsername () {
+      return this.$route.params.username
+    },
+    isOnMyPage () {
+      return Auth.currentProfile.user.userID === this.queryUserID
     }
   },
   methods: {
-    onMeClick () {
-      this.userID = Auth.currentProfile.user.userID
-      this.username = Auth.currentProfile.user.username
-      this.overlay = 'user-profile'
+    onViewUserPage () {
+      this.overlay = 'view-user-page'
     },
-    onNodeClick (node) {
-      if (node.type === 'user') {
-        this.userID = node.userID
-        this.username = node.username
-        this.overlay = 'user-profile'
+    onGoHome () {
+      this.$router.push('/galaxy?r=' + Math.random())
+    },
+    // onAddFriend () {
+    //   this.overlay = 'add-friend'
+    // },
+    // onWritePost () {
+    //   this.overlay = 'write-post'
+    // },
+    // onProfileClick () {
+    //   this.userID = Auth.currentProfile.user.userID
+    //   this.username = Auth.currentProfile.user.username
+    //   this.overlay = 'user-profile'
+    // },
+    onSetupBtns () {
+      this.btns = []
+      if (!this.isOnMyPage) {
+        this.btns.push({
+          text: `🏠`,
+          event: 'home'
+        })
+        this.btns.push({
+          text: `View @${this.queryUsername}`,
+          event: 'view-user-page'
+        })
       }
     },
-    async onRealod () {
+    onReset () {
+      this.graph = {
+        nodes: [],
+        links: []
+      }
+      if (this.socket) {
+        this.socket.close()
+      }
+    },
+    // onMeClick () {
+    //   this.userID = Auth.currentProfile.user.userID
+    //   this.username = Auth.currentProfile.user.username
+    //   this.overlay = 'node-editor'
+    // },
+    onNodeClick (node) {
+      this.currentNode = node
+      if (this.isOnMyPage) {
+        this.overlay = 'node-editor'
+      } else {
+        if (node.type === 'traverse') {
+          this.$router.push(`/profile/${node.value.username}/${node.value.userID}`)
+        } else {
+          this.overlay = 'node-viewer'
+        }
+      }
+      // if (node.type === 'traverse') {
+      // } else {
+      //   this.currentNode = node
+      //   if (this.isOnMyPage) {
+      //     this.overlay = 'node-editor'
+      //   } else {
+      //     this.overlay = 'node-viewer'
+      //   }
+      // }
+    },
+    async onReload () {
       this.socket.notifyGraphChange()
-      await this.downloadGraph()
+      // await this.downloadGraph()
     },
     async downloadGraph () {
-      this.graph = await Graph.getBasicGraph()
-      this.graph.nodes.forEach((node) => {
-        if (node.userID === Auth.currentProfile.user.userID) {
-          node.name += ` (me)`
+      let graphData = await Graph.getUserGraph({ userID: this.queryUserID })
+      let needToReload = false
+      for (let link of graphData.links) {
+        if ((!graphData.nodes.some(n => n._id === link.source) || !graphData.nodes.some(n => n._id === link.target))) {
+          await Graph.removeEdgeByID({ edgeID: link._id })
+          needToReload = true
         }
-      })
+      }
+      if (needToReload) {
+        graphData = await Graph.getUserGraph({ userID: this.queryUserID })
+      }
+      this.graph = graphData
     },
     async getMyNode () {
       let mynode = await Graph.getMyNode()
@@ -109,7 +223,7 @@ export default {
     async makeSocket () {
       let socket = this.socket = new LamdaClient({
         url: getWS(),
-        roomID: 'galaxy',
+        roomID: 'room-' + this.queryUserID,
         nickname: Auth.currentProfile.user.username + '@' + getID()
       })
 
@@ -131,8 +245,9 @@ export default {
       })
     },
     async onInit () {
+      this.onReset()
+      this.onSetupBtns()
       await this.makeSocket()
-
       let mynode = await this.getMyNode()
       if (!mynode) {
         await this.createMyNode()
@@ -146,12 +261,17 @@ export default {
       window.dispatchEvent(new Event('resize'))
     })
     this.scrollBox = makeScrollBox({ dom: window, base: this.base })
+
     await this.onInit()
 
     window.addEventListener('keydown', (evt) => {
       if (evt.keyCode === 27) {
         this.$emit('esc')
       }
+    })
+
+    window.addEventListener('reload-graph', () => {
+      this.onReload()
     })
 
     this.$on('esc', () => {
@@ -174,12 +294,20 @@ export default {
     document.body.style.backgroundColor = this.bgColor
   },
   beforeDestroy () {
+    this.onReset()
     document.body.style.backgroundColor = this.origColor
   }
 }
 </script>
 
 <style lang="postcss" scoped>
+.webgl-bg{
+  position: absolute;
+  top: 60px;
+  left: 0px;
+  width: 100%;
+  height: calc(100% - 60px);
+}
 .overlay-close {
   position: absolute;
   top: 0px;

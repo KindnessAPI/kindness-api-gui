@@ -1,21 +1,16 @@
 <template>
   <div class="relative minus-navbar-height h-full w-full focus:outline-none">
-    <div class="w-full h-full focus:outline-none galaxy-bg-image" ref="mounter"></div>
+    <div class="w-full h-full focus:outline-none" ref="mounter"></div>
     <div class="absolute top-0 left-0">
-      <button @click="toggle3D2D()" class="focus:outline-none text-white bg-black w-12 h-12 border-blue-800 bg-transparent-black border rounded-full shadow-2xl m-4">
+      <button @click="toggle3D2D()" class="focus:outline-none text-white bg-black w-12 h-12 border-blue-800 bg-transparent-black border rounded-full shadow-2xl mt-3 mr-3 ml-3">
         <span v-if="view3D">3D</span>
         <span v-if="!view3D">2D</span>
       </button>
-      <button @click="$emit('me')" class="focus:outline-none text-white bg-black w-12 h-12 border-blue-800 bg-transparent-black border rounded-full shadow-2xl m-3">
-        Me
+      <button :key="ii" v-for="(btn, ii) in btns" @click="$emit(btn.event)" class="focus:outline-none text-white bg-black h-12 border-blue-800 bg-transparent-black border rounded-full shadow-2xl px-4 mt-3 mr-3">
+        {{ btn.text }}
       </button>
     </div>
-    <!-- <div class="absolute top-0 left-0 w-full h-full">
-      <slot></slot>
-    </div> -->
-
-    <slot></slot>
-    <Spaceship v-if="ready"></Spaceship>
+    <slot v-if="ready"></slot>
   </div>
 </template>
 
@@ -25,12 +20,27 @@ import SpriteText from 'three-spritetext'
 import { Mesh, CircleBufferGeometry, MeshBasicMaterial, SpriteMaterial, TextureLoader, Sprite } from 'three'
 import { MapControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { makeBase, Tree } from '../../Reusable/index'
+
 export default {
   mixins: [Tree],
   props: {
+    btns: {
+      default () {
+        return [
+          {
+            text: `Home`,
+            event: 'home'
+          },
+          {
+            text: `Profile`,
+            event: 'me'
+          }
+        ]
+      }
+    },
     graph: {},
     nodeIDKey: {
-      default: 'userID'
+      default: '_id'
     }
     // Auth: {}
   },
@@ -39,6 +49,8 @@ export default {
   },
   data () {
     return {
+      vm: this,
+      pauseAnimation () {},
       base: false,
       ready: false,
       view3D: false,
@@ -48,6 +60,7 @@ export default {
   beforeDestroy () {
     this.here = false
     this.base.onTearDown()
+    this.pauseAnimation()
   },
   mounted () {
     this.prepBase()
@@ -83,6 +96,14 @@ export default {
         }
       })
       var engine = myGraph(this.$refs['mounter'])
+      this.pauseAnimation = () => {
+        engine.pauseAnimation()
+        engine.scene().traverse((item) => {
+          if (item.dispose) {
+            item.dispose()
+          }
+        })
+      }
       // console.log(engine.state)
       // let simulateData = () => {
       //   const N = 60
@@ -186,6 +207,8 @@ export default {
       })
 
       this.renderer = myGraph.renderer()
+      this.renderer.domElement.classList.add('galaxy-bg-image')
+
       this.o3d.position.z = -2500
       this.o3d.scale.x = 5
       this.o3d.scale.y = 5
@@ -209,7 +232,7 @@ export default {
       controls.enableRotate = false
       controls.screenSpacePanning = true
       controls.minDistance = 1
-      controls.maxDistance = 5000
+      controls.maxDistance = 4000
 
       engine.enableNodeDrag(true)
       let adt = {
@@ -421,11 +444,6 @@ export default {
   outline: none;
 }
 
-.galaxy-bg-image{
-  background-color: #251b69;
-  background-image: url('./hdri/sky-space-milky-way-stars-110854.jpg');
-  @apply bg-center bg-cover;
-}
 .bg-transparent-black{
   background-color: rgba(0,0,0,0.7);
 }

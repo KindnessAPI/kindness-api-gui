@@ -32,6 +32,19 @@ export default new Router({
     },
     {
       path: '/galaxy',
+      beforeEnter: async (to, from, next) => {
+        let KA = await import('./APIs/KA')
+        let Auth = KA.Auth
+        if (Auth.isLoggedIn) {
+          let { username, userID } = Auth.currentProfile.user
+          next(`/profile/${username}/${userID}`)
+        } else {
+          next('/login?redirect=' + encodeURIComponent(to.path))
+        }
+      }
+    },
+    {
+      path: '/profile/:username/:userID',
       beforeEnter: loginGate,
       component: () => import('./WebGL/Pages/TraverseGalaxyPage.vue')
     },

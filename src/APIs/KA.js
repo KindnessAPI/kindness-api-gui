@@ -122,7 +122,15 @@ export class LamdaClient extends EventEmitter {
   get ready () {
     return this.ws.readyState === WebSocket.OPEN
   }
-
+  close () {
+    try {
+      this.ws.__disposed = true
+      this.ws.close()
+      console.log('WebSocket: closed')
+    } catch (e) {
+      console.log(e)
+    }
+  }
   open () {
     this.ws = new WebSocket(this.url)
     this.ws.__disposed = false
@@ -376,7 +384,7 @@ export class Auth {
 Auth.loadProfiles()
 
 export class Graph {
-  static async addUserNode ({ name = 'New User', photo = 'https://picsum.photos/200' }) {
+  static async createFriendTraverseNode ({ username, userID, name = 'New User', photo = 'https://picsum.photos/200' }) {
     let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
@@ -387,11 +395,15 @@ export class Graph {
         method: 'create',
         payload: {
           name: name,
+          value: {
+            username,
+            userID
+          },
           img: photo,
-          type: 'user',
+          type: 'traverse',
           tags: [
             {
-              text: 'early-bird'
+              'text': 'early-bird'
             }
           ]
         }
@@ -403,7 +415,7 @@ export class Graph {
       return Promise.reject(err)
     })
   }
-  static async addFriendEdge ({ fromID, toID }) {
+  static async linkFriendTraverseNode ({ fromID, toID }) {
     let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
@@ -432,8 +444,7 @@ export class Graph {
     })
   }
 
-  // ----
-  static async listNodes () {
+  static async addUserNode ({ name = 'New User', photo = 'https://picsum.photos/200' }) {
     let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
@@ -441,9 +452,16 @@ export class Graph {
       url: '/access-node',
       headers: getHeader(),
       data: {
-        method: 'query',
+        method: 'create',
         payload: {
-          type: 'user'
+          name: name,
+          img: photo,
+          type: 'user',
+          tags: [
+            {
+              text: 'early-bird'
+            }
+          ]
         }
       }
     })
@@ -454,7 +472,29 @@ export class Graph {
     })
   }
 
-  static async listEdges () {
+  // ----
+  static async listUserNodes ({ userID }) {
+    let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-node',
+      headers: getHeader(),
+      data: {
+        method: 'query',
+        payload: {
+          userID
+        }
+      }
+    })
+    return resp.then((r) => {
+      return r.data
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+
+  static async removeEdgesSourceNode ({ nodeID }) {
     let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
@@ -464,7 +504,112 @@ export class Graph {
       data: {
         method: 'query',
         payload: {
-          type: 'friend'
+          source: nodeID
+        }
+      }
+    })
+    return resp.then((r) => {
+      return r.data
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+
+  static async removeEdgesTargetNode ({ nodeID }) {
+    let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-edge',
+      headers: getHeader(),
+      data: {
+        method: 'query',
+        payload: {
+          target: nodeID
+        }
+      }
+    })
+    return resp.then((r) => {
+      return r.data
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+
+  static async removeNodeByID ({ nodeID }) {
+    let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-node',
+      headers: getHeader(),
+      data: {
+        method: 'remove-one',
+        payload: {
+          _id: nodeID
+        }
+      }
+    })
+    return resp.then((r) => {
+      return r.data[0]
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+
+  static async listUserEdges ({ userID }) {
+    let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-edge',
+      headers: getHeader(),
+      data: {
+        method: 'query',
+        payload: {
+          userID
+        }
+      }
+    })
+    return resp.then((r) => {
+      return r.data
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+
+  static async listNodeEdges ({ fromID }) {
+    let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-edge',
+      headers: getHeader(),
+      data: {
+        method: 'query',
+        payload: {
+          source: fromID
+        }
+      }
+    })
+    return resp.then((r) => {
+      return r.data
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+
+  static async removeEdgeByID ({ edgeID }) {
+    let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-edge',
+      headers: getHeader(),
+      data: {
+        method: 'remove-one',
+        payload: {
+          _id: edgeID
         }
       }
     })
@@ -537,6 +682,28 @@ export class Graph {
     })
   }
 
+  static async searchNodeByName ({ name }) {
+    let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-node',
+      headers: getHeader(),
+      data: {
+        method: 'query',
+        payload: {
+          type: 'user',
+          name: name
+        }
+      }
+    })
+    return resp.then((r) => {
+      return r.data
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+
   static async getMyEdges () {
     let axios = (await import('axios')).default
     let resp = axios({
@@ -594,6 +761,7 @@ export class Graph {
         }
       }
     })
+
     return resp.then((r) => {
       return r.data
     }, (err) => {
@@ -601,13 +769,13 @@ export class Graph {
     })
   }
 
-  static async getBasicGraph () {
+  static async getUserGraph ({ userID }) {
     let [
       nodes,
       links
     ] = await Promise.all([
-      Graph.listNodes(),
-      Graph.listEdges()
+      Graph.listUserNodes({ userID }),
+      Graph.listUserEdges({ userID })
     ])
 
     return {

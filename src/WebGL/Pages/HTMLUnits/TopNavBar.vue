@@ -2,22 +2,24 @@
   <ScissorArea>
     <div slot="dom">
       <div class="flex w-full justify-between items-center px-3">
-        <router-link class="block lg:w-1/3" to="/">
-          <div class="text-2xl text-black py-3 cursor-pointer">
-            TogetherTime.me
+        <div class="block lg:w-1/3">
+          <div class="text-2xl text-black py-3">
+            <router-link to="/" class="cursor-pointer">
+              TogetherTime.me
+            </router-link>
           </div>
-        </router-link>
+        </div>
         <div class="lg:w-1/3 hidden lg:flex justify-center text-2xl">
 
         </div>
-        <div class="lg:w-1/3 flex justify-end cursor-pointer">
+        <div class="lg:w-1/3 flex justify-end">
           <div class="hidden md:inline-flex">
             <!-- <div class="text-2xl text-black p-3" @click="$router.push('/dash')">
               Love Work in Progress
             </div> -->
-            <router-link v-if="!Auth.isLoggedIn" exact-active-class="underline" class="text-xl text-black py-2 pr-3" to="/login">Login</router-link>
-            <router-link v-if="!Auth.isLoggedIn" exact-active-class="underline" class="text-xl text-black py-2 pr-3" to="/register">Register</router-link>
-            <router-link v-if="Auth.isLoggedIn" exact-active-class="underline" class="text-xl text-black py-2 pr-3" to="/dashboard">Dashboard</router-link>
+            <router-link v-if="!Auth.isLoggedIn" exact-active-class="underline" class="cursor-pointer text-xl text-black py-2 pr-3" to="/login">Login</router-link>
+            <router-link v-if="!Auth.isLoggedIn" exact-active-class="cursor-pointer underline" class="cursor-pointer text-xl text-black py-2 pr-3" to="/register">Register</router-link>
+            <router-link v-if="Auth.isLoggedIn" class="cursor-pointer text-xl text-black py-2 pr-3" to="/galaxy">Galaxy</router-link>
           </div>
 
           <img @click="$emit('menu')" style="min-width:24px;" class="mr-3" src="../icon/menu.svg" alt="">

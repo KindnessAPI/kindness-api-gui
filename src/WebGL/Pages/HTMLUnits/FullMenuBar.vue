@@ -18,6 +18,9 @@
             <router-link exact-active-class="underline" to="/">Home Page</router-link>
           </div>
           <div class="mb-3 px-3 text-black text-xl" v-if="Auth.currentProfile">
+            <router-link exact-active-class="underline" to="/galaxy">Traverse the Galaxy</router-link>
+          </div>
+          <div class="mb-3 px-3 text-black text-xl" v-if="Auth.currentProfile">
             <router-link exact-active-class="underline" to="/dashboard">Dashboard</router-link>
           </div>
           <div class="mb-3 px-3 text-black text-xl" v-if="!Auth.isLoggedIn">

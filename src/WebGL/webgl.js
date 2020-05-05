@@ -29,8 +29,10 @@ async function importAll (r, type) {
 importAll(require.context('./Reusable', true, /\.vue$/, 'sync'), 'sync')
 importAll(require.context('./GLScene', true, /\.vue$/, 'sync'), 'sync')
 importAll(require.context('./AppContent', true, /\.vue$/, 'sync'), 'sync')
+importAll(require.context('./Pages/AppOverlay', true, /\.vue$/, 'sync'), 'sync')
 importAll(require.context('./Pages/HTMLUnits', true, /\.vue$/, 'sync'), 'sync')
 importAll(require.context('./Pages/AuthUnits', true, /\.vue$/, 'sync'), 'sync')
 importAll(require.context('./Pages/AppUnits', true, /\.vue$/, 'sync'), 'sync')
+importAll(require.context('./Pages/AppResuables', true, /\.vue$/, 'sync'), 'sync')
 
 export default exporter
