@@ -13,7 +13,7 @@
     </div>
   </div>
   <div v-else-if="loading">
-    Loading...
+    Loading My Profile...
   </div>
 </template>
 
@@ -39,6 +39,7 @@ export default {
       }
       this.loading = true
       await API.Graph.updateMyNode({ edit: this.myNode })
+      this.$emit('reload')
       this.loading = false
     },
     async getMyNode () {

@@ -8,6 +8,7 @@
       <TraverseGalaxyUnit
       @debug="overlay = 'debug'"
       @node-click="onNodeClick"
+      @me="onMeClick"
       :graph="graph"
       >
       </TraverseGalaxyUnit>
@@ -23,13 +24,13 @@
         v-if="overlay === 'user-profile'"
       ></UserProfileUnit>
 
-      <DebugUnit
+      <!-- <DebugUnit
         @close="overlay = false"
         :userID="userID"
         :username="username"
         @reload="onRealod"
         v-if="overlay === 'debug'"
-      ></DebugUnit>
+      ></DebugUnit> -->
 
     </div>
     <FullMenuBar v-show="openMenu" @close="openMenu = false"></FullMenuBar>
@@ -38,7 +39,7 @@
 
 <script>
 import { PipeScissor, makeScrollBox } from '../Reusable'
-import { Auth, Graph } from '../../APIs/KA'
+import { Auth, Graph, LamdaClient, getWS, getID } from '../../APIs/KA'
 
 // import axios from 'axios'
 export default {
@@ -46,6 +47,7 @@ export default {
   mixins: [PipeScissor],
   data () {
     return {
+      socket: false,
       escFncs: [],
       username: false,
       userID: false,
@@ -67,6 +69,11 @@ export default {
     }
   },
   methods: {
+    onMeClick () {
+      this.userID = Auth.currentProfile.user.userID
+      this.username = Auth.currentProfile.user.username
+      this.overlay = 'user-profile'
+    },
     onNodeClick (node) {
       if (node.type === 'user') {
         this.userID = node.userID
@@ -75,6 +82,7 @@ export default {
       }
     },
     async onRealod () {
+      this.socket.notifyGraphChange()
       await this.downloadGraph()
     },
     async downloadGraph () {
@@ -82,9 +90,6 @@ export default {
       this.graph.nodes.forEach((node) => {
         if (node.userID === Auth.currentProfile.user.userID) {
           node.name += ` (me)`
-          node.isMySelf = true
-        } else {
-          node.isMySelf = false
         }
       })
     },
@@ -101,10 +106,37 @@ export default {
         .then(r => r, () => false)
       return mynode
     },
+    async makeSocket () {
+      let socket = this.socket = new LamdaClient({
+        url: getWS(),
+        roomID: 'galaxy',
+        nickname: Auth.currentProfile.user.username + '@' + getID()
+      })
+
+      socket.on('text', (data) => {
+        let html = `<pre>${data.type} - ${JSON.stringify(data)}</pre>`
+        console.log(html)
+      })
+
+      // socket.sendText({ text: '1231232' })
+
+      socket.on('online', (data) => {
+        let html = `<pre>me: ${socket.nickname} - ${JSON.stringify(data)}</pre>`
+        console.log(html)
+      })
+
+      socket.on('ws-graph-change', async (data) => {
+        console.log('reload received')
+        await this.downloadGraph()
+      })
+    },
     async onInit () {
+      await this.makeSocket()
+
       let mynode = await this.getMyNode()
       if (!mynode) {
         await this.createMyNode()
+        this.socket.notifyGraphChange()
       }
       await this.downloadGraph()
     }

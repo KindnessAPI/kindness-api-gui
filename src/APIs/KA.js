@@ -36,14 +36,15 @@ export const getHeader = () => {
   }
 }
 
-/*
-let getID = () => {
-  return '_' + Math.random().toString(36).substr(2, 9)
+export const getID = () => {
+  return '_' + Math.random().toString(36).substr(2, 9) + '_' + Math.random().toString(36).substr(2, 9)
 }
+
+/*
 
 let socket = new LamdaClient({
   url: getWS(),
-  roomId: 'room-test',
+  roomID: 'room-test',
   nickname: 'kindness-api-client-' + getID()
 })
 
@@ -109,11 +110,11 @@ class EventEmitter {
 }
 
 export class LamdaClient extends EventEmitter {
-  constructor ({ url, nickname, roomId }) {
+  constructor ({ url, nickname, roomID }) {
     super()
     this.url = url
     this.nickname = nickname
-    this.roomId = roomId
+    this.roomID = roomID
     this.autoReconnectInterval = 5 * 1000
     this.open()
   }
@@ -208,7 +209,7 @@ export class LamdaClient extends EventEmitter {
   getOnlineList () {
     this.ensureSend({
       type: 'ws-online-list',
-      roomId: this.roomId
+      roomID: this.roomID
     })
   }
 
@@ -216,15 +217,22 @@ export class LamdaClient extends EventEmitter {
     this.ensureSend({
       type: 'ws-join-room',
       nickname: this.nickname,
-      roomId: this.roomId
+      roomID: this.roomID
     })
   }
 
   sendText ({ text }) {
     this.ensureSend({
       type: 'ws-msg-room',
-      roomId: this.roomId,
+      roomID: this.roomID,
       text
+    })
+  }
+
+  notifyGraphChange () {
+    this.ensureSend({
+      type: 'ws-graph-change',
+      roomID: this.roomID
     })
   }
 }
@@ -524,6 +532,70 @@ export class Graph {
     })
     return resp.then((r) => {
       return r.data[0]
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+
+  static async getMyEdges () {
+    let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-edge',
+      headers: getHeader(),
+      data: {
+        method: 'query',
+        payload: {
+          userID: Auth.currentProfile.user.userID
+        }
+      }
+    })
+    return resp.then((r) => {
+      return r.data
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+
+  static async removeMyEdge ({ edge }) {
+    let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-edge',
+      headers: getHeader(),
+      data: {
+        method: 'remove-one',
+        payload: {
+          _id: edge._id
+        }
+      }
+    })
+    return resp.then((r) => {
+      return r.data
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+
+  static async getUserByIDList ({ idList }) {
+    let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-user',
+      headers: getHeader(),
+      data: {
+        method: 'query',
+        payload: {
+          'sort': '-created_at',
+          'list': idList
+        }
+      }
+    })
+    return resp.then((r) => {
+      return r.data
     }, (err) => {
       return Promise.reject(err)
     })

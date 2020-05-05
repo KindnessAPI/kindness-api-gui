@@ -10,10 +10,12 @@
       <button v-if="!(isMyself || hasFriendship)" @click="addFriend()">
         Add Friend
       </button>
+
       <button v-if="hasFriendship">Friend line Added</button>
 
       <div v-if="isMyself">
-        <MyNodeEditUnit></MyNodeEditUnit>
+        <MyNodeEditUnit @reload="$emit('reload')"></MyNodeEditUnit>
+        <MyEdgeEditUnit @reload="$emit('reload')"></MyEdgeEditUnit>
       </div>
 
     </div>
@@ -53,7 +55,6 @@ export default {
       let myUserID = API.Auth.currentProfile.user.userID
       let otherUserID = this.userID
 
-      console.log(myUserID, otherUserID)
       if (myUserID === otherUserID) {
         window.alert('same user!')
         return

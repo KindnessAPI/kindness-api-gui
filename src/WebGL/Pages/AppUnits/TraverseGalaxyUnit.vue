@@ -6,9 +6,9 @@
         <span v-if="view3D">3D</span>
         <span v-if="!view3D">2D</span>
       </button>
-      <!-- <button @click="$emit('debug')" class="focus:outline-none text-white bg-black w-12 h-12 border-blue-800 bg-transparent-black border rounded-full shadow-2xl m-3">
-        Debug
-      </button> -->
+      <button @click="$emit('me')" class="focus:outline-none text-white bg-black w-12 h-12 border-blue-800 bg-transparent-black border rounded-full shadow-2xl m-3">
+        Me
+      </button>
     </div>
     <!-- <div class="absolute top-0 left-0 w-full h-full">
       <slot></slot>
@@ -28,7 +28,10 @@ import { makeBase, Tree } from '../../Reusable/index'
 export default {
   mixins: [Tree],
   props: {
-    graph: {}
+    graph: {},
+    nodeIDKey: {
+      default: 'userID'
+    }
     // Auth: {}
   },
   components: {
@@ -64,9 +67,9 @@ export default {
       myGraph.warmupTicks(60 * 0.5)
       myGraph.d3AlphaDecay(0.01)
 
-      myGraph.linkDirectionalArrowLength(5)
-      myGraph.linkDirectionalArrowRelPos(5)
-      myGraph.linkCurvature(0.6)
+      // myGraph.linkDirectionalArrowLength(0.0001)
+      // myGraph.linkDirectionalArrowRelPos(0.0001)
+      // myGraph.linkCurvature(0.6)
 
       // myGraph.d3VelocityDecay(0.4)
       // myGraph.dagMode('rl')
@@ -80,7 +83,7 @@ export default {
         }
       })
       var engine = myGraph(this.$refs['mounter'])
-      console.log(engine.state)
+      // console.log(engine.state)
       // let simulateData = () => {
       //   const N = 60
       //   const idMap = new Map()
@@ -125,13 +128,13 @@ export default {
       // simulateData()
 
       let loadData = async (data) => {
-        myGraph.nodeId('userID')
+        myGraph.nodeId(this.nodeIDKey)
 
         let graphBase = data
         // cross-link node objects
         graphBase.links.forEach(link => {
-          const a = graphBase.nodes.find(e => e.userID === link.source)
-          const b = graphBase.nodes.find(e => e.userID === link.target)
+          const a = graphBase.nodes.find(e => e[this.nodeIDKey] === link.source)
+          const b = graphBase.nodes.find(e => e[this.nodeIDKey] === link.target)
           // const a = idMap.get(link.source)
           // const b = idMap.get(link.target)
 
@@ -197,7 +200,7 @@ export default {
       oldControl.dispose()
 
       // myGraph.scene().rotation.x = Math.PI * 0.5
-      myGraph.camera().position.set(0, 0, 300)
+      myGraph.camera().position.set(0, 0, 250)
 
       let controls = new MapControls(myGraph.camera(), myGraph.renderer().domElement)
       controls.panSpeed = 2
@@ -289,15 +292,15 @@ export default {
       // loveline
 
       engine
-        .linkWidth(link => highlightLinks.has(link) ? 4 : 2)
+        .linkWidth(link => highlightLinks.has(link) ? 3 : 2)
         .linkColor(link => highlightLinks.has(link) ? 'rgb(218, 126, 11)' : 'rgba(255,255,255,1.0)')
-        .linkDirectionalParticles(link => highlightLinks.has(link) ? 3 : 2)
+        .linkDirectionalParticles(link => highlightLinks.has(link) ? 3 : 1)
         .linkOpacity(1.0)
         // .linkLabel('type')
-        .linkDirectionalParticleWidth(5)
-        .linkDirectionalParticleResolution(5)
-        .linkResolution(2)
-        .nodeResolution(1)
+        .linkDirectionalParticleWidth(3)
+        .linkDirectionalParticleResolution(3)
+        .linkResolution(3)
+        // .nodeResolution(3)
         .nodeThreeObject((node) => {
           const clicker = new Mesh(
             borderGeo,
