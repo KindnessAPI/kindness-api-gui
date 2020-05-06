@@ -4,11 +4,19 @@
       <img src="../icon/close.svg" class="cursor-pointer" alt="Close" title="close">
     </div>
     <div class="p-4 h-full w-full overflow-y-auto overflow-x-hidden">
-      <NENodeAction :node="currentNode" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NENodeAction>
-      <NENodeEdit :node="currentNode" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NENodeEdit>
-      <NEAddFriend :node="currentNode" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEAddFriend>
-      <NERemoveNode :node="currentNode" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NERemoveNode>
-      <NEManageGraph :node="currentNode" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEManageGraph>
+
+      <div :class="{ 'bg-blue-200': tab === 'action' }" @click="tab = 'action'" class="inline-block px-3 py-2 border mb-2 mr-2">Node Action</div>
+      <div :class="{ 'bg-blue-200': tab === 'edit' }" @click="tab = 'edit'" class="inline-block px-3 py-2 border mb-2 mr-2">Edit Node</div>
+
+      <div v-if="tab === 'action'">
+        <NENodeTraverseAction :node="currentNode" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NENodeTraverseAction>
+        <NEAddFriend :node="currentNode" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEAddFriend>
+      </div>
+      <div v-if="tab === 'edit'">
+        <NENodeEdit :node="currentNode" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NENodeEdit>
+        <NEManageGraph :node="currentNode" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEManageGraph>
+        <NERemoveNode :node="currentNode" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NERemoveNode>
+      </div>
 
       <!-- <ReButton :color="'green'">Add a Blog Post to this node.</ReButton> -->
     </div>
@@ -30,6 +38,7 @@ export default {
   },
   data () {
     return {
+      tab: 'action',
       // isMyself: this.currentNode.userID === this.userID,
       API
     }

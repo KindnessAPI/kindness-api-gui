@@ -83,6 +83,7 @@ export default {
   methods: {
     setActiveUID (uid) {
       Auth.setActiveProfileByUserID(uid)
+      Auth.saveProfiles()
     }
   },
   beforeDestroy () {

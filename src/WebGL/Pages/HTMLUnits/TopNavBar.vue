@@ -19,7 +19,7 @@
             </div> -->
             <router-link v-if="!Auth.isLoggedIn" exact-active-class="underline" class="cursor-pointer text-xl text-black py-2 pr-3" to="/login">Login</router-link>
             <router-link v-if="!Auth.isLoggedIn" exact-active-class="cursor-pointer underline" class="cursor-pointer text-xl text-black py-2 pr-3" to="/register">Register</router-link>
-            <router-link v-if="Auth.isLoggedIn" class="cursor-pointer text-xl text-black py-2 pr-3" to="/galaxy">Galaxy</router-link>
+            <router-link v-if="Auth.isLoggedIn" class="cursor-pointer text-xl text-black py-2 pr-3" :to="`/profile/${Auth.currentProfile.user.username}/${Auth.currentProfile.user.userID}`">@{{ Auth.currentProfile.user.username }}</router-link>
           </div>
 
           <img @click="$emit('menu')" style="min-width:24px;" class="mr-3" src="../icon/menu.svg" alt="">

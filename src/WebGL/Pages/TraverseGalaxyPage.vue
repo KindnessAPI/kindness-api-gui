@@ -5,27 +5,38 @@
     <div v-show="!openMenu" class="full relative">
       <TopNavBar @menu="openMenu = !openMenu"></TopNavBar>
 
-      <!-- <ScissorArea class="webgl-bg" :style="{
-      }">
-        <div
-          slot="dom"
-          class="full"
-        >
-        </div>
-        <FallScene slot="o3d"></FallScene>
-      </ScissorArea> -->
+      <keep-alive>
+        <ScissorArea
+        class="webgl-bg"
+        v-if="this.mainArea === 'loading' ? 'visible' : 'hidden'"
+        :key="'webgloading'"
+        :style="{
+        }">
+          <div
+            slot="dom"
+            class="full flex justify-center items-center text-3xl text-white"
+          >
+            <div>
+              Traversing Galaxy
+              <br/>
+              Loading... ⏱
+            </div>
+          </div>
+          <StarFlowScene slot="o3d"></StarFlowScene>
+        </ScissorArea>
+      </keep-alive>
 
       <TraverseNodeEdgeUnit
       :style="{
-        visibility: this.mainArea === 'traverse' ? 'visible' : 'hidden',
-        backgroundColor: `#251b69`,
-        backgroundImage: `url(${require('./AppUnits/hdri/sky-space-milky-way-stars-110854.jpg')})`,
+        ddvisibility: this.mainArea === 'traverse' ? 'visible' : 'hidden',
+        backgroundColor: this.mainArea === 'traverse' ? `#251b69` : 'transparent',
+        backgroundImage: this.mainArea === 'traverse' ? `url(${require('./AppUnits/hdri/sky-space-milky-way-stars-110854.jpg')})` : '',
         backgroundSize: 'cover',
         backgroundPosition: `center center`
       }"
       :btns="btns"
       @home="onGoHome"
-      @view-user-page="onViewUserPage"
+      @view="onViewProfile"
       @node-click="onNodeClick"
       :graph="graph"
       >
@@ -136,23 +147,14 @@ export default {
     }
   },
   methods: {
-    onViewUserPage () {
-      this.overlay = 'view-user-page'
+    onViewProfile () {
+      let node = this.graph.nodes.find(e => e.userID === this.queryUserID && e.type === 'user')
+      this.currentNode = node
+      this.overlay = 'node-viewer'
     },
     onGoHome () {
-      this.$router.push('/galaxy?r=' + Math.random())
+      this.$router.push(`/profile/${Auth.currentProfile.user.username}/${Auth.currentProfile.user.userID}`)
     },
-    // onAddFriend () {
-    //   this.overlay = 'add-friend'
-    // },
-    // onWritePost () {
-    //   this.overlay = 'write-post'
-    // },
-    // onProfileClick () {
-    //   this.userID = Auth.currentProfile.user.userID
-    //   this.username = Auth.currentProfile.user.username
-    //   this.overlay = 'user-profile'
-    // },
     onSetupBtns () {
       this.btns = []
       if (!this.isOnMyPage) {
@@ -160,13 +162,14 @@ export default {
           text: `🏠`,
           event: 'home'
         })
-        this.btns.push({
-          text: `View @${this.queryUsername}`,
-          event: 'view-user-page'
-        })
       }
+      this.btns.push({
+        text: `@${this.queryUsername}`,
+        event: 'view'
+      })
     },
     onReset () {
+      this.btns = []
       this.graph = {
         nodes: [],
         links: []
@@ -219,6 +222,7 @@ export default {
       for (let link of graphData.links) {
         if ((!graphData.nodes.some(n => n._id === link.source) || !graphData.nodes.some(n => n._id === link.target))) {
           await Graph.removeEdgeByID({ edgeID: link._id })
+          console.log('broken edge found')
           needToReload = true
         }
       }
@@ -265,8 +269,8 @@ export default {
       })
     },
     async onInit () {
+      this.mainArea = 'loading'
       this.onReset()
-      this.onSetupBtns()
       await this.makeSocket()
       let mynode = await this.getMyNode()
       if (!mynode) {
@@ -274,6 +278,8 @@ export default {
         this.socket.notifyGraphChange()
       }
       await this.downloadGraph()
+      this.onSetupBtns()
+      this.mainArea = 'traverse'
     }
   },
   async mounted () {

@@ -1,11 +1,17 @@
 
 <template>
-  <div v-if="node && show">
+  <div v-if="node && node.type === 'traverse'">
     <div class="mb-3 text-3xl">
-      Actions
+      Traverse the Galaxy
     </div>
     <div class="mb-3">
-      <ReButton v-if="node.type === 'traverse'" :color="'green'" :disabled="isMyself" @click="$router.push(`/profile/${node.value.username}/${node.value.userID}`); $emit('close')">Visit Profile <span v-if="loading">⏱</span></ReButton>
+      <ReButton
+        :color="'green'"
+        :disabled="isMyself"
+        @click="$router.push(`/profile/${node.value.username}/${node.value.userID}`); $emit('close')"
+      >
+        Let's visit @{{ node.value.username }}!
+      </ReButton>
       <div>
         <span v-if="isMyself">(You're already inside your own profile.)</span>
       </div>
@@ -30,8 +36,7 @@ export default {
         this.node.type === 'traverse'
       ].some(e => e),
       isMyself: false,
-      Graph,
-      loading: false
+      Graph
     }
   },
   mounted () {
