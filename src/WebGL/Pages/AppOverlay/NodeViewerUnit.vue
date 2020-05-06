@@ -4,12 +4,12 @@
       <img src="../icon/close.svg" class="cursor-pointer" alt="Close" title="close">
     </div>
     <div class="p-4 h-full w-full overflow-y-auto overflow-x-hidden">
-      <NENodeAction :node="currentNode" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NENodeAction>
+      <!-- <NENodeAction :node="currentNode" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NENodeAction>
       <NENodeEdit :node="currentNode" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NENodeEdit>
       <NEAddFriend :node="currentNode" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEAddFriend>
       <NERemoveNode :node="currentNode" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NERemoveNode>
-      <NEManageGraph :node="currentNode" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEManageGraph>
-
+      <NEManageGraph :node="currentNode" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEManageGraph> -->
+      Node Viewer
       <!-- <ReButton :color="'green'">Add a Blog Post to this node.</ReButton> -->
     </div>
   </div>

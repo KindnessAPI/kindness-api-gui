@@ -384,7 +384,8 @@ export class Auth {
 Auth.loadProfiles()
 
 export class Graph {
-  static async createFriendTraverseNode ({ username, userID, name = 'New User', photo = 'https://picsum.photos/200' }) {
+  static async createFriendTraverseNode ({ profileUsername, profileUserID, name = 'New User', photo }) {
+    photo = photo || `https://picsum.photos/id/${(Math.random() * 1200).toFixed(0)}/200/200`
     let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
@@ -396,8 +397,8 @@ export class Graph {
         payload: {
           name: name,
           value: {
-            username,
-            userID
+            username: profileUsername,
+            userID: profileUserID
           },
           img: photo,
           type: 'traverse',
@@ -444,7 +445,9 @@ export class Graph {
     })
   }
 
-  static async addUserNode ({ name = 'New User', photo = 'https://picsum.photos/200' }) {
+  static async addUserNode ({ name = 'New User', photo }) {
+    photo = photo || `https://picsum.photos/id/${(Math.random() * 1200).toFixed(0)}/200/200`
+
     let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
@@ -568,27 +571,6 @@ export class Graph {
         method: 'query',
         payload: {
           userID
-        }
-      }
-    })
-    return resp.then((r) => {
-      return r.data
-    }, (err) => {
-      return Promise.reject(err)
-    })
-  }
-
-  static async listNodeEdges ({ fromID }) {
-    let axios = (await import('axios')).default
-    let resp = axios({
-      baseURL: getRESTURL(),
-      method: 'POST',
-      url: '/access-edge',
-      headers: getHeader(),
-      data: {
-        method: 'query',
-        payload: {
-          source: fromID
         }
       }
     })

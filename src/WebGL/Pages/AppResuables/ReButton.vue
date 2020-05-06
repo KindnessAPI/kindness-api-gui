@@ -1,5 +1,9 @@
 <template>
-  <div class="inline-block px-4 py-2 rounded-lg border cursor-pointer" @click="$emit('click')" :class="classNames">
+  <div class="inline-block px-4 py-2 rounded-lg border cursor-pointer" @click="() => {
+    if(!disabled) {
+      $emit('click');
+    }
+  }" :class="classNames">
     <slot></slot>
   </div>
 </template>
@@ -7,6 +11,9 @@
 <script>
 export default {
   props: {
+    disabled: {
+      default: false
+    },
     color: {
       default: 'green'
     }
@@ -16,7 +23,8 @@ export default {
       classNames: {
         [`bg-${this.color}-500`]: true,
         [`text-${this.color}-100`]: true,
-        [`hover:bg-${this.color}-600`]: true
+        [`hover:bg-${this.color}-600`]: true,
+        [`opacity-50`]: this.disabled
       }
     }
   }

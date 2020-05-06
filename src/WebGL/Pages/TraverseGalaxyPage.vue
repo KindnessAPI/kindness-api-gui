@@ -46,7 +46,19 @@
         v-if="currentNode && graph && overlay === 'node-editor'"
       ></NodeEditorUnit>
 
-      <AddFriendUnit
+      <NodeViewerUnit
+        @close="overlay = false"
+        @reload="onReload"
+
+        :currentNode="currentNode"
+        :graph="graph"
+
+        :userID="queryUserID"
+        :username="queryUsername"
+        v-if="currentNode && graph && overlay === 'node-viewer'"
+      ></NodeViewerUnit>
+
+      <!-- <AddFriendUnit
         v-if="overlay === 'add-friend'"
         @close="overlay = false"
         @reload="onReload"
@@ -56,7 +68,7 @@
         v-if="overlay === 'write-post'"
         @close="overlay = false"
         @reload="onReload"
-      ></WritePostUnit>
+      ></WritePostUnit> -->
 
       <!-- <DebugUnit
         @close="overlay = false"
@@ -191,6 +203,14 @@ export default {
     },
     async onReload () {
       this.socket.notifyGraphChange()
+      // let graph = this.graph
+      // this.graph = {
+      //   nodes: [],
+      //   links: []
+      // }
+      // setTimeout(() => {
+      //   this.graph = graph
+      // }, 10)
       // await this.downloadGraph()
     },
     async downloadGraph () {

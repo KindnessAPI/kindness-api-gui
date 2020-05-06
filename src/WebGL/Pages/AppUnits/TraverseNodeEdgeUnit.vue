@@ -76,7 +76,7 @@ export default {
     },
     install () {
       var myGraph = ForceGraph3D({ controlType: 'fly', rendererConfig: { antialias: true, alpha: true } })
-      // myGraph.d3Force('link').distance(35)
+      myGraph.d3Force('link').distance(40)
       myGraph.warmupTicks(60 * 0.5)
       myGraph.d3AlphaDecay(0.01)
 
@@ -318,7 +318,7 @@ export default {
         .linkWidth(link => highlightLinks.has(link) ? 3 : 2)
         .linkColor(link => highlightLinks.has(link) ? 'rgb(218, 126, 11)' : 'rgba(255,255,255,1.0)')
         .linkDirectionalParticles(link => highlightLinks.has(link) ? 3 : 1)
-        .linkOpacity(1.0)
+        .linkOpacity(0.6)
         // .linkLabel('type')
         .linkDirectionalParticleWidth(3)
         .linkDirectionalParticleResolution(3)

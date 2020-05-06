@@ -2,10 +2,11 @@
 <template>
   <div v-if="node && node.type !== 'user'">
     <div class="mb-3 text-3xl">
-      Remove this node and Links
+      Remove
     </div>
     <div class="mb-3">
-      <ReButton :color="'red'" @click="removeNode()">Remove <span v-if="loading">⏱</span></ReButton>
+      <!-- <img class="w-16 h-16 object-cover object-center" :src="`${node.img}`" alt=""> -->
+      <ReButton :color="'red'" @click="removeNode()">Remove Node & Link<span v-if="loading">⏱</span></ReButton>
     </div>
     <!-- <div class="mb-3">
       <table>

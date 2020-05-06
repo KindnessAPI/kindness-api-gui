@@ -32,7 +32,7 @@ module.exports = {
       .use('vue-loader')
       .loader('vue-loader')
       .tap(options => {
-        // options.hotReload = false
+        options.hotReload = false
         return options
       })
   }

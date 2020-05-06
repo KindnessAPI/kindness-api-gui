@@ -2,7 +2,7 @@
 <template>
   <div v-if="node">
     <div class="mb-3 text-3xl">
-      Manage Links
+      Edit Links
     </div>
     <div>
       <table>
@@ -19,9 +19,12 @@
             {{ enode.name }}
           </td>
           <td class="pr-3 pb-3">
+            <img class="w-16 h-16 object-cover object-center" :src="`${enode.img}`" alt="">
+          </td>
+          <td class="pr-3 pb-3">
             <div :key="enode._id" v-if="enode._id !== node._id">
-              <ReButton :key="'y' + enode._id + node._id" color="red" class="inline-block" @click="removeLink(node, enode)" v-if="hasLink(node, enode)">Unlink <span v-if="enode.loading">⏱</span></ReButton>
-              <ReButton :key="'n' + enode._id + node._id" color="green" class="inline-block" @click="addLink(node, enode)" v-if="!hasLink(node, enode)">Link <span v-if="enode.loading">⏱</span></ReButton>
+              <ReButton :key="'y' + enode._id + node._id" color="red" class="inline-block" @click="removeLink(node, enode)" v-if="(hasLink(node, enode) || hasLink(enode, node))">Unlink <span v-if="enode.loading">⏱</span></ReButton>
+              <ReButton :key="'n' + enode._id + node._id" color="green" class="inline-block" @click="addLink(node, enode)" v-if="!(hasLink(node, enode) || hasLink(enode, node))">Link <span v-if="enode.loading">⏱</span></ReButton>
             </div>
           </td>
         </tr>
@@ -65,7 +68,7 @@ export default {
     async removeLink (fromNode, toNode) {
       toNode.loading = true
       this.$forceUpdate()
-      let link = this.hasLink(fromNode, toNode)
+      let link = this.hasLink(fromNode, toNode) || this.hasLink(toNode, fromNode)
       await Graph.removeEdgeByID({ edgeID: link._id })
       toNode.loading = false
       this.$forceUpdate()
