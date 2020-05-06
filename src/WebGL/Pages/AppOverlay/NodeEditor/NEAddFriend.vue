@@ -2,7 +2,7 @@
 <template>
   <div>
     <div class="mb-3 text-3xl">
-      Attach a Friend
+      Add a Friend to here
     </div>
     <div class="mb-3">
       <div class="text-xl">
