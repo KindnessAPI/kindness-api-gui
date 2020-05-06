@@ -7,9 +7,9 @@
     <div class="mb-3">
       <textarea placeholder="name" v-model="node.name" cols="36" rows="1" class="max-w-full rounded-none bg-transparent px-2 whitespace-pre-line resize-none px-0 py-2 mb-3 border-b border-black inline-block"></textarea>
     </div>
-    <div class="mb-3">
+    <!-- <div class="mb-3">
       <textarea placeholder="type" v-model="node.type" cols="36" rows="1" class="max-w-full rounded-none bg-transparent px-2 whitespace-pre-line resize-none px-0 py-2 mb-3 border-b border-black inline-block"></textarea>
-    </div>
+    </div> -->
     <div class="mb-3">
       <img :src="node.img" class="w-16 h-16" alt="">
       <textarea placeholder="photo link" v-model="node.img" cols="36" rows="1" class="max-w-full rounded-none bg-transparent px-2 whitespace-pre-line resize-none px-0 py-2 mb-3 border-b border-black inline-block"></textarea>

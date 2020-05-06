@@ -2,7 +2,7 @@
 <template>
   <div>
     <div class="mb-3 text-3xl">
-      Add another Space Travel Gateway to here
+      Add a Friend to this Node
     </div>
     <div class="mb-3">
       <div class="text-xl">

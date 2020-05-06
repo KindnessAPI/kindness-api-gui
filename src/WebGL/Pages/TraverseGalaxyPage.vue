@@ -43,11 +43,7 @@
           class="full flex justify-center items-center text-3xl text-white"
         >
           <div>
-            Traversing
-            <br/>
-            Galaxy...
-            <br/>
-            🙏🏻⏱
+            Traversing Galaxy ⏱
           </div>
         </div>
       </div>

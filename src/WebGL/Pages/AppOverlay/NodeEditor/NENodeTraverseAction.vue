@@ -1,9 +1,6 @@
 
 <template>
   <div v-if="node && node.type === 'traverse'">
-    <div class="mb-3 text-3xl">
-      Traverse the Galaxy
-    </div>
     <div class="mb-3">
       <ReButton
         :color="'green'"

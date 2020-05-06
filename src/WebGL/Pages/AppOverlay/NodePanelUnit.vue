@@ -5,8 +5,9 @@
     </div>
     <div v-if="editable" class="p-4 h-full w-full overflow-y-auto overflow-x-hidden">
       <div class="mb-3 text-3xl">
-        <span v-if="node.type === 'user'">Your Headquarter</span>
-        <span v-if="node.type === 'traverse'">Space Travel Gateway to</span>: {{ node.name }}
+        <span v-if="node.type === 'user'">Your Headquarter: </span>
+        <span v-if="node.type === 'traverse'">Space Travel to: </span>
+        {{ node.name }}
       </div>
 
       <div :class="{ 'bg-blue-200': tab === 'action' }" @click="tab = 'action'" class="inline-block px-3 py-2 border mb-2 mr-2">Node Action</div>
