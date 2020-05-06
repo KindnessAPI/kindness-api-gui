@@ -8,6 +8,7 @@
       <ReButton
         :color="'green'"
         :disabled="isMyself"
+        :class="{ 'opacity-50': isMyself }"
         @click="$router.push(`/profile/${node.value.username}/${node.value.userID}`); $emit('close')"
       >
         Let's visit @{{ node.value.username }}!

@@ -7,10 +7,12 @@
     <div v-show="!openMenu" class="full relative">
       <TopNavBar @menu="openMenu = !openMenu"></TopNavBar>
 
-      <ScissorArea
+      <!--  -->
+
+      <!-- <ScissorArea
       class="webgl-bg"
       :key="'webgloading'"
-      :render="this.mainArea === 'loading'"
+      v-if="this.mainArea === 'loading'"
       >
         <div
           slot="dom"
@@ -24,13 +26,37 @@
         </div>
         <StarFlowScene slot="o3d">
         </StarFlowScene>
-      </ScissorArea>
+      </ScissorArea> -->
+
+      <div class="simple-bg"
+        :style="{
+          backgroundColor: this.mainArea === 'loading' ? `#251b69` : '#251b69',
+          backgroundImage: this.mainArea === 'loading' ? `url(${require('./AppUnits/hdri/sky-space-milky-way-stars-110854.jpg')})` : `url(${require('./AppUnits/hdri/astronomy-atmosphere-earth-exploration-220201.jpg')})`,
+          backgroundSize: this.mainArea === 'loading' ? 'cover' : 'cover',
+          backgroundPosition: this.mainArea === 'loading' ? `center center` : 'center center',
+          backgroundRepeat: this.mainArea === 'loading' ? `no-repeat no-repeat` : 'no-repeat no-repeat'
+        }"
+        >
+        <div
+          slot="dom"
+          v-if="this.mainArea === 'loading'"
+          class="full flex justify-center items-center text-3xl text-white"
+        >
+          <div>
+            Traversing
+            <br/>
+            Galaxy...
+            <br/>
+            🙏🏻⏱
+          </div>
+        </div>
+      </div>
 
       <TraverseNodeEdgeUnit
       :style="{
         __visibility: this.mainArea === 'traverse' ? 'visible' : 'hidden',
-        backgroundColor: this.mainArea === 'traverse' ? `#251b69` : 'transparent',
-        backgroundImage: this.mainArea === 'traverse' ? `url(${require('./AppUnits/hdri/sky-space-milky-way-stars-110854.jpg')})` : '',
+        __backgroundColor: this.mainArea === 'traverse' ? `#251b69` : '',
+        __backgroundImage: this.mainArea === 'traverse' ? `url(${require('./AppUnits/hdri/sky-space-milky-way-stars-110854.jpg')})` : '',
         backgroundSize: 'cover',
         backgroundPosition: `center center`
       }"
@@ -40,55 +66,25 @@
       @node-click="onNodeClick"
       :graph="graph"
       >
-        <Spaceship></Spaceship>
+        <O3D ref="o3d">
+          <Spaceship></Spaceship>
+        </O3D>
       </TraverseNodeEdgeUnit>
 
+      <!-- <div v-if="overlay" @click="overlay = false" class="overlay-bg"></div> -->
       <div v-if="overlay" @click="overlay = false" class="overlay-close"></div>
 
       <NodePanelUnit
         @close="overlay = false"
         @reload="onReload"
         :editable="isOnMyPage"
-        :currentNode="currentNode"
+        :node="currentNode"
         :graph="graph"
 
         :userID="queryUserID"
         :username="queryUsername"
         v-if="currentNode && graph && overlay === 'node-panel'"
       ></NodePanelUnit>
-
-      <!--
-      <NodeViewerUnit
-        @close="overlay = false"
-        @reload="onReload"
-
-        :currentNode="currentNode"
-        :graph="graph"
-
-        :userID="queryUserID"
-        :username="queryUsername"
-        v-if="currentNode && graph && overlay === 'node-viewer'"
-      ></NodeViewerUnit> -->
-
-      <!-- <AddFriendUnit
-        v-if="overlay === 'add-friend'"
-        @close="overlay = false"
-        @reload="onReload"
-      ></AddFriendUnit>
-
-      <WritePostUnit
-        v-if="overlay === 'write-post'"
-        @close="overlay = false"
-        @reload="onReload"
-      ></WritePostUnit> -->
-
-      <!-- <DebugUnit
-        @close="overlay = false"
-        :userID="userID"
-        :username="username"
-        @reload="onReload"
-        v-if="overlay === 'debug'"
-      ></DebugUnit> -->
 
       <div v-if="overlay" @click="overlay = false" class="overlay-close-btn">
       </div>
@@ -108,6 +104,7 @@ export default {
   mixins: [PipeScissor],
   data () {
     return {
+      layouts: {},
       currentNode: false,
       mainArea: 'traverse',
       btns: [],
@@ -317,6 +314,11 @@ export default {
       }
     })
 
+    // this.base.onLoop(() => {
+    //   let time = window.performance.now() * 0.001
+    //   this.$refs['o3d'].o3d.rotation.z = time
+    // })
+
     // let axios = require('axios').default
     // axios.post('http://localhost:3333/login', {
     //   username: 'lok',
@@ -337,21 +339,36 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-.webgl-bg{
+.simple-bg{
   position: absolute;
   top: 60px;
   left: 0px;
   width: 100%;
   height: calc(100% - 60px);
 }
-.overlay-close {
+
+.overlay-bg{
   position: absolute;
-  top: 0px;
+  top: 60px;
   left: 0px;
   right: 0px;
   bottom: 0px;
   z-index: 10;
-  background-color: rgba(125,125,125,0.75);
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat no-repeat;
+  background-image: url('./AppOverlay/img/mb-lines-svg-2.svg');
+  background-color: rgba(0, 0, 0, 0.61);
+  opacity: 0.6;
+}
+.overlay-close {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+  z-index: 11;
+  background-color: rgba(0, 0, 0, 0.329);
 }
 .overlay-close-btn {
   position: absolute;
@@ -362,20 +379,20 @@ export default {
 }
 .overlay {
   position: absolute;
-  top: 20px;
-  left: 20px;
-  right: 20px;
-  bottom: 20px;
-  z-index: 11;
-  background-color: white;
+  top: 60px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: 12;
+  background-color: rgba(255, 255, 255, 0.788);
 }
 @screen lg {
   .overlay {
     position: absolute;
-    top: 50px;
-    left: 50px;
-    right: 50px;
-    bottom: 50px;
+    top: 60px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
   }
 }
 </style>

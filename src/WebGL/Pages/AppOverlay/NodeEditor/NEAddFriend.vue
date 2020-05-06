@@ -2,14 +2,14 @@
 <template>
   <div>
     <div class="mb-3 text-3xl">
-      Add a Friend to here
+      Add another Space Travel Gateway to here
     </div>
     <div class="mb-3">
       <div class="text-xl">
       Search Username <span v-if="search.loading">⏱</span>
       </div>
       <div>
-        <input type="text" placeholder="Username" v-model="search.query" @input="onTrySearch" class="rounded-none px-0 py-2 mb-3 border-b border-black inline-block">
+        <input type="text" placeholder="Username" v-model="search.query" @input="onTrySearch" class="rounded-none bg-transparent px-0 py-2 mb-3 border-b border-black inline-block">
       </div>
       <table>
         <tr :key="node._id" v-for="node in search.result">

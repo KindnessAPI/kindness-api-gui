@@ -5,18 +5,18 @@
       Edit Details
     </div>
     <div class="mb-3">
-      <textarea placeholder="name" v-model="node.name" cols="36" rows="1" class="max-w-full rounded-none whitespace-pre-line resize-none px-0 py-2 mb-3 border-b border-black inline-block"></textarea>
+      <textarea placeholder="name" v-model="node.name" cols="36" rows="1" class="max-w-full rounded-none bg-transparent px-2 whitespace-pre-line resize-none px-0 py-2 mb-3 border-b border-black inline-block"></textarea>
     </div>
     <div class="mb-3">
-      <textarea placeholder="type" v-model="node.type" cols="36" rows="1" class="max-w-full rounded-none whitespace-pre-line resize-none px-0 py-2 mb-3 border-b border-black inline-block"></textarea>
+      <textarea placeholder="type" v-model="node.type" cols="36" rows="1" class="max-w-full rounded-none bg-transparent px-2 whitespace-pre-line resize-none px-0 py-2 mb-3 border-b border-black inline-block"></textarea>
     </div>
     <div class="mb-3">
       <img :src="node.img" class="w-16 h-16" alt="">
-      <textarea placeholder="photo link" v-model="node.img" cols="36" rows="1" class="max-w-full rounded-none whitespace-pre-line resize-none px-0 py-2 mb-3 border-b border-black inline-block"></textarea>
+      <textarea placeholder="photo link" v-model="node.img" cols="36" rows="1" class="max-w-full rounded-none bg-transparent px-2 whitespace-pre-line resize-none px-0 py-2 mb-3 border-b border-black inline-block"></textarea>
     </div>
-    <div class="mb-3">
+    <!-- <div class="mb-3" v-if="isDev">
       <VJsoneditor v-model="node.value" :options="options" :plus="false" height="400px" @error="onError" />
-    </div>
+    </div> -->
     <div class="mb-3">
       <ReButton :color="'green'" @click="updateNode()">Update node <span v-if="loading">⏱</span></ReButton>
     </div>
@@ -26,18 +26,19 @@
 <script>
 // import _ from 'lodash'
 import { Graph } from '../../../../APIs/KA.js'
-import VJsoneditor from 'v-jsoneditor'
+// import VJsoneditor from 'v-jsoneditor'
 export default {
   props: {
     node: {},
     graph: {}
   },
   components: {
-    VJsoneditor,
+    // VJsoneditor,
     ...require('../../../webgl').default
   },
   data () {
     return {
+      isDev: process.env.NODE_ENV === 'development',
       options: {
         mode: 'code'
       },
@@ -47,6 +48,9 @@ export default {
   mounted () {
   },
   methods: {
+    onError (err) {
+      console.log(err)
+    },
     canStringify (v) {
       let res = false
       try {
