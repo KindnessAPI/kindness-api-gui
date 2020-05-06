@@ -9,6 +9,9 @@
 import { Tree, getID } from '../Reusable'
 export default {
   props: {
+    render: {
+      default: true
+    },
     area: {
       default () {
         return getID()
@@ -26,6 +29,11 @@ export default {
       element: false,
       scene: false,
       camera: false
+    }
+  },
+  watch: {
+    render () {
+      this.tryHook()
     }
   },
   created () {
@@ -51,6 +59,7 @@ export default {
       if (this.scene && this.camera && this.element) {
         let aeras = this.lookup('areas')
         aeras[this.area] = {
+          render: this.render,
           element: this.element,
           scene: this.scene,
           camera: this.camera,

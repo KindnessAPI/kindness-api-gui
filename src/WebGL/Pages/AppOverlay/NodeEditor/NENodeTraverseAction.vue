@@ -32,6 +32,7 @@ export default {
   },
   data () {
     return {
+      Auth,
       show: [
         this.node.type === 'traverse'
       ].some(e => e),
@@ -41,7 +42,7 @@ export default {
   },
   mounted () {
     if (this.node.type === 'traverse') {
-      this.isMyself = Auth.currentProfile.user.userID === this.node.value.userID
+      this.isMyself = this.$route.params.userID === this.node.value.userID
     }
   },
   methods: {

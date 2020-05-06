@@ -45,6 +45,11 @@ export const PipeScissor = {
         var camera = config.camera
         var scene = config.scene
         var composer = config.composer
+        let render = config.render
+
+        if (!render) {
+          continue
+        }
 
         var rect = element.getBoundingClientRect()
         if (rect.height === 0 && rect.width === 0) {

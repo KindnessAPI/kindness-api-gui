@@ -300,10 +300,26 @@ export default {
         controls.update()
       })
 
-      let iconGeo = new CircleBufferGeometry(10, 40)
-      let borderGeo = new CircleBufferGeometry(11, 40)
-      borderGeo.translate(0, 0, -0.1)
-      iconGeo.computeBoundingSphere()
+      let iconGeo = false
+      let borderGeo = false
+
+      let iconGeoSquare = new CircleBufferGeometry(10, 4)
+      let borderGeoSquare = new CircleBufferGeometry(11, 4)
+      iconGeoSquare.computeBoundingSphere()
+      borderGeoSquare.computeBoundingSphere()
+      borderGeoSquare.translate(0, 0, -0.1)
+
+      let iconGeoHexa = new CircleBufferGeometry(10, 6)
+      let borderGeoHexa = new CircleBufferGeometry(11, 6)
+      iconGeoHexa.computeBoundingSphere()
+      borderGeoHexa.computeBoundingSphere()
+      borderGeoHexa.translate(0, 0, -0.1)
+
+      let iconGeoCircle = new CircleBufferGeometry(10, 40)
+      let borderGeoCircle = new CircleBufferGeometry(11, 40)
+      iconGeoCircle.computeBoundingSphere()
+      borderGeoCircle.computeBoundingSphere()
+      borderGeoCircle.translate(0, 0, -0.1)
 
       let transparentMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0 })
       let whiteMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0.8, color: 0xffffff })
@@ -325,6 +341,19 @@ export default {
         .linkResolution(3)
         // .nodeResolution(3)
         .nodeThreeObject((node) => {
+          if (node.type === 'traverse') {
+            iconGeo = iconGeoHexa
+            borderGeo = borderGeoHexa
+          } else if (node.type === 'user') {
+            iconGeo = iconGeoCircle
+            borderGeo = borderGeoCircle
+          } else if (node.type === 'content') {
+            iconGeo = iconGeoSquare
+            borderGeo = borderGeoSquare
+          } else {
+            iconGeo = iconGeoCircle
+            borderGeo = borderGeoCircle
+          }
           const clicker = new Mesh(
             borderGeo,
             transparentMat

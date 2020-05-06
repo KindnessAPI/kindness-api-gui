@@ -2,7 +2,7 @@
 <template>
   <div>
     <div class="mb-3 text-3xl">
-      Add Friend
+      Attach a Friend
     </div>
     <div class="mb-3">
       <div class="text-xl">
@@ -58,6 +58,7 @@ export default {
         friend.loading = false
         this.$forceUpdate()
         window.dispatchEvent(new Event('reload-graph'))
+        this.$emit('close')
       } catch (e) {
         console.log(e)
       }

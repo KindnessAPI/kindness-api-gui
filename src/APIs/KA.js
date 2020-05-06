@@ -445,7 +445,7 @@ export class Graph {
     })
   }
 
-  static async addUserNode ({ name = 'New User', photo }) {
+  static async addUserNode ({ profileUsername, profileUserID, name = 'New User', photo }) {
     photo = photo || `https://picsum.photos/id/${(Math.random() * 1200).toFixed(0)}/200/200`
 
     let axios = (await import('axios')).default
@@ -460,6 +460,10 @@ export class Graph {
           name: name,
           img: photo,
           type: 'user',
+          value: {
+            username: profileUsername,
+            userID: profileUserID
+          },
           tags: [
             {
               text: 'early-bird'

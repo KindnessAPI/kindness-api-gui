@@ -1,34 +1,34 @@
 <template>
   <div class="full">
-    <div class="fixed top-0 left-0 full pointer-events-none" :style="{ zIndex: -1 }" ref="mounter"></div>
+    <div class="fixed top-0 left-0 full pointer-events-none" :style="{
+      zIndex: -1,
+    }" ref="mounter"></div>
 
     <div v-show="!openMenu" class="full relative">
       <TopNavBar @menu="openMenu = !openMenu"></TopNavBar>
 
-      <keep-alive>
-        <ScissorArea
-        class="webgl-bg"
-        v-if="this.mainArea === 'loading' ? 'visible' : 'hidden'"
-        :key="'webgloading'"
-        :style="{
-        }">
-          <div
-            slot="dom"
-            class="full flex justify-center items-center text-3xl text-white"
-          >
-            <div>
-              Traversing Galaxy
-              <br/>
-              Loading... ⏱
-            </div>
+      <ScissorArea
+      class="webgl-bg"
+      :key="'webgloading'"
+      :render="this.mainArea === 'loading'"
+      >
+        <div
+          slot="dom"
+          class="full flex justify-center items-center text-3xl text-white"
+        >
+          <div>
+            Traversing Galaxy
+            <br/>
+            Please wait... ⏱
           </div>
-          <StarFlowScene slot="o3d"></StarFlowScene>
-        </ScissorArea>
-      </keep-alive>
+        </div>
+        <StarFlowScene slot="o3d">
+        </StarFlowScene>
+      </ScissorArea>
 
       <TraverseNodeEdgeUnit
       :style="{
-        ddvisibility: this.mainArea === 'traverse' ? 'visible' : 'hidden',
+        __visibility: this.mainArea === 'traverse' ? 'visible' : 'hidden',
         backgroundColor: this.mainArea === 'traverse' ? `#251b69` : 'transparent',
         backgroundImage: this.mainArea === 'traverse' ? `url(${require('./AppUnits/hdri/sky-space-milky-way-stars-110854.jpg')})` : '',
         backgroundSize: 'cover',
@@ -45,18 +45,19 @@
 
       <div v-if="overlay" @click="overlay = false" class="overlay-close"></div>
 
-      <NodeEditorUnit
+      <NodePanelUnit
         @close="overlay = false"
         @reload="onReload"
-
+        :editable="isOnMyPage"
         :currentNode="currentNode"
         :graph="graph"
 
         :userID="queryUserID"
         :username="queryUsername"
-        v-if="currentNode && graph && overlay === 'node-editor'"
-      ></NodeEditorUnit>
+        v-if="currentNode && graph && overlay === 'node-panel'"
+      ></NodePanelUnit>
 
+      <!--
       <NodeViewerUnit
         @close="overlay = false"
         @reload="onReload"
@@ -67,7 +68,7 @@
         :userID="queryUserID"
         :username="queryUsername"
         v-if="currentNode && graph && overlay === 'node-viewer'"
-      ></NodeViewerUnit>
+      ></NodeViewerUnit> -->
 
       <!-- <AddFriendUnit
         v-if="overlay === 'add-friend'"
@@ -149,8 +150,7 @@ export default {
   methods: {
     onViewProfile () {
       let node = this.graph.nodes.find(e => e.userID === this.queryUserID && e.type === 'user')
-      this.currentNode = node
-      this.overlay = 'node-viewer'
+      this.onNodeClick(node)
     },
     onGoHome () {
       this.$router.push(`/profile/${Auth.currentProfile.user.username}/${Auth.currentProfile.user.userID}`)
@@ -181,30 +181,23 @@ export default {
     // onMeClick () {
     //   this.userID = Auth.currentProfile.user.userID
     //   this.username = Auth.currentProfile.user.username
-    //   this.overlay = 'node-editor'
+    //   this.overlay = 'node-panel'
     // },
     onNodeClick (node) {
       this.currentNode = node
+
       if (this.isOnMyPage) {
-        this.overlay = 'node-editor'
+        this.overlay = 'node-panel'
       } else {
         if (node.type === 'traverse') {
           this.$router.push(`/profile/${node.value.username}/${node.value.userID}`)
         } else {
-          this.overlay = 'node-viewer'
+          this.overlay = 'node-panel'
         }
       }
-      // if (node.type === 'traverse') {
-      // } else {
-      //   this.currentNode = node
-      //   if (this.isOnMyPage) {
-      //     this.overlay = 'node-editor'
-      //   } else {
-      //     this.overlay = 'node-viewer'
-      //   }
-      // }
     },
     async onReload () {
+      this.mainArea = 'loading'
       this.socket.notifyGraphChange()
       // let graph = this.graph
       // this.graph = {
@@ -217,6 +210,7 @@ export default {
       // await this.downloadGraph()
     },
     async downloadGraph () {
+      this.mainArea = 'loading'
       let graphData = await Graph.getUserGraph({ userID: this.queryUserID })
       let needToReload = false
       for (let link of graphData.links) {
@@ -230,6 +224,7 @@ export default {
         graphData = await Graph.getUserGraph({ userID: this.queryUserID })
       }
       this.graph = graphData
+      this.mainArea = 'traverse'
     },
     async getMyNode () {
       let mynode = await Graph.getMyNode()
@@ -240,7 +235,11 @@ export default {
       if (!(Auth.currentProfile && Auth.currentProfile.user.username)) {
         return
       }
-      let mynode = await Graph.addUserNode({ name: Auth.currentProfile.user.username })
+      let mynode = await Graph.addUserNode({
+        name: Auth.currentProfile.user.username,
+        profileUsername: Auth.currentProfile.user.username,
+        profileUserID: Auth.currentProfile.user.userID
+      })
         .then(r => r, () => false)
       return mynode
     },
@@ -273,6 +272,17 @@ export default {
       this.onReset()
       await this.makeSocket()
       let mynode = await this.getMyNode()
+      // patch mynode without value
+      if (mynode && !mynode.value) {
+        mynode = {
+          ...mynode,
+          value: {
+            username: Auth.currentProfile.user.username,
+            userID: Auth.currentProfile.user.userID
+          }
+        }
+        await Graph.updateMyNode({ edit: mynode })
+      }
       if (!mynode) {
         await this.createMyNode()
         this.socket.notifyGraphChange()
