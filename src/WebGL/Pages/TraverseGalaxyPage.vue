@@ -242,11 +242,11 @@ export default {
       if (!(Auth.currentProfile && Auth.currentProfile.user.username)) {
         return
       }
-      if (Auth.currentProfile.user.userID !== this.queryUserID) {
-        this.mainArea = 'not-ready'
-        this.$router.go(-1)
-        throw new Error('cannot create other people\'s profile')
-      }
+      // if (Auth.currentProfile.user.userID !== this.queryUserID) {
+      //   this.mainArea = 'not-ready'
+      //   this.$router.go(-1)
+      //   throw new Error('cannot create other people\'s profile')
+      // }
       let mynode = await Graph.addUserNode({
         name: Auth.currentProfile.user.username,
         profileUsername: Auth.currentProfile.user.username,
@@ -284,11 +284,11 @@ export default {
         let me = Auth.currentProfile.user
         let profile = await Profile.getProfileByUserID({ userID: me.userID })
         if (!profile) {
-          if (Auth.currentProfile.user.userID !== this.queryUserID) {
-            this.mainArea = 'not-ready'
-            this.$router.go(-1)
-            throw new Error('cannot create other people\'s profile')
-          }
+          // if (Auth.currentProfile.user.userID !== this.queryUserID) {
+          //   this.mainArea = 'not-ready'
+          //   this.$router.go(-1)
+          //   throw new Error('cannot create other people\'s profile')
+          // }
           profile = await Profile.createProfile({ userID: me.userID, username: me.username })
         }
         this.profile = profile
