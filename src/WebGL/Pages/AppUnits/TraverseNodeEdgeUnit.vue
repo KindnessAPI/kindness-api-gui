@@ -75,13 +75,13 @@ export default {
       this.view3D = !this.view3D
       this.$emit('snyc3D2D')
     },
-    install () {
+    async install () {
       var myGraph = ForceGraph3D({ controlType: 'fly', rendererConfig: { antialias: true, alpha: true } })
       myGraph.d3Force('link').distance(40)
       myGraph.warmupTicks(60 * 0.5)
       myGraph.d3AlphaDecay(0.01)
-      myGraph.nodeLabel('__')
-      myGraph.linkLabel('__')
+      myGraph.nodeLabel('__' + Math.random())
+      myGraph.linkLabel('__' + Math.random())
 
       // myGraph.linkDirectionalArrowLength(0.0001)
       // myGraph.linkDirectionalArrowRelPos(0.0001)
@@ -309,6 +309,60 @@ export default {
         controls.update()
       })
 
+      // -------
+
+      // var Params = {
+      //   exposure: 1,
+      //   bloomStrength: 0.6,
+      //   bloomThreshold: 0.9,
+      //   bloomRadius: 0.7
+      // }
+      // let { EffectComposer } = require('three/examples/jsm/postprocessing/EffectComposer.js')
+      // let { RenderPass } = require('three/examples/jsm/postprocessing/RenderPass.js')
+      // let { UnrealBloomPass } = require('three/examples/jsm/postprocessing/UnrealBloomPass.js')
+      // let { Vector2 } = require('three')
+      // let renderer = engine.renderer()
+      // let element = engine.renderer().domElement
+      // let rect = element.getBoundingClientRect()
+      // let depth = 70000
+      // let screen = getScreen({ camera: engine.camera(), depth })
+      // let image = await new Promise((resolve) => {
+      //   let img = new Image()
+      //   img.onload = () => {
+      //     resolve(img)
+      //   }
+      //   img.src = require('../AppUnits/hdri/sky-space-dark-galaxy-2150.jpg')
+      // })
+      // let bgtex = new TextureLoader().load(require('../AppUnits/hdri/sky-space-dark-galaxy-2150.jpg'))
+      // let bgmat = new MeshBasicMaterial({ map: bgtex })
+      // let ww = screen.max * 1.2
+      // let hh = screen.max * 1.2
+      // ww = screen.max * image.width / image.height
+
+      // let bgplane = new PlaneBufferGeometry(ww, hh)
+      // let bgmesh = new Mesh(bgplane, bgmat)
+      // bgmesh.position.z = -depth
+      // engine.scene().add(bgmesh)
+
+      // var renderScene = new RenderPass(engine.scene(), engine.camera())
+      // var bloomPass = new UnrealBloomPass(new Vector2(rect.width * 2, rect.height * 2), 1.5, 0.4, 0.85)
+      // bloomPass.threshold = Params.bloomThreshold
+      // bloomPass.strength = Params.bloomStrength
+      // bloomPass.radius = Params.bloomRadius
+
+      // this.composer = new EffectComposer(renderer)
+      // this.composer.addPass(renderScene)
+      // this.composer.addPass(bloomPass)
+      // this.base.onResize(() => {
+      //   let rect = element.getBoundingClientRect()
+      //   let dpi = window.devicePixelRatio || 1
+      //   bloomPass.setSize(rect.width * dpi, rect.height * dpi)
+      //   this.composer.setSize(rect.width * dpi, rect.height * dpi)
+      // })
+      // myGraph.postProcessingComposer(this.composer)
+
+      // -------
+
       let iconGeo = false
       let borderGeo = false
 
@@ -341,7 +395,7 @@ export default {
       borderGeoCircle.translate(0, 0, -0.1)
 
       let transparentMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0 })
-      let whiteMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0.8, color: 0xffffff, envMap: this.cuber.out.envMap })
+      let whiteMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 1.0, color: 0xffffff, envMap: this.cuber.out.envMap })
       let blueMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0.45, color: 0xffffff, envMap: this.cuber.out.envMap })
       let limeMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0.65, color: 0x32cd32, envMap: this.cuber.out.envMap })
 

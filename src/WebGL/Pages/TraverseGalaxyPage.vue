@@ -230,6 +230,7 @@ export default {
       }
     },
     async onReload () {
+      await this.initMyProfile()
       this.mainArea = 'loading'
       this.socket.notifyGraphChange()
       // let graph = this.graph
