@@ -70,6 +70,16 @@
         </div>
       </div>
 
+      <div v-if="this.mainArea === 'not-ready'" class="overlay-loading">
+        <div
+          class="full flex justify-center items-center text-3xl text-white"
+        >
+          <div class="p-6 rounded-lg text-white bg-translucent">
+            Profile Not Ready
+          </div>
+        </div>
+      </div>
+
       <!-- <div v-if="overlay" @click="overlay = false" class="overlay-bg"></div> -->
       <div v-if="overlay" @click="overlay = false" class="overlay-close"></div>
 
@@ -229,11 +239,13 @@ export default {
       return mynode
     },
     async createMyNode () {
-      if (Auth.currentProfile.user.userID !== this.queryUserID) {
-        throw new Error('cannot create other people\'s profile')
-      }
       if (!(Auth.currentProfile && Auth.currentProfile.user.username)) {
         return
+      }
+      if (Auth.currentProfile.user.userID !== this.queryUserID) {
+        this.mainArea = 'not-ready'
+        this.$router.go(-1)
+        throw new Error('cannot create other people\'s profile')
       }
       let mynode = await Graph.addUserNode({
         name: Auth.currentProfile.user.username,
@@ -268,13 +280,15 @@ export default {
       })
     },
     async initProfile () {
-      if (Auth.currentProfile.user.userID !== this.queryUserID) {
-        throw new Error('cannot create other people\'s profile')
-      }
       try {
         let me = Auth.currentProfile.user
         let profile = await Profile.getProfileByUserID({ userID: me.userID })
         if (!profile) {
+          if (Auth.currentProfile.user.userID !== this.queryUserID) {
+            this.mainArea = 'not-ready'
+            this.$router.go(-1)
+            throw new Error('cannot create other people\'s profile')
+          }
           profile = await Profile.createProfile({ userID: me.userID, username: me.username })
         }
         this.profile = profile
