@@ -53,6 +53,7 @@ export default {
   methods: {
     async initContent () {
       try {
+        console.log(this.node._id, this.node.name)
         let me = Auth.currentProfile.user
         let content = await Content.getContentByNodeID({ nodeID: this.node._id })
         if (!content) {
