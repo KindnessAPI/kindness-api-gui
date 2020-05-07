@@ -75,7 +75,7 @@ export default {
           if (this.$route.query.redirect) {
             this.$router.push(this.$route.query.redirect)
           } else {
-            this.$router.push('/dashboard')
+            this.$router.push('/galaxy')
           }
           // console.log(profile)
         }, (e) => {

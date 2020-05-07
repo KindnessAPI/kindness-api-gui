@@ -383,7 +383,248 @@ export class Auth {
 
 Auth.loadProfiles()
 
+export class Content {
+  static async getContentByNodeID ({ nodeID }) {
+    let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-content',
+      headers: getHeader(),
+      data: {
+        method: 'query',
+        payload: {
+          nodeID
+        }
+      }
+    })
+    return resp.then((r) => {
+      return r.data[0]
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+  static async createContent ({ userID, username, nodeID, title = 'Please enter title', photo }) {
+    if (!nodeID) {
+      throw new Error('missing ndoe id')
+    }
+    photo = photo || `https://picsum.photos/id/${(Math.random() * 1200).toFixed(0)}/500/500`
+
+    let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-content',
+      headers: getHeader(),
+      data: {
+        method: 'create',
+        payload: {
+          type: 'memo',
+          userID,
+          username,
+          nodeID,
+          title,
+          content: '',
+          coverImg: photo,
+          tags: [{ text: 'memo' }]
+        }
+      }
+    })
+    return resp.then((r) => {
+      return r.data
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+  static async removeContentByID ({ contentID }) {
+    if (!contentID) {
+      throw new Error('missing content id')
+    }
+    let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-content',
+      headers: getHeader(),
+      data: {
+        method: 'remove-one',
+        payload: {
+          _id: contentID
+        }
+      }
+    })
+    return resp.then((r) => {
+      return r.data
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+  static async updateContent ({ edit }) {
+    let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-content',
+      headers: getHeader(),
+      data: {
+        method: 'update',
+        payload: {
+          _id: edit._id,
+          edit
+        }
+      }
+    })
+    return resp.then((r) => {
+      return r.data
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+}
+
+export class Profile {
+  static async getProfileByUserID ({ userID }) {
+    let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-profile',
+      headers: getHeader(),
+      data: {
+        method: 'query',
+        payload: {
+          userID
+        }
+      }
+    })
+    return resp.then((r) => {
+      return r.data[0]
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+  static async createProfile ({ userID, username, photo }) {
+    photo = photo || `https://picsum.photos/id/${(Math.random() * 1200).toFixed(0)}/200/200`
+
+    let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-profile',
+      headers: getHeader(),
+      data: {
+        method: 'create',
+        payload: {
+          type: 'user',
+          userID,
+          username,
+
+          displayName: username,
+          bio: '',
+
+          instagramURL: '',
+          youtubeURL: '',
+          twitterURL: '',
+
+          displayShip: true,
+
+          photoImg: photo,
+          bgImg: '',
+          loadingImg: '',
+
+          tags: [{ text: 'first-profile' }]
+        }
+      }
+    })
+    return resp.then((r) => {
+      return r.data
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+  static async updateProfile ({ edit }) {
+    let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-profile',
+      headers: getHeader(),
+      data: {
+        method: 'update',
+        payload: {
+          _id: edit._id,
+          edit
+        }
+      }
+    })
+    return resp.then((r) => {
+      return r.data[0]
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+}
+
 export class Graph {
+  static async createContentNode ({ name = 'New Content', photo }) {
+    photo = photo || `https://picsum.photos/id/${(Math.random() * 1200).toFixed(0)}/200/200`
+    let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-node',
+      headers: getHeader(),
+      data: {
+        method: 'create',
+        payload: {
+          name: name,
+          img: photo,
+          value: {},
+          type: 'content',
+          tags: [
+            // {
+            //   'text': 'my-content'
+            // }
+          ]
+        }
+      }
+    })
+    return resp.then((r) => {
+      return r.data
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+  static async linkContentNode ({ fromID, toID }) {
+    let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-edge',
+      headers: getHeader(),
+      data: {
+        method: 'create',
+        payload: {
+          source: fromID,
+          target: toID,
+          name: 'make memo',
+          type: 'memo',
+          value: {},
+          tags: [
+            {
+              'text': 'early-bird'
+            }
+          ]
+        }
+      }
+    })
+    return resp.then((r) => {
+      return r.data
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+
   static async createFriendTraverseNode ({ profileUsername, profileUserID, name = 'New User', photo }) {
     photo = photo || `https://picsum.photos/id/${(Math.random() * 1200).toFixed(0)}/200/200`
     let axios = (await import('axios')).default
@@ -430,6 +671,7 @@ export class Graph {
           target: toID,
           name: 'make friend',
           type: 'friend',
+          value: {},
           tags: [
             {
               'text': 'early-bird'

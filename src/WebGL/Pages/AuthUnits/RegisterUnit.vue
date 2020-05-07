@@ -136,7 +136,7 @@ export default {
         email
       }).then((profile) => {
         console.log(profile)
-        this.$router.push('/dashboard')
+        this.$router.push('/galaxy')
       }, () => {
       })
     }

@@ -37,15 +37,7 @@
           backgroundRepeat: this.mainArea === 'loading' ? `no-repeat no-repeat` : 'no-repeat no-repeat'
         }"
         >
-        <div
-          slot="dom"
-          v-if="this.mainArea === 'loading'"
-          class="full flex justify-center items-center text-3xl text-white"
-        >
-          <div>
-            Traversing Galaxy ⏱
-          </div>
-        </div>
+
       </div>
 
       <TraverseNodeEdgeUnit
@@ -66,6 +58,17 @@
           <Spaceship></Spaceship>
         </O3D>
       </TraverseNodeEdgeUnit>
+
+      <div v-if="this.mainArea === 'loading'" class="overlay-loading">
+        <div
+          class="full flex justify-center items-center text-3xl text-white"
+        >
+          <div class="p-6 rounded-lg text-white bg-translucent">
+            Traversing Galaxy <br/>
+            Please wait...✨
+          </div>
+        </div>
+      </div>
 
       <!-- <div v-if="overlay" @click="overlay = false" class="overlay-bg"></div> -->
       <div v-if="overlay" @click="overlay = false" class="overlay-close"></div>
@@ -92,7 +95,7 @@
 
 <script>
 import { PipeScissor, makeScrollBox } from '../Reusable'
-import { Auth, Graph, LamdaClient, getWS, getID } from '../../APIs/KA'
+import { Auth, Graph, LamdaClient, getWS, getID, Profile } from '../../APIs/KA'
 
 // import axios from 'axios'
 export default {
@@ -100,6 +103,7 @@ export default {
   mixins: [PipeScissor],
   data () {
     return {
+      profile: false,
       layouts: {},
       currentNode: false,
       mainArea: 'traverse',
@@ -225,6 +229,9 @@ export default {
       return mynode
     },
     async createMyNode () {
+      if (Auth.currentProfile.user.userID !== this.queryUserID) {
+        throw new Error('cannot create other people\'s profile')
+      }
       if (!(Auth.currentProfile && Auth.currentProfile.user.username)) {
         return
       }
@@ -260,6 +267,21 @@ export default {
         await this.downloadGraph()
       })
     },
+    async initProfile () {
+      if (Auth.currentProfile.user.userID !== this.queryUserID) {
+        throw new Error('cannot create other people\'s profile')
+      }
+      try {
+        let me = Auth.currentProfile.user
+        let profile = await Profile.getProfileByUserID({ userID: me.userID })
+        if (!profile) {
+          profile = await Profile.createProfile({ userID: me.userID, username: me.username })
+        }
+        this.profile = profile
+      } catch (e) {
+        console.log(e)
+      }
+    },
     async onInit () {
       this.mainArea = 'loading'
       this.onReset()
@@ -280,6 +302,7 @@ export default {
         await this.createMyNode()
         this.socket.notifyGraphChange()
       }
+      await this.initProfile()
       await this.downloadGraph()
       this.onSetupBtns()
       this.mainArea = 'traverse'
@@ -364,7 +387,15 @@ export default {
   bottom: 0px;
   right: 0px;
   z-index: 11;
-  background-color: rgba(0, 0, 0, 0.329);
+  background-color: rgba(0, 0, 0, 0.589);
+}
+.overlay-loading{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+  z-index: 12;
 }
 .overlay-close-btn {
   position: absolute;
@@ -375,20 +406,24 @@ export default {
 }
 .overlay {
   position: absolute;
-  top: 60px;
+  top: 0px;
   left: 0px;
   right: 0px;
   bottom: 0px;
   z-index: 12;
-  background-color: rgba(255, 255, 255, 0.788);
+  background-color: rgba(255, 255, 255, 0.904);
 }
 @screen lg {
   .overlay {
     position: absolute;
-    top: 60px;
+    top: 0px;
     left: 0px;
     right: 0px;
     bottom: 0px;
   }
+}
+.bg-translucent{
+  background-color: rgba(0, 0, 0, 0.418);
+  box-shadow: 0px 0px 30px 0px rgb(30, 30, 30);
 }
 </style>

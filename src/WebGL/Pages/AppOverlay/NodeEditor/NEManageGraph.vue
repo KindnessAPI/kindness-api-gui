@@ -1,7 +1,7 @@
 
 <template>
   <div v-if="node">
-    <div class="mb-3 text-3xl">
+    <div class="mb- text-3xl">
       Edit Links
     </div>
     <div>

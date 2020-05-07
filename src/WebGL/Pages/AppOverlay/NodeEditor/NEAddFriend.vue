@@ -1,11 +1,11 @@
 
 <template>
   <div>
-    <div class="mb-3 text-3xl">
+    <div class="mb-3 text-xl">
       Add a Friend to this Node
     </div>
     <div class="mb-3">
-      <div class="text-xl">
+      <div class="text-lg">
       Search Username <span v-if="search.loading">⏱</span>
       </div>
       <div>
