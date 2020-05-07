@@ -40,10 +40,10 @@
         <div>
           <img @click="profile.bgImg = img.img" class="border w-16 h-16 m-1 inline-block" :key="img.key" v-for="img in imgs" :src="img.img" :alt="img.key">
         </div>
+        <textarea placeholder="Background image link" v-model="profile.bgImg" cols="36" rows="1" class="max-w-full rounded-none bg-transparent whitespace-pre-line resize-none px-0 py-2 mb-3 border-b border-black inline-block"></textarea>
         <div>
           <img :src="profile.bgImg" class="border w-16 h-16 m-1 inline-block" alt="">
         </div>
-        <textarea placeholder="Background image link" v-model="profile.bgImg" cols="36" rows="1" class="max-w-full rounded-none bg-transparent whitespace-pre-line resize-none px-0 py-2 mb-3 border-b border-black inline-block"></textarea>
       </div>
 
       <div class="mb-3 border-l border-black hover:border-green-400 pl-3">
@@ -52,10 +52,10 @@
         <div>
           <img @click="profile.loadingImg = img.img" class="border w-16 h-16 m-1 inline-block" :key="img.key" v-for="img in imgs" :src="img.img" :alt="img.key">
         </div>
+        <textarea placeholder="Loading screen image link" v-model="profile.loadingImg" cols="36" rows="1" class="max-w-full rounded-none bg-transparent whitespace-pre-line resize-none px-0 py-2 mb-3 border-b border-black inline-block"></textarea>
         <div>
           <img :src="profile.loadingImg" class="border w-16 h-16 m-1 inline-block" alt="">
         </div>
-        <textarea placeholder="Loading screen image link" v-model="profile.loadingImg" cols="36" rows="1" class="max-w-full rounded-none bg-transparent whitespace-pre-line resize-none px-0 py-2 mb-3 border-b border-black inline-block"></textarea>
       </div>
       <div class="mb-3">
         <ReButton :color="'green'" @click="updateProfile()">Save Profile <span v-if="loading">⏱</span></ReButton>
@@ -70,7 +70,7 @@
 </template>
 
 <script>
-import { Profile, Auth } from '../../../../APIs/KA.js'
+import { Profile, Auth, Graph } from '../../../../APIs/KA.js'
 export default {
   props: {
     node: {}
@@ -105,6 +105,13 @@ export default {
       try {
         this.loading = true
         await Profile.updateProfile({ edit: this.profile })
+        let myNode = {
+          _id: this.node._id,
+          img: this.profile.photoImg
+        }
+        await Graph.updateMyNode({ edit: myNode })
+        this.$emit('close')
+        window.dispatchEvent(new Event('reload-graph'))
         this.loading = false
       } catch (e) {
         this.loading = false

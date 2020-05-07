@@ -1,6 +1,6 @@
 <template>
   <div class="overlay">
-    <div v-if="editable" class="p-4 h-full w-full scrolling-touch overflow-y-auto overflow-x-hidden">
+    <div v-if="editable" class="p-4 h-full w-full scrolling-touch overflow-y-auto overflow-x-hidden max-w-xl mx-auto">
       <div v-if="node.type === 'traverse'" :class="{ 'bg-blue-200': tab === 'traverse' }" @click="tab = 'traverse'" class="inline-block px-3 py-2 border border-gray-500 mb-2 mr-2 rounded-lg ">Space Travel</div>
       <div v-if="node.type === 'content'" :class="{ 'bg-blue-200': tab === 'content' }" @click="tab = 'content'" class="inline-block px-3 py-2 border border-gray-500 mb-2 mr-2 rounded-lg ">Memo</div>
       <div v-if="node.type === 'user'" :class="{ 'bg-blue-200': tab === 'profile' }" @click="tab = 'profile'" class="inline-block px-3 py-2 border border-gray-500 mb-2 mr-2 rounded-lg ">Profile</div>
@@ -39,7 +39,7 @@
     </div>
 
     <div @click="$emit('close')" class="absolute top-0 right-0 pr-6 pt-6 z-20">
-      <img src="../icon/close.svg" class="cursor-pointer" alt="Close" title="close">
+      <img src="../icon/close.svg" class="cursor-pointer p-2 bg-white rounded-full" alt="Close" title="close">
     </div>
   </div>
 </template>

@@ -71,6 +71,7 @@ export default {
       }
       await Graph.updateMyNode({ edit })
       this.loading = false
+      this.$emit('close')
       window.dispatchEvent(new Event('reload-graph'))
     }
   }

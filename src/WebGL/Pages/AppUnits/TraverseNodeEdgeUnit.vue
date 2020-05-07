@@ -19,7 +19,7 @@ import ForceGraph3D from '3d-force-graph'
 import SpriteText from 'three-spritetext'
 import { Mesh, CircleBufferGeometry, MeshBasicMaterial, SpriteMaterial, TextureLoader, Sprite } from 'three'
 import { MapControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import { makeBase, Tree } from '../../Reusable/index'
+import { makeBase, Tree, ShaderCubeRefraction } from '../../Reusable/index'
 
 export default {
   mixins: [Tree],
@@ -49,6 +49,7 @@ export default {
   },
   data () {
     return {
+      cuber: false,
       vm: this,
       pauseAnimation () {},
       base: false,
@@ -104,6 +105,12 @@ export default {
           }
         })
       }
+
+      this.cuber = new ShaderCubeRefraction({ renderer: engine.renderer(), loop: this.base.onLoop, res: 128 })
+      this.cuber.out.material.transparent = true
+      this.cuber.out.material.opacity = 0.8
+      engine.linkMaterial(this.cuber.out.material)
+
       // console.log(engine.state)
       // let simulateData = () => {
       //   const N = 60
@@ -303,11 +310,21 @@ export default {
       let iconGeo = false
       let borderGeo = false
 
+      let iconGeoTriangle = new CircleBufferGeometry(10, 3)
+      let borderGeoTriangle = new CircleBufferGeometry(11, 3)
+      iconGeoTriangle.computeBoundingSphere()
+      borderGeoTriangle.computeBoundingSphere()
+      borderGeoTriangle.translate(0, 0, -0.1)
+      iconGeoTriangle.rotateZ(Math.PI * -0.5)
+      borderGeoTriangle.rotateZ(Math.PI * -0.5)
+
       let iconGeoSquare = new CircleBufferGeometry(10, 4)
       let borderGeoSquare = new CircleBufferGeometry(11, 4)
       iconGeoSquare.computeBoundingSphere()
       borderGeoSquare.computeBoundingSphere()
       borderGeoSquare.translate(0, 0, -0.1)
+      // borderGeoSquare.rotateZ(Math.PI * 0.25)
+      // iconGeoSquare.rotateZ(Math.PI * 0.25)
 
       let iconGeoHexa = new CircleBufferGeometry(10, 6)
       let borderGeoHexa = new CircleBufferGeometry(11, 6)
@@ -322,9 +339,9 @@ export default {
       borderGeoCircle.translate(0, 0, -0.1)
 
       let transparentMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0 })
-      let whiteMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0.8, color: 0xffffff })
-      let blueMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0.45, color: 0xffffff })
-      let limeMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0.65, color: 0x32cd32 })
+      let whiteMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0.8, color: 0xffffff, envMap: this.cuber.out.envMap })
+      let blueMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0.45, color: 0xffffff, envMap: this.cuber.out.envMap })
+      let limeMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0.65, color: 0x32cd32, envMap: this.cuber.out.envMap })
 
       // let map = new Map()
       // user
@@ -332,7 +349,7 @@ export default {
 
       engine
         .linkWidth(link => highlightLinks.has(link) ? 3 : 2)
-        .linkColor(link => highlightLinks.has(link) ? 'rgb(218, 126, 11)' : 'rgba(255,255,255,1.0)')
+        .linkColor(link => highlightLinks.has(link) ? 'rgb(20, 156, 255)' : 'rgba(255,255,255,1.0)')
         .linkDirectionalParticles(link => highlightLinks.has(link) ? 3 : 1)
         .linkOpacity(0.6)
         // .linkLabel('type')

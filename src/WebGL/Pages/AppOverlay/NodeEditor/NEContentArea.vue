@@ -1,20 +1,16 @@
 <template>
   <div v-if="content" class="max-w-xl mx-auto">
     <div>
-      <img class="w-64 h-32 object-cover object-center" :src="content.coverImg" alt="">
+      <img class="w-full h-64 object-cover object-center" :src="content.coverImg" alt="">
     </div>
-    <div>
-      Title: {{ content.title }}
-    </div>
-    <div>
-      {{ content.content }}
-    </div>
+    <div class="text-xl">{{ content.title }}</div>
+    <div class="whitespace-pre-wrap">{{ content.content }}</div>
   </div>
-  <div v-else-if="content === null">
-    Loading Content
+  <div class="max-w-xl mx-auto" v-else-if="content === null">
+    Loading Content... ⏱
   </div>
-  <div v-else-if="!content">
-    Can't Load Content...
+  <div class="max-w-xl mx-auto" v-else-if="!content">
+    Can't Load Content... ✨
   </div>
 </template>
 

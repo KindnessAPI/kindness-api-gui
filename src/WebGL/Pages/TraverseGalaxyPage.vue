@@ -305,7 +305,7 @@ export default {
         await this.downloadGraph()
       })
     },
-    async initProfile () {
+    async initMyProfile () {
       try {
         let me = Auth.currentProfile.user
         let profile = await Profile.getProfileByUserID({ userID: me.userID })
@@ -337,7 +337,7 @@ export default {
         await this.createMyNode()
         this.socket.notifyGraphChange()
       }
-      await this.initProfile()
+      await this.initMyProfile()
       await this.downloadGraph()
       this.onSetupBtns()
       this.mainArea = 'traverse'

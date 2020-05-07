@@ -77,9 +77,9 @@ class CustomWebGLCubeRenderTarget extends WebGLCubeRenderTarget {
 }
 
 export class ShaderCube {
-  constructor ({ renderer, loop }) {
+  constructor ({ renderer, loop, res = 64 }) {
     this.renderer = renderer
-    this.resX = 128
+    this.resX = res
     this.renderTargetCube = new CustomWebGLCubeRenderTarget(this.resX, { format: RGBFormat, magFilter: LinearFilter, minFilter: LinearFilter })
     this.renderTargetPlane = new WebGLRenderTarget(this.resX, this.resX, { format: RGBFormat, magFilter: LinearFilter, minFilter: LinearFilter })
     this.camera = new Camera()
@@ -170,6 +170,7 @@ export class ShaderCube {
     })
     this.plane = new Mesh(this.geo, this.mat)
     this.out = {
+      envMap: this.renderTargetCube.texture,
       material: new MeshBasicMaterial({ color: 0xffffff, envMap: this.renderTargetCube.texture })
     }
     this.scene.add(this.plane)
