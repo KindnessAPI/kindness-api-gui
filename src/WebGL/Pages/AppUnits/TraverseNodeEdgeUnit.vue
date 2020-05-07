@@ -80,6 +80,8 @@ export default {
       myGraph.d3Force('link').distance(40)
       myGraph.warmupTicks(60 * 0.5)
       myGraph.d3AlphaDecay(0.01)
+      myGraph.nodeLabel('__')
+      myGraph.linkLabel('__')
 
       // myGraph.linkDirectionalArrowLength(0.0001)
       // myGraph.linkDirectionalArrowRelPos(0.0001)
