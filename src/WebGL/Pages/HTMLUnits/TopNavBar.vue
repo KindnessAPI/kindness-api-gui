@@ -23,7 +23,7 @@
           </div>
 
           <router-link to="/galaxy" v-if="$route.path.indexOf('/profile') === -1">
-            <span class="inline-block md:hidden py-2 mr-3 text-2xl">🛰</span>
+            <span class="inline-block md:hidden py-2 ml-3 mr-3 text-2xl">✨</span>
           </router-link>
 
           <img @click="$emit('menu')" style="min-width:24px;" class="mr-3" src="../icon/menu.svg" alt="">

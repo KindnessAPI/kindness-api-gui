@@ -28,26 +28,35 @@
         </StarFlowScene>
       </ScissorArea> -->
 
-      <div class="simple-bg"
-        :style="{
-          backgroundColor: this.mainArea === 'loading' ? `#251b69` : '#251b69',
-          backgroundImage: this.mainArea === 'loading' ? `url(${require('./AppUnits/hdri/sky-space-milky-way-stars-110854.jpg')})` : `url(${require('./AppUnits/hdri/astronomy-atmosphere-earth-exploration-220201.jpg')})`,
-          backgroundSize: this.mainArea === 'loading' ? 'cover' : 'cover',
-          backgroundPosition: this.mainArea === 'loading' ? `center center` : 'center center',
-          backgroundRepeat: this.mainArea === 'loading' ? `no-repeat no-repeat` : 'no-repeat no-repeat'
-        }"
-        >
+      <transition name="fade">
+        <div class="simple-bg"
+          v-if="this.mainArea === 'loading'"
+          :style="{
+            backgroundColor: '#251b69',
+            backgroundImage: `url(${loadingBG})`,
+            backgroundSize:'cover',
+            backgroundPosition: 'center center',
+            backgroundRepeat: 'no-repeat no-repeat'
+          }"
+          >
+        </div>
+      </transition>
 
-      </div>
+      <transition name="fade">
+        <div class="simple-bg"
+          v-if="this.mainArea === 'traverse'"
+          :style="{
+            backgroundColor: '#251b69',
+            backgroundImage: `url(${readyBG})`,
+            backgroundSize:'cover',
+            backgroundPosition: 'center center',
+            backgroundRepeat: 'no-repeat no-repeat'
+          }"
+          >
+        </div>
+      </transition>
 
       <TraverseNodeEdgeUnit
-      :style="{
-        __visibility: this.mainArea === 'traverse' ? 'visible' : 'hidden',
-        __backgroundColor: this.mainArea === 'traverse' ? `#251b69` : '',
-        __backgroundImage: this.mainArea === 'traverse' ? `url(${require('./AppUnits/hdri/sky-space-milky-way-stars-110854.jpg')})` : '',
-        backgroundSize: 'cover',
-        backgroundPosition: `center center`
-      }"
       :btns="btns"
       @home="onGoHome"
       @view="onViewProfile"
@@ -113,6 +122,11 @@ export default {
   mixins: [PipeScissor],
   data () {
     return {
+      bg: {
+        stars: require('./AppUnits/hdri/sky-space-milky-way-stars-110854.jpg'),
+        earth: require('./AppUnits/hdri/astronomy-atmosphere-earth-exploration-220201.jpg'),
+        galaxy: require('./AppUnits/hdri/sky-space-dark-galaxy-2150.jpg')
+      },
       profile: false,
       layouts: {},
       currentNode: false,
@@ -144,6 +158,18 @@ export default {
     }
   },
   computed: {
+    loadingBG () {
+      if (this.profile && this.profile.loadingImg) {
+        return this.profile.loadingImg
+      }
+      return this.bg.galaxy
+    },
+    readyBG () {
+      if (this.profile && this.profile.bgImg) {
+        return this.profile.bgImg
+      }
+      return this.bg.stars
+    },
     queryUserID () {
       return this.$route.params.userID
     },
@@ -284,11 +310,6 @@ export default {
         let me = Auth.currentProfile.user
         let profile = await Profile.getProfileByUserID({ userID: me.userID })
         if (!profile) {
-          // if (Auth.currentProfile.user.userID !== this.queryUserID) {
-          //   this.mainArea = 'not-ready'
-          //   this.$router.go(-1)
-          //   throw new Error('cannot create other people\'s profile')
-          // }
           profile = await Profile.createProfile({ userID: me.userID, username: me.username })
         }
         this.profile = profile
@@ -405,7 +426,7 @@ export default {
 }
 .overlay-loading{
   position: absolute;
-  top: 0px;
+  top: 60px;
   left: 0px;
   bottom: 0px;
   right: 0px;
@@ -439,5 +460,12 @@ export default {
 .bg-translucent{
   background-color: rgba(0, 0, 0, 0.418);
   box-shadow: 0px 0px 30px 0px rgb(30, 30, 30);
+  transform: translateY(-30px);
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 1.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>

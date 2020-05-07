@@ -35,7 +35,11 @@
       </div>
 
       <div class="mb-3 border-l border-black hover:border-green-400 pl-3">
-        <div class="text-lg mt-3">Background Image</div>
+        <div class="text-lg mt-3 mb-2">Background Image</div>
+        <div class="mb-2">Sample Images...</div>
+        <div>
+          <img @click="profile.bgImg = img.img" class="border w-16 h-16 m-1 inline-block" :key="img.key" v-for="img in imgs" :src="img.img" :alt="img.key">
+        </div>
         <div>
           <img :src="profile.bgImg" class="border w-16 h-16 m-1 inline-block" alt="">
         </div>
@@ -44,6 +48,10 @@
 
       <div class="mb-3 border-l border-black hover:border-green-400 pl-3">
         <div class="text-lg mt-3">Loading Screen Image</div>
+        <div class="mb-2">Sample Images...</div>
+        <div>
+          <img @click="profile.loadingImg = img.img" class="border w-16 h-16 m-1 inline-block" :key="img.key" v-for="img in imgs" :src="img.img" :alt="img.key">
+        </div>
         <div>
           <img :src="profile.loadingImg" class="border w-16 h-16 m-1 inline-block" alt="">
         </div>
@@ -72,6 +80,7 @@ export default {
   },
   data () {
     return {
+      imgs: require('../../../imgs').default,
       loading: false,
       profile: false
     }

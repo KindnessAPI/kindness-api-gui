@@ -13,7 +13,7 @@
 
 <script>
 // import _ from 'lodash'
-import { Graph } from '../../../../APIs/KA.js'
+import { Graph, Content, Auth } from '../../../../APIs/KA.js'
 export default {
   props: {
     node: {}
@@ -34,6 +34,8 @@ export default {
       this.loading = true
       let newNode = await Graph.createContentNode({ name: this.content.title })
       await Graph.linkContentNode({ fromID: this.node._id, toID: newNode._id })
+      let me = Auth.currentProfile.user
+      await Content.createContent({ userID: me.userID, username: me.username, nodeID: newNode._id, title: newNode.name })
       this.loading = false
       window.dispatchEvent(new Event('reload-graph'))
       this.$emit('close')
