@@ -35,6 +35,11 @@ export default {
   },
   components: {
   },
+  watch: {
+    node () {
+      this.getContent()
+    }
+  },
   mounted () {
     this.getContent()
   },
