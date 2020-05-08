@@ -272,28 +272,6 @@ export default {
       node.badge = node.badge || 0
       this.$refs['edge-node'].$emit('badge', node)
     },
-    async getMyNode () {
-      let mynode = await Graph.getMyNode()
-        .then(r => r, () => false)
-      return mynode
-    },
-    async createMyNode () {
-      if (!(Auth.currentProfile && Auth.currentProfile.user.username)) {
-        return
-      }
-      // if (Auth.currentProfile.user.userID !== this.queryUserID) {
-      //   this.mainArea = 'not-ready'
-      //   this.$router.go(-1)
-      //   throw new Error('cannot create other people\'s profile')
-      // }
-      let mynode = await Graph.addUserNode({
-        name: Auth.currentProfile.user.username,
-        profileUsername: Auth.currentProfile.user.username,
-        profileUserID: Auth.currentProfile.user.userID
-      })
-        .then(r => r, () => false)
-      return mynode
-    },
     async makeSocket () {
       let socket = this.socket = new LamdaClient({
         url: getWS(),
@@ -331,22 +309,7 @@ export default {
       }
     },
     async initMyNode () {
-      let mynode = await this.getMyNode()
-      // patch mynode without value
-      if (mynode && !mynode.value) {
-        mynode = {
-          ...mynode,
-          value: {
-            username: Auth.currentProfile.user.username,
-            userID: Auth.currentProfile.user.userID
-          }
-        }
-        await Graph.updateMyNode({ edit: mynode })
-      }
-      if (!mynode) {
-        await this.createMyNode()
-        this.socket.notifyGraphChange()
-      }
+      await Graph.provideMyNode()
     },
     async onInit () {
       this.mainArea = 'loading'

@@ -503,6 +503,7 @@ export class Profile {
       return Promise.reject(err)
     })
   }
+
   static async createProfile ({ userID, username, photo }) {
     photo = photo || `https://picsum.photos/id/${(Math.random() * 1200).toFixed(0)}/200/200`
 
@@ -687,39 +688,39 @@ export class Graph {
     })
   }
 
-  static async addUserNode ({ profileUsername, profileUserID, name = 'New User', photo }) {
-    photo = photo || `https://picsum.photos/id/${(Math.random() * 1200).toFixed(0)}/200/200`
+  // static async addUserNode ({ profileUsername, profileUserID, name = 'New User', photo }) {
+  //   photo = photo || `https://picsum.photos/id/${(Math.random() * 1200).toFixed(0)}/200/200`
 
-    let axios = (await import('axios')).default
-    let resp = axios({
-      baseURL: getRESTURL(),
-      method: 'POST',
-      url: '/access-node',
-      headers: getHeader(),
-      data: {
-        method: 'create',
-        payload: {
-          name: name,
-          img: photo,
-          type: 'user',
-          value: {
-            username: profileUsername,
-            userID: profileUserID
-          },
-          tags: [
-            {
-              text: 'early-bird'
-            }
-          ]
-        }
-      }
-    })
-    return resp.then((r) => {
-      return r.data
-    }, (err) => {
-      return Promise.reject(err)
-    })
-  }
+  //   let axios = (await import('axios')).default
+  //   let resp = axios({
+  //     baseURL: getRESTURL(),
+  //     method: 'POST',
+  //     url: '/access-node',
+  //     headers: getHeader(),
+  //     data: {
+  //       method: 'create',
+  //       payload: {
+  //         name: name,
+  //         img: photo,
+  //         type: 'user',
+  //         value: {
+  //           username: profileUsername,
+  //           userID: profileUserID
+  //         },
+  //         tags: [
+  //           {
+  //             text: 'early-bird'
+  //           }
+  //         ]
+  //       }
+  //     }
+  //   })
+  //   return resp.then((r) => {
+  //     return r.data
+  //   }, (err) => {
+  //     return Promise.reject(err)
+  //   })
+  // }
 
   // ----
   static async listUserNodes ({ userID }) {
@@ -926,6 +927,47 @@ export class Graph {
     })
     return resp.then((r) => {
       return r.data[0]
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+
+  static async provideMyNode () {
+    let photo = `https://picsum.photos/id/${(Math.random() * 1200).toFixed(0)}/500/500`
+
+    let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-node',
+      headers: getHeader(),
+      data: {
+        method: 'provide',
+        payload: {
+          get: {
+            type: 'user',
+            userID: Auth.currentProfile.user.userID
+          },
+          create: {
+            img: photo,
+            type: 'user',
+
+            tags: [
+              {
+                text: 'early-bird'
+              }
+            ],
+            name: Auth.currentProfile.user.username,
+            value: {
+              username: Auth.currentProfile.user.username,
+              userID: Auth.currentProfile.user.userID
+            }
+          }
+        }
+      }
+    })
+    return resp.then((r) => {
+      return r.data
     }, (err) => {
       return Promise.reject(err)
     })

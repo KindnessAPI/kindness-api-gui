@@ -77,7 +77,7 @@ export default {
     },
     async install () {
       var myGraph = ForceGraph3D({ controlType: 'fly', rendererConfig: { antialias: true, alpha: true } })
-      myGraph.d3Force('link').distance(40)
+      myGraph.d3Force('link').distance(45)
       myGraph.warmupTicks(60 * 0.5)
       myGraph.d3AlphaDecay(0.01)
       myGraph.nodeLabel('__' + Math.random())
@@ -108,14 +108,15 @@ export default {
         })
       }
 
-      this.cuber = new ShaderCube({ renderer: engine.renderer(), loop: this.base.onLoop, res: 128 })
+      this.cuber = new ShaderCube({ renderer: engine.renderer(), loop: this.base.onLoop, res: 32 })
       this.cuber.out.material.transparent = true
       this.cuber.out.material.opacity = 0.8
-      engine.linkMaterial(this.cuber.out.material)
+      // engine.linkMaterial(this.cuber.out.material)
 
       // console.log(engine.state)
+
       // let simulateData = () => {
-      //   const N = 60
+      //   const N = 160
       //   const idMap = new Map()
       //   const graphBase = {
       //     nodes: [...Array(N).keys()].map(i => ({ id: i, neighbors: [], links: [] })),
@@ -155,7 +156,10 @@ export default {
 
       //   myGraph.graphData(graphBase)
       // }
-      // simulateData()
+      // window.simulateData = simulateData
+      // setTimeout(() => {
+      //   simulateData()
+      // }, 5000)
 
       let loadData = async (data) => {
         myGraph.nodeId(this.nodeIDKey)
@@ -187,6 +191,8 @@ export default {
       // loadData()
 
       this.$watch('graph', (v) => {
+        // simulateData()
+
         if (v) {
           loadData(v)
         }
@@ -406,8 +412,8 @@ export default {
 
       let transparentMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0 })
       let whiteMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 1.0, color: 0xffffff, envMap: this.cuber.out.envMap })
-      let blueMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0.65, color: 0xffffff, envMap: this.cuber.out.envMap })
-      let limeMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0.65, color: 0x32cd32, envMap: this.cuber.out.envMap })
+      let blueMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0.85, color: 0xffffff, envMap: this.cuber.out.envMap })
+      let limeMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0.85, color: 0x32cd32, envMap: this.cuber.out.envMap })
 
       // let map = new Map()
       // user
@@ -521,6 +527,9 @@ export default {
             border.material = can ? limeMat : blueMat
           }
 
+          // setTimeout(() => {
+          //   clicker.frustumCulled = true
+          // })
           return clicker
         })
         .onNodeHover(node => {
