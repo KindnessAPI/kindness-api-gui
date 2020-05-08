@@ -35,8 +35,9 @@ export default {
       }
       let node = this.node
       this.loading = true
-      await Graph.removeEdgesSourceNode({ nodeID: node._id })
-      await Graph.removeEdgesTargetNode({ nodeID: node._id })
+      let src = await Graph.queryEdgesSourceNode({ nodeID: node._id })
+      let target = await Graph.queryEdgesTargetNode({ nodeID: node._id })
+      await Graph.removeEdgeByList({ list: [...src, ...target] })
       await Graph.removeNodeByID({ nodeID: node._id })
 
       if (node.type === 'content') {

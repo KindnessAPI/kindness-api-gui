@@ -318,10 +318,7 @@ export default {
         console.log(e)
       }
     },
-    async onInit () {
-      this.mainArea = 'loading'
-      this.onReset()
-      await this.makeSocket()
+    async initMyNode () {
       let mynode = await this.getMyNode()
       // patch mynode without value
       if (mynode && !mynode.value) {
@@ -338,6 +335,12 @@ export default {
         await this.createMyNode()
         this.socket.notifyGraphChange()
       }
+    },
+    async onInit () {
+      this.mainArea = 'loading'
+      this.onReset()
+      await this.makeSocket()
+      await this.initMyNode()
       await this.initMyProfile()
       await this.downloadGraph()
       this.onSetupBtns()
@@ -368,20 +371,6 @@ export default {
         popped()
       }
     })
-
-    // this.base.onLoop(() => {
-    //   let time = window.performance.now() * 0.001
-    //   this.$refs['o3d'].o3d.rotation.z = time
-    // })
-
-    // let axios = require('axios').default
-    // axios.post('http://localhost:3333/login', {
-    //   username: 'lok',
-    //   email: 'lok@lok.com',
-    //   password: 'loklok-test'
-    // })
-    //   .then(r => r.data)
-    //   .then(console.log)
 
     this.origColor = document.body.style.backgroundColor
     document.body.style.backgroundColor = this.bgColor

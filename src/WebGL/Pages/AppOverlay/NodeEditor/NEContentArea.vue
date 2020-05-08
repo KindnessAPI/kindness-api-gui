@@ -5,6 +5,9 @@
     </div>
     <div class="text-xl">{{ content.title }}</div>
     <div class="whitespace-pre-wrap">{{ content.content }}</div>
+    <div class="related">
+      <pre>{{ related }}</pre>
+    </div>
   </div>
   <div class="max-w-xl mx-auto" v-else-if="content === null">
     Loading Content... ⏱
@@ -15,7 +18,7 @@
 </template>
 
 <script>
-import { Content } from '../../../../APIs/KA.js'
+import { Content, Graph } from '../../../../APIs/KA.js'
 
 export default {
   props: {
@@ -28,12 +31,20 @@ export default {
   },
   data () {
     return {
+      related: false,
       content: null
     }
   },
   methods: {
     async getContent () {
       this.content = await Content.getContentByNodeID({ nodeID: this.node._id })
+      let src = await Graph.queryEdgesSourceNode({ nodeID: this.node._id })
+      let target = await Graph.queryEdgesTargetNode({ nodeID: this.node._id })
+      let list = [
+        ...src.map(e => e.target),
+        ...target.map(e => e.source)
+      ]
+      this.related = await Graph.queryNodesByList({ list })
     }
   }
 }

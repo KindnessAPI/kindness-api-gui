@@ -325,6 +325,7 @@ export default {
       // let element = engine.renderer().domElement
       // let rect = element.getBoundingClientRect()
       // let depth = 70000
+
       // let screen = getScreen({ camera: engine.camera(), depth })
       // let image = await new Promise((resolve) => {
       //   let img = new Image()
@@ -339,6 +340,7 @@ export default {
       // let hh = screen.max * 1.2
       // ww = screen.max * image.width / image.height
 
+      // let { PlaneBufferGeometry } = require('three')
       // let bgplane = new PlaneBufferGeometry(ww, hh)
       // let bgmesh = new Mesh(bgplane, bgmat)
       // bgmesh.position.z = -depth
@@ -396,7 +398,7 @@ export default {
 
       let transparentMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0 })
       let whiteMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 1.0, color: 0xffffff, envMap: this.cuber.out.envMap })
-      let blueMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0.45, color: 0xffffff, envMap: this.cuber.out.envMap })
+      let blueMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0.65, color: 0xffffff, envMap: this.cuber.out.envMap })
       let limeMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0.65, color: 0x32cd32, envMap: this.cuber.out.envMap })
 
       // let map = new Map()
@@ -409,8 +411,8 @@ export default {
         .linkDirectionalParticles(link => highlightLinks.has(link) ? 3 : 1)
         .linkOpacity(0.6)
         // .linkLabel('type')
-        .linkDirectionalParticleWidth(3)
-        .linkDirectionalParticleResolution(3)
+        .linkDirectionalParticleWidth(link => highlightLinks.has(link) ? 4 : 3)
+        .linkDirectionalParticleResolution(5)
         .linkResolution(3)
         // .nodeResolution(3)
         .nodeThreeObject((node) => {

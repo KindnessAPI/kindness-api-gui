@@ -6,7 +6,7 @@
       <div v-if="node.type === 'user'" :class="{ 'bg-blue-200': tab === 'profile' }" @click="tab = 'profile'" class="inline-block px-3 py-2 border border-gray-500 mb-2 mr-2 rounded-lg ">Profile</div>
       <!-- General -->
       <div :class="{ 'bg-blue-200': tab === 'action' }" @click="tab = 'action'" class="inline-block px-3 py-2 border border-gray-500 mb-2 mr-2 rounded-lg ">Add Friends, memo & etc..</div>
-      <div :class="{ 'bg-blue-200': tab === 'edit' }" @click="tab = 'edit'" class="inline-block px-3 py-2 border border-gray-500 mb-2 mr-2  rounded-lg ">Edit Node Thumbnail...</div>
+      <div :class="{ 'bg-blue-200': tab === 'edit' }" @click="tab = 'edit'" class="inline-block px-3 py-2 border border-gray-500 mb-2 mr-2  rounded-lg ">Edit Node & Thumbnail...</div>
 
       <div v-if="tab === 'profile'" :key="node._id" >
         <NEProfileEdit :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEProfileEdit>

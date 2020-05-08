@@ -743,7 +743,7 @@ export class Graph {
     })
   }
 
-  static async removeEdgesSourceNode ({ nodeID }) {
+  static async queryEdgesSourceNode ({ nodeID }) {
     let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
@@ -764,7 +764,7 @@ export class Graph {
     })
   }
 
-  static async removeEdgesTargetNode ({ nodeID }) {
+  static async queryEdgesTargetNode ({ nodeID }) {
     let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
@@ -775,6 +775,27 @@ export class Graph {
         method: 'query',
         payload: {
           target: nodeID
+        }
+      }
+    })
+    return resp.then((r) => {
+      return r.data
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+
+  static async queryNodesByList ({ list }) {
+    let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-node',
+      headers: getHeader(),
+      data: {
+        method: 'query',
+        payload: {
+          list: list
         }
       }
     })
@@ -796,6 +817,27 @@ export class Graph {
         method: 'remove-one',
         payload: {
           _id: nodeID
+        }
+      }
+    })
+    return resp.then((r) => {
+      return r.data[0]
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+
+  static async removeEdgeByList ({ list }) {
+    let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-node',
+      headers: getHeader(),
+      data: {
+        method: 'remove-many',
+        payload: {
+          list: list
         }
       }
     })
