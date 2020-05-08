@@ -25,7 +25,7 @@ export default {
     return {
       loading: false,
       content: {
-        title: 'New Piece of Content'
+        title: 'New Memo'
       }
     }
   },

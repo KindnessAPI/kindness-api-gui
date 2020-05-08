@@ -17,7 +17,7 @@
       <div class="mb-3 border-l border-black hover:border-green-400 pl-3">
         <div class="text-lg mt-3">Cover Image</div>
         <div>
-          <img :src="content.coverImg" class="border w-16 h-16 m-1 inline-block" alt="">
+          <img :src="content.coverImg" class="border w-64 max-w-full h-32 m-1 inline-block object-cover object-center" alt="">
         </div>
         <textarea placeholder="Cover image link" v-model="content.coverImg" cols="36" rows="1" class="max-w-full rounded-none bg-transparent whitespace-pre-line resize-none px-0 py-2 mb-3 border-b border-black inline-block"></textarea>
       </div>
@@ -26,8 +26,11 @@
         <ReButton :color="'green'" @click="updateContent()">Save Memo <span v-if="loading">⏱</span></ReButton>
       </div>
     </div>
-    <div v-else>
+    <div v-else-if="content === null">
       Loading Memo
+    </div>
+    <div v-else-if="!content">
+      Can't Load Memo
     </div>
   </div>
 </template>
@@ -44,7 +47,7 @@ export default {
   data () {
     return {
       loading: false,
-      content: false
+      content: null
     }
   },
   async mounted () {

@@ -19,7 +19,7 @@ import ForceGraph3D from '3d-force-graph'
 import SpriteText from 'three-spritetext'
 import { Mesh, CircleBufferGeometry, MeshBasicMaterial, SpriteMaterial, TextureLoader, Sprite } from 'three'
 import { MapControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import { makeBase, Tree, ShaderCubeRefraction } from '../../Reusable/index'
+import { makeBase, Tree, ShaderCube } from '../../Reusable/index'
 
 export default {
   mixins: [Tree],
@@ -108,7 +108,7 @@ export default {
         })
       }
 
-      this.cuber = new ShaderCubeRefraction({ renderer: engine.renderer(), loop: this.base.onLoop, res: 128 })
+      this.cuber = new ShaderCube({ renderer: engine.renderer(), loop: this.base.onLoop, res: 128 })
       this.cuber.out.material.transparent = true
       this.cuber.out.material.opacity = 0.8
       engine.linkMaterial(this.cuber.out.material)
@@ -389,12 +389,20 @@ export default {
       iconGeoHexa.computeBoundingSphere()
       borderGeoHexa.computeBoundingSphere()
       borderGeoHexa.translate(0, 0, -0.1)
+      // borderGeoHexa.rotateZ(Math.PI * 0.5)
+      // iconGeoHexa.rotateZ(Math.PI * 0.5)
 
-      let iconGeoCircle = new CircleBufferGeometry(10, 40)
-      let borderGeoCircle = new CircleBufferGeometry(11, 40)
+      let iconGeoCircle = new CircleBufferGeometry(14, 40)
+      let borderGeoCircle = new CircleBufferGeometry(15, 40)
       iconGeoCircle.computeBoundingSphere()
       borderGeoCircle.computeBoundingSphere()
       borderGeoCircle.translate(0, 0, -0.1)
+
+      let iconGeoBadge = new CircleBufferGeometry(3, 40)
+      let borderGeoBadge = new CircleBufferGeometry(4, 40)
+      iconGeoBadge.computeBoundingSphere()
+      borderGeoBadge.computeBoundingSphere()
+      borderGeoBadge.translate(0, 0, -0.1)
 
       let transparentMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0 })
       let whiteMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 1.0, color: 0xffffff, envMap: this.cuber.out.envMap })
@@ -447,13 +455,43 @@ export default {
           sprite.geometry = iconGeo
           clicker.add(sprite)
 
+          let badgeMat = new SpriteMaterial({ color: 'red', transparent: true, opacity: 0.79 })
+          const badge = new Sprite(badgeMat)
+          badge.geometry = iconGeoBadge
+          sprite.add(badge)
+          let badgeText = new SpriteText(``)
+          badgeText.color = 'white'
+          // badgeText.strokeColor = 'black'
+          // badgeText.strokeWidth = 1.5
+          badgeText.textHeight = 2.5
+          badge.add(badgeText)
+          badge.position.x = iconGeo.boundingSphere.radius * 0.86
+          badge.position.y = iconGeo.boundingSphere.radius * 0.86
+          let onBadgeChange = (evtNode) => {
+            if (node._id === evtNode._id) {
+              if (evtNode.badge) {
+                let badgeValue = Number(evtNode.badge)
+                if (badgeValue > 99) {
+                  badgeValue = '99+'
+                }
+                badgeText.text = badgeValue + ''
+                badge.visible = true
+              } else {
+                badgeText.text = ''
+                badge.visible = false
+              }
+            }
+          }
+          onBadgeChange(node)
+          this.$on('badge', onBadgeChange)
+
           border.position.z = 2.99
           sprite.position.z = 3
 
           let spriteText = new SpriteText(`${node.name}`)
           spriteText.color = 'white'
           spriteText.strokeColor = 'black'
-          spriteText.strokeWidth = 1.5
+          spriteText.strokeWidth = 1
           spriteText.textHeight = 4
           spriteText.position.y = iconGeo.boundingSphere.radius * -1.35
 

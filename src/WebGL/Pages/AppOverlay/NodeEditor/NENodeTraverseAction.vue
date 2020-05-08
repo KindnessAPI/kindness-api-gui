@@ -1,22 +1,17 @@
 
 <template>
-  <div v-if="node && node.type === 'traverse'">
-    <div class="mb-3 text-xl">
-      <span v-if="node.type === 'traverse'">Space Travel to: </span>
-      {{ node.name }}
-    </div>
-    <div class="mb-3">
+  <div v-if="node && node.type === 'traverse' && !isMyself">
+    <div class="mb-3 text-center">
       <ReButton
         :color="'teal'"
         :disabled="isMyself"
         :class="{ 'opacity-50': isMyself }"
-        @click="$router.push(`/profile/${node.value.username}/${node.value.userID}`); $emit('close')"
+        @click="onGo"
       >
-        Let's Go!
+        <span v-if="!isMyself">Space Travel to: </span>
+        <span v-if="isMyself">You're already at </span>
+        <span>{{ node.name }}</span>
       </ReButton>
-      <div>
-        <span v-if="isMyself">(You're already inside your own profile.)</span>
-      </div>
     </div>
   </div>
 </template>
@@ -48,6 +43,13 @@ export default {
     }
   },
   methods: {
+    onGo () {
+      if (this.isMyself) {
+        return
+      }
+      this.$router.push(`/profile/${this.node.value.username}/${this.node.value.userID}`)
+      this.$emit('close')
+    }
     // async updateNode () {
     //   this.loading = true
     //   let edit = {

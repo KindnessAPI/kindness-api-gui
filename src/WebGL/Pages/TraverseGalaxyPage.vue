@@ -62,6 +62,7 @@
       @view="onViewProfile"
       @node-click="onNodeClick"
       :graph="graph"
+      ref="edge-node"
       >
         <O3D ref="o3d">
           <Spaceship></Spaceship>
@@ -218,16 +219,18 @@ export default {
     // },
     onNodeClick (node) {
       this.currentNode = node
+      this.overlay = 'node-panel'
 
-      if (this.isOnMyPage) {
-        this.overlay = 'node-panel'
-      } else {
-        if (node.type === 'traverse') {
-          this.$router.push(`/profile/${node.value.username}/${node.value.userID}`)
-        } else {
-          this.overlay = 'node-panel'
-        }
-      }
+      // ----
+      // if (this.isOnMyPage) {
+      //   this.overlay = 'node-panel'
+      // } else {
+      //   if (node.type === 'traverse') {
+      //     this.$router.push(`/profile/${node.value.username}/${node.value.userID}`)
+      //   } else {
+      //     this.overlay = 'node-panel'
+      //   }
+      // }
     },
     async onReload () {
       await this.initMyProfile()
@@ -259,6 +262,15 @@ export default {
       }
       this.graph = graphData
       this.mainArea = 'traverse'
+    },
+    updateBadgeByUserID ({ userID, badge }) {
+      let node = this.graph.nodes.find(n => n.type === 'traverse' && n.value.userID === userID)
+      node.badge = badge
+      this.updateBadgeByNode(node)
+    },
+    updateBadgeByNode (node) {
+      node.badge = node.badge || 0
+      this.$refs['edge-node'].$emit('badge', node)
     },
     async getMyNode () {
       let mynode = await Graph.getMyNode()

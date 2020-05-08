@@ -16,7 +16,12 @@
         </tr>
         <tr :key="enode._id" v-for="enode in graph.nodes">
           <td class="pr-3 pb-3">
-            {{ enode.name }}
+            <div>
+              {{ enode.name }}
+            </div>
+            <div class="text-gray-500 text-sm">
+              {{ getType(enode.type) }}
+            </div>
           </td>
           <td class="pr-3 pb-3">
             <img class="w-16 h-16 object-cover object-center" :src="`${enode.img}`" alt="">
@@ -54,6 +59,15 @@ export default {
   mounted () {
   },
   methods: {
+    getType (node) {
+      if (node === 'traverse') {
+        return 'User Profile'
+      } else if (node === 'user') {
+        return 'User Profile'
+      } else if (node === 'content') {
+        return 'Memo'
+      }
+    },
     hasLink (fromNode, toNode) {
       return this.graph.links.find(e => e.source._id === fromNode._id && e.target._id === toNode._id)
     },

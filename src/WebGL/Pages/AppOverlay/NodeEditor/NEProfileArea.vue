@@ -1,5 +1,5 @@
 <template>
-  <div v-if="profile" class="max-w-xl mx-auto">
+  <div v-if="profile" class="min-height-profile pt-3">
     <div class="w-full mb-3 flex justify-center">
       <div class="w-24 h-24">
         <img :src="profile.photoImg" class="w-24 h-24 object-center object-cover rounded-full border-gray-700" alt="">
@@ -21,10 +21,10 @@
 
     <!-- <pre>{{ profile }}</pre> -->
   </div>
-  <div v-else-if="profile === null" class="max-w-xl mx-auto text-center pt-12">
-    Loading...
+  <div v-else-if="profile === null" class="max-w-xl mx-auto text-center min-height-profile pt-3">
+    Loading Profile...
   </div>
-  <div v-else-if="!profile" class="max-w-xl mx-auto text-center pt-12">
+  <div v-else-if="!profile" class="max-w-xl mx-auto text-center min-height-profile pt-3">
     Can't Load Profile
   </div>
 </template>
@@ -54,6 +54,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.min-height-profile{
+  min-height: 240px;
+}
 </style>
