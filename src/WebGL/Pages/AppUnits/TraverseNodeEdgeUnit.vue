@@ -17,8 +17,9 @@
 <script>
 import ForceGraph3D from '3d-force-graph'
 import SpriteText from 'three-spritetext'
-import { Mesh, CircleBufferGeometry, MeshBasicMaterial, SpriteMaterial, TextureLoader, Sprite } from 'three'
-import { MapControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { Mesh, CircleBufferGeometry, MeshBasicMaterial, SpriteMaterial, TextureLoader, Sprite, Raycaster } from 'three'
+// import { MapControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { MapControls } from './OrbitControls.js'
 import { makeBase, Tree, ShaderCube } from '../../Reusable/index'
 
 export default {
@@ -76,6 +77,7 @@ export default {
       this.$emit('snyc3D2D')
     },
     async install () {
+      let raylist = []
       var myGraph = ForceGraph3D({ controlType: 'fly', rendererConfig: { antialias: true, alpha: true } })
       myGraph.d3Force('link').distance(45)
       myGraph.warmupTicks(60 * 0.5)
@@ -162,6 +164,8 @@ export default {
       // }, 5000)
 
       let loadData = async (data) => {
+        raylist = []
+
         myGraph.nodeId(this.nodeIDKey)
 
         let graphBase = data
@@ -248,33 +252,107 @@ export default {
       controls.screenSpacePanning = true
       controls.minDistance = 1
       controls.maxDistance = 4000
+      let start = 0
+      let end = 0
+      let raycaster = new Raycaster()
+      let { Vector2 } = require('three/src/math/Vector2')
+
+      var mouse = new Vector2()
+      let mouseRect = this.$el.getBoundingClientRect()
+      window.addEventListener('resize', () => {
+        mouseRect = this.$el.getBoundingClientRect()
+      })
+      let hm = {
+        tx: 0,
+        ty: 0,
+        dx: 0,
+        dy: 0,
+        ax: 0,
+        ay: 0
+      }
+      let leftbar = 0
+      let toolbar = 60
+      function onTouchStart (event) {
+        let tchs = event.touches[0]
+        if (tchs) {
+          // console.log(tchs)
+          mouse.x = ((tchs.pageX - leftbar) / mouseRect.width) * 2 - 1
+          mouse.y = -((tchs.pageY - toolbar) / mouseRect.height) * 2 + 1
+          hm.tx = tchs.pageX
+          hm.ty = tchs.pageX
+        }
+      }
+      function onTouchMove (event) {
+        let tchs = event.touches[0]
+        if (tchs) {
+          // console.log(tchs)
+          mouse.x = ((tchs.pageX - leftbar) / mouseRect.width) * 2 - 1
+          mouse.y = -((tchs.pageY - toolbar) / mouseRect.height) * 2 + 1
+          hm.dx = tchs.pageX - hm.tx
+          hm.dy = tchs.pageX - hm.ty
+
+          hm.ax += hm.dx
+          hm.ay += hm.dy
+
+          hm.tx = tchs.pageX
+          hm.ty = tchs.pageX
+        }
+      }
+      controls.domElement.addEventListener('touchstart', onTouchStart)
+      controls.domElement.addEventListener('touchmove', onTouchMove)
+      controls.addEventListener('start', (evt) => {
+        start = new Date().getTime()
+      })
+      controls.addEventListener('end', (evt) => {
+        end = new Date().getTime()
+        let delta = end - start
+        let dist = Math.sqrt(Math.pow(hm.ax, 2) + Math.pow(hm.ay, 2))
+        if (delta < 250 && dist < 30) {
+          raycaster.setFromCamera(mouse, myGraph.camera())
+          let hits = raycaster.intersectObjects(raylist)
+          let hit = hits[0]
+          if (hit) {
+            let node = hit.object.userData.node
+            this.$emit('node-click', node)
+          }
+        }
+        hm = {
+          tx: 0,
+          ty: 0,
+          dx: 0,
+          dy: 0,
+          ax: 0,
+          ay: 0
+        }
+      })
 
       engine.enableNodeDrag(true)
-      let adt = {
-        x: 0,
-        y: 0
-      }
-      let dragRadius = 25
+      // let adt = {
+      //   x: 0,
+      //   y: 0
+      // }
+      // let dragRadius = 25
       engine.onNodeDrag((node, translate) => {
         controls.enablePan = false
-        if (node.ondrag) {
-          node.ondrag()
-        }
-        adt.x += translate.x
-        adt.y += translate.y
 
-        let { x, y } = adt
-        x = x || 0
-        y = y || 0
-        let dt = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2))
-        if (node.onDT) {
-          node.onDT(dt)
-        }
-        if (dt >= dragRadius) {
-          node.canOpen && node.canOpen(true)
-        } else {
-          node.canOpen && node.canOpen(false)
-        }
+        // if (node.ondrag) {
+        //   node.ondrag()
+        // }
+        // adt.x += translate.x
+        // adt.y += translate.y
+
+        // let { x, y } = adt
+        // x = x || 0
+        // y = y || 0
+        // let dt = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2))
+        // if (node.onDT) {
+        //   node.onDT(dt)
+        // }
+        // if (dt >= dragRadius) {
+        //   node.canOpen && node.canOpen(true)
+        // } else {
+        //   node.canOpen && node.canOpen(false)
+        // }
         // if (dt >= dragRadius) {
         // } else if (dt < dragRadius) {
         // }
@@ -283,25 +361,25 @@ export default {
       engine.onNodeDragEnd((node, translate) => {
         controls.enablePan = true
 
-        let { x, y } = translate
-        x = x || 0
-        y = y || 0
-        let dt = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2))
+        // let { x, y } = translate
+        // x = x || 0
+        // y = y || 0
+        // let dt = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2))
 
-        if (node && dt > dragRadius) {
-          this.$emit('node-click', node)
-          if (node.ondragend) {
-            node.ondragend()
-          }
-        } else {
-          if (node.ondragcancel) {
-            node.ondragcancel()
-          }
-        }
-        adt = {
-          x: 0,
-          y: 0
-        }
+        // if (node && dt > dragRadius) {
+        //   this.$emit('node-click', node)
+        //   if (node.ondragend) {
+        //     node.ondragend()
+        //   }
+        // } else {
+        //   if (node.ondragcancel) {
+        //     node.ondragcancel()
+        //   }
+        // }
+        // adt = {
+        //   x: 0,
+        //   y: 0
+        // }
       })
 
       engine.onNodeClick((node) => {
@@ -412,13 +490,12 @@ export default {
 
       let transparentMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0 })
       let whiteMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 1.0, color: 0xffffff, envMap: this.cuber.out.envMap })
-      let blueMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0.85, color: 0xffffff, envMap: this.cuber.out.envMap })
-      let limeMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0.85, color: 0x32cd32, envMap: this.cuber.out.envMap })
+      // let blueMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0.85, color: 0xffffff, envMap: this.cuber.out.envMap })
+      // let limeMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0.85, color: 0x32cd32, envMap: this.cuber.out.envMap })
 
       // let map = new Map()
       // user
       // loveline
-
       engine
         .linkWidth(link => highlightLinks.has(link) ? 3 : 2)
         .linkColor(link => highlightLinks.has(link) ? 'rgb(20, 156, 255)' : 'rgba(255,255,255,1.0)')
@@ -503,33 +580,35 @@ export default {
 
           clicker.add(spriteText)
 
-          node.ondrag = () => {
-            // border.material = whiteMat
-          }
-          node.onDT = (v) => {
-            let r = dragRadius
-            let sc = 0.5
-            let sv = (v * sc + r) / (r)
-            if (sv > 1.5) {
-              sv = 1.5
-            }
-            border.scale.set(sv, sv, sv)
-          }
-          node.ondragend = () => {
-            border.material = whiteMat
-            border.scale.set(1, 1, 1)
-          }
-          node.ondragcancel = () => {
-            border.material = whiteMat
-            border.scale.set(1, 1, 1)
-          }
-          node.canOpen = (can) => {
-            border.material = can ? limeMat : blueMat
-          }
+          // node.ondrag = () => {
+          //   // border.material = whiteMat
+          // }
+          // node.onDT = (v) => {
+          //   let r = dragRadius
+          //   let sc = 0.5
+          //   let sv = (v * sc + r) / (r)
+          //   if (sv > 1.5) {
+          //     sv = 1.5
+          //   }
+          //   border.scale.set(sv, sv, sv)
+          // }
+          // node.ondragend = () => {
+          //   border.material = whiteMat
+          //   border.scale.set(1, 1, 1)
+          // }
+          // node.ondragcancel = () => {
+          //   border.material = whiteMat
+          //   border.scale.set(1, 1, 1)
+          // }
+          // node.canOpen = (can) => {
+          //   border.material = can ? limeMat : blueMat
+          // }
 
           // setTimeout(() => {
           //   clicker.frustumCulled = true
           // })
+          clicker.userData.node = node
+          raylist.push(clicker)
           return clicker
         })
         .onNodeHover(node => {

@@ -212,39 +212,14 @@ export default {
         this.socket.close()
       }
     },
-    // onMeClick () {
-    //   this.userID = Auth.currentProfile.user.userID
-    //   this.username = Auth.currentProfile.user.username
-    //   this.overlay = 'node-panel'
-    // },
     onNodeClick (node) {
       this.currentNode = node
       this.overlay = 'node-panel'
-
-      // ----
-      // if (this.isOnMyPage) {
-      //   this.overlay = 'node-panel'
-      // } else {
-      //   if (node.type === 'traverse') {
-      //     this.$router.push(`/profile/${node.value.username}/${node.value.userID}`)
-      //   } else {
-      //     this.overlay = 'node-panel'
-      //   }
-      // }
     },
     async onReload () {
       await this.initMyProfile()
       this.mainArea = 'loading'
       this.socket.notifyGraphChange()
-      // let graph = this.graph
-      // this.graph = {
-      //   nodes: [],
-      //   links: []
-      // }
-      // setTimeout(() => {
-      //   this.graph = graph
-      // }, 10)
-      // await this.downloadGraph()
     },
     async downloadGraph () {
       this.mainArea = 'loading'

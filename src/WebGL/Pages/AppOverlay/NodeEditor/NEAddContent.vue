@@ -3,7 +3,7 @@
   <div>
     <!-- <pre>{{ node }}</pre> -->
     <div class="mb-3 text-xl">
-      Add a memo to this node.
+      Add a Memo to this Node
     </div>
     <div class="mb-3">
       <ReButton :color="'green'" @click="createContentNode()">Add a Memo <span v-if="loading">⏱</span></ReButton>

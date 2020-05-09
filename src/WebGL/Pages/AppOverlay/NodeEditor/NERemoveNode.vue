@@ -1,11 +1,11 @@
 
 <template>
-  <div v-if="node && node.type !== 'user'">
+  <div v-if="node && node.type !== 'user' || isDev">
     <div class="mb-3 text-xl">
       Remove
     </div>
     <div class="mb-3">
-      <ReButton :color="'red'" @click="removeNode()">Remove Node & Link<span v-if="loading">⏱</span></ReButton>
+      <ReButton :color="'red'" @click="removeNode()">Remove Node & <span v-if="totalLinks">{{ totalLinks }}</span> Link<span v-if="loading">⏱</span></ReButton>
     </div>
   </div>
 </template>
@@ -23,10 +23,15 @@ export default {
   },
   data () {
     return {
+      isDev: process.env.NODE_ENV === 'development',
+      totalLinks: 0,
       loading: false
     }
   },
-  mounted () {
+  async mounted () {
+    let src = await Graph.queryEdgesSourceNode({ nodeID: this.node._id })
+    let target = await Graph.queryEdgesTargetNode({ nodeID: this.node._id })
+    this.totalLinks = src.length + target.length
   },
   methods: {
     async removeNode () {
