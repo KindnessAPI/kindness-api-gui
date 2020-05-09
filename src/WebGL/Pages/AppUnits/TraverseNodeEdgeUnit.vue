@@ -298,12 +298,7 @@ export default {
           hm.ty = tchs.pageX
         }
       }
-      controls.domElement.addEventListener('touchstart', onTouchStart)
-      controls.domElement.addEventListener('touchmove', onTouchMove)
-      controls.addEventListener('start', (evt) => {
-        start = new Date().getTime()
-      })
-      controls.addEventListener('end', (evt) => {
+      let onTouchEnd = (evt) => {
         end = new Date().getTime()
         let delta = end - start
         let dist = Math.sqrt(Math.pow(hm.ax, 2) + Math.pow(hm.ay, 2))
@@ -324,6 +319,12 @@ export default {
           ax: 0,
           ay: 0
         }
+      }
+      controls.domElement.addEventListener('touchstart', onTouchStart)
+      controls.domElement.addEventListener('touchmove', onTouchMove)
+      controls.domElement.addEventListener('touchend', onTouchEnd)
+      controls.addEventListener('start', (evt) => {
+        start = new Date().getTime()
       })
 
       engine.enableNodeDrag(true)
