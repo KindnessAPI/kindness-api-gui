@@ -49,6 +49,11 @@ export default new Router({
       component: () => import('./WebGL/Pages/TraverseGalaxyPage.vue')
     },
     {
+      path: '/my-photos',
+      beforeEnter: loginGate,
+      component: () => import('./WebGL/Pages/AppResuables/GEImageManager.vue')
+    },
+    {
       path: '/prayer-room',
       beforeEnter: loginGate,
       component: () => import('./WebGL/Pages/PrayerRoomPage.vue')

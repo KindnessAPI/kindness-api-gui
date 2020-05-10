@@ -1187,7 +1187,7 @@ export class MyFiles {
       }
     })
   }
-  static async getMyFiles ({ pageAt = 0, perPage = 20 }) {
+  static async getMyFiles ({ userID = Auth.currentProfile.userID, pageAt = 0, perPage = 20 }) {
     let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
@@ -1197,9 +1197,10 @@ export class MyFiles {
       data: {
         method: 'query',
         payload: {
-          userID: Auth.currentProfile.userID,
+          userID,
           skip: pageAt * perPage,
-          limit: perPage
+          limit: perPage,
+          sort: '-created_at'
         }
       }
     })
@@ -1226,6 +1227,28 @@ export class MyFiles {
           mime,
           cloudinary,
           tags: []
+        }
+      }
+    })
+
+    return resp.then((r) => {
+      return r.data
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+
+  static async deleteCloudinaryFileByList ({ objs = [] }) {
+    let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-file',
+      headers: getHeader(),
+      data: {
+        method: 'remove-objs',
+        payload: {
+          objs
         }
       }
     })

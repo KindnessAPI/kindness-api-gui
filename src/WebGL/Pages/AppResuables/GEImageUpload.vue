@@ -17,6 +17,12 @@ import axios from 'axios'
 
 export default {
   props: {
+    accept: {
+      default: 'image/*'
+    },
+    multiple: {
+      default: false
+    },
     square: {
       default: false
     },
@@ -41,71 +47,78 @@ export default {
     upload () {
       let filer = document.createElement('input')
       filer.type = 'file'
-      filer.accept = 'image/*'
+      filer.accept = this.accept
+      filer.multiple = this.multiple
       this.$refs['mounter'].appendChild(filer)
       filer.onchange = async (evt) => {
         let files = evt.target.files
-        let file = files[0]
-        if (file) {
-          this.state = 'uploading'
-          try {
-            const options = {
-              maxSizeMB: 2, // (default: Number.POSITIVE_INFINITY)
-              maxWidthOrHeight: 2048, // compressedFile will scale down by ratio to a point that width or height is smaller than maxWidthOrHeight (default: undefined)
-              useWebWorker: true, // optional, use multi-thread web worker, fallback to run in main-thread (default: true)
-              maxIteration: 4 // optional, max number of iteration to compress the image (default: 10)
-            }
-            let compressedImage = await imageCompression(file, options)
+        // let file = files[0]
 
-            let url = MyFiles.UPLOAD_URL
-            let formData = new FormData()
-
-            formData.append('file', compressedImage)
-            formData.append('upload_preset', 'kindness-api')
-
-            var config = {
-              onUploadProgress: (progressEvent) => {
-                var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
-                console.log(percentCompleted)
-                this.progress = percentCompleted
-                this.$forceUpdate()
+        let uploadFile = async (file) => {
+          if (file) {
+            this.state = 'uploading'
+            try {
+              const options = {
+                maxSizeMB: 2, // (default: Number.POSITIVE_INFINITY)
+                maxWidthOrHeight: 2048, // compressedFile will scale down by ratio to a point that width or height is smaller than maxWidthOrHeight (default: undefined)
+                useWebWorker: true, // optional, use multi-thread web worker, fallback to run in main-thread (default: true)
+                maxIteration: 4 // optional, max number of iteration to compress the image (default: 10)
               }
+              let compressedImage = await imageCompression(file, options)
+
+              let url = MyFiles.UPLOAD_URL
+              let formData = new FormData()
+
+              formData.append('file', compressedImage)
+              formData.append('upload_preset', 'kindness-api')
+
+              var config = {
+                onUploadProgress: (progressEvent) => {
+                  var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+                  console.log(percentCompleted)
+                  this.progress = percentCompleted
+                  this.$forceUpdate()
+                }
+              }
+
+              let res = await axios.post(url, formData, config)
+              let cloudinary = res.data
+
+              // https://res.cloudinary.com/ht8mcws2o/image/upload/c_scale,w_150/v1570172749/spaceboard/fbb9uqtegper8vhy68dc.png
+              // http://res.cloudinary.com/ht8mcws2o/image/upload/v1570172749/spaceboard/fbb9uqtegper8vhy68dc.png
+
+              let thumb = cloudinary.secure_url.replace('/upload/', '/upload/w_256,h_256,c_fill,g_auto:0,q_auto/')
+              let iurl = cloudinary.secure_url.replace(`/upload/`, `/upload/q_auto/`)
+              // let base64 = await MyFiles.imageToURI(compressed.image)
+              // let resCloud = await new Promise((resolve, reject) => {
+              //   cloudinary.uploader.upload(base64, (error, result) => {
+              //     if (error) {
+              //       reject(error)
+              //     } else {
+              //       resolve(result)
+              //     }
+              //   })
+              // })
+              // console.log(resCloud)
+
+              let mime = file.type
+              let filename = file.name
+              let ext = file.name.split('.').pop()
+              // let size = file.size
+              let dbData = await MyFiles.createCloudinaryFile({ filename, ext, mime, cloudinary })
+              // let url = dbData.cloudinary.secure_url
+              // let qAutoURL = url.replace(`/image/upload/`, `/image/upload/q_auto/`)
+              this.$emit('data', dbData)
+              this.$emit('url', iurl)
+              this.$emit('thumb', thumb)
+            } catch (e) {
+              console.log(e)
             }
-
-            let res = await axios.post(url, formData, config)
-            let cloudinary = res.data
-            let iurl = cloudinary.secure_url
-
-            // https://res.cloudinary.com/ht8mcws2o/image/upload/c_scale,w_150/v1570172749/spaceboard/fbb9uqtegper8vhy68dc.png
-            // http://res.cloudinary.com/ht8mcws2o/image/upload/v1570172749/spaceboard/fbb9uqtegper8vhy68dc.png
-
-            iurl = iurl.replace(`/upload/`, `/upload/q_auto/`)
-
-            // let base64 = await MyFiles.imageToURI(compressed.image)
-            // let resCloud = await new Promise((resolve, reject) => {
-            //   cloudinary.uploader.upload(base64, (error, result) => {
-            //     if (error) {
-            //       reject(error)
-            //     } else {
-            //       resolve(result)
-            //     }
-            //   })
-            // })
-            // console.log(resCloud)
-
-            let mime = file.type
-            let filename = file.name
-            let ext = file.name.split('.').pop()
-            // let size = file.size
-            let dbData = await MyFiles.createCloudinaryFile({ filename, ext, mime, cloudinary })
-            // let url = dbData.cloudinary.secure_url
-            // let qAutoURL = url.replace(`/image/upload/`, `/image/upload/q_auto/`)
-            this.$emit('data', dbData)
-            this.$emit('url', iurl)
-          } catch (e) {
-            console.log(e)
+            this.state = 'ready'
           }
-          this.state = 'ready'
+        }
+        for (let file of files) {
+          await uploadFile(file)
         }
       }
       filer.click()
