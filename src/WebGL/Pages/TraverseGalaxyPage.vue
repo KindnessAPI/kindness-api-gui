@@ -249,6 +249,16 @@ export default {
       if (needToReload) {
         graphData = await Graph.getUserGraph({ userID: this.queryUserID })
       }
+      let userIDs = graphData.nodes.filter(e => e.value && e.value.userID).map(e => e.value.userID)
+      let users = await Profile.getProfileByUserIDList({ userIDs: userIDs })
+      users = users.filter(e => e.type === 'user')
+      // console.log(users, userIDs)
+      graphData.nodes
+        .filter(e => e.type === 'user' || e.type === 'traverse')
+        .filter(e => e.value && e.value.userID)
+        .forEach(e => {
+          e.img = users.find(u => u.userID === e.value.userID).photoImg || e.img
+        })
       this.graph = graphData
       this.mainArea = 'traverse'
     },

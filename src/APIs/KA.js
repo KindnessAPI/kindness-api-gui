@@ -504,6 +504,27 @@ export class Profile {
     })
   }
 
+  static async getProfileByUserIDList ({ list }) {
+    let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-profile',
+      headers: getHeader(),
+      data: {
+        method: 'query',
+        payload: {
+          list
+        }
+      }
+    })
+    return resp.then((r) => {
+      return r.data
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+
   static async createProfile ({ userID, username, photo }) {
     photo = photo || `https://picsum.photos/id/${(Math.random() * 1200).toFixed(0)}/256/256`
 
