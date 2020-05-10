@@ -219,15 +219,16 @@ export default {
     },
     onNodeClick (node) {
       this.currentNode = node
-      if (node.type === 'traverse') {
-        if (node.value.username !== this.queryUsername) {
-          this.$router.push(`/profile/${node.value.username}/${node.value.userID}`)
-        } else {
-          this.overlay = 'node-panel'
-        }
-      } else {
-        this.overlay = 'node-panel'
-      }
+      this.overlay = 'node-panel'
+      // if (node.type === 'traverse') {
+      //   if (node.value.username !== this.queryUsername) {
+      //     this.$router.push(`/profile/${node.value.username}/${node.value.userID}`)
+      //   } else {
+      //     this.overlay = 'node-panel'
+      //   }
+      // } else {
+      //   this.overlay = 'node-panel'
+      // }
     },
     async onReload () {
       await this.initMyProfile()

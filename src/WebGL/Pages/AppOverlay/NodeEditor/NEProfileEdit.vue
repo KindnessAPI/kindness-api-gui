@@ -30,35 +30,42 @@
 
       <div class="mb-3 border-l border-black hover:border-green-400 pl-3">
         <div class="text-lg mt-3">Profile Image</div>
-        <img :src="profile.photoImg" class="border w-16 h-16 m-1" alt="">
         <textarea placeholder="Profile image link" v-model="profile.photoImg" cols="36" rows="1" class="max-w-full rounded-none bg-transparent whitespace-pre-line resize-none px-0 py-2 mb-3 border-b border-black inline-block"></textarea>
+        <div class="flex">
+          <img :src="profile.photoImg" class="border w-16 h-16 m-1 inline-block object-center object-cover" alt="">
+          <!-- <GEProfileUpload @url="profile.photoImg = $event; updateProfile({ close: false })"></GEProfileUpload> -->
+          <GEImageUpload class="inline-block" @url="profile.photoImg = $event; updateProfile({ close: false })" :label="loading ? 'Saving' : 'Choose Image & Upload'"></GEImageUpload>
+        </div>
       </div>
 
       <div class="mb-3 border-l border-black hover:border-green-400 pl-3">
         <div class="text-lg mt-3 mb-2">Background Image</div>
-        <div class="mb-2">Sample Images...</div>
+        <!-- <div class="mb-2">Example Images...</div>
         <div>
-          <img @click="profile.bgImg = img.img" class="border w-16 h-16 m-1 inline-block" :key="img.key" v-for="img in imgs" :src="img.img" :alt="img.key">
-        </div>
+          <img @click="profile.bgImg = img.img" class="border w-16 h-16 m-1 inline-block object-center object-cover" :key="img.key" v-for="img in imgs" :src="img.img" :alt="img.key">
+        </div> -->
         <textarea placeholder="Background image link" v-model="profile.bgImg" cols="36" rows="1" class="max-w-full rounded-none bg-transparent whitespace-pre-line resize-none px-0 py-2 mb-3 border-b border-black inline-block"></textarea>
         <div>
-          <img :src="profile.bgImg" class="border w-16 h-16 m-1 inline-block" alt="">
+          <img :src="profile.bgImg" class="border w-16 h-16 m-1 inline-block object-center object-cover" alt="">
+          <GEImageUpload class="inline-block" @url="profile.bgImg = $event; updateProfile({ close: false })" :label="loading ? 'Saving' : 'Choose Image & Upload'"></GEImageUpload>
         </div>
       </div>
 
       <div class="mb-3 border-l border-black hover:border-green-400 pl-3">
         <div class="text-lg mt-3">Loading Screen Image</div>
-        <div class="mb-2">Sample Images...</div>
+        <!-- <div class="mb-2">Example Images...</div>
         <div>
-          <img @click="profile.loadingImg = img.img" class="border w-16 h-16 m-1 inline-block" :key="img.key" v-for="img in imgs" :src="img.img" :alt="img.key">
-        </div>
+          <img @click="profile.loadingImg = img.img" class="border w-16 h-16 m-1 inline-block object-center object-cover" :key="img.key" v-for="img in imgs" :src="img.img" :alt="img.key">
+        </div> -->
         <textarea placeholder="Loading screen image link" v-model="profile.loadingImg" cols="36" rows="1" class="max-w-full rounded-none bg-transparent whitespace-pre-line resize-none px-0 py-2 mb-3 border-b border-black inline-block"></textarea>
         <div>
-          <img :src="profile.loadingImg" class="border w-16 h-16 m-1 inline-block" alt="">
+          <img :src="profile.loadingImg" class="border w-16 h-16 m-1 inline-block object-center object-cover" alt="">
+          <GEImageUpload class="inline-block" @url="profile.loadingImg = $event; updateProfile({ close: false })" :label="loading ? 'Saving' : 'Choose Image & Upload'"></GEImageUpload>
         </div>
       </div>
+
       <div class="mb-3">
-        <ReButton :color="'green'" @click="updateProfile()">Save Profile <span v-if="loading">⏱</span></ReButton>
+        <ReButton :color="'green'" @click="updateProfile({ close: true })">Save All Settings & Close <span v-if="loading">⏱</span></ReButton>
       </div>
     </div>
     <div v-else>
@@ -76,6 +83,8 @@ export default {
     node: {}
   },
   components: {
+    // GEProfileUpload: require('../../AppResuables/GEProfileUpload.vue').default,
+    GEImageUpload: require('../../AppResuables/GEImageUpload.vue').default,
     ReButton: require('../../AppResuables/ReButton.vue').default
   },
   data () {
@@ -101,7 +110,7 @@ export default {
         console.log(e)
       }
     },
-    async updateProfile () {
+    async updateProfile ({ close }) {
       try {
         this.loading = true
         await Profile.updateProfile({ edit: this.profile })
@@ -110,7 +119,9 @@ export default {
           img: this.profile.photoImg
         }
         await Graph.updateMyNode({ edit: myNode })
-        this.$emit('close')
+        if (close) {
+          this.$emit('close')
+        }
         window.dispatchEvent(new Event('reload-graph'))
         this.loading = false
       } catch (e) {
