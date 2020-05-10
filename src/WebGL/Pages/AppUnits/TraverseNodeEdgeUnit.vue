@@ -199,8 +199,8 @@ export default {
 
         if (v) {
           loadData(v)
-          controls.object.position.x = 0
-          controls.object.position.y = 0
+          // controls.object.position.x = 0
+          // controls.object.position.y = 0
         }
       })
 
@@ -479,17 +479,11 @@ export default {
       // borderGeoHexa.rotateZ(Math.PI * 0.5)
       // iconGeoHexa.rotateZ(Math.PI * 0.5)
 
-      let iconGeoCircle = new CircleBufferGeometry(10, 40)
-      let borderGeoCircle = new CircleBufferGeometry(11, 40)
+      let iconGeoCircle = new CircleBufferGeometry(14, 40)
+      let borderGeoCircle = new CircleBufferGeometry(15, 40)
       iconGeoCircle.computeBoundingSphere()
       borderGeoCircle.computeBoundingSphere()
       borderGeoCircle.translate(0, 0, -0.1)
-
-      let iconGeoCircleBig = new CircleBufferGeometry(14, 40)
-      let borderGeoCircleBig = new CircleBufferGeometry(15, 40)
-      iconGeoCircleBig.computeBoundingSphere()
-      borderGeoCircleBig.computeBoundingSphere()
-      borderGeoCircleBig.translate(0, 0, -0.1)
 
       let iconGeoBadge = new CircleBufferGeometry(3, 40)
       let borderGeoBadge = new CircleBufferGeometry(4, 40)
@@ -513,17 +507,17 @@ export default {
         .linkWidth(link => highlightLinks.has(link) ? 3 : 2)
         .linkColor(link => highlightLinks.has(link) ? 'rgb(20, 156, 255)' : 'rgba(255,255,255,1.0)')
         .linkOpacity(0.6)
-        .linkDirectionalParticles(link => highlightLinks.has(link) ? 3 : 1)
-        .linkDirectionalParticleWidth(link => highlightLinks.has(link) ? 4 : 3)
-        .linkDirectionalParticleResolution(5)
+        // .linkDirectionalParticles(link => highlightLinks.has(link) ? 3 : 1)
+        // .linkDirectionalParticleWidth(link => highlightLinks.has(link) ? 4 : 3)
+        // .linkDirectionalParticleResolution(5)
         // .nodeResolution(3)
         .nodeThreeObject((node) => {
           if (node.type === 'traverse') {
             iconGeo = iconGeoHexa
             borderGeo = borderGeoHexa
           } else if (node.type === 'user') {
-            iconGeo = iconGeoCircleBig
-            borderGeo = borderGeoCircleBig
+            iconGeo = iconGeoCircle
+            borderGeo = borderGeoCircle
           } else if (node.type === 'content') {
             iconGeo = iconGeoSquare
             borderGeo = borderGeoSquare
@@ -553,6 +547,7 @@ export default {
           const badge = new Sprite(badgeMat)
           badge.geometry = iconGeoBadge
           sprite.add(badge)
+
           let badgeText = new SpriteText(``)
           badgeText.color = 'white'
           // badgeText.strokeColor = 'black'
