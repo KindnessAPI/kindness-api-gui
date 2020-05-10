@@ -328,59 +328,59 @@ export default {
       })
 
       engine.enableNodeDrag(true)
-      // let adt = {
-      //   x: 0,
-      //   y: 0
-      // }
-      // let dragRadius = 25
+      let adt = {
+        x: 0,
+        y: 0
+      }
+      let dragRadius = 25
       engine.onNodeDrag((node, translate) => {
         controls.enablePan = false
 
-        // if (node.ondrag) {
-        //   node.ondrag()
-        // }
-        // adt.x += translate.x
-        // adt.y += translate.y
+        if (node.ondrag) {
+          node.ondrag()
+        }
+        adt.x += translate.x
+        adt.y += translate.y
 
-        // let { x, y } = adt
-        // x = x || 0
-        // y = y || 0
-        // let dt = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2))
-        // if (node.onDT) {
-        //   node.onDT(dt)
-        // }
-        // if (dt >= dragRadius) {
-        //   node.canOpen && node.canOpen(true)
-        // } else {
-        //   node.canOpen && node.canOpen(false)
-        // }
-        // if (dt >= dragRadius) {
-        // } else if (dt < dragRadius) {
-        // }
+        let { x, y } = adt
+        x = x || 0
+        y = y || 0
+        let dt = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2))
+        if (node.onDT) {
+          node.onDT(dt)
+        }
+        if (dt >= dragRadius) {
+          node.onCanOpen && node.onCanOpen(true)
+        } else {
+          node.onCanOpen && node.onCanOpen(false)
+        }
+        if (dt >= dragRadius) {
+        } else if (dt < dragRadius) {
+        }
       })
 
       engine.onNodeDragEnd((node, translate) => {
         controls.enablePan = true
 
-        // let { x, y } = translate
-        // x = x || 0
-        // y = y || 0
-        // let dt = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2))
+        let { x, y } = translate
+        x = x || 0
+        y = y || 0
+        let dt = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2))
 
-        // if (node && dt > dragRadius) {
-        //   this.$emit('node-click', node)
-        //   if (node.ondragend) {
-        //     node.ondragend()
-        //   }
-        // } else {
-        //   if (node.ondragcancel) {
-        //     node.ondragcancel()
-        //   }
-        // }
-        // adt = {
-        //   x: 0,
-        //   y: 0
-        // }
+        if (node && dt > dragRadius) {
+          this.$emit('node-drag', node)
+          if (node.ondragend) {
+            node.ondragend()
+          }
+        } else {
+          if (node.ondragcancel) {
+            node.ondragcancel()
+          }
+        }
+        adt = {
+          x: 0,
+          y: 0
+        }
       })
 
       engine.onNodeClick((node) => {
@@ -491,8 +491,8 @@ export default {
 
       let transparentMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0 })
       let whiteMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 1.0, color: 0xffffff, envMap: this.cuber.out.envMap })
-      // let blueMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0.85, color: 0xffffff, envMap: this.cuber.out.envMap })
-      // let limeMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0.85, color: 0x32cd32, envMap: this.cuber.out.envMap })
+      let blueMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0.85, color: 0xffffff, envMap: this.cuber.out.envMap })
+      let limeMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0.85, color: 0x32cd32, envMap: this.cuber.out.envMap })
 
       // let map = new Map()
       // user
@@ -581,29 +581,29 @@ export default {
 
           clicker.add(spriteText)
 
-          // node.ondrag = () => {
-          //   // border.material = whiteMat
-          // }
-          // node.onDT = (v) => {
-          //   let r = dragRadius
-          //   let sc = 0.5
-          //   let sv = (v * sc + r) / (r)
-          //   if (sv > 1.5) {
-          //     sv = 1.5
-          //   }
-          //   border.scale.set(sv, sv, sv)
-          // }
-          // node.ondragend = () => {
-          //   border.material = whiteMat
-          //   border.scale.set(1, 1, 1)
-          // }
-          // node.ondragcancel = () => {
-          //   border.material = whiteMat
-          //   border.scale.set(1, 1, 1)
-          // }
-          // node.canOpen = (can) => {
-          //   border.material = can ? limeMat : blueMat
-          // }
+          node.ondrag = () => {
+            // border.material = whiteMat
+          }
+          node.onDT = (v) => {
+            let r = dragRadius
+            let sc = 0.5
+            let sv = (v * sc + r) / (r)
+            if (sv > 1.5) {
+              sv = 1.5
+            }
+            border.scale.set(sv, sv, sv)
+          }
+          node.ondragend = () => {
+            border.material = whiteMat
+            border.scale.set(1, 1, 1)
+          }
+          node.ondragcancel = () => {
+            border.material = whiteMat
+            border.scale.set(1, 1, 1)
+          }
+          node.onCanOpen = (can) => {
+            border.material = can ? limeMat : blueMat
+          }
 
           // setTimeout(() => {
           //   clicker.frustumCulled = true

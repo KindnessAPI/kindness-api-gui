@@ -61,6 +61,7 @@
       @home="onGoHome"
       @view="onViewProfile"
       @node-click="onNodeClick"
+      @node-drag="onNodeDrag"
       :graph="graph"
       ref="edge-node"
       >
@@ -212,9 +213,21 @@ export default {
         this.socket.close()
       }
     },
-    onNodeClick (node) {
+    onNodeDrag (node) {
       this.currentNode = node
       this.overlay = 'node-panel'
+    },
+    onNodeClick (node) {
+      this.currentNode = node
+      if (node.type === 'traverse') {
+        if (node.value.username !== this.queryUsername) {
+          this.$router.push(`/profile/${node.value.username}/${node.value.userID}`)
+        } else {
+          this.overlay = 'node-panel'
+        }
+      } else {
+        this.overlay = 'node-panel'
+      }
     },
     async onReload () {
       await this.initMyProfile()
