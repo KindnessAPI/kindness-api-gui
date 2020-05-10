@@ -408,7 +408,7 @@ export class Content {
     if (!nodeID) {
       throw new Error('missing ndoe id')
     }
-    photo = photo || `https://picsum.photos/id/${(Math.random() * 1200).toFixed(0)}/500/500`
+    photo = photo || `https://picsum.photos/id/${(Math.random() * 1200).toFixed(0)}/512/512`
 
     let axios = (await import('axios')).default
     let resp = axios({
@@ -505,7 +505,7 @@ export class Profile {
   }
 
   static async createProfile ({ userID, username, photo }) {
-    photo = photo || `https://picsum.photos/id/${(Math.random() * 1200).toFixed(0)}/200/200`
+    photo = photo || `https://picsum.photos/id/${(Math.random() * 1200).toFixed(0)}/256/256`
 
     let axios = (await import('axios')).default
     let resp = axios({

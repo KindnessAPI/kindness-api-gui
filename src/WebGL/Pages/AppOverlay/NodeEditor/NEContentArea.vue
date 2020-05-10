@@ -18,10 +18,10 @@
       </div>
     </div> -->
   </div>
-  <div class="max-w-xl mx-auto" v-else-if="content === null">
+  <div class="max-w-xl mx-auto p-3" v-else-if="content === null">
     Loading Content... ⏱
   </div>
-  <div class="max-w-xl mx-auto" v-else-if="!content">
+  <div class="max-w-xl mx-auto p-3" v-else-if="!content">
     Can't Load Content... ✨
   </div>
 </template>
