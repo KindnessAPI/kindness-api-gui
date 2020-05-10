@@ -1021,7 +1021,7 @@ export class Graph {
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
-      url: '/access-edge',
+      url: '/access-edge?method=query',
       headers: getHeader(),
       data: {
         method: 'query',

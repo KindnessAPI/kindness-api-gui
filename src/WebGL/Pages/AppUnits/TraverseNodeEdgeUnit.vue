@@ -199,6 +199,8 @@ export default {
 
         if (v) {
           loadData(v)
+          controls.object.position.x = 0
+          controls.object.position.y = 0
         }
       })
 
@@ -477,11 +479,17 @@ export default {
       // borderGeoHexa.rotateZ(Math.PI * 0.5)
       // iconGeoHexa.rotateZ(Math.PI * 0.5)
 
-      let iconGeoCircle = new CircleBufferGeometry(14, 40)
-      let borderGeoCircle = new CircleBufferGeometry(15, 40)
+      let iconGeoCircle = new CircleBufferGeometry(10, 40)
+      let borderGeoCircle = new CircleBufferGeometry(11, 40)
       iconGeoCircle.computeBoundingSphere()
       borderGeoCircle.computeBoundingSphere()
       borderGeoCircle.translate(0, 0, -0.1)
+
+      let iconGeoCircleBig = new CircleBufferGeometry(14, 40)
+      let borderGeoCircleBig = new CircleBufferGeometry(15, 40)
+      iconGeoCircleBig.computeBoundingSphere()
+      borderGeoCircleBig.computeBoundingSphere()
+      borderGeoCircleBig.translate(0, 0, -0.1)
 
       let iconGeoBadge = new CircleBufferGeometry(3, 40)
       let borderGeoBadge = new CircleBufferGeometry(4, 40)
@@ -494,26 +502,28 @@ export default {
       let blueMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0.85, color: 0xffffff, envMap: this.cuber.out.envMap })
       let limeMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0.85, color: 0x32cd32, envMap: this.cuber.out.envMap })
 
+      engine.linkWidth(2)
+
       // let map = new Map()
       // user
       // loveline
       engine
+        // .linkLabel('name')
+        .linkResolution(3)
         .linkWidth(link => highlightLinks.has(link) ? 3 : 2)
         .linkColor(link => highlightLinks.has(link) ? 'rgb(20, 156, 255)' : 'rgba(255,255,255,1.0)')
-        .linkDirectionalParticles(link => highlightLinks.has(link) ? 3 : 1)
         .linkOpacity(0.6)
-        // .linkLabel('type')
+        .linkDirectionalParticles(link => highlightLinks.has(link) ? 3 : 1)
         .linkDirectionalParticleWidth(link => highlightLinks.has(link) ? 4 : 3)
         .linkDirectionalParticleResolution(5)
-        .linkResolution(3)
         // .nodeResolution(3)
         .nodeThreeObject((node) => {
           if (node.type === 'traverse') {
             iconGeo = iconGeoHexa
             borderGeo = borderGeoHexa
           } else if (node.type === 'user') {
-            iconGeo = iconGeoCircle
-            borderGeo = borderGeoCircle
+            iconGeo = iconGeoCircleBig
+            borderGeo = borderGeoCircleBig
           } else if (node.type === 'content') {
             iconGeo = iconGeoSquare
             borderGeo = borderGeoSquare
@@ -605,6 +615,17 @@ export default {
             border.material = can ? limeMat : blueMat
           }
 
+          // node.onCanClick = (hNode) => {
+          //   if (hNode && hNode._id === node._id) {
+          //     border.material = limeMat
+          //     border.scale.set(1.1, 1.1, 1.1)
+          //   } else {
+          //     border.material = whiteMat
+          //     border.scale.set(1, 1, 1)
+          //   }
+          // }
+          // this.$on('node-hover', node.onCanClick)
+
           // setTimeout(() => {
           //   clicker.frustumCulled = true
           // })
@@ -613,7 +634,10 @@ export default {
           return clicker
         })
         .onNodeHover(node => {
+          // this.$emit('node-hover', node)
+
           if (node) {
+            // node.onCanClick && node.onCanClick(true)
             this.$refs.mounter.style.cursor = 'pointer'
           } else {
             this.$refs.mounter.style.cursor = ''

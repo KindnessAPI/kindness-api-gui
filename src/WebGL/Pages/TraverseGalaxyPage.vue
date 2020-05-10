@@ -23,14 +23,14 @@
             <br/>
             Please wait... ⏱
           </div>
-        </div>
+        </div>-
         <StarFlowScene slot="o3d">
         </StarFlowScene>
       </ScissorArea> -->
 
       <transition name="fade">
         <div class="simple-bg"
-          v-if="this.mainArea === 'loading'"
+          v-if="mainArea === 'loading'"
           :style="{
             backgroundColor: '#251b69',
             backgroundImage: `url(${loadingBG})`,
@@ -44,7 +44,7 @@
 
       <transition name="fade">
         <div class="simple-bg"
-          v-if="this.mainArea === 'traverse'"
+          v-if="mainArea === 'traverse'"
           :style="{
             backgroundColor: '#251b69',
             backgroundImage: `url(${readyBG})`,
