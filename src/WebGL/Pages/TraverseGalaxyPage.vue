@@ -399,7 +399,7 @@ export default {
   right: 0px;
   bottom: 0px;
   z-index: 12;
-  background-color: rgba(255, 255, 255, 0.904);
+  background-color: rgba(255, 255, 255, 0.7);
 }
 @screen lg {
   .overlay {
