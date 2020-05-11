@@ -353,9 +353,11 @@ export default {
     async onInit () {
       this.mainArea = 'loading'
       this.onReset()
-      await this.makeSocket()
-      await this.initMyNode()
-      await this.initMyProfile()
+      await Promise.all([
+        this.makeSocket(),
+        this.initMyProfile(),
+        this.initMyNode()
+      ])
       await this.downloadGraph()
       this.onSetupBtns()
       this.mainArea = 'traverse'
