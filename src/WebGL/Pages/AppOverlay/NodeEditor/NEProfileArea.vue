@@ -1,5 +1,5 @@
 <template>
-  <div v-if="profile" class="min-height-profile pt-3">
+  <div v-if="profile" class="pt-3">
     <div class="w-full mb-3 flex justify-center">
       <div class="w-24 h-24">
         <img :src="profile.photoImg" class="w-24 h-24 object-center object-cover rounded-full border-gray-700" alt="">
@@ -15,16 +15,17 @@
       <a target="_blank" :href="profile.twitterURL"><img class="m-1" v-if="profile.twitterURL" src="../img/twitter.svg" alt="Twitter"></a>
       <a target="_blank" :href="profile.youtubeURL"><img class="m-1" v-if="profile.youtubeURL" src="../img/youtube.svg" alt="Yotuube"></a>
     </div>
+
     <div class="w-full mb-3 flex justify-center">
       {{ profile.bio }}
     </div>
 
     <!-- <pre>{{ profile }}</pre> -->
   </div>
-  <div v-else-if="profile === null" class="max-w-xl mx-auto text-center min-height-profile pt-3">
+  <div v-else-if="profile === null" class="max-w-xl mx-auto text-center pt-3">
     Loading Profile...
   </div>
-  <div v-else-if="!profile" class="max-w-xl mx-auto text-center min-height-profile pt-3">
+  <div v-else-if="!profile" class="max-w-xl mx-auto text-center pt-3">
     Can't Load Profile
   </div>
 </template>

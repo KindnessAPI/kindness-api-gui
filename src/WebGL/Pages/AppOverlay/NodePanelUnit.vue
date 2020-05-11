@@ -1,6 +1,6 @@
 <template>
   <div class="overlay">
-    <div v-if="editable" class="p-3 h-full w-full scrolling-touch overflow-y-auto overflow-x-hidden max-w-xl mx-auto">
+    <div v-if="editable" class="p-3 h-full w-full scrolling-touch overflow-y-auto overflow-x-hidden">
       <div v-if="node.type === 'traverse'" :class="{ 'bg-blue-200': tab === 'traverse' }" @click="tab = 'traverse'" class="inline-block px-3 py-2 border border-gray-500 mb-2 mr-2 rounded-lg ">Profile</div>
       <div v-if="node.type === 'user'" :class="{ 'bg-blue-200': tab === 'user' }" @click="tab = 'user'" class="inline-block px-3 py-2 border border-gray-500 mb-2 mr-2 rounded-lg ">Profile</div>
       <!-- General -->
@@ -16,7 +16,6 @@
       </div>
       <div v-if="tab === 'addon'">
         <NEAddFriend :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEAddFriend>
-        <!-- <NEAddContent :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEAddContent> -->
       </div>
       <div v-if="tab === 'edit'">
         <!-- <NENodeEdit v-if="!(node.type === 'user' || node.type === 'traverse')" :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NENodeEdit> -->
@@ -25,11 +24,11 @@
       </div>
     </div>
     <div v-else class="h-full w-full scrolling-touch overflow-y-auto overflow-x-hidden">
-      <div v-if="node.type === 'traverse'" class="p-3 max-w-xl mx-auto">
+      <div v-if="node.type === 'traverse'" class="p-3">
         <NEProfileArea :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEProfileArea>
         <NENodeTraverseAction :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NENodeTraverseAction>
       </div>
-      <div v-if="node.type === 'user'" class="p-3 max-w-xl mx-auto">
+      <div v-if="node.type === 'user'" class="p-3">
         <NEProfileArea :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEProfileArea>
       </div>
     </div>

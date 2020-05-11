@@ -514,9 +514,9 @@ export default {
         .linkWidth(link => highlightLinks.has(link) ? 3 : 2)
         .linkColor(link => highlightLinks.has(link) ? 'rgb(20, 156, 255)' : 'rgba(255,255,255,1.0)')
         .linkOpacity(0.6)
-        // .linkDirectionalParticles(link => highlightLinks.has(link) ? 3 : 1)
-        // .linkDirectionalParticleWidth(link => highlightLinks.has(link) ? 4 : 3)
-        // .linkDirectionalParticleResolution(5)
+        .linkDirectionalParticles(link => highlightLinks.has(link) ? 3 : 1)
+        .linkDirectionalParticleWidth(link => highlightLinks.has(link) ? 4 : 3)
+        .linkDirectionalParticleResolution(5)
         // .nodeResolution(3)
         .nodeThreeObject((node) => {
           if (node.type === 'traverse') {
