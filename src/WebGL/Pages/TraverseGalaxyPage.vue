@@ -60,7 +60,8 @@
         <ScissorArea class="w-full h-full focus:outline-none" style="z-index: -1;">
           <div slot="dom" class="full bg-gray pt-3 focus:outline-none">
           </div>
-          <DashboardScene slot="o3d"></DashboardScene>
+          <component :is="transitionScene" slot="o3d"></component>
+          <!-- <DashboardScene slot="o3d"></DashboardScene> -->
         </ScissorArea>
       </div>
 
@@ -169,11 +170,8 @@ export default {
         'DashboardScene',
         'StarFlowScene',
         'RiverFieldScene',
-        'FooterScene',
-        'SpaceWalkScene',
         'FallScene',
-        'ChurchScene',
-        'GospelScene'
+        'RiseScene'
         // 'MotherBoardScene'
       ],
       transitionScene: 'GospelScene',
@@ -228,13 +226,13 @@ export default {
       if (this.profile && this.profile.loadingImg) {
         return this.profile.loadingImg
       }
-      return this.bg.galaxy
+      return ''
     },
     readyBG () {
       if (this.profile && this.profile.bgImg) {
         return this.profile.bgImg
       }
-      return this.bg.stars
+      return ''
     },
     queryUserID () {
       return this.$route.params.userID
