@@ -55,6 +55,7 @@
           <StarFlowScene slot="o3d"></StarFlowScene>
         </ScissorArea>
       </div>
+
       <div class="simple-bg pointer-events-none" v-if="mainArea === 'already-here'">
         <ScissorArea class="w-full h-full focus:outline-none" style="z-index: -1;">
           <div slot="dom" class="full bg-gray pt-3 focus:outline-none">
@@ -106,6 +107,7 @@
           </div>
         </div>
       </transition>
+
       <transition name="fade">
         <div v-if="mainArea === 'already-here'" class="overlay-loading pointer-events-none">
           <div
@@ -190,9 +192,10 @@ export default {
   watch: {
     mainArea () {
       window.dispatchEvent(new Event('resize'))
-      setTimeout(() => {
-        window.dispatchEvent(new Event('resize'))
-      }, 100)
+
+      // setTimeout(() => {
+      //   window.dispatchEvent(new Event('resize'))
+      // }, 100)
     },
     'overlay' () {
       if (this.overlay) {
@@ -267,6 +270,7 @@ export default {
       if (node.type === 'traverse') {
         if (node.value.username !== this.queryUsername) {
           this.$router.push(`/profile/${node.value.username}/${node.value.userID}`)
+          this.mainArea = 'loading'
           this.overlay = false
         } else {
           this.mainArea = 'already-here'
