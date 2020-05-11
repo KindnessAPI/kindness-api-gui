@@ -30,7 +30,7 @@
 
 <script>
 import _ from 'lodash'
-import { Graph } from '../../../../APIs/KA.js'
+import { Graph, Auth } from '../../../../APIs/KA.js'
 export default {
   props: {
     node: {}
@@ -54,7 +54,16 @@ export default {
         friend.loading = true
         this.$forceUpdate()
         let newNode = await Graph.createFriendTraverseNode({ profileUsername: friend.username, name: friend.name, profileUserID: friend.userID, photo: friend.photo })
-        await Graph.linkFriendTraverseNode({ fromID: this.node._id, toID: newNode._id })
+        let toPerson = {
+          userID: friend.userID,
+          username: friend.username
+        }
+        let fromPerson = {
+          userID: Auth.currentProfile.userID,
+          username: Auth.currentProfile.username
+        }
+
+        await Graph.linkFriendTraverseNode({ fromID: this.node._id, toID: newNode._id, fromPerson, toPerson })
         friend.loading = false
         this.$forceUpdate()
         window.dispatchEvent(new Event('reload-graph'))

@@ -521,7 +521,7 @@ export class Graph {
       return Promise.reject(err)
     })
   }
-  static async linkFriendTraverseNode ({ fromID, toID }) {
+  static async linkFriendTraverseNode ({ fromID, toID, fromPerson, toPerson }) {
     let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
@@ -535,7 +535,10 @@ export class Graph {
           target: toID,
           name: 'make friend',
           type: 'friend',
-          value: {},
+          value: {
+            fromPerson,
+            toPerson
+          },
           tags: [
             {
               'text': 'early-bird'
@@ -883,7 +886,7 @@ export class Graph {
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
-      url: '/access-edge?method=query',
+      url: '/access-edge',
       headers: getHeader(),
       data: {
         method: 'query',
