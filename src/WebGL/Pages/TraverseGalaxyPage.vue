@@ -168,7 +168,7 @@ export default {
     return {
       transitionSceneList: [
         'DashboardScene',
-        'StarFlowScene',
+        // 'StarFlowScene',
         'RiverFieldScene',
         'FallScene',
         'RiseScene'
