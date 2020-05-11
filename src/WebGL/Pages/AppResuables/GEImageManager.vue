@@ -1,5 +1,5 @@
 <template>
-  <div class="p-3 max-w-4xl mx-auto overflow-auto">
+  <div class="p-3 max-w-4xl h-full overflow-auto max-w-full">
     <div class="">
       <!-- <button v-if="close" class="block font-bold underline" @click="">Close</button> -->
       <h1 class="text-2xl font-bold inline-block">Image Manager</h1>
