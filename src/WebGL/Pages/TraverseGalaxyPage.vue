@@ -433,6 +433,7 @@ export default {
   bottom: 20px;
   z-index: 12;
   background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
 }
 @screen lg {
   .overlay {
