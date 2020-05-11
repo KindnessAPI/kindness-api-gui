@@ -19,7 +19,7 @@
           <td class="pr-3 pb-3">
             <img class="w-16 h-16 object-cover object-center" :src="`${node.img}`" alt="">
           </td>
-          <td class="pr-3 pb-3">
+          <td class="pr-3 pb-3" v-if="node.userID !== myUserID">
             <ReButton :color="'green'" @click="addFriend(node)">Add Friend <span v-if="node.loading">⏱</span></ReButton>
           </td>
         </tr>
@@ -45,6 +45,7 @@ export default {
         result: false,
         query: ''
       },
+      myUserID: Auth.currentProfile.user.userID,
       selected: false
     }
   },

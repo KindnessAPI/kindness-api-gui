@@ -65,9 +65,9 @@
       :graph="graph"
       ref="edge-node"
       >
-        <O3D ref="o3d">
+        <!-- <O3D ref="o3d">
           <Spaceship></Spaceship>
-        </O3D>
+        </O3D> -->
       </TraverseNodeEdgeUnit>
 
       <div v-if="this.mainArea === 'loading'" class="overlay-loading">
@@ -260,8 +260,9 @@ export default {
         graphData = await Graph.getUserGraph({ userID: this.queryUserID })
       }
       let userIDs = graphData.nodes.filter(e => e.value && e.value.userID).map(e => e.value.userID)
-      let profiles = await Profile.getProfileByUserIDList({ userIDs: userIDs })
-      profiles = profiles.filter(e => e.type === 'user')
+      let profiles = await Profile.getProfileByUserIDList({ list: userIDs })
+      // profiles = profiles.filter(e => e.type === 'user')
+      console.log(userIDs, profiles)
       // console.log(profiles, userIDs)
       graphData.nodes
         .filter(e => e.type === 'user' || e.type === 'traverse')

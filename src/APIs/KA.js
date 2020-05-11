@@ -1,3 +1,4 @@
+import axios from 'axios'
 export const getWS = () => {
   let testing = 'ws://' + location.hostname + ':3333'
   let staging = 'wss://ws-staging.kindnessapi.com'
@@ -321,7 +322,7 @@ export class Auth {
     return Store.Profiles.length > 0
   }
   static async checkUsername (auth) {
-    let axios = (await import('axios')).default
+    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -338,7 +339,7 @@ export class Auth {
   }
 
   static async register (auth) {
-    let axios = (await import('axios')).default
+    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -360,7 +361,7 @@ export class Auth {
   }
 
   static async login (auth) {
-    let axios = (await import('axios')).default
+    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -385,7 +386,7 @@ Auth.loadProfiles()
 
 export class Profile {
   static async getProfileByUserID ({ userID }) {
-    let axios = (await import('axios')).default
+    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -405,8 +406,8 @@ export class Profile {
     })
   }
 
-  static async getProfileByUserIDList ({ userIDs }) {
-    let axios = (await import('axios')).default
+  static async getProfileByUserIDList ({ list }) {
+    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -415,7 +416,9 @@ export class Profile {
       data: {
         method: 'query',
         payload: {
-          userIDs
+          userID: { $in: list },
+          skip: 0,
+          limit: 500
         }
       }
     })
@@ -429,7 +432,7 @@ export class Profile {
   static async createProfile ({ userID, username, photo }) {
     photo = photo || `https://picsum.photos/id/${(Math.random() * 1200).toFixed(0)}/256/256`
 
-    let axios = (await import('axios')).default
+    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -466,7 +469,7 @@ export class Profile {
     })
   }
   static async updateProfile ({ edit }) {
-    let axios = (await import('axios')).default
+    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -491,7 +494,7 @@ export class Profile {
 export class Graph {
   static async createFriendTraverseNode ({ profileUsername, profileUserID, name = 'New User', photo }) {
     photo = photo || `https://picsum.photos/id/${(Math.random() * 1200).toFixed(0)}/200/200`
-    let axios = (await import('axios')).default
+    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -522,7 +525,7 @@ export class Graph {
     })
   }
   static async linkFriendTraverseNode ({ fromID, toID, fromPerson, toPerson }) {
-    let axios = (await import('axios')).default
+    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -557,7 +560,7 @@ export class Graph {
   // static async addUserNode ({ profileUsername, profileUserID, name = 'New User', photo }) {
   //   photo = photo || `https://picsum.photos/id/${(Math.random() * 1200).toFixed(0)}/200/200`
 
-  //   let axios = (await import('axios')).default
+  //   // let axios = (await import('axios')).default
   //   let resp = axios({
   //     baseURL: getRESTURL(),
   //     method: 'POST',
@@ -590,7 +593,7 @@ export class Graph {
 
   // ----
   static async listUserNodes ({ userID }) {
-    let axios = (await import('axios')).default
+    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -610,7 +613,7 @@ export class Graph {
     })
   }
   static async listUserEdges ({ userID }) {
-    let axios = (await import('axios')).default
+    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -631,7 +634,7 @@ export class Graph {
   }
 
   static async queryEdgesSourceNode ({ nodeID }) {
-    let axios = (await import('axios')).default
+    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -652,7 +655,7 @@ export class Graph {
   }
 
   static async queryEdgesTargetNode ({ nodeID }) {
-    let axios = (await import('axios')).default
+    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -673,7 +676,7 @@ export class Graph {
   }
 
   static async queryNodesByList ({ list }) {
-    let axios = (await import('axios')).default
+    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -694,7 +697,7 @@ export class Graph {
   }
 
   static async removeNodeByID ({ nodeID }) {
-    let axios = (await import('axios')).default
+    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -715,7 +718,7 @@ export class Graph {
   }
 
   static async removeEdgeByList ({ list }) {
-    let axios = (await import('axios')).default
+    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -736,7 +739,7 @@ export class Graph {
   }
 
   static async removeEdgeByID ({ edgeID }) {
-    let axios = (await import('axios')).default
+    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -776,7 +779,7 @@ export class Graph {
   }
   */
   static async updateMyNode ({ edit }) {
-    let axios = (await import('axios')).default
+    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -800,7 +803,7 @@ export class Graph {
   static async provideMyNode () {
     let photo = `https://picsum.photos/id/${(Math.random() * 1200).toFixed(0)}/500/500`
 
-    let axios = (await import('axios')).default
+    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -839,7 +842,7 @@ export class Graph {
   }
 
   static async getMyNode () {
-    let axios = (await import('axios')).default
+    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -860,7 +863,7 @@ export class Graph {
   }
 
   static async searchNodeByName ({ name }) {
-    let axios = (await import('axios')).default
+    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -882,7 +885,7 @@ export class Graph {
   }
 
   static async getMyEdges () {
-    let axios = (await import('axios')).default
+    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -903,7 +906,7 @@ export class Graph {
   }
 
   static async removeMyEdge ({ edge }) {
-    let axios = (await import('axios')).default
+    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -924,7 +927,7 @@ export class Graph {
   }
 
   static async getUserByIDList ({ idList }) {
-    let axios = (await import('axios')).default
+    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -1063,7 +1066,7 @@ export class MyFiles {
     })
   }
   static async getMyFiles ({ userID = Auth.currentProfile.userID, pageAt = 0, perPage = 20 }) {
-    let axios = (await import('axios')).default
+    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -1087,7 +1090,7 @@ export class MyFiles {
     })
   }
   static async createCloudinaryFile ({ cloudinary, filename, ext, mime, base64 }) {
-    let axios = (await import('axios')).default
+    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -1114,7 +1117,7 @@ export class MyFiles {
   }
 
   static async deleteCloudinaryFileByList ({ objs = [] }) {
-    let axios = (await import('axios')).default
+    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
