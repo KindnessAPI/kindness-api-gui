@@ -1,10 +1,16 @@
 <template>
   <div v-if="profile" class="pt-3">
-    <div class="w-full mb-3 flex justify-center">
-      <div class="w-24 h-24">
-        <img :src="profile.photoImg" class="w-24 h-24 object-center object-cover rounded-full border-gray-700" alt="">
+
+    <div :style="{
+      backgroundImage: `url(${profile.bgImg})`
+    }" class="m-2 p-2 rounded-lg bg-cover bg-center">
+      <div class="w-full mb-3 flex justify-center">
+        <div class="w-24 h-24">
+          <img :src="profile.photoImg" class="w-24 h-24 object-center object-cover rounded-full border-gray-700" alt="">
+        </div>
       </div>
     </div>
+
     <div class="w-full mb-3 flex justify-center items-center">
       {{ profile.displayName }} <img v-if="profile.verified" class="w-5 h-5 ml-1" src="../img/verified.svg">
     </div>
