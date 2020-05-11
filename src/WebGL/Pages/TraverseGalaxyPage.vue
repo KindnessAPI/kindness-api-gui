@@ -52,7 +52,8 @@
         <ScissorArea class="w-full h-full focus:outline-none" style="z-index: -1;">
           <div slot="dom" class="full bg-gray pt-3 focus:outline-none">
           </div>
-          <FallScene slot="o3d"></FallScene>
+          <DashboardScene slot="o3d"></DashboardScene>
+
           <!-- <component :is="transitionScene" slot="o3d"></component> -->
         </ScissorArea>
       </div>
@@ -62,7 +63,7 @@
           <div slot="dom" class="full bg-gray pt-3 focus:outline-none">
           </div>
           <!-- <component :is="transitionScene" slot="o3d"></component> -->
-          <DashboardScene slot="o3d"></DashboardScene>
+          <FallScene slot="o3d"></FallScene>
         </ScissorArea>
       </div>
 
@@ -103,7 +104,7 @@
             class="full flex justify-center items-center text-3xl text-white"
           >
             <div class="p-6 rounded-lg text-white bg-translucent select-none">
-              Loading Star Map ✨
+              Loading StarMap ✨
             </div>
           </div>
         </div>
