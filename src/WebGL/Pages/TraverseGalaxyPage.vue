@@ -149,6 +149,7 @@ export default {
         earth: require('./AppUnits/hdri/astronomy-atmosphere-earth-exploration-220201.jpg'),
         galaxy: require('./AppUnits/hdri/sky-space-dark-galaxy-2150.jpg')
       },
+      myNode: false,
       allReady: false,
       profile: false,
       layouts: {},
@@ -347,7 +348,11 @@ export default {
         let me = Auth.currentProfile.user
         let profile = await Profile.getProfileByUserID({ userID: this.queryUserID })
         if (!profile && me.userID === this.queryUserID) {
-          profile = await Profile.createProfile({ userID: me.userID, username: me.username })
+          let photo = false
+          if (this.myNode && this.myNode.img) {
+            photo = this.myNode.img
+          }
+          profile = await Profile.createProfile({ userID: me.userID, username: me.username, photo })
         } else {
         }
         this.profile = profile
@@ -356,16 +361,16 @@ export default {
       }
     },
     async initMyNode () {
-      await Graph.provideMyNode()
+      this.myNode = await Graph.provideMyNode()
     },
     async onInit () {
       this.mainArea = 'loading'
       this.onReset()
       await Promise.all([
         this.makeSocket(),
-        this.initMyProfile(),
         this.initMyNode()
       ])
+      await this.initMyProfile()
       await this.downloadGraph()
       this.onSetupBtns()
       this.mainArea = 'traverse'
