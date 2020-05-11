@@ -7,8 +7,6 @@
     <div v-show="!openMenu" class="full relative">
       <TopNavBar @menu="openMenu = !openMenu"></TopNavBar>
 
-      <!--  -->
-
       <!-- <ScissorArea
       class="webgl-bg"
       :key="'webgloading'"
@@ -33,7 +31,7 @@
         backgroundImage: `url(${loadingBG}), url(${readyBG})`,
       }"></div>
 
-      <transition name="fade">
+      <!-- <transition name="fade">
         <div class="simple-bg"
           v-if="mainArea === 'loading'"
           :key="loadingBG + '__loading'"
@@ -48,9 +46,28 @@
         </div>
       </transition>
 
+      -->
+
+      <div class="simple-bg pointer-events-none" v-if="mainArea === 'loading'">
+        <ScissorArea class="w-full h-full focus:outline-none" style="z-index: -1;">
+          <div slot="dom" class="full bg-gray pt-3 focus:outline-none">
+          </div>
+          <StarFlowScene slot="o3d"></StarFlowScene>
+        </ScissorArea>
+      </div>
+      <div class="simple-bg pointer-events-none" v-if="mainArea === 'already-here'">
+        <ScissorArea class="w-full h-full focus:outline-none" style="z-index: -1;">
+          <div slot="dom" class="full bg-gray pt-3 focus:outline-none">
+          </div>
+          <DashboardScene slot="o3d"></DashboardScene>
+        </ScissorArea>
+      </div>
+
+      <!--  -->
+
       <transition name="fade">
         <div class="simple-bg pointer-events-none"
-          v-if="mainArea === 'traverse' || mainArea === 'already-here'"
+          v-if="mainArea === 'traverse'"
           :key="readyBG + '__ready'"
           :style="{
             backgroundColor: 'transparent',
@@ -171,6 +188,12 @@ export default {
     }
   },
   watch: {
+    mainArea () {
+      window.dispatchEvent(new Event('resize'))
+      setTimeout(() => {
+        window.dispatchEvent(new Event('resize'))
+      }, 100)
+    },
     'overlay' () {
       if (this.overlay) {
         this.escFncs.push(() => {
@@ -249,14 +272,14 @@ export default {
           this.mainArea = 'already-here'
           setTimeout(() => {
             this.mainArea = 'traverse'
-          }, 1000)
+          }, 2500)
           // this.overlay = 'node-panel'
         }
       } else {
         this.mainArea = 'already-here'
         setTimeout(() => {
           this.mainArea = 'traverse'
-        }, 1000)
+        }, 2500)
         // this.overlay = 'node-panel'
       }
     },
@@ -487,6 +510,7 @@ export default {
   background-color: rgba(255, 255, 255, 0.95);
   border-radius: 15px;
 }
+
 @screen lg {
   .overlay {
     position: absolute;
