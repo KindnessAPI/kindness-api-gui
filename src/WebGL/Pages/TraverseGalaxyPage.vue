@@ -227,6 +227,15 @@ export default {
       }
     },
     onNodeClick (node) {
+      // if (node.type === 'traverse') {
+      //   if (node.value.username !== this.queryUsername) {
+      //     this.$router.push(`/profile/${node.value.username}/${node.value.userID}`)
+      //   } else {
+      //     this.overlay = 'node-panel'
+      //   }
+      // } else {
+      //   this.overlay = 'node-panel'
+      // }
       this.currentNode = node
       this.overlay = 'node-panel'
     },
@@ -242,6 +251,7 @@ export default {
       for (let link of graphData.links) {
         if ((!graphData.nodes.some(n => n._id === link.source) || !graphData.nodes.some(n => n._id === link.target))) {
           await Graph.removeEdgeByID({ edgeID: link._id })
+          // graphData.links.splice(graphData.links.findIndex(lnk => lnk._id === link._id), 1)
           console.log('broken edge found')
           needToReload = true
         }
@@ -250,15 +260,20 @@ export default {
         graphData = await Graph.getUserGraph({ userID: this.queryUserID })
       }
       let userIDs = graphData.nodes.filter(e => e.value && e.value.userID).map(e => e.value.userID)
-      let users = await Profile.getProfileByUserIDList({ userIDs: userIDs })
-      users = users.filter(e => e.type === 'user')
-      // console.log(users, userIDs)
+      let profiles = await Profile.getProfileByUserIDList({ userIDs: userIDs })
+      profiles = profiles.filter(e => e.type === 'user')
+      // console.log(profiles, userIDs)
       graphData.nodes
         .filter(e => e.type === 'user' || e.type === 'traverse')
         .filter(e => e.value && e.value.userID)
         .forEach(e => {
-          e.img = users.find(u => u.userID === e.value.userID).photoImg || e.img
+          let profile = profiles.find(u => u.userID === e.value.userID)
+          if (profile) {
+            e.name = profile.displayName
+            e.img = profile.photoImg
+          }
         })
+
       this.graph = graphData
       this.mainArea = 'traverse'
     },

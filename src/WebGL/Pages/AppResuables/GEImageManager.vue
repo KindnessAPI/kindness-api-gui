@@ -26,7 +26,7 @@
           <input type="checkbox" class="inline-block" v-model="file.selected" @change="$forceUpdate()">
         </td>
         <td class="p-2 text-center" v-if="pick">
-          <button class="m-2 py-2 px-3 bg-teal-500 hover:bg-teal-400 rounded-lg text-white" @click="$emit('pick', { file, thumb: file.cloudinary.secure_url.replace('/upload/', '/upload/w_256,h_256,c_fill,g_auto:0,q_auto/'), img: file.cloudinary.secure_url.replace('/upload/', '/upload/q_auto/') })">Pick</button>
+          <button class="m-2 py-2 px-3 bg-teal-500 hover:bg-teal-400 rounded-lg text-white" @click="$emit('pick', { file, ...MyFiles.getURLfromCloudinary({ cloudinary: file.cloudinary }) })">Pick</button>
         </td>
         <td class="m-1">
           <a :href="file.cloudinary.secure_url" target="_blank">
@@ -60,6 +60,7 @@ export default {
   },
   data () {
     return {
+      MyFiles,
       pageAt: 0,
       perPage: 150,
       loading: false,

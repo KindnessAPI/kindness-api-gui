@@ -12,7 +12,7 @@
 
 <script>
 // import _ from 'lodash'
-import { Graph, Content } from '../../../../APIs/KA.js'
+import { Graph } from '../../../../APIs/KA.js'
 export default {
   props: {
     node: {},
@@ -44,15 +44,6 @@ export default {
       let target = await Graph.queryEdgesTargetNode({ nodeID: node._id })
       await Graph.removeEdgeByList({ list: [...src, ...target] })
       await Graph.removeNodeByID({ nodeID: node._id })
-
-      if (node.type === 'content') {
-        try {
-          let content = await Content.getContentByNodeID({ nodeID: node._id })
-          await Content.removeContentByID({ contentID: content._id })
-        } catch (e) {
-          console.log(e)
-        }
-      }
 
       this.loading = false
       this.$emit('close')

@@ -476,6 +476,7 @@ export default {
       iconGeoHexa.computeBoundingSphere()
       borderGeoHexa.computeBoundingSphere()
       borderGeoHexa.translate(0, 0, -0.1)
+
       // borderGeoHexa.rotateZ(Math.PI * 0.5)
       // iconGeoHexa.rotateZ(Math.PI * 0.5)
 
@@ -484,6 +485,12 @@ export default {
       iconGeoCircle.computeBoundingSphere()
       borderGeoCircle.computeBoundingSphere()
       borderGeoCircle.translate(0, 0, -0.1)
+
+      let iconGeoSmallCircle = new CircleBufferGeometry(10, 40)
+      let borderGeoSmallCircle = new CircleBufferGeometry(11, 40)
+      iconGeoSmallCircle.computeBoundingSphere()
+      borderGeoSmallCircle.computeBoundingSphere()
+      borderGeoSmallCircle.translate(0, 0, -0.1)
 
       let iconGeoBadge = new CircleBufferGeometry(3, 40)
       let borderGeoBadge = new CircleBufferGeometry(4, 40)
@@ -513,14 +520,11 @@ export default {
         // .nodeResolution(3)
         .nodeThreeObject((node) => {
           if (node.type === 'traverse') {
-            iconGeo = iconGeoHexa
-            borderGeo = borderGeoHexa
+            iconGeo = iconGeoSmallCircle
+            borderGeo = borderGeoSmallCircle
           } else if (node.type === 'user') {
             iconGeo = iconGeoCircle
             borderGeo = borderGeoCircle
-          } else if (node.type === 'content') {
-            iconGeo = iconGeoSquare
-            borderGeo = borderGeoSquare
           } else {
             iconGeo = iconGeoCircle
             borderGeo = borderGeoCircle

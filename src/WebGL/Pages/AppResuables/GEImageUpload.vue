@@ -88,7 +88,9 @@ export default {
               // http://res.cloudinary.com/ht8mcws2o/image/upload/v1570172749/spaceboard/fbb9uqtegper8vhy68dc.png
 
               let thumb = cloudinary.secure_url.replace('/upload/', '/upload/w_256,h_256,c_fill,g_auto:0,q_auto/')
+              let square = cloudinary.secure_url.replace('/upload/', '/upload/w_1024,h_1024,c_fill,g_auto:0,q_auto/')
               let iurl = cloudinary.secure_url.replace(`/upload/`, `/upload/q_auto/`)
+              let rawURL = cloudinary.secure_url
               // let base64 = await MyFiles.imageToURI(compressed.image)
               // let resCloud = await new Promise((resolve, reject) => {
               //   cloudinary.uploader.upload(base64, (error, result) => {
@@ -110,7 +112,9 @@ export default {
               // let qAutoURL = url.replace(`/image/upload/`, `/image/upload/q_auto/`)
               this.$emit('data', dbData)
               this.$emit('url', iurl)
+              this.$emit('raw', rawURL)
               this.$emit('thumb', thumb)
+              this.$emit('square', square)
             } catch (e) {
               console.log(e)
             }

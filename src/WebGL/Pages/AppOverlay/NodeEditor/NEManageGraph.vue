@@ -64,8 +64,6 @@ export default {
         return 'User Profile'
       } else if (node === 'user') {
         return 'User Profile'
-      } else if (node === 'content') {
-        return 'Memo'
       }
     },
     hasLink (fromNode, toNode) {
