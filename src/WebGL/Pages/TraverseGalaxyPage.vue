@@ -28,11 +28,16 @@
         </StarFlowScene>
       </ScissorArea> -->
 
+      <!-- preloader -->
+      <div :style="{
+        backgroundImage: `url(${loadingBG}), url(${readyBG})`,
+      }"></div>
+
       <transition name="fade">
         <div class="simple-bg"
           v-if="mainArea === 'loading'"
           :style="{
-            backgroundColor: '#ffffff',
+            backgroundColor: '#000000',
             backgroundImage: `url(${loadingBG})`,
             backgroundSize:'cover',
             backgroundPosition: 'center center',
@@ -43,10 +48,10 @@
       </transition>
 
       <transition name="fade">
-        <div class="simple-bg"
+        <div class="simple-bg pointer-events-none"
           v-if="mainArea === 'traverse' || mainArea === 'already-here'"
           :style="{
-            backgroundColor: '#ffffff',
+            backgroundColor: 'transparent',
             backgroundImage: `url(${readyBG})`,
             backgroundSize:'cover',
             backgroundPosition: 'center center',
@@ -70,26 +75,29 @@
         </O3D> -->
       </TraverseNodeEdgeUnit>
 
-      <div v-if="mainArea === 'loading'" class="overlay-loading">
-        <div
-          class="full flex justify-center items-center text-3xl text-white"
-        >
-          <div class="p-6 rounded-lg text-white bg-translucent">
-            Traversing Galaxy <br/>
-            Please wait...✨
+      <transition name="fade">
+        <div v-if="mainArea === 'loading'" class="overlay-loading">
+          <div
+            class="full flex justify-center items-center text-3xl text-white"
+          >
+            <div class="p-6 rounded-lg text-white bg-translucent select-none">
+              Traversing Galaxy <br/>
+              Please wait...✨
+            </div>
           </div>
         </div>
-      </div>
-
-      <div v-if="mainArea === 'already-here'" class="overlay-loading">
-        <div
-          class="full flex justify-center items-center text-3xl text-white"
-        >
-          <div class="p-6 rounded-lg text-white bg-translucent mx-6">
-            Already arrvied. ✨
+      </transition>
+      <transition name="fade">
+        <div v-if="mainArea === 'already-here'" class="overlay-loading pointer-events-none">
+          <div
+            class="full flex justify-center items-center text-3xl text-white"
+          >
+            <div class="p-6 rounded-lg text-white bg-translucent mx-6 select-none">
+              You're already here. ✨
+            </div>
           </div>
         </div>
-      </div>
+      </transition>
 
       <!--
       <div v-if="mainArea === 'not-ready'" class="overlay-loading">
