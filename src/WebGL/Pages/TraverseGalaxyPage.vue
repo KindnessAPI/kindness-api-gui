@@ -107,7 +107,7 @@
       ></NodePanelUnit>
 
       <div v-if="overlay" @click="overlay = false" class="overlay-close-btn">
-        <img src="./icon/close.svg" class="cursor-pointer bg-white p-2 rounded-full" alt="Close" title="close">
+        <img src="./icon/close.svg" class="cursor-pointer close-icon bg-white p-2 rounded-full" alt="Close" title="close">
       </div>
 
     </div>
@@ -415,11 +415,16 @@ export default {
 }
 .overlay-close-btn {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 15px;
+  right: 20px;
   /* background-color: rgba(0,0,0,0.75); */
   z-index: 12;
 }
+.close-icon{
+  width: 50px;
+  height: 50px;
+}
+
 .overlay {
   position: absolute;
   top: 80px;
@@ -449,4 +454,5 @@ export default {
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
 }
+
 </style>
