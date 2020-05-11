@@ -24,7 +24,7 @@
             </div>
           </td>
           <td class="pr-3 pb-3">
-            <img class="w-16 h-16 object-cover object-center" :src="`${enode.img}`" alt="">
+            <img class="w-16 h-16 object-cover object-center rounded-full" :src="`${enode.img}`" alt="">
           </td>
           <td class="pr-3 pb-3">
             <div :key="enode._id" v-if="enode._id !== node._id">
