@@ -491,7 +491,7 @@ export default {
   width: 50px;
   right: calc(50% - 50px * 0.5);
 }
-@screen lg {
+@screen md {
   .overlay-close-btn{
     top: 15px;
     bottom: inherit;
@@ -518,7 +518,7 @@ export default {
   transform: perspective(100vmax) translateZ(1px);
 }
 
-@screen lg {
+@screen md {
   .overlay {
     position: absolute;
     top: 80px;
