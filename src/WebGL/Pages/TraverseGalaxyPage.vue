@@ -52,7 +52,8 @@
         <ScissorArea class="w-full h-full focus:outline-none" style="z-index: -1;">
           <div slot="dom" class="full bg-gray pt-3 focus:outline-none">
           </div>
-          <component :is="transitionScene" slot="o3d"></component>
+          <FallScene slot="o3d"></FallScene>
+          <!-- <component :is="transitionScene" slot="o3d"></component> -->
         </ScissorArea>
       </div>
 
@@ -60,8 +61,8 @@
         <ScissorArea class="w-full h-full focus:outline-none" style="z-index: -1;">
           <div slot="dom" class="full bg-gray pt-3 focus:outline-none">
           </div>
-          <component :is="transitionScene" slot="o3d"></component>
-          <!-- <DashboardScene slot="o3d"></DashboardScene> -->
+          <!-- <component :is="transitionScene" slot="o3d"></component> -->
+          <DashboardScene slot="o3d"></DashboardScene>
         </ScissorArea>
       </div>
 
@@ -102,8 +103,7 @@
             class="full flex justify-center items-center text-3xl text-white"
           >
             <div class="p-6 rounded-lg text-white bg-translucent select-none">
-              Traversing Galaxy <br/>
-              Please wait...✨
+              Loading Star Map ✨
             </div>
           </div>
         </div>
@@ -166,15 +166,15 @@ export default {
   mixins: [PipeScissor],
   data () {
     return {
-      transitionSceneList: [
-        'DashboardScene',
-        // 'StarFlowScene',
-        'RiverFieldScene',
-        'FallScene',
-        'RiseScene'
-        // 'MotherBoardScene'
-      ],
-      transitionScene: 'GospelScene',
+      // transitionSceneList: [
+      //   'DashboardScene',
+      //   // 'StarFlowScene',
+      //   'RiverFieldScene',
+      //   'FallScene',
+      //   'RiseScene'
+      //   // 'MotherBoardScene'
+      // ],
+      // transitionScene: 'FallScene',
       bg: {
         stars: require('./AppUnits/hdri/sky-space-milky-way-stars-110854.jpg'),
         earth: require('./AppUnits/hdri/astronomy-atmosphere-earth-exploration-220201.jpg'),
@@ -202,13 +202,13 @@ export default {
   watch: {
     mainArea () {
       window.dispatchEvent(new Event('resize'))
-      this.transitionScene = this.transitionSceneList[Math.floor(this.transitionSceneList.length * Math.random())]
+      // this.transitionScene = this.transitionSceneList[Math.floor(this.transitionSceneList.length * Math.random())]
       // setTimeout(() => {
       //   window.dispatchEvent(new Event('resize'))
       // }, 100)
     },
     'overlay' () {
-      this.transitionScene = this.transitionSceneList[Math.floor(this.transitionSceneList.length * Math.random())]
+      // this.transitionScene = this.transitionSceneList[Math.floor(this.transitionSceneList.length * Math.random())]
       if (this.overlay) {
         this.escFncs.push(() => {
           this.overlay = false
@@ -216,7 +216,7 @@ export default {
       }
     },
     'queryUserID' () {
-      this.transitionScene = this.transitionSceneList[Math.floor(this.transitionSceneList.length * Math.random())]
+      // this.transitionScene = this.transitionSceneList[Math.floor(this.transitionSceneList.length * Math.random())]
       this.onReset()
       this.onInit()
     }
