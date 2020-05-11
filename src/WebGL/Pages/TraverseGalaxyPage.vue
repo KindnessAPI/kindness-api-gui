@@ -36,6 +36,7 @@
       <transition name="fade">
         <div class="simple-bg"
           v-if="mainArea === 'loading'"
+          :key="loadingBG + '__loading'"
           :style="{
             backgroundColor: '#000000',
             backgroundImage: `url(${loadingBG})`,
@@ -50,6 +51,7 @@
       <transition name="fade">
         <div class="simple-bg pointer-events-none"
           v-if="mainArea === 'traverse' || mainArea === 'already-here'"
+          :key="readyBG + '__ready'"
           :style="{
             backgroundColor: 'transparent',
             backgroundImage: `url(${readyBG})`,
