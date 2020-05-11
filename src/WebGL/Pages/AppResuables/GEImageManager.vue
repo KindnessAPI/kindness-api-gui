@@ -59,6 +59,7 @@ export default {
   },
   data () {
     return {
+      view: 'mini',
       MyFiles,
       pageAt: 0,
       perPage: 150,
