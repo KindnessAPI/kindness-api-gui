@@ -113,8 +113,8 @@
           <div
             class="full flex justify-center items-center text-3xl text-white"
           >
-            <div class="p-6 rounded-lg text-white bg-translucent mx-6 select-none">
-              You're here.✨
+            <div class="p-6 rounded-lg text-white bg-translucent mx-3 select-none">
+              You arrived already.✨
             </div>
           </div>
         </div>
