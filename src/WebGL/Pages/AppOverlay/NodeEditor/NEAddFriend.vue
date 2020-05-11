@@ -1,12 +1,9 @@
 
 <template>
   <div>
-    <div class="mb-3 text-xl">
-      Add a Friend
-    </div>
     <div class="mb-3">
       <div class="text-lg">
-      Search Username <span v-if="search.loading">⏱</span>
+        Search and Add Friends <span v-if="search.loading">⏱</span>
       </div>
       <div>
         <input type="text" placeholder="Username" v-model="search.query" @input="onTrySearch" class="rounded-none bg-transparent px-0 py-2 mb-3 border-b border-black inline-block">
@@ -14,13 +11,23 @@
       <table>
         <tr :key="node._id" v-for="node in search.result">
           <td class="pr-3 pb-3">
-            @{{ node.username }}
+            <div>
+              @{{ node.username }}
+            </div>
+            <div class=" text-sm text-gray-600">
+              <span v-if="node.userID === myUserID">Myself</span>
+              <span v-if="node.userID !== myUserID">
+                <span v-if="alreadyAdded(node)">Already a Friend</span>
+                <span v-if="!alreadyAdded(node)">Can Add</span>
+              </span>
+            </div>
           </td>
           <td class="pr-3 pb-3">
-            <img class="w-16 h-16 object-cover object-center" :src="`${node.img}`" alt="">
+            <img class="w-16 h-16 object-cover object-center rounded-full" :src="`${node.img}`" alt="">
           </td>
-          <td class="pr-3 pb-3" v-if="node.userID !== myUserID">
-            <ReButton :color="'green'" @click="addFriend(node)">Add Friend <span v-if="node.loading">⏱</span></ReButton>
+          <td class="pr-3 pb-3">
+            <ReButton v-if="node.userID !== myUserID && !alreadyAdded(node)" :color="'green'" @click="addFriend(node)">Add Friend <span v-if="node.loading">⏱</span></ReButton>
+            <ReButton :disabled="true" v-if="!(node.userID !== myUserID && !alreadyAdded(node))" :color="'gray'">Added</ReButton>
           </td>
         </tr>
       </table>
@@ -33,7 +40,8 @@ import _ from 'lodash'
 import { Graph, Auth } from '../../../../APIs/KA.js'
 export default {
   props: {
-    node: {}
+    node: {},
+    graph: {}
   },
   components: {
     ...require('../../../webgl').default
@@ -50,6 +58,9 @@ export default {
     }
   },
   methods: {
+    alreadyAdded (compareNode) {
+      return this.graph.nodes.filter(n => n.value && n.value.userID).some(n => n.value.userID === compareNode.userID)
+    },
     async addFriend (friend) {
       try {
         friend.loading = true

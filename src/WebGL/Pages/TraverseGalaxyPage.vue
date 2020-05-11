@@ -502,6 +502,7 @@ export default {
 .close-icon{
   width: 50px;
   height: 50px;
+  box-shadow: 0px 0px 30px 0px rgba(255, 255, 255, 0.6);
 }
 
 .overlay {
@@ -512,15 +513,17 @@ export default {
   bottom: 80px;
   z-index: 12;
   background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0px 0px 30px 0px rgba(255, 255, 255, 0.6);
   border-radius: 15px;
+  transform: perspective(100vmax) translateZ(1px);
 }
 
 @screen lg {
   .overlay {
     position: absolute;
     top: 80px;
-    left: 20px;
-    right: 20px;
+    left: calc(50% - 28rem * 0.5);
+    @apply max-w-md;
     bottom: 20px;
   }
 }
