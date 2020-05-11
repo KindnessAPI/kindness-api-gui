@@ -12,7 +12,7 @@
       <!-- <ScissorArea
       class="webgl-bg"
       :key="'webgloading'"
-      v-if="this.mainArea === 'loading'"
+      v-if="mainArea === 'loading'"
       >
         <div
           slot="dom"
@@ -44,7 +44,7 @@
 
       <transition name="fade">
         <div class="simple-bg"
-          v-if="mainArea === 'traverse'"
+          v-if="mainArea === 'traverse' || mainArea === 'already-here'"
           :style="{
             backgroundColor: '#251b69',
             backgroundImage: `url(${readyBG})`,
@@ -65,12 +65,12 @@
       :graph="graph"
       ref="edge-node"
       >
-        <!-- <O3D ref="o3d">
+        <!-- <O3D ref="o3d" v-if="allReady">
           <Spaceship></Spaceship>
         </O3D> -->
       </TraverseNodeEdgeUnit>
 
-      <div v-if="this.mainArea === 'loading'" class="overlay-loading">
+      <div v-if="mainArea === 'loading'" class="overlay-loading">
         <div
           class="full flex justify-center items-center text-3xl text-white"
         >
@@ -81,7 +81,18 @@
         </div>
       </div>
 
-      <div v-if="this.mainArea === 'not-ready'" class="overlay-loading">
+      <div v-if="mainArea === 'already-here'" class="overlay-loading">
+        <div
+          class="full flex justify-center items-center text-3xl text-white"
+        >
+          <div class="p-6 rounded-lg text-white bg-translucent mx-6">
+            Already arrvied. ✨
+          </div>
+        </div>
+      </div>
+
+      <!--
+      <div v-if="mainArea === 'not-ready'" class="overlay-loading">
         <div
           class="full flex justify-center items-center text-3xl text-white"
         >
@@ -89,7 +100,7 @@
             Profile Not Ready
           </div>
         </div>
-      </div>
+      </div> -->
 
       <!-- <div v-if="overlay" @click="overlay = false" class="overlay-bg"></div> -->
       <div v-if="overlay" @click="overlay = false" class="overlay-close"></div>
@@ -130,6 +141,7 @@ export default {
         earth: require('./AppUnits/hdri/astronomy-atmosphere-earth-exploration-220201.jpg'),
         galaxy: require('./AppUnits/hdri/sky-space-dark-galaxy-2150.jpg')
       },
+      allReady: false,
       profile: false,
       layouts: {},
       currentNode: false,
@@ -190,6 +202,7 @@ export default {
     },
     onGoHome () {
       this.$router.push(`/profile/${Auth.currentProfile.user.username}/${Auth.currentProfile.user.userID}`)
+      this.overlay = false
     },
     onSetupBtns () {
       this.btns = []
@@ -220,11 +233,20 @@ export default {
       if (node.type === 'traverse') {
         if (node.value.username !== this.queryUsername) {
           this.$router.push(`/profile/${node.value.username}/${node.value.userID}`)
+          this.overlay = false
         } else {
-          this.overlay = 'node-panel'
+          this.mainArea = 'already-here'
+          setTimeout(() => {
+            this.mainArea = 'traverse'
+          }, 1000)
+          // this.overlay = 'node-panel'
         }
       } else {
-        this.overlay = 'node-panel'
+        this.mainArea = 'already-here'
+        setTimeout(() => {
+          this.mainArea = 'traverse'
+        }, 1000)
+        // this.overlay = 'node-panel'
       }
     },
     onNodeClick (node) {
@@ -315,9 +337,10 @@ export default {
     async initMyProfile () {
       try {
         let me = Auth.currentProfile.user
-        let profile = await Profile.getProfileByUserID({ userID: me.userID })
-        if (!profile) {
+        let profile = await Profile.getProfileByUserID({ userID: this.queryUserID })
+        if (!profile && me.userID === this.queryUserID) {
           profile = await Profile.createProfile({ userID: me.userID, username: me.username })
+        } else {
         }
         this.profile = profile
       } catch (e) {
@@ -365,6 +388,8 @@ export default {
 
     this.origColor = document.body.style.backgroundColor
     document.body.style.backgroundColor = this.bgColor
+
+    this.allReady = true
   },
   beforeDestroy () {
     this.onReset()
