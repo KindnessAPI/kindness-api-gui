@@ -157,5 +157,6 @@ export default {
 <style scoped>
 .translucent{
   background-color: rgba(255,255,255,0.95);
+  border-radius: 15px;
 }
 </style>

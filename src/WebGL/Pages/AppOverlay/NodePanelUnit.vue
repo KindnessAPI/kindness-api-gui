@@ -1,11 +1,12 @@
 <template>
   <div class="overlay">
-    <div v-if="editable" class="p-3 h-full w-full scrolling-touch overflow-y-auto overflow-x-hidden">
-      <div v-if="node.type === 'traverse'" :class="{ 'bg-blue-200': tab === 'traverse' }" @click="tab = 'traverse'" class="inline-block px-3 py-2 border border-gray-500 mb-2 mr-2 rounded-lg ">Profile</div>
-      <div v-if="node.type === 'user'" :class="{ 'bg-blue-200': tab === 'user' }" @click="tab = 'user'" class="inline-block px-3 py-2 border border-gray-500 mb-2 mr-2 rounded-lg ">Profile</div>
+    <div v-if="editable" class="p-3 h-full w-full scrolling-touch overflow-y-auto overflow-x-hidden relative">
+
+      <div v-if="node.type === 'traverse'" :class="{ 'bg-blue-200': tab === 'traverse' }" @click="tab = 'traverse'" class="shadow-sm inline-block px-3 py-2 border border-gray-500 mb-2 mr-2 bg-white rounded-lg ">Profile</div>
+      <div v-if="node.type === 'user'" :class="{ 'bg-blue-200': tab === 'user' }" @click="tab = 'user'" class="shadow-sm inline-block px-3 py-2 border border-gray-500 mb-2 mr-2 bg-white rounded-lg ">Profile</div>
       <!-- General -->
-      <div :class="{ 'bg-blue-200': tab === 'addon' }" @click="tab = 'addon'" class="inline-block px-3 py-2 border border-gray-500 mb-2 mr-2 rounded-lg ">Add Friends</div>
-      <div :class="{ 'bg-blue-200': tab === 'edit' }" @click="tab = 'edit'" class="inline-block px-3 py-2 border border-gray-500 mb-2 mr-2  rounded-lg ">More...</div>
+      <div :class="{ 'bg-blue-200': tab === 'addon' }" @click="tab = 'addon'" class="shadow-sm inline-block px-3 py-2 border border-gray-500 mb-2 mr-2 bg-white rounded-lg ">Add Friends</div>
+      <div :class="{ 'bg-blue-200': tab === 'edit' }" @click="tab = 'edit'" class="shadow-sm inline-block px-3 py-2 border border-gray-500 mb-2 mr-2  bg-white rounded-lg ">More...</div>
 
       <div v-if="tab === 'user'" :key="node._id" >
         <NEProfileEdit :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEProfileEdit>

@@ -457,10 +457,20 @@ export default {
 }
 .overlay-close-btn {
   position: absolute;
-  top: 15px;
-  right: 20px;
+  bottom: 15px;
+  /* right: 20px; */
   /* background-color: rgba(0,0,0,0.75); */
   z-index: 12;
+  width: 50px;
+  right: calc(50% - 50px * 0.5);
+}
+@screen lg {
+  .overlay-close-btn{
+    top: 15px;
+    bottom: inherit;
+    /* left: 20px; */
+    /* right: inherit; */
+  }
 }
 .close-icon{
   width: 50px;
@@ -469,10 +479,10 @@ export default {
 
 .overlay {
   position: absolute;
-  top: 80px;
-  left: 20px;
-  right: 20px;
-  bottom: 20px;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 80px;
   z-index: 12;
   background-color: rgba(255, 255, 255, 0.95);
   border-radius: 15px;
