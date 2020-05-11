@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     async removeNode () {
-      if (!window.confirm('remove ?')) {
+      if (!window.confirm('Remove ?')) {
         return
       }
       let node = this.node

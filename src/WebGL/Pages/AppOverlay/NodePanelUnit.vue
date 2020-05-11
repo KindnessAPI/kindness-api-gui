@@ -33,9 +33,9 @@
       </div>
     </div>
 
-    <div @click="$emit('close')" class="absolute top-0 right-0 pr-3 pt-3 z-20">
+    <!-- <div @click="$emit('close')" class="absolute top-0 right-0 pr-3 pt-3 z-20">
       <img src="../icon/close.svg" class="cursor-pointer p-2 bg-white rounded-full" alt="Close" title="close">
-    </div>
+    </div> -->
   </div>
 </template>
 
