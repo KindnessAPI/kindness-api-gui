@@ -32,7 +32,7 @@
         <div class="simple-bg"
           v-if="mainArea === 'loading'"
           :style="{
-            backgroundColor: '#251b69',
+            backgroundColor: '#ffffff',
             backgroundImage: `url(${loadingBG})`,
             backgroundSize:'cover',
             backgroundPosition: 'center center',
@@ -46,7 +46,7 @@
         <div class="simple-bg"
           v-if="mainArea === 'traverse' || mainArea === 'already-here'"
           :style="{
-            backgroundColor: '#251b69',
+            backgroundColor: '#ffffff',
             backgroundImage: `url(${readyBG})`,
             backgroundSize:'cover',
             backgroundPosition: 'center center',
