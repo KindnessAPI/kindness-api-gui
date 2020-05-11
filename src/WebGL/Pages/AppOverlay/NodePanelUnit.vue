@@ -1,6 +1,6 @@
 <template>
   <div class="overlay">
-    <div v-if="editable" class="p-3 h-full w-full scrolling-touch overflow-y-auto overflow-x-hidden relative max-w-lg mx-auto">
+    <div v-if="editable" class="p-3 h-full w-full scrolling-touch relative max-w-lg mx-auto">
 
       <div class="flex flex-wrap justify-center mb-1">
         <div v-if="node.type === 'traverse'" :class="{ 'bg-blue-200': tab === 'traverse' }" @click="tab = 'traverse'" class="shadow-sm inline-block px-3 py-2 border border-gray-500 mb-2 mr-2 bg-white rounded-lg ">Profile</div>
@@ -26,7 +26,7 @@
         <NERemoveNode :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NERemoveNode>
       </div>
     </div>
-    <div v-else class="h-full w-full scrolling-touch overflow-y-auto overflow-x-hidden">
+    <div v-else class="h-full w-full scrolling-touch">
       <div v-if="node.type === 'traverse'" class="p-3">
         <NEProfileArea :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEProfileArea>
         <NENodeTraverseAction :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NENodeTraverseAction>

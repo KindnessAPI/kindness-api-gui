@@ -1,19 +1,19 @@
 
 <template>
   <div v-if="node">
-    <div class="mb- text-3xl">
-      Edit Links
+    <div class="mb- text-2xl">
+      Relationship
     </div>
     <div>
       <table>
-        <tr>
+        <!-- <tr>
           <th>
             Nodes
           </th>
           <th>
             Action
           </th>
-        </tr>
+        </tr> -->
         <tr :key="enode._id" v-for="enode in graph.nodes">
           <td class="pr-3 pb-3">
             <div>
@@ -61,9 +61,9 @@ export default {
   methods: {
     getType (node) {
       if (node === 'traverse') {
-        return 'User Profile'
+        return `Friend's Profile`
       } else if (node === 'user') {
-        return 'User Profile'
+        return 'Your Profile'
       }
     },
     hasLink (fromNode, toNode) {

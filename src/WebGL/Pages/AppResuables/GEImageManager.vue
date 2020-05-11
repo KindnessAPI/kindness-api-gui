@@ -2,7 +2,7 @@
   <div class="p-3 max-w-4xl h-full overflow-auto max-w-full">
     <div class="">
       <!-- <button v-if="close" class="block font-bold underline" @click="">Close</button> -->
-      <h1 class="text-2xl font-bold inline-block">Image Manager</h1>
+      <h1 class="text-2xl font-bold inline-block">My Images</h1>
       <button v-if="close" class="inline-block mx-2 py-2 px-3 bg-orange-500 hover:bg-orange-400 rounded-lg text-white" @click="$emit('close')">Close</button>
       <GEImageUpload class="inline-block mx-2" :multiple="true" @data="files.unshift($event)"></GEImageUpload>
       <button v-if="files && files.some(e => e.selected)" class="inline-block mx-2 py-2 px-3 bg-red-500 hover:bg-red-400 rounded-lg text-white" @click="deleteSelected()">Remove Selected</button>

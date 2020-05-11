@@ -515,7 +515,9 @@ export default {
   background-color: rgba(255, 255, 255, 0.95);
   box-shadow: 0px 0px 30px 0px rgba(255, 255, 255, 0.6);
   border-radius: 15px;
-  transform: perspective(100vmax) translateZ(1px);
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  /* transform: perspective(100vmax) translateZ(1px); */
 }
 
 @screen md {
@@ -524,7 +526,11 @@ export default {
     top: 80px;
     left: calc(50% - 28rem * 0.5);
     @apply max-w-md;
-    bottom: 20px;
+    bottom: inherit;
+    height: auto;
+    max-height: calc(100% - 80px - 20px);
+    min-height: 450px;
+    transition: height 1.5s;
   }
 }
 .bg-translucent{
