@@ -8,9 +8,8 @@
         :class="{ 'opacity-50': isMyself }"
         @click="onGo"
       >
-        <span v-if="!isMyself">Space Travel to: </span>
-        <span v-if="isMyself">You're already at </span>
-        <span>{{ node.name }}</span>
+        <span>Traverse to: </span>
+        <span>@{{ node.value.username }}</span>
       </ReButton>
     </div>
   </div>

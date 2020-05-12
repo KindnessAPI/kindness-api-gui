@@ -3,7 +3,7 @@
     <GEImageManager v-if="accessor" :close="true" @close="accessor = false" :pick="true" @pick="onPick"></GEImageManager>
     <div v-else class="mx-auto max-w-md pb-2">
       <div class="mb-3 text-xl">
-        Profile Edit
+        Profile and Settings
       </div>
       <div v-if="profile">
         <div class="mb-3 border-l border-black hover:border-green-400 pl-3">
@@ -55,7 +55,7 @@
           </div>
         </div>
 
-        <div v-if="false" class="mb-3 border-l border-black hover:border-green-400 pl-3">
+        <div class="mb-3 border-l border-black hover:border-green-400 pl-3">
           <div class="text-lg mt-3">Loading Screen Image</div>
           <!-- <div class="mb-2">Example Images...</div>
           <div>
@@ -69,7 +69,7 @@
           </div>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3 text-center">
           <ReButton :color="'green'" @click="updateProfile({ close: true })">Save All Settings & Close <span v-if="loading">⏱</span></ReButton>
         </div>
       </div>

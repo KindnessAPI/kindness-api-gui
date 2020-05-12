@@ -31,7 +31,7 @@
         backgroundImage: `url(${loadingBG}), url(${readyBG})`,
       }"></div>
 
-      <!-- <transition name="fade">
+      <transition name="fade">
         <div class="simple-bg"
           v-if="mainArea === 'loading'"
           :key="loadingBG + '__loading'"
@@ -46,28 +46,13 @@
         </div>
       </transition>
 
-      -->
-
-      <div class="simple-bg pointer-events-none" v-if="mainArea === 'loading'">
+      <!-- <div class="simple-bg pointer-events-none" v-if="mainArea === 'loading'">
         <ScissorArea class="w-full h-full focus:outline-none" style="z-index: -1;">
           <div slot="dom" class="full bg-gray pt-3 focus:outline-none">
           </div>
-          <DashboardScene slot="o3d"></DashboardScene>
-
-          <!-- <component :is="transitionScene" slot="o3d"></component> -->
+          <StarFlowScene slot="o3d"></StarFlowScene>
         </ScissorArea>
-      </div>
-
-      <div class="simple-bg pointer-events-none" v-if="mainArea === 'already-here'">
-        <ScissorArea class="w-full h-full focus:outline-none" style="z-index: -1;">
-          <div slot="dom" class="full bg-gray pt-3 focus:outline-none">
-          </div>
-          <!-- <component :is="transitionScene" slot="o3d"></component> -->
-          <FallScene slot="o3d"></FallScene>
-        </ScissorArea>
-      </div>
-
-      <!--  -->
+      </div> -->
 
       <transition name="fade">
         <div class="simple-bg pointer-events-none"
@@ -84,6 +69,15 @@
         </div>
       </transition>
 
+      <div class="simple-bg pointer-events-none" v-if="mainArea === 'already-here'">
+        <ScissorArea class="w-full h-full focus:outline-none" style="z-index: -1;">
+          <div slot="dom" class="full bg-gray pt-3 focus:outline-none">
+          </div>
+          <!-- <component :is="transitionScene" slot="o3d"></component> -->
+          <MotherBoardScene slot="o3d"></MotherBoardScene>
+        </ScissorArea>
+      </div>
+
       <TraverseNodeEdgeUnit
       :btns="btns"
       @home="onGoHome"
@@ -91,6 +85,7 @@
       @node-click="onNodeClick"
       @node-drag="onNodeDrag"
       :graph="graph"
+      @mail="onMail"
       ref="edge-node"
       >
         <!-- <O3D ref="o3d" v-if="allReady">
@@ -103,8 +98,10 @@
           <div
             class="full flex justify-center items-center text-3xl text-white"
           >
-            <div class="p-6 rounded-lg text-white bg-translucent select-none">
-              Loading StarMap ✨
+            <div class="p-6 rounded-lg text-white bg-translucent select-none text-center">
+              Traversing Galaxy
+              <br/>
+              ✨ Loading StarMap ✨
             </div>
           </div>
         </div>
@@ -131,10 +128,13 @@
             Profile Not Ready
           </div>
         </div>
-      </div> -->
+      </div>
+      -->
 
       <!-- <div v-if="overlay" @click="overlay = false" class="overlay-bg"></div> -->
-      <div v-if="overlay" @click="overlay = false" class="overlay-close"></div>
+      <transition name="fadefast">
+        <div v-if="overlay" @click="overlay = false" class="overlay-close"></div>
+      </transition>
       <transition name="flyin">
         <NodePanelUnit
           @close="overlay = false"
@@ -189,7 +189,7 @@ export default {
       profile: false,
       layouts: {},
       currentNode: false,
-      mainArea: 'traverse',
+      mainArea: 'loading',
       btns: [],
       socket: false,
       escFncs: [],
@@ -230,13 +230,13 @@ export default {
       if (this.profile && this.profile.loadingImg) {
         return this.profile.loadingImg
       }
-      return ''
+      return this.bg.stars
     },
     readyBG () {
       if (this.profile && this.profile.bgImg) {
         return this.profile.bgImg
       }
-      return ''
+      return this.bg.stars
     },
     queryUserID () {
       return this.$route.params.userID
@@ -249,6 +249,9 @@ export default {
     }
   },
   methods: {
+    onMail () {
+      console.log(123)
+    },
     onViewProfile () {
       let node = this.graph.nodes.find(e => e.userID === this.queryUserID && e.type === 'user')
       this.onNodeClick(node)
@@ -268,6 +271,10 @@ export default {
       this.btns.push({
         text: `@${this.queryUsername}`,
         event: 'view'
+      })
+      this.btns.push({
+        text: `📨`,
+        event: 'mail'
       })
     },
     onReset () {
@@ -324,18 +331,19 @@ export default {
     async downloadGraph () {
       this.mainArea = 'loading'
       let graphData = await Graph.getUserGraph({ userID: this.queryUserID })
-      let needToReload = false
-      for (let link of graphData.links) {
-        if ((!graphData.nodes.some(n => n._id === link.source) || !graphData.nodes.some(n => n._id === link.target))) {
-          await Graph.removeEdgeByID({ edgeID: link._id })
-          // graphData.links.splice(graphData.links.findIndex(lnk => lnk._id === link._id), 1)
-          console.log('broken edge found')
-          needToReload = true
-        }
-      }
-      if (needToReload) {
-        graphData = await Graph.getUserGraph({ userID: this.queryUserID })
-      }
+      // let needToReload = false
+      // for (let link of graphData.links) {
+      //   if ((!graphData.nodes.some(n => n._id === link.source) || !graphData.nodes.some(n => n._id === link.target))) {
+      //     await Graph.removeEdgeByID({ edgeID: link._id })
+      //     // graphData.links.splice(graphData.links.findIndex(lnk => lnk._id === link._id), 1)
+      //     console.log('broken edge found')
+      //     needToReload = true
+      //   }
+      // }
+      // if (needToReload) {
+      //   graphData = await Graph.getUserGraph({ userID: this.queryUserID })
+      // }
+
       let userIDs = graphData.nodes.filter(e => e.value && e.value.userID).map(e => e.value.userID)
       let profiles = await Profile.getProfileByUserIDList({ list: userIDs })
       // profiles = profiles.filter(e => e.type === 'user')
@@ -367,7 +375,7 @@ export default {
     async makeSocket () {
       let socket = this.socket = new LamdaClient({
         url: getWS(),
-        roomID: 'room-' + this.queryUserID,
+        roomID: this.queryUserID,
         nickname: Auth.currentProfile.user.username + '@' + getID()
       })
 
@@ -390,6 +398,7 @@ export default {
     },
     async initMyProfile () {
       try {
+        this.myNode = await Graph.provideMyNode()
         let me = Auth.currentProfile.user
         let profile = await Profile.getProfileByUserID({ userID: this.queryUserID })
         if (!profile && me.userID === this.queryUserID) {
@@ -405,15 +414,11 @@ export default {
         console.log(e)
       }
     },
-    async initMyNode () {
-      this.myNode = await Graph.provideMyNode()
-    },
     async onInit () {
       this.mainArea = 'loading'
       this.onReset()
       await Promise.all([
-        this.makeSocket(),
-        this.initMyNode()
+        this.makeSocket()
       ])
       await this.initMyProfile()
       await this.downloadGraph()
@@ -545,12 +550,12 @@ export default {
     bottom: inherit;
     height: auto;
     max-height: calc(100% - 80px - 20px);
-    min-height: 450px;
+    min-height: 250px;
     transition: height 1.5s;
   }
 }
 .bg-translucent{
-  background-color: rgba(0, 0, 0, 0.418);
+  background-color: rgba(0, 0, 0, 0.6);
   box-shadow: 0px 0px 30px 0px rgb(30, 30, 30);
   transform: translateY(-30px);
 }
@@ -565,7 +570,7 @@ export default {
   transition: transform 0.5s, opacity 0.5s;
 }
 .circlein-enter, .circlein-leave-to /* .circlein-leave-active below version 2.1.8 */ {
-  transform: rotate(36deg) scale(0.2);
+  transform: rotate(180deg) scale(0.2);
   opacity: 0;
 }
 
@@ -576,5 +581,11 @@ export default {
   opacity: 0;
   @apply pointer-events-none;
 }
-
+.fadefast-enter-active, .fadefast-leave-active {
+  transition: opacity 0.5s;
+}
+.fadefast-enter, .fadefast-leave-to /* .flyin-leave-active below version 2.1.8 */ {
+  opacity: 0;
+  @apply pointer-events-none;
+}
 </style>

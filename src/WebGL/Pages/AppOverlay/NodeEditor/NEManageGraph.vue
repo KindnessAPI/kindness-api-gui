@@ -1,7 +1,7 @@
 
 <template>
   <div v-if="node">
-    <div class="mb- text-2xl">
+    <div class="mb- text-xl">
       Relationship
     </div>
     <div>

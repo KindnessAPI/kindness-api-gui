@@ -11,8 +11,11 @@
       </div>
     </div>
 
-    <div v-if="profile.displayName" class="w-full mb-3 flex justify-center items-center">
+    <div v-if="profile.displayName" class="w-full flex text-lg justify-center items-center">
       {{ profile.displayName }} <img v-if="profile.verified" class="w-5 h-5 ml-1" src="../img/verified.svg">
+    </div>
+    <div v-if="profile.displayName" class="w-full text-sm text-gray-600 mb-3 flex justify-center items-center">
+      @{{ node.value.username }}
     </div>
 
     <div class="w-full flex justify-center">
