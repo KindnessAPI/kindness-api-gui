@@ -14,7 +14,7 @@
 
     <!-- -->
     <O3D :animated="true" layout="bglayer">
-      <ImageBG v-if="image" :image="image"></ImageBG>
+      <ImageBG v-if="image && ready" :image="image"></ImageBG>
       <!-- <RadientBG></RadientBG> -->
     </O3D>
 
@@ -68,6 +68,7 @@ export default {
   mixins: [Tree],
   data () {
     return {
+      ready: false,
       Math,
       settings: {},
       flower1: {},
@@ -86,6 +87,8 @@ export default {
   },
   async mounted () {
     await this.lookupWait('ready')
+    this.ready = true
+    window.dispatchEvent(new Event('resize'))
 
     // let div = document.createElement('div')
     // Cache.painter = Cache.painter || makePaintCanvas({ pixel: 16, sdk: this.lookup('sdk'), setting: 'parametric-cluster-canvas', domElement: div, base: this.lookup('base') })
