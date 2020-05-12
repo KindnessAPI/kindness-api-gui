@@ -562,15 +562,15 @@ export default {
 }
 
 .circlein-enter-active, .circlein-leave-active {
-  transition: transform 1.5s, opacity 1.5s;
+  transition: transform 0.5s, opacity 0.5s;
 }
 .circlein-enter, .circlein-leave-to /* .circlein-leave-active below version 2.1.8 */ {
-  transform: rotate(360deg) scale(0.2);
+  transform: rotate(36deg) scale(0.2);
   opacity: 0;
 }
 
 .flyin-enter-active, .flyin-leave-active {
-  transition: opacity 1.5s;
+  transition: opacity 0.5s;
 }
 .flyin-enter, .flyin-leave-to /* .flyin-leave-active below version 2.1.8 */ {
   opacity: 0;
