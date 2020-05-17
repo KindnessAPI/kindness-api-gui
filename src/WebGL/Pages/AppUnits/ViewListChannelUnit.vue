@@ -49,6 +49,7 @@ export default {
       this.loading = true
       let data = await Channel.getMyChannels({ userID: Auth.currentProfile.user.userID })
       this.channels = data
+      console.log(data)
       this.items = data.map(e => {
         return {
           _id: e._id,

@@ -6,6 +6,7 @@
       <TopNavBar @menu="openMenu = !openMenu"></TopNavBar>
 
       <LoginUnit></LoginUnit>
+      <!-- <RegisterBanner></RegisterBanner> -->
     </div>
     <FullMenuBar v-show="openMenu" @close="openMenu = false"></FullMenuBar>
   </div>
