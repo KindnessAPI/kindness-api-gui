@@ -46,6 +46,7 @@ export default {
       this.$forceUpdate()
     })
   },
+  // env.isActiveRender
   computed: {
     items () {
       if (this.channels) {

@@ -252,6 +252,11 @@ export default {
           this.overlay = false
         })
       }
+      if (this.overlay) {
+        this.base.isActiveRender = false
+      } else {
+        this.base.isActiveRender = true
+      }
     },
     queryUserID () {
       // this.transitionScene = this.transitionSceneList[Math.floor(this.transitionSceneList.length * Math.random())]
