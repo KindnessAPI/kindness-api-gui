@@ -811,6 +811,27 @@ export class Graph {
     })
   }
 
+  static async removeEdgesByIDList ({ list }) {
+    // let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-edge',
+      headers: getHeader(),
+      data: {
+        method: 'remove-many',
+        payload: {
+          list
+        }
+      }
+    })
+    return resp.then((r) => {
+      return r.data
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+
   /*
   {
     "method": "update",

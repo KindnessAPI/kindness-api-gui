@@ -153,6 +153,7 @@
       <transition name="fadefast">
         <div v-if="overlay" @click="overlay = false" class="overlay-close"></div>
       </transition>
+
       <transition name="flyin">
         <NodePanelUnit
           @close="overlay = false"
@@ -371,18 +372,21 @@ export default {
     async downloadGraph () {
       this.mainArea = 'loading'
       let graphData = await Graph.getUserGraph({ userID: this.queryUserID })
-      // let needToReload = false
-      // for (let link of graphData.links) {
-      //   if ((!graphData.nodes.some(n => n._id === link.source) || !graphData.nodes.some(n => n._id === link.target))) {
-      //     await Graph.removeEdgeByID({ edgeID: link._id })
-      //     // graphData.links.splice(graphData.links.findIndex(lnk => lnk._id === link._id), 1)
-      //     console.log('broken edge found')
-      //     needToReload = true
-      //   }
-      // }
-      // if (needToReload) {
-      //   graphData = await Graph.getUserGraph({ userID: this.queryUserID })
-      // }
+      let needToReload = false
+      let list = []
+      for (let link of graphData.links) {
+        if ((!graphData.nodes.some(n => n._id === link.source) || !graphData.nodes.some(n => n._id === link.target))) {
+          // await Graph.removeEdgeByID({ edgeID: link._id })
+          list.push(link._id)
+          // graphData.links.splice(graphData.links.findIndex(lnk => lnk._id === link._id), 1)
+          console.log('broken edge found')
+          needToReload = true
+        }
+      }
+      if (needToReload) {
+        await Graph.removeEdgesByIDList({ list })
+        graphData = await Graph.getUserGraph({ userID: this.queryUserID })
+      }
 
       let userIDs = graphData.nodes.filter(e => e.value && e.value.userID).map(e => e.value.userID)
       let profiles = await Profile.getProfileByUserIDList({ list: userIDs })
