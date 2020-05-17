@@ -132,11 +132,11 @@ export default {
 
       // this.$parent.$emit('scene', engine.scene())
       // this.$parent.$emit('camera', engine.camera())
-      let makePhantom = ({ hex = `#32cd32`, opacity = 1 }) => new ShaderMaterial({
+      let makePhantom = ({ color = `#32cd32`, opacity = 1 }) => new ShaderMaterial({
         transparent: true,
         depthWrite: false,
         uniforms: {
-          color: { value: new Color(hex) },
+          color: { value: new Color(color) },
           time: { value: 0 },
           opacity: { value: opacity }
         },
@@ -203,8 +203,8 @@ export default {
           }
         `
       })
-      let phantomMatLime = makePhantom({ hex: '#32cd32', opacity: 1 })
-      let phantomMatWhite = makePhantom({ hex: '#ffffff', opacity: 1 })
+      let phantomMatLime = makePhantom({ color: 'rgb(20, 156, 255)', opacity: 1 })
+      let phantomMatWhite = makePhantom({ color: '#ffffff', opacity: 1 })
       this.base.onLoop(() => {
         phantomMatLime.uniforms.time.value = window.performance.now() * 0.001
         phantomMatWhite.uniforms.time.value = window.performance.now() * 0.001
@@ -571,14 +571,14 @@ export default {
       // borderGeoSquare.rotateZ(Math.PI * 0.25)
       // iconGeoSquare.rotateZ(Math.PI * 0.25)
 
-      let iconGeoHexa = new CircleBufferGeometry(10, 6)
-      let borderGeoHexa = new CircleBufferGeometry(11, 6)
-      iconGeoHexa.computeBoundingSphere()
-      borderGeoHexa.computeBoundingSphere()
-      borderGeoHexa.translate(0, 0, -0.1)
+      let iconGeoOcta = new CircleBufferGeometry(15, 8)
+      let borderGeoOcta = new CircleBufferGeometry(16, 8)
+      iconGeoOcta.computeBoundingSphere()
+      borderGeoOcta.computeBoundingSphere()
+      borderGeoOcta.translate(0, 0, -0.1)
 
-      // borderGeoHexa.rotateZ(Math.PI * 0.5)
-      // iconGeoHexa.rotateZ(Math.PI * 0.5)
+      // borderGeoOcta.rotateZ(Math.PI * 0.5)
+      // iconGeoOcta.rotateZ(Math.PI * 0.5)
 
       let iconGeoCircle = new CircleBufferGeometry(14, 40)
       let borderGeoCircle = new CircleBufferGeometry(15, 40)
@@ -626,11 +626,11 @@ export default {
             iconGeo = iconGeoSmallCircle
             borderGeo = borderGeoSmallCircle
           } else if (node.type === 'user') {
-            iconGeo = iconGeoCircle
-            borderGeo = borderGeoCircle
+            iconGeo = iconGeoOcta
+            borderGeo = borderGeoOcta
           } else {
-            iconGeo = iconGeoCircle
-            borderGeo = borderGeoCircle
+            iconGeo = iconGeoSmallCircle
+            borderGeo = borderGeoSmallCircle
           }
           const clicker = new Mesh(
             borderGeo,

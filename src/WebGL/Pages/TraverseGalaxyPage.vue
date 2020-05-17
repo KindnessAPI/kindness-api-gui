@@ -70,12 +70,12 @@
         </div>
       </transition>
 
-      <div class="simple-bg pointer-events-none" v-if="mainArea === 'already-here'">
+      <div class="simple-bg pointer-events-none" v-if="mainArea === 'starmap-loaded'">
         <ScissorArea class="w-full h-full focus:outline-none" style="z-index: -1;">
           <div slot="dom" class="full bg-gray pt-3 focus:outline-none">
           </div>
           <!-- <component :is="transitionScene" slot="o3d"></component> -->
-          <MotherBoardScene slot="o3d"></MotherBoardScene>
+          <DashboardScene slot="o3d"></DashboardScene>
         </ScissorArea>
       </div>
 
@@ -117,21 +117,21 @@
             class="full flex justify-center items-center text-xl text-white"
           >
             <div class="p-6 rounded-lg text-white bg-translucent select-none text-center">
-              Traversing Galaxy
+              ✨ Loading Star Map ✨
               <br/>
-              ✨ Loading StarMap ✨
+              @{{ queryUsername }}
             </div>
           </div>
         </div>
       </transition>
 
       <transition name="fade">
-        <div v-if="mainArea === 'already-here'" class="overlay-loading pointer-events-none">
+        <div v-if="mainArea === 'starmap-loaded'" class="overlay-loading pointer-events-none">
           <div
             class="full flex justify-center items-center text-xl text-white"
           >
             <div class="p-6 rounded-lg text-white bg-translucent mx-3 select-none">
-              ✨ You've just arrvied. ✨
+              ✨ Star Map Loaded ✨
             </div>
           </div>
         </div>
@@ -342,17 +342,17 @@ export default {
           this.mainArea = 'loading'
           this.overlay = false
         } else {
-          this.mainArea = 'already-here'
+          this.mainArea = 'starmap-loaded'
           setTimeout(() => {
             this.mainArea = 'traverse'
-          }, 2500)
+          }, 3000)
           // this.overlay = 'node-panel'
         }
       } else {
-        this.mainArea = 'already-here'
+        this.mainArea = 'starmap-loaded'
         setTimeout(() => {
           this.mainArea = 'traverse'
-        }, 2500)
+        }, 3000)
         // this.overlay = 'node-panel'
       }
     },

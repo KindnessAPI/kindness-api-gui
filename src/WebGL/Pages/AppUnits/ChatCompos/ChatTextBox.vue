@@ -1,7 +1,7 @@
 <template>
   <div class="w-full h-full bg-gray-200 border-t border-gray-600 flex">
-    <input type="text" class="h-full pl-4 pr-4 input-width" v-model="text" placeholder="Type your messsage here...." @keydown.enter="$emit('send', text);  text = ''" />
-    <div class="sender-button flex justify-center items-center cursor-pointer bg-white" @click="$emit('send', text); text = ''">
+    <input type="text" class="h-full pl-4 pr-4 input-width" v-model="text" placeholder="Type your messsage here...." @keydown.enter="onSend" />
+    <div class="sender-button flex justify-center items-center cursor-pointer bg-white" @click="onSend">
       <div class="p-2 bg-gray-200 rounded-full">
         <img src="../icon/send.svg" class="send-icon" alt="">
       </div>
@@ -20,6 +20,13 @@ export default {
     }
   },
   methods: {
+    onSend () {
+      if (this.text === '') {
+        return
+      }
+      this.$emit('send', this.text)
+      this.text = ''
+    }
   }
 }
 </script>

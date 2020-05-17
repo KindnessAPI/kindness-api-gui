@@ -8,7 +8,7 @@
         :class="{ 'opacity-50': isMyself }"
         @click="onGo"
       >
-        <span>Traverse to: </span>
+        <span>Visit Star Map ✨ </span>
         <span>@{{ node.value.username }}</span>
       </ReButton>
     </div>

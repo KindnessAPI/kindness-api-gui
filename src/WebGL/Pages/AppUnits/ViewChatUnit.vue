@@ -65,8 +65,12 @@ export default {
 
       this.$on('scroll-to-bottom', () => {
         let element = this.$refs['scroller']
+        element.scrollTop = element.scrollHeight
         this.$nextTick(() => {
           element.scrollTop = element.scrollHeight
+          setTimeout(() => {
+            element.scrollTop = element.scrollHeight
+          }, 15)
         })
       })
       this.$emit('scroll-to-bottom')

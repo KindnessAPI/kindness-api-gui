@@ -34,10 +34,10 @@
           <div class="text-lg mt-3">Profile Image</div>
           <textarea placeholder="Profile image link" v-model="profile.photoImg" cols="36" rows="1" class="max-w-full rounded-none bg-transparent whitespace-pre-line resize-none px-0 py-2 mb-3 border-b border-black inline-block"></textarea>
           <div class="">
-            <img :src="profile.photoImg" class="border w-16 h-16 m-1 inline-block object-center object-cover" alt="">
+            <img :src="profile.photoImg" class="border w-16 h-16 m-1 inline-block rounded-full object-center object-cover" alt="">
             <!-- <GEProfileUpload @url="profile.photoImg = $event; updateProfile({ close: false })"></GEProfileUpload> -->
-            <GEImageUpload class="inline-block mx-1" @thumb="profile.photoImg = $event; updateProfile({ close: true })" :label="loading ? 'Saving' : 'Upload'"></GEImageUpload>
-            <ReButton @click="pickMyImage({ getter: (v) => v.thumb, setter: (v) => { profile.photoImg = v } })">Pick Photo</ReButton>
+            <GEImageUpload class="inline-block mx-1" @thumb="profile.photoImg = $event; updateProfile({ close: true })" :label="loading ? 'Saving' : 'Upload Photo'"></GEImageUpload>
+            <ReButton @click="pickMyImage({ getter: (v) => v.thumb, setter: (v) => { profile.photoImg = v } })">Browse</ReButton>
           </div>
         </div>
 
@@ -45,13 +45,13 @@
           <div class="text-lg mt-3 mb-2">Background Image</div>
           <!-- <div class="mb-2">Example Images...</div>
           <div>
-            <img @click="profile.bgImg = img.img" class="border w-16 h-16 m-1 inline-block object-center object-cover" :key="img.key" v-for="img in imgs" :src="img.img" :alt="img.key">
+            <img @click="profile.bgImg = img.img" class="border w-16 h-16 m-1 inline-block rounded-full object-center object-cover" :key="img.key" v-for="img in imgs" :src="img.img" :alt="img.key">
           </div> -->
           <textarea placeholder="Background image link" v-model="profile.bgImg" cols="36" rows="1" class="max-w-full rounded-none bg-transparent whitespace-pre-line resize-none px-0 py-2 mb-3 border-b border-black inline-block"></textarea>
           <div>
-            <img :src="profile.bgImg" class="border w-16 h-16 m-1 inline-block object-center object-cover" alt="">
-            <GEImageUpload class="inline-block mx-1" @url="profile.bgImg = $event; updateProfile({ close: true })" :label="loading ? 'Saving' : 'Upload'"></GEImageUpload>
-            <ReButton @click="pickMyImage({ getter: (v) => v.img, setter: (v) => { profile.bgImg = v } })">Pick Photo</ReButton>
+            <img :src="profile.bgImg" class="border w-16 h-16 m-1 inline-block rounded-full object-center object-cover" alt="">
+            <GEImageUpload class="inline-block mx-1" @url="profile.bgImg = $event; updateProfile({ close: true })" :label="loading ? 'Saving' : 'Upload Photo'"></GEImageUpload>
+            <ReButton @click="pickMyImage({ getter: (v) => v.img, setter: (v) => { profile.bgImg = v } })">Browse</ReButton>
           </div>
         </div>
 
@@ -59,13 +59,13 @@
           <div class="text-lg mt-3">Loading Screen Image</div>
           <!-- <div class="mb-2">Example Images...</div>
           <div>
-            <img @click="profile.loadingImg = img.img" class="border w-16 h-16 m-1 inline-block object-center object-cover" :key="img.key" v-for="img in imgs" :src="img.img" :alt="img.key">
+            <img @click="profile.loadingImg = img.img" class="border w-16 h-16 m-1 inline-block rounded-full object-center object-cover" :key="img.key" v-for="img in imgs" :src="img.img" :alt="img.key">
           </div> -->
           <textarea placeholder="Loading screen image link" v-model="profile.loadingImg" cols="36" rows="1" class="max-w-full rounded-none bg-transparent whitespace-pre-line resize-none px-0 py-2 mb-3 border-b border-black inline-block"></textarea>
           <div>
-            <img :src="profile.loadingImg" class="border w-16 h-16 m-1 inline-block object-center object-cover" alt="">
-            <GEImageUpload class="inline-block mx-1" @url="profile.loadingImg = $event; updateProfile({ close: true })" :label="loading ? 'Saving' : 'Upload'"></GEImageUpload>
-            <ReButton @click="pickMyImage({ getter: (v) => v.img, setter: (v) => { profile.loadingImg = v } })">Pick Photo</ReButton>
+            <img :src="profile.loadingImg" class="border w-16 h-16 m-1 inline-block rounded-full object-center object-cover" alt="">
+            <GEImageUpload class="inline-block mx-1" @url="profile.loadingImg = $event; updateProfile({ close: true })" :label="loading ? 'Saving' : 'Upload Photo'"></GEImageUpload>
+            <ReButton @click="pickMyImage({ getter: (v) => v.img, setter: (v) => { profile.loadingImg = v } })">Browse</ReButton>
           </div>
         </div>
 
