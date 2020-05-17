@@ -169,6 +169,7 @@
       <transition name="flyin">
         <keep-alive>
           <MessengerUnit
+            :key="me.userID"
             @close="overlay = false"
             @reload="onReload"
             :editable="isOnMyPage"
