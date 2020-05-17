@@ -73,6 +73,9 @@ export default {
 
       this.$on('send-text', (v) => {
         this.socket.sendText({ text: v })
+        this.channel.lastMessageSent = v
+        this.channel.lastMessageDate = new Date().toString()
+        this.$emit('channel-change', this.channel)
       })
 
       this.socket.on('online', (data) => {

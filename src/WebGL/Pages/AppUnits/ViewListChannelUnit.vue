@@ -30,8 +30,7 @@ export default {
     return {
       loading: false,
       channels: false,
-      item: false,
-      items: false
+      item: false
     }
   },
   mounted () {
@@ -39,6 +38,38 @@ export default {
     this.$on('reload', () => {
       this.getChannels()
     })
+    this.$on('channel-change', (event) => {
+      console.log(event)
+      let idx = this.channels.findIndex(e => e._id === event._id)
+      this.channels[idx] = JSON.parse(JSON.stringify(event))
+
+      this.$forceUpdate()
+    })
+  },
+  computed: {
+    items () {
+      if (this.channels) {
+        return this.channels.map(e => {
+          return {
+            _id: e._id,
+            title: e.title,
+            ts: (new Date(e.lastMessageDate)).getTime(),
+            subtitle: e.lastMessageSent || moment(Date.parse(e.lastMessageDate)).fromNow(),
+            image: e.img
+          }
+        }).sort((a, b) => {
+          if (a.ts > b.ts) {
+            return -1
+          } else if (a.ts < b.ts) {
+            return 1
+          } else {
+            return 0
+          }
+        })
+      } else {
+        return false
+      }
+    }
   },
   methods: {
     onItem (item) {
@@ -49,24 +80,6 @@ export default {
       this.loading = true
       let data = await Channel.getMyChannels({ userID: Auth.currentProfile.user.userID })
       this.channels = data
-      console.log(data)
-      this.items = data.map(e => {
-        return {
-          _id: e._id,
-          title: e.title,
-          ts: (new Date(e.lastMessageDate)).getTime(),
-          subtitle: e.lastMessageSent || moment(Date.parse(e.lastMessageDate)).fromNow(),
-          image: e.img
-        }
-      }).sort((a, b) => {
-        if (a.ts > b.ts) {
-          return -1
-        } else if (a.ts < b.ts) {
-          return 1
-        } else {
-          return 0
-        }
-      })
       this.loading = false
     }
   }
