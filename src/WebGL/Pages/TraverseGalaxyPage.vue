@@ -167,7 +167,7 @@
       </transition>
 
       <transition name="flyin">
-        <!-- <keep-alive> -->
+        <keep-alive>
           <MessengerUnit
             @close="overlay = false"
             @reload="onReload"
@@ -178,7 +178,7 @@
             :username="me.username"
             v-if="overlay === 'messenger'"
           ></MessengerUnit>
-        <!-- </keep-alive> -->
+        </keep-alive>
       </transition>
 
       <transition name="circlein">
