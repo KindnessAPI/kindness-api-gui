@@ -9,25 +9,25 @@
         <input type="text" placeholder="Username" v-model="search.query" @input="onTrySearch" class="rounded-none bg-transparent px-0 py-2 mb-3 border-b border-black inline-block">
       </div>
       <table>
-        <tr :key="node._id" v-for="node in search.result">
+        <tr :key="profile._id" v-for="profile in search.result">
           <td class="pr-3 pb-3">
             <div>
-              @{{ node.username }}
+              @{{ profile.username }}
             </div>
             <div class=" text-sm text-gray-600">
-              <span v-if="node.userID === myUserID">Myself</span>
-              <span v-if="node.userID !== myUserID">
-                <span v-if="alreadyAdded(node)">Already a Friend</span>
-                <span v-if="!alreadyAdded(node)">Can Add</span>
+              <span v-if="profile.userID === myUserID">Myself</span>
+              <span v-if="profile.userID !== myUserID">
+                <span v-if="alreadyAdded(profile)">Already a Friend</span>
+                <span v-if="!alreadyAdded(profile)">Can Add</span>
               </span>
             </div>
           </td>
           <td class="pr-3 pb-3">
-            <img class="w-16 h-16 object-cover object-center rounded-full" :src="`${node.img}`" alt="">
+            <img class="w-16 h-16 object-cover object-center rounded-full" :src="`${profile.photoImg}`" alt="">
           </td>
           <td class="pr-3 pb-3">
-            <ReButton v-if="node.userID !== myUserID && !alreadyAdded(node)" :color="'green'" @click="addFriend(node)">Add Friend <span v-if="node.loading">⏱</span></ReButton>
-            <ReButton :disabled="true" v-if="!(node.userID !== myUserID && !alreadyAdded(node))" :color="'gray'">Added</ReButton>
+            <ReButton v-if="profile.userID !== myUserID && !alreadyAdded(profile)" :color="'green'" @click="addFriend(profile)">Add Friend <span v-if="profile.loading">⏱</span></ReButton>
+            <ReButton :disabled="true" v-if="!(profile.userID !== myUserID && !alreadyAdded(profile))" :color="'gray'">Added</ReButton>
           </td>
         </tr>
       </table>
@@ -37,7 +37,18 @@
 
 <script>
 import _ from 'lodash'
-import { Graph, Auth } from '../../../../APIs/KA.js'
+import { Graph, Auth, Profile } from '../../../../APIs/KA.js'
+
+function removeDuplicates (arr, prop) {
+  let obj = {}
+  return Object.keys(arr.reduce((prev, next) => {
+    if (!obj[next[prop]]) {
+      obj[next[prop]] = next
+    }
+    return obj
+  }, obj)).map((i) => obj[i])
+}
+
 export default {
   props: {
     node: {},
@@ -48,6 +59,7 @@ export default {
   },
   data () {
     return {
+      removeDuplicates,
       search: {
         loading: false,
         result: false,
@@ -86,7 +98,8 @@ export default {
     },
     async searchData () {
       this.search.loading = true
-      this.search.result = await Graph.searchNodeByName({ name: this.search.query })
+      this.search.result = await Profile.searchProfileByDisplayName({ displayName: this.search.query })
+      this.search.result = removeDuplicates(this.search.result, 'userID')
       this.search.loading = false
     },
     onTrySearch: _.debounce(function () {

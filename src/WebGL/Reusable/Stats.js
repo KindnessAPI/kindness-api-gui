@@ -7,8 +7,8 @@ export class Stats {
     stats.dom.style.position = 'fixed'
     stats.dom.style.top = ''
     stats.dom.style.bottom = '0px'
-    stats.dom.style.left = ''
-    stats.dom.style.right = '0px'
+    stats.dom.style.left = '0px'
+    stats.dom.style.right = ''
     return stats
   }
 }

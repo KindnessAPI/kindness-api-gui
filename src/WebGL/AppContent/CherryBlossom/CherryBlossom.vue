@@ -6,7 +6,7 @@
 
 <script>
 import { Tree } from '../../Reusable'
-import { MeshMatcapMaterial, DoubleSide, Object3D, TextureLoader, IcosahedronBufferGeometry, Mesh } from 'three'
+import { MeshMatcapMaterial, DoubleSide, Object3D, TextureLoader } from 'three'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 // import { Refractor } from 'three/examples/jsm/objects/Refractor'
 // import { FastBlurShader } from './FastBlurShader'
@@ -51,11 +51,11 @@ export default {
     Cache.yellow = new MeshMatcapMaterial({ color: 0xffd743, side: DoubleSide, matcap: texLoader.load(require('./matcap/bright-yellow.png')) })
     Cache.pedals = new MeshMatcapMaterial({ color: 0xffffff, side: DoubleSide, matcap: texLoader.load(require('./matcap/pink.jpg')) })
 
-    let loadingMesh = new Mesh(
-      new IcosahedronBufferGeometry(25, 0),
-      Cache.pedals
-    )
-    this.o3d.add(loadingMesh)
+    // let loadingMesh = new Mesh(
+    //   new IcosahedronBufferGeometry(25, 0),
+    //   Cache.pedals
+    // )
+    // this.o3d.add(loadingMesh)
 
     this.$on('init', async () => {
       // eslint-disable-next-line
@@ -84,7 +84,7 @@ export default {
 
       setTimeout(() => {
         this.o3d.add(this.flower1)
-        this.o3d.remove(loadingMesh)
+        // this.o3d.remove(loadingMesh)
         this.$emit('ready')
       }, 500)
     })

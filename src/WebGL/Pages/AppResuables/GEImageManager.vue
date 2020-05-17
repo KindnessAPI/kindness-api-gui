@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { MyFiles } from '../../../APIs/KA'
+import { MyFiles, Auth } from '../../../APIs/KA'
 
 export default {
   props: {
@@ -88,7 +88,8 @@ export default {
     },
     async getFiles () {
       this.loading = true
-      this.files = await MyFiles.getMyFiles({ pageAt: this.pageAt, perPage: this.perPage })
+      let userID = Auth.currentProfile.user.userID
+      this.files = await MyFiles.getMyFiles({ userID, pageAt: this.pageAt, perPage: this.perPage })
       this.loading = false
     },
     async deleteSelected () {

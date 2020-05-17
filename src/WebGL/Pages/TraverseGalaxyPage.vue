@@ -5,7 +5,9 @@
     }" ref="mounter"></div>
 
     <div v-show="!openMenu" class="full relative">
-      <TopNavBar @menu="openMenu = !openMenu"></TopNavBar>
+      <div class="topnavbar">
+        <TopNavBar @menu="openMenu = !openMenu" ></TopNavBar>
+      </div>
 
       <!-- <ScissorArea
       class="webgl-bg"
@@ -26,7 +28,6 @@
         </StarFlowScene>
       </ScissorArea> -->
 
-      <!-- preloader -->
       <div :style="{
         backgroundImage: `url(${loadingBG}), url(${readyBG})`,
       }"></div>
@@ -78,6 +79,25 @@
         </ScissorArea>
       </div>
 
+      <!-- <div class="relative minus-navbar-height h-full w-full focus:outline-none">
+        <ScissorArea class="w-full h-full focus:outline-none" style="z-index: -1;">
+          <div slot="dom" class="full">
+          </div>
+          <TraverseScene
+            slot="o3d"
+            :btns="btns"
+            @home="onGoHome"
+            @view="onViewProfile"
+            @node-click="onNodeClick"
+            @node-drag="onNodeDrag"
+            :graph="graph"
+            @mail="onMail"
+            ref="edge-node-2"
+            >
+          </TraverseScene>
+        </ScissorArea>
+      </div> -->
+
       <TraverseNodeEdgeUnit
       :btns="btns"
       @home="onGoHome"
@@ -86,11 +106,9 @@
       @node-drag="onNodeDrag"
       :graph="graph"
       @mail="onMail"
+      :run="overlay === false"
       ref="edge-node"
       >
-        <!-- <O3D ref="o3d" v-if="allReady">
-          <Spaceship></Spaceship>
-        </O3D> -->
       </TraverseNodeEdgeUnit>
 
       <transition name="fade">
@@ -113,7 +131,7 @@
             class="full flex justify-center items-center text-3xl text-white"
           >
             <div class="p-6 rounded-lg text-white bg-translucent mx-3 select-none">
-              You've just arrvied.✨
+              ✨ You've just arrvied. ✨
             </div>
           </div>
         </div>
@@ -142,11 +160,25 @@
           :editable="isOnMyPage"
           :node="currentNode"
           :graph="graph"
-
           :userID="queryUserID"
           :username="queryUsername"
           v-if="currentNode && graph && overlay === 'node-panel'"
         ></NodePanelUnit>
+      </transition>
+
+      <transition name="flyin">
+        <!-- <keep-alive> -->
+          <MessengerUnit
+            @close="overlay = false"
+            @reload="onReload"
+            :editable="isOnMyPage"
+            :graph="graph"
+
+            :userID="me.userID"
+            :username="me.username"
+            v-if="overlay === 'messenger'"
+          ></MessengerUnit>
+        <!-- </keep-alive> -->
       </transition>
 
       <transition name="circlein">
@@ -211,7 +243,7 @@ export default {
       //   window.dispatchEvent(new Event('resize'))
       // }, 100)
     },
-    'overlay' () {
+    overlay () {
       // this.transitionScene = this.transitionSceneList[Math.floor(this.transitionSceneList.length * Math.random())]
       if (this.overlay) {
         this.escFncs.push(() => {
@@ -219,13 +251,16 @@ export default {
         })
       }
     },
-    'queryUserID' () {
+    queryUserID () {
       // this.transitionScene = this.transitionSceneList[Math.floor(this.transitionSceneList.length * Math.random())]
       this.onReset()
       this.onInit()
     }
   },
   computed: {
+    me () {
+      return Auth.currentProfile.user
+    },
     loadingBG () {
       if (this.profile && this.profile.loadingImg) {
         return this.profile.loadingImg
@@ -250,7 +285,7 @@ export default {
   },
   methods: {
     onMail () {
-      console.log(123)
+      this.overlay = 'messenger'
     },
     onViewProfile () {
       let node = this.graph.nodes.find(e => e.userID === this.queryUserID && e.type === 'user')
@@ -272,7 +307,11 @@ export default {
         text: `@${this.queryUsername}`,
         event: 'view'
       })
+
       this.btns.push({
+        place: 'tr',
+        type: 'mail',
+        badge: 1,
         text: `📨`,
         event: 'mail'
       })
@@ -538,7 +577,25 @@ export default {
   border-radius: 15px;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
+
+  transform: perspective(100vmax) translateZ(2px);
   /* transform: perspective(100vmax) translateZ(1px); */
+}
+
+.overlay-full {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 80px;
+  z-index: 16;
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0px 0px 30px 0px rgba(255, 255, 255, 0.6);
+  border-radius: 15px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  transform: perspective(100vmax) translateZ(2px);
+  overflow: hidden;
 }
 
 @screen md {
@@ -553,7 +610,14 @@ export default {
     min-height: 250px;
     transition: height 1.5s;
   }
+  .overlay-full{
+    top: 80px;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+  }
 }
+
 .bg-translucent{
   background-color: rgba(0, 0, 0, 0.6);
   box-shadow: 0px 0px 30px 0px rgb(30, 30, 30);
@@ -587,5 +651,22 @@ export default {
 .fadefast-enter, .fadefast-leave-to /* .flyin-leave-active below version 2.1.8 */ {
   opacity: 0;
   @apply pointer-events-none;
+}
+.topnavbar{
+  height: 60px;
+}
+
+.minus-navbar-height{
+  height: calc(100% - 60px);
+}
+.minus-navbar-height:focus, *:focus{
+  outline: none;
+}
+
+.bg-transparent-black{
+  background-color: rgba(0,0,0,0.7);
+}
+.toolbarheight{
+  height: 60px;
 }
 </style>

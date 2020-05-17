@@ -1,8 +1,11 @@
 
 <template>
   <div v-if="node && node.type !== 'user' || hasTwoUser">
-    <div class="mb-3 text-2xl">
-      Remove
+    <div class="mb-3">
+      <span class=" text-2xl">
+        Remove
+      </span>
+      {{ node.name }}
     </div>
     <div class="mb-3">
       <ReButton :color="'red'" @click="removeNode()">Remove This & <span v-if="totalLinks">{{ totalLinks }} related</span> Link<span v-if="loading">⏱</span></ReButton>

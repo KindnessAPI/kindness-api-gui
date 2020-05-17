@@ -111,12 +111,13 @@ class EventEmitter {
 }
 
 export class LamdaClient extends EventEmitter {
-  constructor ({ url, nickname, roomID }) {
+  constructor ({ url, nickname, roomID, token }) {
     super()
     this.url = url
     this.nickname = nickname
     this.roomID = roomID
     this.autoReconnectInterval = 5 * 1000
+    this.token = token
     this.open()
   }
 
@@ -234,7 +235,9 @@ export class LamdaClient extends EventEmitter {
     this.ensureSend({
       type: 'ws-msg-room',
       roomID: this.roomID,
-      text
+      text,
+      channelID: this.roomID,
+      token: this.token
     })
   }
 
@@ -385,6 +388,34 @@ export class Auth {
 Auth.loadProfiles()
 
 export class Profile {
+  static async getProfilesByQuery ({ query }) {
+    // let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-profile',
+      headers: getHeader(),
+      data: {
+        method: 'query',
+        payload: {
+          $or: [
+            {
+              displayName: { $regex: query, $options: 'i' }
+            },
+            {
+              username: { $regex: query, $options: 'i' }
+            }
+          ]
+        }
+      }
+    })
+    return resp.then((r) => {
+      return r.data
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+
   static async getProfileByUserID ({ userID }) {
     // let axios = (await import('axios')).default
     let resp = axios({
@@ -401,6 +432,27 @@ export class Profile {
     })
     return resp.then((r) => {
       return r.data[0]
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+
+  static async searchProfileByDisplayName ({ displayName }) {
+    // let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-profile',
+      headers: getHeader(),
+      data: {
+        method: 'query',
+        payload: {
+          displayName
+        }
+      }
+    })
+    return resp.then((r) => {
+      return r.data
     }, (err) => {
       return Promise.reject(err)
     })
@@ -1065,7 +1117,7 @@ export class MyFiles {
       }
     })
   }
-  static async getMyFiles ({ userID = Auth.currentProfile.userID, pageAt = 0, perPage = 20 }) {
+  static async getMyFiles ({ userID = Auth.currentProfile.user.userID, pageAt = 0, perPage = 20 }) {
     // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
@@ -1127,6 +1179,98 @@ export class MyFiles {
         method: 'remove-objs',
         payload: {
           objs
+        }
+      }
+    })
+
+    return resp.then((r) => {
+      return r.data
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+}
+
+export class Message {
+  static async getMyRoomMessage ({ channelID, pageAt = 0, perPage = 50 }) {
+    // let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-message',
+      headers: getHeader(),
+      data: {
+        method: 'query',
+        payload: {
+          channelID: channelID,
+          skip: pageAt * perPage,
+          limit: perPage,
+          sort: '-created_at'
+        }
+      }
+    })
+
+    return resp.then((r) => {
+      return r.data
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+}
+
+export class Channel {
+  static async getMyChannels ({ userID }) {
+    // let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-channel',
+      headers: getHeader(),
+      data: {
+        method: 'query',
+        payload: {
+          $or: [
+            { userID },
+            { 'participants.userID': userID }
+          ]
+        }
+      }
+    })
+
+    return resp.then((r) => {
+      return r.data
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+  static async createChannel ({ userID, username, participants, title, img = '' }) {
+    // let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-channel',
+      headers: getHeader(),
+      data: {
+        method: 'create',
+        payload: {
+          userID,
+          username,
+
+          type: 'chat', // dm
+          participants, /*
+          [{
+            username: String,
+            userID: String,
+            isAdmin: Boolean
+          }]
+          */
+
+          lastMessageSent: '',
+          lastMessageDate: new Date(),
+
+          title,
+          img,
+          tags: [{ text: 'chat-room' }]
         }
       }
     })
