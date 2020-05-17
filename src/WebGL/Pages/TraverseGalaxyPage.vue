@@ -114,7 +114,7 @@
       <transition name="fade">
         <div v-if="mainArea === 'loading'" class="overlay-loading pointer-events-none">
           <div
-            class="full flex justify-center items-center text-3xl text-white"
+            class="full flex justify-center items-center text-xl text-white"
           >
             <div class="p-6 rounded-lg text-white bg-translucent select-none text-center">
               Traversing Galaxy
@@ -128,7 +128,7 @@
       <transition name="fade">
         <div v-if="mainArea === 'already-here'" class="overlay-loading pointer-events-none">
           <div
-            class="full flex justify-center items-center text-3xl text-white"
+            class="full flex justify-center items-center text-xl text-white"
           >
             <div class="p-6 rounded-lg text-white bg-translucent mx-3 select-none">
               ✨ You've just arrvied. ✨
@@ -140,7 +140,7 @@
       <!--
       <div v-if="mainArea === 'not-ready'" class="overlay-loading">
         <div
-          class="full flex justify-center items-center text-3xl text-white"
+          class="full flex justify-center items-center text-xl text-white"
         >
           <div class="p-6 rounded-lg text-white bg-translucent">
             Profile Not Ready
