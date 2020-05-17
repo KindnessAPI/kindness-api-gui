@@ -10,6 +10,7 @@
       <MakeFriendsUnit></MakeFriendsUnit>
       <SpacewalkUnit></SpacewalkUnit>
       <RegisterUnit></RegisterUnit>
+      <RegisterBanner></RegisterBanner>
     </div>
     <FullMenuBar v-show="openMenu" @close="openMenu = false"></FullMenuBar>
 
