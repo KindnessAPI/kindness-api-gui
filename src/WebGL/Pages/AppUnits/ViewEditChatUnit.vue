@@ -4,7 +4,7 @@
       <div class="w-1/3 text-left pl-3 flex items-center justify-start">
         <!-- <img src="./icon/left.svg" class="inline-block" @click="$emit('view', 'chat')" alt=""> -->
       </div>
-      <div class="w-1/3">Edit Channel Details</div>
+      <div class="w-1/3">Settings</div>
       <div class="w-1/3 text-right pr-3 flex items-center justify-end">
         <img class="inline-block cursor-pointer" src="./icon/check.svg" @click="onUpdateChat()" alt="">
       </div>
@@ -12,12 +12,24 @@
     <div class="msg-body-list remain-height bg-white  overflow-x-hidden overflow-y-auto">
       <div>
         <div class="bg-gray-200 px-3 py-2 text-xl">
-          Edit Room Title
+          Room Title
         </div>
         <div class="flex justify-start bg-gray-200 pb-3">
-          <input type="text" v-if="isAdmin || isOwner" placeholder="New Title" v-model="channel.title" class="py-3 px-3 text-sm shadow-none appearance-none border-yellow-700 border w-3/6 h-full mx-3 rounded-lg" />
+          <input type="text" v-if="isAdmin || isOwner" placeholder="New Title" v-model="channel.title" class="py-3 px-3 text-lg shadow-none appearance-none border-yellow-700 border w-3/6 h-full mx-3 rounded-lg" />
           <div v-else class="pl-3">
             {{ channel.title }}
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="bg-gray-200 px-3 py-2 text-xl">
+          Room Picture
+        </div>
+        <div class="flex justify-start bg-gray-200 pb-3">
+          <GEImageUpload v-if="isAdmin || isOwner" class="inline-block mx-1" @url="channel.img = $event; run()" :label="'Select and Upload Photo'"></GEImageUpload>
+          <div class="pl-3" v-else>
+            <img :src="channel.img" class="h-16 w-16 rounded-full object-cover object-center" alt="">
           </div>
         </div>
       </div>
@@ -33,7 +45,7 @@
             Add Member
           </div>
           <div class="flex justify-start bg-gray-200 pb-3">
-            <input type="text" placeholder="New Title" v-model="query" class="py-3 px-3 text-sm shadow-none appearance-none border-blue-500 border w-3/6 h-full mx-3 rounded-lg" @input="tryLoad" />
+            <input type="text" placeholder="New Title" v-model="query" class="py-3 px-3 text-lg shadow-none appearance-none border-blue-500 border w-3/6 h-full mx-3 rounded-lg" @input="tryLoad" />
           </div>
           <div class="pl-3 py-3 flex" :key="rec._id" v-for="rec in result">
             <div>
@@ -67,7 +79,8 @@
       <!--
       <div class="border-t border-gray-500">
         <ContactListUnit ref="contact" :checkbox="true" v-if="items" :items="items" @item="onPersonSelect"></ContactListUnit>
-      </div> -->
+      </div>
+      -->
     </div>
   </div>
 </template>

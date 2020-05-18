@@ -1,7 +1,7 @@
 <template>
   <div v-if="item" :class="{ 'justify-start': !checkbox, ' justify-between': checkbox }" class="flex border-b p-3 border-gray-500 flex cursor-pointer hover:bg-gray-200" @click="onClick(item)">
     <div class="p-1">
-      <img :src="item.image" class="h-16 w-16 rounded-full" alt="">
+      <img :src="item.image" class="h-16 w-16 rounded-full object-cover object-center" alt="">
     </div>
     <div class="py-3 pl-4 h-full">
       <div class="text-left text-lg">{{item.title}}</div>
