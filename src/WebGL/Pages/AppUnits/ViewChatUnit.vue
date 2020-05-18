@@ -1,13 +1,17 @@
 <template>
   <div class="h-full w-full">
     <div class="msg-header text-lg py-3 text-center bg-yellow-500 flex justify-between">
-      <div class="w-1/5 text-left pl-3 flex items-center">
+      <div class="w-1/5 text-left pl-3 flex items-center justify-start">
         <span class="inline-block" v-if="back"  @click="$emit('view', 'list-channel')">
           <img src="./icon/left.svg" alt="">
         </span>
       </div>
       <div class="w-3/5">{{ channel.title }}</div>
-      <div class="w-1/5 text-right pr-3"></div>
+      <div class="w-1/5 text-right pr-3 flex items-center justify-end">
+        <span class="inline-block" @click="$emit('view', 'edit-chat')">
+          <img src="./icon/settings.svg" style="margin-bottom: 0px" alt="">
+        </span>
+      </div>
     </div>
     <div class="msg-body-list remain-height-chat-diaglogue bg-white  overflow-x-hidden overflow-y-auto rounded-b-lg pb-4" ref="scroller">
       <ChatDialogueBox :key="channel._id + 'dialogue'" :msgs="msgs.slice().sort(this.sortMsgs)"></ChatDialogueBox>

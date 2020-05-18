@@ -6,6 +6,7 @@
       </keep-alive>
       <ViewAddChannelUnit @view="view = $event" @channel="channel = $event" v-if="view === 'add-channel'"></ViewAddChannelUnit>
       <ViewChatUnit :key="channel._id" @view="view = $event" :channel="channel" v-if="view === 'chat'"></ViewChatUnit>
+        <ViewEditChatUnit :key="channel._id" :back="false" v-if="view === 'edit-chat'" @view="view = $event" :channel="channel" @channel="channel = $event"></ViewEditChatUnit>
     </div>
     <div class="full flex" v-if="mode === 'desktop'">
       <div class="chat-list border-r border-gray-600">
@@ -14,6 +15,7 @@
       <div class="chat-content">
         <ViewAddChannelUnit @reload-channels="$refs['list-channel'].$emit('reload')" v-if="desktopView === 'add-channel'" @view="desktopView = $event" @channel="channel = $event"></ViewAddChannelUnit>
         <ViewChatUnit :key="channel._id" :back="false" v-if="desktopView === 'chat'" @view="desktopView = $event" :channel="channel" @channel="channel = $event"></ViewChatUnit>
+        <ViewEditChatUnit :key="channel._id" :back="false" v-if="desktopView === 'edit-chat'" @view="desktopView = $event" :channel="channel" @channel="channel = $event"></ViewEditChatUnit>
       </div>
     </div>
   </div>

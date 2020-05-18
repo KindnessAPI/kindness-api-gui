@@ -55,7 +55,8 @@ export default {
             _id: e._id,
             title: e.title,
             ts: (new Date(e.lastMessageDate)).getTime(),
-            subtitle: e.lastMessageSent || moment(Date.parse(e.lastMessageDate)).fromNow(),
+            subtitle: e.lastMessageSent,
+            subtitle2: moment(Date.parse(e.lastMessageDate)).fromNow(),
             image: e.img
           }
         }).sort((a, b) => {

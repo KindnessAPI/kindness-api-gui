@@ -6,6 +6,7 @@
     <div class="py-3 pl-4 h-full">
       <div class="text-left text-lg">{{item.title}}</div>
       <div class="text-left text-sm text-gray-600" v-if="item.subtitle">{{item.subtitle}}</div>
+      <div class="text-left text-xs text-gray-600" v-if="item.subtitle2">{{item.subtitle2}}</div>
     </div>
     <div v-if="checkbox" class=" inline-flex justify-end items-center">
       <div>

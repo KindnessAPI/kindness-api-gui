@@ -1240,6 +1240,31 @@ export class Message {
 }
 
 export class Channel {
+  // update-by-participants
+
+  static async updateChannelByParticipants ({ edit }) {
+    // let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-channel',
+      headers: getHeader(),
+      data: {
+        method: 'update-by-participants',
+        payload: {
+          _id: edit._id,
+          edit
+        }
+      }
+    })
+
+    return resp.then((r) => {
+      return r.data
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+
   static async getMyChannels ({ userID }) {
     // let axios = (await import('axios')).default
     let resp = axios({
@@ -1264,6 +1289,7 @@ export class Channel {
       return Promise.reject(err)
     })
   }
+
   static async createChannel ({ userID, username, participants, title, img = '' }) {
     // let axios = (await import('axios')).default
     let resp = axios({
