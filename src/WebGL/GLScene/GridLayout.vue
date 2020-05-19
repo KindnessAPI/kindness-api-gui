@@ -12,7 +12,7 @@
 <script>
 import { Tree, makeScroller, getID } from '../Reusable'
 // import { Scene } from 'three'
-import { LamdaClient, getWS } from '../../APIs/KA'
+import { LambdaClient, getWS } from '../../APIs/KA'
 
 export default {
   name: 'HappyLayout',
@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     setup () {
-      this.lamda = new LamdaClient({
+      this.lamda = new LambdaClient({
         url: getWS(),
         roomId: 'chat-box-inst',
         nickname: 'KA@' + getID()

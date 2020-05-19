@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { LamdaClient, getWS, Auth, Message } from '../../../APIs/KA'
+import { LambdaClient, getWS, Auth, Message } from '../../../APIs/KA'
 export default {
   props: {
     back: {
@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     async onSetup () {
-      this.socket = new LamdaClient({
+      this.socket = new LambdaClient({
         url: getWS(),
         token: Auth.currentProfile.jwt,
         roomID: this.channel._id,

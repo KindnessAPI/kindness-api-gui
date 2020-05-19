@@ -196,7 +196,7 @@
 
 <script>
 import { PipeScissor, makeScrollBox } from '../Reusable'
-import { Auth, Graph, LamdaClient, getWS, getID, Profile } from '../../APIs/KA'
+import { Auth, Graph, LambdaClient, getWS, getID, Profile } from '../../APIs/KA'
 
 // import axios from 'axios'
 export default {
@@ -218,6 +218,7 @@ export default {
         earth: require('./AppUnits/hdri/astronomy-atmosphere-earth-exploration-220201.jpg'),
         galaxy: require('./AppUnits/hdri/sky-space-dark-galaxy-2150.jpg')
       },
+      mybell: false,
       myNode: false,
       allReady: false,
       profile: false,
@@ -332,6 +333,9 @@ export default {
       if (this.socket) {
         this.socket.close()
       }
+      if (this.mybell) {
+        this.mybell.close()
+      }
     },
     onNodeDrag (node) {
       this.currentNode = node
@@ -422,22 +426,32 @@ export default {
       this.$refs['edge-node'].$emit('badge', node)
     },
     async makeSocket () {
-      let socket = this.socket = new LamdaClient({
+      let socket = this.socket = new LambdaClient({
         url: getWS(),
         roomID: this.queryUserID,
         nickname: Auth.currentProfile.user.username + '@' + getID()
       })
 
-      socket.on('text', (data) => {
-        let html = `<pre>${data.type} - ${JSON.stringify(data)}</pre>`
-        console.log(html)
+      let mybell = this.mybell = new LambdaClient({
+        url: getWS(),
+        roomID: Auth.currentProfile.user.userID,
+        nickname: Auth.currentProfile.user.username + '@' + getID()
       })
+
+      // socket.on('text', (data) => {
+      //   let html = `<pre>${data.type} - ${JSON.stringify(data)}</pre>`
+      //   console.log(html)
+      // })
 
       // socket.sendText({ text: '1231232' })
 
-      socket.on('online', (data) => {
-        let html = `<pre>me: ${socket.nickname} - ${JSON.stringify(data)}</pre>`
-        console.log(html)
+      // socket.on('online', (data) => {
+      //   let html = `<pre>me: ${socket.nickname} - ${JSON.stringify(data)}</pre>`
+      //   console.log(html)
+      // })
+
+      mybell.on('channel-update', (data) => {
+        this.$root.$emit('channel-update', data)
       })
 
       socket.on('ws-graph-change', async (data) => {

@@ -39,9 +39,26 @@ export default {
       this.getChannels()
     })
     this.$on('channel-change', (event) => {
-      console.log(event)
+      // console.log(event)
+      if (!this.channels) {
+        return
+      }
       let idx = this.channels.findIndex(e => e._id === event._id)
       this.channels[idx] = JSON.parse(JSON.stringify(event))
+
+      this.$forceUpdate()
+    })
+    this.$root.$on('channel-update', (event) => {
+      let updatedChannel = event.data
+      if (!this.channels) {
+        return
+      }
+      let idx = this.channels.findIndex(e => e._id === updatedChannel._id)
+      this.channels[idx] = JSON.parse(JSON.stringify(updatedChannel))
+
+      this.channels = [
+        ...this.channels
+      ]
 
       this.$forceUpdate()
     })

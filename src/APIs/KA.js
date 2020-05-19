@@ -43,7 +43,7 @@ export const getID = () => {
 
 /*
 
-let socket = new LamdaClient({
+let socket = new LambdaClient({
   url: getWS(),
   roomID: 'room-test',
   nickname: 'kindness-api-client-' + getID()
@@ -110,7 +110,7 @@ class EventEmitter {
   }
 }
 
-export class LamdaClient extends EventEmitter {
+export class LambdaClient extends EventEmitter {
   constructor ({ url, nickname, roomID, token }) {
     super()
     this.url = url
