@@ -218,7 +218,6 @@ export default {
         earth: require('./AppUnits/hdri/astronomy-atmosphere-earth-exploration-220201.jpg'),
         galaxy: require('./AppUnits/hdri/sky-space-dark-galaxy-2150.jpg')
       },
-      mybell: false,
       myNode: false,
       allReady: false,
       profile: false,
@@ -226,7 +225,7 @@ export default {
       currentNode: false,
       mainArea: 'loading',
       btns: [],
-      socket: false,
+      myBell: false,
       escFncs: [],
       username: false,
       userID: false,
@@ -311,6 +310,7 @@ export default {
           event: 'home'
         })
       }
+
       this.btns.push({
         text: `@${this.queryUsername}`,
         event: 'view'
@@ -330,11 +330,8 @@ export default {
         nodes: [],
         links: []
       }
-      if (this.socket) {
-        this.socket.close()
-      }
-      if (this.mybell) {
-        this.mybell.close()
+      if (this.myBell) {
+        this.myBell.close()
       }
     },
     onNodeDrag (node) {
@@ -376,7 +373,8 @@ export default {
     async onReload () {
       await this.initMyProfile()
       this.mainArea = 'loading'
-      this.socket.notifyGraphChange()
+      await this.downloadGraph()
+      // this.myBell.notifyGraphChange()
     },
     async downloadGraph () {
       this.mainArea = 'loading'
@@ -399,9 +397,11 @@ export default {
 
       let userIDs = graphData.nodes.filter(e => e.value && e.value.userID).map(e => e.value.userID)
       let profiles = await Profile.getProfileByUserIDList({ list: userIDs })
+
       // profiles = profiles.filter(e => e.type === 'user')
-      console.log(userIDs, profiles)
+      // console.log(userIDs, profiles)
       // console.log(profiles, userIDs)
+
       graphData.nodes
         .filter(e => e.type === 'user' || e.type === 'traverse')
         .filter(e => e.value && e.value.userID)
@@ -426,36 +426,19 @@ export default {
       this.$refs['edge-node'].$emit('badge', node)
     },
     async makeSocket () {
-      let socket = this.socket = new LambdaClient({
+      let myBell = this.myBell = new LambdaClient({
         url: getWS(),
-        roomID: this.queryUserID,
-        nickname: Auth.currentProfile.user.username + '@' + getID()
-      })
-
-      let mybell = this.mybell = new LambdaClient({
-        url: getWS(),
+        token: Auth.currentProfile.jwt,
         roomID: Auth.currentProfile.user.userID,
         nickname: Auth.currentProfile.user.username + '@' + getID()
       })
 
-      // socket.on('text', (data) => {
-      //   let html = `<pre>${data.type} - ${JSON.stringify(data)}</pre>`
-      //   console.log(html)
-      // })
-
-      // socket.sendText({ text: '1231232' })
-
-      // socket.on('online', (data) => {
-      //   let html = `<pre>me: ${socket.nickname} - ${JSON.stringify(data)}</pre>`
-      //   console.log(html)
-      // })
-
-      mybell.on('channel-update', (data) => {
-        this.$root.$emit('channel-update', data)
+      myBell.on('channel-update', (wsevent) => {
+        this.$root.$emit('channel-update', wsevent.data)
       })
 
-      socket.on('ws-graph-change', async (data) => {
-        console.log('reload received')
+      myBell.on('ws-graph-change', async (data) => {
+        // console.log('reload received')
         await this.downloadGraph()
       })
     },

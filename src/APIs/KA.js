@@ -148,6 +148,8 @@ export class LambdaClient extends EventEmitter {
 
       try {
         let detail = JSON.parse(evt.data)
+        // console.log(detail)
+
         this.emit(detail.type, detail)
       } catch (e) {
         console.log(e)
@@ -231,6 +233,19 @@ export class LambdaClient extends EventEmitter {
     })
   }
 
+  $on (event, handler) {
+    this.on(event, handler)
+  }
+
+  $emit (event, data) {
+    this.ensureSend({
+      token: this.token,
+      roomID: this.roomID,
+      ...data,
+      type: event
+    })
+  }
+
   sendText ({ text }) {
     this.ensureSend({
       type: 'ws-msg-room',
@@ -241,12 +256,12 @@ export class LambdaClient extends EventEmitter {
     })
   }
 
-  notifyGraphChange () {
-    this.ensureSend({
-      type: 'ws-graph-change',
-      roomID: this.roomID
-    })
-  }
+  // notifyGraphChange () {
+  //   this.ensureSend({
+  //     type: 'ws-graph-change',
+  //     roomID: this.roomID
+  //   })
+  // }
 }
 
 export var Store = {

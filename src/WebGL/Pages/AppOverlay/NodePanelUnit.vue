@@ -6,8 +6,8 @@
         <div v-if="node.type === 'traverse'" :class="{ 'bg-blue-200': tab === 'traverse' }" @click="tab = 'traverse'" class="shadow-sm inline-block px-3 py-2 border border-gray-500 mb-2 mr-2 bg-white rounded-lg ">Profile</div>
         <div v-if="node.type === 'user'" :class="{ 'bg-blue-200': tab === 'user' }" @click="tab = 'user'" class="shadow-sm inline-block px-3 py-2 border border-gray-500 mb-2 mr-2 bg-white rounded-lg ">Profile</div>
         <!-- General -->
-        <div :class="{ 'bg-blue-200': tab === 'addon' }" @click="tab = 'addon'" class="shadow-sm inline-block px-3 py-2 border border-gray-500 mb-2 mr-2 bg-white rounded-lg ">Add Friends</div>
-        <div :class="{ 'bg-blue-200': tab === 'edit' }" @click="tab = 'edit'" class="shadow-sm inline-block px-3 py-2 border border-gray-500 mb-2 mr-2  bg-white rounded-lg ">More...</div>
+        <div :class="{ 'bg-blue-200': tab === 'addon' }" @click="tab = 'addon'" class="shadow-sm inline-block px-3 py-2 border border-gray-500 mb-2 mr-2 bg-white rounded-lg ">Friends</div>
+        <div :class="{ 'bg-blue-200': tab === 'edit' }" @click="tab = 'edit'" class="shadow-sm inline-block px-3 py-2 border border-gray-500 mb-2 mr-2  bg-white rounded-lg ">Relationships</div>
       </div>
 
       <div v-if="tab === 'user'" :key="node._id" >
