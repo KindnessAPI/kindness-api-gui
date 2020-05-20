@@ -3,7 +3,7 @@
     <GEImageManager v-if="accessor" :close="true" @close="accessor = false" :pick="true" @pick="onPick"></GEImageManager>
     <div v-else class="mx-auto max-w-md pb-2">
       <div class="mb-3 text-xl">
-        Profile and Settings
+        Profile settings
       </div>
       <div v-if="profile">
         <div class="mb-3 border-l border-black hover:border-green-400 pl-3">

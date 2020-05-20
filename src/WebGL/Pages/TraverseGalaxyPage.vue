@@ -23,7 +23,7 @@
             <br/>
             Please wait... ⏱
           </div>
-        </div>-
+        </div>
         <StarFlowScene slot="o3d">
         </StarFlowScene>
       </ScissorArea> -->
@@ -316,13 +316,13 @@ export default {
         event: 'view'
       })
 
-      this.btns.push({
-        place: 'tr',
-        type: 'mail',
-        badge: 1,
-        text: `📨`,
-        event: 'mail'
-      })
+      // this.btns.push({
+      //   place: 'tr',
+      //   type: 'mail',
+      //   badge: 1,
+      //   text: `📨`,
+      //   event: 'mail'
+      // })
     },
     onReset () {
       this.btns = []
@@ -367,16 +367,16 @@ export default {
       // } else {
       //   this.overlay = 'node-panel'
       // }
+
       this.currentNode = node
       this.overlay = 'node-panel'
     },
     async onReload () {
-      await this.initMyProfile()
       this.mainArea = 'loading'
-      await this.downloadGraph()
-      // this.myBell.notifyGraphChange()
+      await this.prepareProfile()
+      await this.prepareGraph()
     },
-    async downloadGraph () {
+    async prepareGraph () {
       this.mainArea = 'loading'
       let graphData = await Graph.getUserGraph({ userID: this.queryUserID })
       let needToReload = false
@@ -398,10 +398,7 @@ export default {
       let userIDs = graphData.nodes.filter(e => e.value && e.value.userID).map(e => e.value.userID)
       let profiles = await Profile.getProfileByUserIDList({ list: userIDs })
 
-      // profiles = profiles.filter(e => e.type === 'user')
-      // console.log(userIDs, profiles)
-      // console.log(profiles, userIDs)
-
+      // assign profile pics to nodes
       graphData.nodes
         .filter(e => e.type === 'user' || e.type === 'traverse')
         .filter(e => e.value && e.value.userID)
@@ -425,7 +422,7 @@ export default {
       node.badge = node.badge || 0
       this.$refs['edge-node'].$emit('badge', node)
     },
-    async makeSocket () {
+    async makeMySocket () {
       let myBell = this.myBell = new LambdaClient({
         url: getWS(),
         token: Auth.currentProfile.jwt,
@@ -433,41 +430,25 @@ export default {
         nickname: Auth.currentProfile.user.username + '@' + getID()
       })
 
-      myBell.on('channel-update', (wsevent) => {
-        this.$root.$emit('channel-update', wsevent.data)
+      myBell.on('channel-update', (event) => {
+        this.$root.$emit('channel-update', event.data)
       })
 
-      myBell.on('ws-graph-change', async (data) => {
-        // console.log('reload received')
-        await this.downloadGraph()
-      })
+      // myBell.on('update-user-badge', (event) => {
+      //   let { userID, badge } = event.data
+      //   this.updateBadgeByUserID({ userID, badge })
+      // })
     },
-    async initMyProfile () {
-      try {
-        this.myNode = await Graph.provideMyNode()
-        let me = Auth.currentProfile.user
-        let profile = await Profile.getProfileByUserID({ userID: this.queryUserID })
-        if (!profile && me.userID === this.queryUserID) {
-          let photo = false
-          if (this.myNode && this.myNode.img) {
-            photo = this.myNode.img
-          }
-          profile = await Profile.createProfile({ userID: me.userID, username: me.username, photo })
-        } else {
-        }
-        this.profile = profile
-      } catch (e) {
-        console.log(e)
-      }
+    async prepareProfile () {
+      this.profile = await Profile.provideProfile({ userID: this.queryUserID })
+      await Graph.provideUserNode({ userID: this.queryUserID })
     },
     async onInit () {
       this.mainArea = 'loading'
       this.onReset()
-      await Promise.all([
-        this.makeSocket()
-      ])
-      await this.initMyProfile()
-      await this.downloadGraph()
+      this.makeMySocket()
+      await this.prepareProfile()
+      await this.prepareGraph()
       this.onSetupBtns()
       this.mainArea = 'traverse'
     }

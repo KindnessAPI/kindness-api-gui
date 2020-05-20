@@ -121,6 +121,19 @@ export class LambdaClient extends EventEmitter {
     this.open()
   }
 
+  $on (event, handler) {
+    this.on(event, handler)
+  }
+
+  $emit (event, data) {
+    this.ensureSend({
+      token: this.token,
+      roomID: this.roomID,
+      ...data,
+      type: event
+    })
+  }
+
   get ready () {
     return this.ws.readyState === WebSocket.OPEN
   }
@@ -233,19 +246,6 @@ export class LambdaClient extends EventEmitter {
     })
   }
 
-  $on (event, handler) {
-    this.on(event, handler)
-  }
-
-  $emit (event, data) {
-    this.ensureSend({
-      token: this.token,
-      roomID: this.roomID,
-      ...data,
-      type: event
-    })
-  }
-
   sendText ({ text }) {
     this.ensureSend({
       type: 'ws-msg-room',
@@ -255,13 +255,6 @@ export class LambdaClient extends EventEmitter {
       token: this.token
     })
   }
-
-  // notifyGraphChange () {
-  //   this.ensureSend({
-  //     type: 'ws-graph-change',
-  //     roomID: this.roomID
-  //   })
-  // }
 }
 
 export var Store = {
@@ -420,7 +413,8 @@ export class Profile {
             {
               username: { $regex: query, $options: 'i' }
             }
-          ]
+          ],
+          limit: 50
         }
       }
     })
@@ -496,6 +490,52 @@ export class Profile {
     })
   }
 
+  static async provideProfile ({ userID }) {
+    // photo = photo || `https://picsum.photos/id/${(Math.random() * 1200).toFixed(0)}/256/256`
+
+    // let axios = (await import('axios')).default
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-profile',
+      headers: getHeader(),
+      data: {
+        method: 'provide',
+        payload: {
+          userID
+          // get: {
+          //   userID
+          // },
+          // create: {
+          //   type: 'user',
+          //   userID,
+          //   username,
+
+          //   displayName: username,
+          //   bio: '',
+
+          //   instagramURL: '',
+          //   youtubeURL: '',
+          //   twitterURL: '',
+
+          //   displayShip: true,
+
+          //   photoImg: photo,
+          //   bgImg: '',
+          //   loadingImg: '',
+
+          //   tags: [{ text: 'first-profile' }]
+          // }
+        }
+      }
+    })
+    return resp.then((r) => {
+      return r.data
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+
   static async createProfile ({ userID, username, photo }) {
     photo = photo || `https://picsum.photos/id/${(Math.random() * 1200).toFixed(0)}/256/256`
 
@@ -535,6 +575,7 @@ export class Profile {
       return Promise.reject(err)
     })
   }
+
   static async updateProfile ({ edit }) {
     // let axios = (await import('axios')).default
     let resp = axios({
@@ -888,9 +929,7 @@ export class Graph {
     })
   }
 
-  static async provideMyNode () {
-    let photo = `https://picsum.photos/id/${(Math.random() * 1200).toFixed(0)}/500/500`
-
+  static async provideUserNode ({ userID }) {
     // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
@@ -900,25 +939,7 @@ export class Graph {
       data: {
         method: 'provide',
         payload: {
-          get: {
-            type: 'user',
-            userID: Auth.currentProfile.user.userID
-          },
-          create: {
-            img: photo,
-            type: 'user',
-
-            tags: [
-              {
-                text: 'early-bird'
-              }
-            ],
-            name: Auth.currentProfile.user.username,
-            value: {
-              username: Auth.currentProfile.user.username,
-              userID: Auth.currentProfile.user.userID
-            }
-          }
+          userID
         }
       }
     })

@@ -15,7 +15,7 @@
       {{ profile.displayName }} <img v-if="profile.verified" class="w-5 h-5 ml-1" src="../img/verified.svg">
     </div>
     <div v-if="profile.displayName" class="w-full text-sm text-gray-600 mb-3 flex justify-center items-center">
-      @{{ node.value.username }}
+      <span>@{{ node.value.username }} </span>
     </div>
 
     <div class="w-full flex justify-center">
@@ -57,6 +57,7 @@ import { Profile } from '../../../../APIs/KA.js'
 
 export default {
   props: {
+    isMe: {},
     node: {}
   },
   data () {

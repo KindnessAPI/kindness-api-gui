@@ -66,7 +66,7 @@ export default {
       this.selectedItems = this.items.filter(e => e.selected)
     },
     async load () {
-      let data = await Profile.getProfilesByQuery({ query: this.query })
+      let data = await Profile.getProfilesByQuery({ query: this.query || '_____' })
       this.items = data.map(e => {
         return {
           username: e.username,

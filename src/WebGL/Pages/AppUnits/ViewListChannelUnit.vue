@@ -51,13 +51,14 @@ export default {
     this.$root.$on('channel-update', (event) => {
       let updatedChannel = event
       if (!this.channels) {
+        this.getChannels()
         return
       }
       let idx = this.channels.findIndex(e => e._id === updatedChannel._id)
       if (idx !== -1) {
         this.channels[idx] = JSON.parse(JSON.stringify(updatedChannel))
       } else {
-        this.channels.push(updatedChannel)
+        this.getChannels()
       }
       this.channels = [
         ...this.channels
