@@ -3,7 +3,7 @@
 
     <div :style="{
       backgroundImage: `url(${profile.bgImg})`
-    }" class="m-2 mt-0 p-2 rounded-lg bg-cover bg-center max-w-md mx-auto py-12">
+    }" class="m-2 mt-0 p-2 rounded-lg bg-gray-300 bg-cover bg-center max-w-md mx-auto py-12">
       <div class="w-full mb-3 flex justify-center">
         <div class="w-24 h-24">
           <img :src="profile.photoImg" class="w-24 h-24 object-center object-cover rounded-full border-2 shadow-xl border-white" alt="">
