@@ -380,18 +380,18 @@ export default {
       this.mainArea = 'loading'
       let graphData = await Graph.getUserGraph({ userID: this.queryUserID })
       let needToReload = false
-      let list = []
+      let brokenEdgeIDs = []
       for (let link of graphData.links) {
         if ((!graphData.nodes.some(n => n._id === link.source) || !graphData.nodes.some(n => n._id === link.target))) {
           // await Graph.removeEdgeByID({ edgeID: link._id })
-          list.push(link._id)
+          brokenEdgeIDs.push(link._id)
           // graphData.links.splice(graphData.links.findIndex(lnk => lnk._id === link._id), 1)
-          console.log('broken edge found')
+          console.log('Broken edge found')
           needToReload = true
         }
       }
       if (needToReload) {
-        await Graph.removeEdgesByIDList({ list })
+        await Graph.removeEdgesByIDList({ list: brokenEdgeIDs })
         graphData = await Graph.getUserGraph({ userID: this.queryUserID })
       }
 
