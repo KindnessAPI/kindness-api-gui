@@ -36,8 +36,9 @@
 </template>
 
 <script>
-// import _ from 'lodash'
 import { Graph } from '../../../../APIs/KA.js'
+// import _ from 'lodash'
+
 export default {
   props: {
     node: {},
