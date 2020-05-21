@@ -632,6 +632,7 @@ export class Graph {
       return Promise.reject(err)
     })
   }
+
   static async linkFriendTraverseNode ({ fromID, toID, fromPerson, toPerson }) {
     // let axios = (await import('axios')).default
     let resp = axios({

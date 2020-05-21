@@ -1,35 +1,41 @@
 <template>
   <div class="overlay">
-    <div v-if="editable" class="p-3 h-full w-full scrolling-touch relative max-w-lg mx-auto">
-
-      <div class="flex flex-wrap justify-center mb-1">
-        <div :class="{ 'bg-blue-200': tab === 'profile' }" @click="tab = 'profile'" class="shadow-sm inline-block px-3 py-2 border border-gray-500 mb-2 mr-2 bg-white rounded-lg ">Profile</div>
-        <!-- <div v-if="isMe" :class="{ 'bg-blue-200': tab === 'settings' }" @click="tab = 'settings'" class="shadow-sm inline-block px-3 py-2 border border-gray-500 mb-2 mr-2 bg-white rounded-lg ">Settings</div> -->
-        <!-- <div :class="{ 'bg-blue-200': tab === 'addon' }" @click="tab = 'addon'" class="shadow-sm inline-block px-3 py-2 border border-gray-500 mb-2 mr-2 bg-white rounded-lg ">Friendship</div> -->
-        <div :class="{ 'bg-blue-200': tab === 'friendship' }" @click="tab = 'friendship'" class="shadow-sm inline-block px-3 py-2 border border-gray-500 mb-2 mr-2  bg-white rounded-lg ">Friendship</div>
+    <div v-if="editable" class="h-full w-full relative">
+      <div class="flex flex-wrap justify-start px-3 pt-3 bg-yellow-400">
+        <div :class="{ 'border-yellow-700 bg-yellow-200 text-yellow-800': tab === 'profile' }" @click="tab = 'profile'" class="shadow-sm inline-block px-3 py-2 border border-gray-500 mb-2 mr-2 bg-white rounded-lg ">Profile</div>
+        <!-- <div v-if="tab === 'settings'" :class="{ 'border-yellow-700 bg-yellow-200 text-yellow-800': tab === 'settings' }" @click="tab = 'profile'" class="shadow-sm inline-block px-3 py-2 border border-gray-500 mb-2 mr-2 bg-white rounded-lg ">Settings</div> -->
+        <div :class="{ 'border-yellow-700 bg-yellow-200 text-yellow-800': tab === 'friendship' }" @click="tab = 'friendship'" class="shadow-sm inline-block px-3 py-2 border border-gray-500 mb-2 mr-2  bg-white rounded-lg ">Friendship</div>
       </div>
-
-      <div v-if="tab === 'profile'" :key="node._id" >
-        <NEProfileArea :isMe="isMe" :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEProfileArea>
-        <NENodeTraverseAction :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NENodeTraverseAction>
-        <div class=" text-center">
-          <ReButton v-if="isMe" :color="'blue'" @click="tab = 'settings'">Edit My Profile</ReButton>
+      <div class="p-3 content-height overflow-scroll scrolling-touch ">
+        <div v-if="tab === 'profile'" :key="node._id" >
+          <NEProfileArea :isMe="isMe" :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEProfileArea>
+          <!-- <div class=" text-center">
+            <ReButton v-if="isMe" :color="'blue'" @click="tab = 'settings'">Edit My Profile</ReButton>
+          </div> -->
+          <div class="mt-3 flex justify-start items-center flex-wrap">
+            <NEIcon v-if="isMe" :color="'teal'" :img="require('./img/profile-teal.svg')" @click="tab = 'settings'" label="Edit My Profile"></NEIcon>
+            <NENodeTraverseAction :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NENodeTraverseAction>
+            <NEPrayerRoom></NEPrayerRoom>
+          </div>
+        </div>
+        <div v-if="tab === 'settings'" :key="node._id" >
+          <NEProfileEdit :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEProfileEdit>
+        </div>
+        <div v-if="tab === 'friendship'">
+          <!-- <NENodeEdit v-if="!(node.type === 'user' || node.type === 'traverse')" :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NENodeEdit> -->
+          <NEAddFriend :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEAddFriend>
+          <NEManageGraph :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEManageGraph>
+          <NERemoveNode :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NERemoveNode>
         </div>
       </div>
-      <div v-if="tab === 'settings'" :key="node._id" >
-        <NEProfileEdit :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEProfileEdit>
-      </div>
-      <div v-if="tab === 'friendship'">
-        <!-- <NENodeEdit v-if="!(node.type === 'user' || node.type === 'traverse')" :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NENodeEdit> -->
-        <NEAddFriend :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEAddFriend>
-        <NEManageGraph :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEManageGraph>
-        <NERemoveNode :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NERemoveNode>
-      </div>
     </div>
-    <div v-else class="h-full w-full scrolling-touch">
+    <div v-else class="h-full w-full">
       <div class="p-3">
         <NEProfileArea :isMe="isMe" :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEProfileArea>
-        <NENodeTraverseAction :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NENodeTraverseAction>
+        <div class="mt-3 flex justify-start items-center flex-wrap">
+          <NENodeTraverseAction :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NENodeTraverseAction>
+          <NEPrayerRoom></NEPrayerRoom>
+        </div>
       </div>
     </div>
 
@@ -71,5 +77,8 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+.content-height{
+  height: calc(100% - 62px);
+}
 </style>

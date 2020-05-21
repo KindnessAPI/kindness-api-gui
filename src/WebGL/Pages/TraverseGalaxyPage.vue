@@ -106,6 +106,7 @@
       @node-drag="onNodeDrag"
       :graph="graph"
       @mail="onMail"
+      @notify="onNotify"
       :run="overlay === false"
       ref="edge-node"
       >
@@ -158,7 +159,7 @@
         <NodePanelUnit
           @close="overlay = false"
           @reload="onReload"
-          :editable="isOnMyPage"
+          :editable="isMe"
           :node="currentNode"
           :graph="graph"
           :userID="queryUserID"
@@ -173,13 +174,29 @@
             :key="me.userID"
             @close="overlay = false"
             @reload="onReload"
-            :editable="isOnMyPage"
+            :editable="isMe"
             :graph="graph"
 
             :userID="me.userID"
             :username="me.username"
             v-if="overlay === 'messenger'"
           ></MessengerUnit>
+        <!-- </keep-alive> -->
+      </transition>
+
+      <transition name="flyin">
+        <!-- <keep-alive> -->
+          <NotificationUnit
+            :key="me.userID"
+            @close="overlay = false"
+            @reload="onReload"
+            :isMe="isMe"
+            :graph="graph"
+
+            :userID="me.userID"
+            :username="me.username"
+            v-if="overlay === 'notify'"
+          ></NotificationUnit>
         <!-- </keep-alive> -->
       </transition>
 
@@ -286,11 +303,14 @@ export default {
     queryUsername () {
       return this.$route.params.username
     },
-    isOnMyPage () {
+    isMe () {
       return Auth.currentProfile.user.userID === this.queryUserID
     }
   },
   methods: {
+    onNotify () {
+      this.overlay = 'notify'
+    },
     onMail () {
       this.overlay = 'messenger'
     },
@@ -304,9 +324,10 @@ export default {
     },
     onSetupBtns () {
       this.btns = []
-      if (!this.isOnMyPage) {
+      if (!this.isMe) {
         this.btns.push({
-          text: `🏠`,
+          place: 'tr',
+          text: `🏡`,
           event: 'home'
         })
       }
@@ -314,6 +335,12 @@ export default {
       this.btns.push({
         text: `@${this.queryUsername}`,
         event: 'view'
+      })
+
+      this.btns.push({
+        place: 'tr',
+        text: `🔔`,
+        event: 'notify'
       })
 
       // this.btns.push({
@@ -386,7 +413,7 @@ export default {
           // await Graph.removeEdgeByID({ edgeID: link._id })
           brokenEdgeIDs.push(link._id)
           // graphData.links.splice(graphData.links.findIndex(lnk => lnk._id === link._id), 1)
-          console.log('Broken edge found')
+          console.log('Broken Edge Found')
           needToReload = true
         }
       }
@@ -553,6 +580,11 @@ export default {
   box-shadow: 0px 0px 30px 0px rgba(255, 255, 255, 0.6);
 }
 
+.scroll-area{
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .overlay {
   position: absolute;
   top: 10px;
@@ -563,8 +595,7 @@ export default {
   background-color: rgba(255, 255, 255, 0.95);
   box-shadow: 0px 0px 30px 0px rgba(255, 255, 255, 0.6);
   border-radius: 15px;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
+  overflow: hidden;
 
   transform: perspective(100vmax) translateZ(2px);
   /* transform: perspective(100vmax) translateZ(1px); */
@@ -580,8 +611,6 @@ export default {
   background-color: rgba(255, 255, 255, 0.95);
   box-shadow: 0px 0px 30px 0px rgba(255, 255, 255, 0.6);
   border-radius: 15px;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
   transform: perspective(100vmax) translateZ(2px);
   overflow: hidden;
 }
@@ -592,11 +621,10 @@ export default {
     top: 80px;
     left: calc(50% - 28rem * 0.5);
     @apply max-w-md;
-    bottom: inherit;
-    height: auto;
-    max-height: calc(100% - 80px - 20px);
+    bottom: 10px;
+    height: calc(95% - 80px - 20px);
+    max-height: calc(800px);
     min-height: 250px;
-    transition: height 1.5s;
   }
   .overlay-full{
     top: 80px;

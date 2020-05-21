@@ -1,8 +1,7 @@
 
 <template>
-  <div v-if="node && node.type === 'traverse' && !isMyself">
-    <div class="mb-3 text-center">
-      <ReButton
+  <div class="inline-block" v-if="node && node.type === 'traverse' && !isMyself">
+      <!-- <ReButton
         :color="'teal'"
         :disabled="isMyself"
         :class="{ 'opacity-50': isMyself }"
@@ -10,8 +9,8 @@
       >
         <span>Visit Star Map ✨ </span>
         <span>@{{ node.value.username }}</span>
-      </ReButton>
-    </div>
+      </ReButton> -->
+    <NEIcon :color="'yellow'" @click="onGo" :img="require('../img/star-yellow.svg')" label="Visit StarMap"></NEIcon>
   </div>
 </template>
 
