@@ -4,25 +4,26 @@
 
       <div class="flex flex-wrap justify-center mb-1">
         <div :class="{ 'bg-blue-200': tab === 'profile' }" @click="tab = 'profile'" class="shadow-sm inline-block px-3 py-2 border border-gray-500 mb-2 mr-2 bg-white rounded-lg ">Profile</div>
-        <div v-if="isMe" :class="{ 'bg-blue-200': tab === 'settings' }" @click="tab = 'settings'" class="shadow-sm inline-block px-3 py-2 border border-gray-500 mb-2 mr-2 bg-white rounded-lg ">Settings</div>
+        <!-- <div v-if="isMe" :class="{ 'bg-blue-200': tab === 'settings' }" @click="tab = 'settings'" class="shadow-sm inline-block px-3 py-2 border border-gray-500 mb-2 mr-2 bg-white rounded-lg ">Settings</div> -->
         <!-- General -->
-        <div :class="{ 'bg-blue-200': tab === 'addon' }" @click="tab = 'addon'" class="shadow-sm inline-block px-3 py-2 border border-gray-500 mb-2 mr-2 bg-white rounded-lg ">Friends</div>
-        <div :class="{ 'bg-blue-200': tab === 'edit' }" @click="tab = 'edit'" class="shadow-sm inline-block px-3 py-2 border border-gray-500 mb-2 mr-2  bg-white rounded-lg ">Relationships</div>
+        <!-- <div :class="{ 'bg-blue-200': tab === 'addon' }" @click="tab = 'addon'" class="shadow-sm inline-block px-3 py-2 border border-gray-500 mb-2 mr-2 bg-white rounded-lg ">Friendship</div> -->
+        <div :class="{ 'bg-blue-200': tab === 'friendship' }" @click="tab = 'friendship'" class="shadow-sm inline-block px-3 py-2 border border-gray-500 mb-2 mr-2  bg-white rounded-lg ">Friendship</div>
       </div>
 
       <div v-if="tab === 'profile'" :key="node._id" >
         <NEProfileArea :isMe="isMe" :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEProfileArea>
         <NENodeTraverseAction :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NENodeTraverseAction>
+        <div class=" text-center">
+          <ReButton v-if="isMe" :color="'blue'" @click="tab = 'settings'">Edit My Profile</ReButton>
+        </div>
       </div>
       <div v-if="tab === 'settings'" :key="node._id" >
         <NEProfileEdit :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEProfileEdit>
       </div>
-      <div v-if="tab === 'addon'">
-        <NEAddFriend :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEAddFriend>
-      </div>
-      <div v-if="tab === 'edit'">
+      <div v-if="tab === 'friendship'">
         <!-- <NENodeEdit v-if="!(node.type === 'user' || node.type === 'traverse')" :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NENodeEdit> -->
         <NEManageGraph :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEManageGraph>
+        <NEAddFriend :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEAddFriend>
         <NERemoveNode :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NERemoveNode>
       </div>
     </div>

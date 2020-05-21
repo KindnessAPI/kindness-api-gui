@@ -1,26 +1,23 @@
 
 <template>
   <div v-if="node">
-    <div class="mb- text-xl">
-      Relationship
+    <div class="mb-3">
+      <span class="text-xl">Relationship</span>
+      <span class="text-sm">
+        of
+        <span class="font-bold" v-if="node && node.value"> @{{ node.value.username }}</span>
+        with others.
+      </span>
     </div>
     <div>
       <table>
-        <!-- <tr>
-          <th>
-            Nodes
-          </th>
-          <th>
-            Action
-          </th>
-        </tr> -->
         <tr :key="enode._id" v-for="enode in graph.nodes">
           <td class="pr-3 pb-3">
             <div>
               {{ enode.name }}
             </div>
             <div class="text-gray-500 text-sm">
-              {{ getType(enode.type) }}
+              {{ getProfileType(enode.type) }}
             </div>
           </td>
           <td class="pr-3 pb-3">
@@ -34,7 +31,6 @@
           </td>
         </tr>
       </table>
-
     </div>
   </div>
 </template>
@@ -59,10 +55,10 @@ export default {
   mounted () {
   },
   methods: {
-    getType (node) {
-      if (node === 'traverse') {
+    getProfileType (typeName) {
+      if (typeName === 'traverse') {
         return `Friend's Profile`
-      } else if (node === 'user') {
+      } else if (typeName === 'user') {
         return 'Your Profile'
       }
     },

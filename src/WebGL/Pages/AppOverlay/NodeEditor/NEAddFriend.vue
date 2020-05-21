@@ -3,7 +3,7 @@
   <div>
     <div class="mb-3">
       <div class="text-lg">
-        Search and Add Friends <span v-if="search.loading">⏱</span>
+        Add Friends <span v-if="search.loading">⏱</span>
       </div>
       <div>
         <input type="text" placeholder="Username" v-model="search.query" @input="onTrySearch" class="rounded-none bg-transparent px-0 py-2 mb-3 border-b border-black inline-block">

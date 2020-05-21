@@ -45,7 +45,7 @@ export default {
       this.loading = true
       let src = await Graph.queryEdgesSourceNode({ nodeID: node._id })
       let target = await Graph.queryEdgesTargetNode({ nodeID: node._id })
-      await Graph.removeEdgeByList({ list: [...src, ...target] })
+      await Graph.removeEdgeByList({ list: [...src, ...target].map(e => e._id) })
       await Graph.removeNodeByID({ nodeID: node._id })
 
       this.loading = false
