@@ -235,6 +235,7 @@ export default {
         earth: require('./AppUnits/hdri/astronomy-atmosphere-earth-exploration-220201.jpg'),
         galaxy: require('./AppUnits/hdri/sky-space-dark-galaxy-2150.jpg')
       },
+      bellButton: false,
       myNode: false,
       allReady: false,
       profile: false,
@@ -242,7 +243,6 @@ export default {
       currentNode: false,
       mainArea: 'loading',
       btns: [],
-      myBell: false,
       escFncs: [],
       username: false,
       userID: false,
@@ -337,11 +337,12 @@ export default {
         event: 'view'
       })
 
-      this.btns.push({
+      this.bellButton = {
         place: 'tr',
         text: `🔔`,
         event: 'notify'
-      })
+      }
+      this.btns.push(this.bellButton)
 
       // this.btns.push({
       //   place: 'tr',
@@ -357,9 +358,7 @@ export default {
         nodes: [],
         links: []
       }
-      if (this.myBell) {
-        this.myBell.close()
-      }
+      this.$emit('onReset')
     },
     onNodeDrag (node) {
       this.currentNode = node
@@ -450,7 +449,7 @@ export default {
       this.$refs['edge-node'].$emit('badge', node)
     },
     async makeMySocket () {
-      let myBell = this.myBell = new LambdaClient({
+      let myBell = new LambdaClient({
         url: getWS(),
         token: Auth.currentProfile.jwt,
         roomID: Auth.currentProfile.user.userID,
@@ -459,6 +458,10 @@ export default {
 
       myBell.on('channel-update', (event) => {
         this.$root.$emit('channel-update', event.data)
+      })
+
+      this.$on('onReset', () => {
+        myBell.close()
       })
 
       // myBell.on('update-user-badge', (event) => {

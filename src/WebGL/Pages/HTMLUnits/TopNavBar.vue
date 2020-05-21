@@ -22,8 +22,8 @@
             <router-link v-if="Auth.isLoggedIn" class="cursor-pointer text-xl text-black my-2 mr-3" :to="`/profile/${Auth.currentProfile.user.username}/${Auth.currentProfile.user.userID}`">@{{ Auth.currentProfile.user.username }}</router-link>
           </div>
 
-          <router-link to="/galaxy" class="ml-3 mr-3" v-if="$route.path.indexOf('/profile') === -1">
-            <span class="inline-block md:hidden py-2 text-2xl">✨</span>
+          <router-link to="/galaxy" class="inline-flex md:hidden ml-3 mr-3" v-if="$route.path.indexOf('/profile') === -1">
+            <span class="inline-block md:hidden py-2 text-2xl">😎</span>
           </router-link>
 
           <img @click="$emit('menu')" style="min-width:24px;" class="mr-3 cursor-pointer" src="../icon/menu.svg" alt="">

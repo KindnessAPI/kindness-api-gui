@@ -6,7 +6,7 @@
         <!-- <div v-if="tab === 'settings'" :class="{ 'border-yellow-700 bg-yellow-200 text-yellow-800': tab === 'settings' }" @click="tab = 'profile'" class="shadow-sm inline-block px-3 py-2 border border-gray-500 mb-2 mr-2 bg-white rounded-lg ">Settings</div> -->
         <div :class="{ 'border-yellow-700 bg-yellow-200 text-yellow-800': tab === 'friendship' }" @click="tab = 'friendship'" class="shadow-sm inline-block px-3 py-2 border border-gray-500 mb-2 mr-2  bg-white rounded-lg ">Friendship</div>
       </div>
-      <div class="p-3 content-height overflow-scroll scrolling-touch ">
+      <div class="p-3 content-height overflow-y-scroll overflow-x-hidden scrolling-touch  ">
         <div v-if="tab === 'profile'" :key="node._id" >
           <NEProfileArea :isMe="isMe" :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEProfileArea>
           <!-- <div class=" text-center">

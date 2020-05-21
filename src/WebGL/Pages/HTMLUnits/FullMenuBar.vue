@@ -10,24 +10,24 @@
             <img @click="$emit('close')" src="../icon/close.svg" alt="">
           </div>
         </div>
-        <div class="mx-auto px-3 mt-3">
-          <div class="mb-3 px-3 text-black text-xl" v-if="Auth.currentProfile">
-            Welcome back, @{{ Auth.currentProfile.user.username }}!
+        <div class="mx-auto px-2 mt-3">
+          <!-- <div class="mb-3 px-2 text-black text-xl" v-if="Auth.currentProfile">
+            Welcome back!
+          </div> -->
+          <div class="mb-3 px-2 text-black text-xl">
+            <router-link exact-active-class="underline" to="/">Welcome Page</router-link>
           </div>
-          <div class="mb-3 px-3 text-black text-xl">
-            <router-link exact-active-class="underline" to="/">Home Page</router-link>
+          <div class="mb-3 px-2 text-black text-xl" v-if="Auth.currentProfile">
+            <router-link exact-active-class="underline" to="/galaxy">My StarMap</router-link>
           </div>
-          <div class="mb-3 px-3 text-black text-xl" v-if="Auth.currentProfile">
-            <router-link exact-active-class="underline" to="/galaxy">Traverse the Galaxy</router-link>
+          <div class="mb-3 px-2 text-black text-xl" v-if="Auth.currentProfile">
+            <router-link exact-active-class="underline" to="/prayer-room">Prayer Room</router-link>
           </div>
-          <div class="mb-3 px-3 text-black text-xl" v-if="Auth.currentProfile">
-            <router-link exact-active-class="underline" to="/dashboard">Dashboard</router-link>
-          </div>
-          <div class="mb-3 px-3 text-black text-xl" v-if="!Auth.isLoggedIn">
+          <div class="mb-3 px-2 text-black text-xl" v-if="!Auth.isLoggedIn">
             <router-link exact-active-class="underline" class="block mb-3 hover:opacity-50" to="/login">Login</router-link>
             <router-link exact-active-class="underline" class="block mb-3 hover:opacity-50" to="/register">Register</router-link>
           </div>
-          <div class="mb-3 px-3 text-black text-xl" v-if="Auth.isLoggedIn">
+          <div class="mb-3 px-2 text-black text-xl" v-if="Auth.isLoggedIn">
             <router-link exact-active-class="underline" class="block mb-3 hover:opacity-50" to="/login">Add More Accounts</router-link>
             <router-link exact-active-class="underline" class="block mb-3 hover:opacity-50" to="/switch-profiles">Switch Accounts</router-link>
             <router-link exact-active-class="underline" class="block mb-3 hover:opacity-50" to="/logout">Logout</router-link>
