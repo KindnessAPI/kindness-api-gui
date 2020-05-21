@@ -26,7 +26,7 @@
             <span class="inline-block md:hidden py-2 text-2xl">✨</span>
           </router-link>
 
-          <img @click="$emit('menu')" style="min-width:24px;" class="mr-3" src="../icon/menu.svg" alt="">
+          <img @click="$emit('menu')" style="min-width:24px;" class="mr-3 cursor-pointer" src="../icon/menu.svg" alt="">
         </div>
       </div>
       <!-- <TopNavBar @open="openMenu = true" @close="openMenu = false" @menu="openMenu = !openMenu"></TopNavBar> -->

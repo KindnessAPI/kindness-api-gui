@@ -44,10 +44,12 @@ export default {
           isAdmin: false
         }
       })
+
       let andMore = ''
       if (participants.length >= 2) {
-        andMore = ' and ...'
+        andMore = ' and more'
       }
+
       let newChannel = await Channel.createChannel({
         userID: Auth.currentProfile.user.userID,
         username: Auth.currentProfile.user.username,
@@ -86,5 +88,4 @@ export default {
 </script>
 
 <style lang="postcss">
-
 </style>

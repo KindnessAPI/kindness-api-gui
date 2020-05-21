@@ -25,8 +25,8 @@
           </td>
           <td class="pr-3 pb-3">
             <div :key="enode._id" v-if="enode._id !== node._id">
-              <ReButton :key="'y' + enode._id + node._id" color="red" class="inline-block" @click="removeLink(node, enode)" v-if="(hasLink(node, enode) || hasLink(enode, node))">Unlink <span v-if="enode.loading">⏱</span></ReButton>
-              <ReButton :key="'n' + enode._id + node._id" color="green" class="inline-block" @click="addLink(node, enode)" v-if="!(hasLink(node, enode) || hasLink(enode, node))">Link <span v-if="enode.loading">⏱</span></ReButton>
+              <ReButton :key="'y' + enode._id + node._id" color="red" class="inline-block" @click="removeLink(node, enode)" v-if="(findLink(node, enode) || findLink(enode, node))">Unlink <span v-if="enode.loading">⏱</span></ReButton>
+              <ReButton :key="'n' + enode._id + node._id" color="green" class="inline-block" @click="addLink(node, enode)" v-if="!(findLink(node, enode) || findLink(enode, node))">Link <span v-if="enode.loading">⏱</span></ReButton>
             </div>
           </td>
         </tr>
@@ -63,7 +63,7 @@ export default {
         return 'Your Profile'
       }
     },
-    hasLink (fromNode, toNode) {
+    findLink (fromNode, toNode) {
       return this.graph.links.find(e => e.source._id === fromNode._id && e.target._id === toNode._id)
     },
     async addLink (fromNode, toNode) {
@@ -77,7 +77,7 @@ export default {
     async removeLink (fromNode, toNode) {
       toNode.loading = true
       this.$forceUpdate()
-      let link = this.hasLink(fromNode, toNode) || this.hasLink(toNode, fromNode)
+      let link = this.findLink(fromNode, toNode) || this.findLink(toNode, fromNode)
       await Graph.removeEdgeByID({ edgeID: link._id })
       toNode.loading = false
       this.$forceUpdate()

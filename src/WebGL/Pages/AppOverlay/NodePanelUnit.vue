@@ -5,7 +5,6 @@
       <div class="flex flex-wrap justify-center mb-1">
         <div :class="{ 'bg-blue-200': tab === 'profile' }" @click="tab = 'profile'" class="shadow-sm inline-block px-3 py-2 border border-gray-500 mb-2 mr-2 bg-white rounded-lg ">Profile</div>
         <!-- <div v-if="isMe" :class="{ 'bg-blue-200': tab === 'settings' }" @click="tab = 'settings'" class="shadow-sm inline-block px-3 py-2 border border-gray-500 mb-2 mr-2 bg-white rounded-lg ">Settings</div> -->
-        <!-- General -->
         <!-- <div :class="{ 'bg-blue-200': tab === 'addon' }" @click="tab = 'addon'" class="shadow-sm inline-block px-3 py-2 border border-gray-500 mb-2 mr-2 bg-white rounded-lg ">Friendship</div> -->
         <div :class="{ 'bg-blue-200': tab === 'friendship' }" @click="tab = 'friendship'" class="shadow-sm inline-block px-3 py-2 border border-gray-500 mb-2 mr-2  bg-white rounded-lg ">Friendship</div>
       </div>
@@ -22,8 +21,8 @@
       </div>
       <div v-if="tab === 'friendship'">
         <!-- <NENodeEdit v-if="!(node.type === 'user' || node.type === 'traverse')" :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NENodeEdit> -->
-        <NEManageGraph :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEManageGraph>
         <NEAddFriend :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEAddFriend>
+        <NEManageGraph :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEManageGraph>
         <NERemoveNode :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NERemoveNode>
       </div>
     </div>
@@ -32,11 +31,6 @@
         <NEProfileArea :isMe="isMe" :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEProfileArea>
         <NENodeTraverseAction :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NENodeTraverseAction>
       </div>
-      <!-- <div v-if="node.type === 'traverse'" class="p-3">
-      </div>
-      <div v-if="node.type === 'user'" class="p-3">
-        <NEProfileArea :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEProfileArea>
-      </div> -->
     </div>
 
     <!-- <div @click="$emit('close')" class="absolute top-0 right-0 pr-3 pt-3 z-20">
