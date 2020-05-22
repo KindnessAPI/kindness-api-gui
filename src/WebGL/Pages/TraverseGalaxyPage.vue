@@ -9,7 +9,8 @@
         <TopNavBar @menu="openMenu = !openMenu" ></TopNavBar>
       </div>
 
-      <!-- <ScissorArea
+      <!--
+      <ScissorArea
       class="webgl-bg"
       :key="'webgloading'"
       v-if="mainArea === 'loading'"
@@ -26,7 +27,8 @@
         </div>
         <StarFlowScene slot="o3d">
         </StarFlowScene>
-      </ScissorArea> -->
+      </ScissorArea>
+      -->
 
       <div :style="{
         backgroundImage: `url(${loadingBG}), url(${readyBG})`,

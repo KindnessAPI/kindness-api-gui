@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-minus-toolbar-full">
+  <div class="">
 
     <div class="h-full w-full flex flex-col lg:flex-row">
 
@@ -30,14 +30,14 @@
         -->
 
         <div class="px-3 max-w-xl mx-auto  py-24 lg:py-32 xl:py-64">
-          <div class="px-3 mb-3 text-3xl md:text-4xl font-bold">
+          <div class="px-3 mb-3 text-2xl md:text-3xl font-bold">
             Fostering International Friendship
           </div>
           <div class="px-3 mb-3">
             Explore people with StarMap
           </div>
           <div class="px-3 mb-3">
-            Friends of Friends of Friends...
+            People are meant to be with each other.
           </div>
           <div class="px-3 mb-3">
 
@@ -64,6 +64,6 @@ export default {
 }
 
 .h-minus-toolbar-full{
-  height: calc(100% - 60px);
+  min-height: calc(100% - 60px);
 }
 </style>

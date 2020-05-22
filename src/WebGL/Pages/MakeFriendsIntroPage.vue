@@ -5,6 +5,7 @@
     <div v-show="!openMenu" class="full">
       <TopNavBar @menu="openMenu = !openMenu"></TopNavBar>
       <MakeFriendsUnit v-if="Auth" :Auth="Auth"></MakeFriendsUnit>
+      <RegisterBanner></RegisterBanner>
     </div>
     <FullMenuBar v-show="openMenu" @close="openMenu = false"></FullMenuBar>
   </div>

@@ -237,6 +237,8 @@ export default {
           let name = imgs[id % (imgs.length - 2)]
           node.img = `/imgs/${name}`
           node.name = name.replace('.jpg', '')
+
+          node.badge = (Math.random() * 50).toFixed(0)
         })
 
         // cross-link node objects

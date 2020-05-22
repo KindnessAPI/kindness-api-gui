@@ -6,6 +6,7 @@
       <TopNavBar @menu="openMenu = !openMenu"></TopNavBar>
 
       <PrayerRoomUnit></PrayerRoomUnit>
+
     </div>
     <FullMenuBar v-show="openMenu" @close="openMenu = false"></FullMenuBar>
   </div>
