@@ -122,6 +122,10 @@
               <li class="pb-3">I saved a lot of cash for my dream projects. 😎</li>
             </ul>
           </div>
+
+          <div class="pb-3">
+            <ViewOthersUnit></ViewOthersUnit>
+          </div>
         </div>
 
       </div>

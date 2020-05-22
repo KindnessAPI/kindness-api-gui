@@ -29,6 +29,7 @@
 
 <script>
 import { Auth } from '../../../APIs/KA'
+
 export default {
   data () {
     return {

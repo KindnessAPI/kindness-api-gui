@@ -8,6 +8,7 @@
       <LokStoryUnit></LokStoryUnit>
 
       <RegisterBanner></RegisterBanner>
+
     </div>
     <FullMenuBar v-show="openMenu" @close="openMenu = false"></FullMenuBar>
   </div>

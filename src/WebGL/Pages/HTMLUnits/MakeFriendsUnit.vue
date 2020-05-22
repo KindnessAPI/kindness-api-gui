@@ -38,9 +38,7 @@
           <div class="px-3 mb-3">
             People are meant to be with each other, not inside a newsfeed.
           </div>
-          <div class="px-3 mb-3">
-
-          </div>
+          <ViewOthersUnit></ViewOthersUnit>
         </div>
       </div>
     </div>
@@ -57,11 +55,11 @@ export default {
 </script>
 
 <style lang="postcss">
-.bg-space{
+.bg-space {
   background-image: url('../../../WebGL/Pages/AppUnits/hdri/sky-space-milky-way-stars-110854.jpg');
   background-size: cover;
 }
-.h-minus-toolbar-full{
+.h-minus-toolbar-full {
   min-height: calc(100% - 60px);
 }
 </style>

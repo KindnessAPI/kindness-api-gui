@@ -30,6 +30,7 @@
           <div class="px-3 mb-3">
             Let's Spread the Gospel.
           </div>
+          <ViewOthersUnit></ViewOthersUnit>
 
         </div>
         <div class="h-24 lg:h-32 xl:h-64"></div>
