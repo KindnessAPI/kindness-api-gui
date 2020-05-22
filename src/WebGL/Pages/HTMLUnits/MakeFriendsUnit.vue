@@ -20,7 +20,6 @@
         <!--  -->
       </div>
       <div class="lg:w-1/2 relative">
-
         <!--
         <ScissorArea class="absolute top-0 left-0 right-0 bottom-0" style="z-index: -1;">
           <div slot="dom" class="full">
@@ -34,10 +33,10 @@
             Fostering International Friendship
           </div>
           <div class="px-3 mb-3">
-            Explore people with StarMap
+            You can explore people with Star Map.
           </div>
           <div class="px-3 mb-3">
-            People are meant to be with each other.
+            People are meant to be with each other, not inside a newsfeed.
           </div>
           <div class="px-3 mb-3">
 
@@ -62,7 +61,6 @@ export default {
   background-image: url('../../../WebGL/Pages/AppUnits/hdri/sky-space-milky-way-stars-110854.jpg');
   background-size: cover;
 }
-
 .h-minus-toolbar-full{
   min-height: calc(100% - 60px);
 }

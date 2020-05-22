@@ -25,15 +25,15 @@
 
           <div>
             <div class="px-3 mb-3" v-if="!Auth.currentProfile">
-              Hi! I'm <a target="_blank" href="https://www.instagram.com/wonglok831/">@wonglok831 ↗</a>.
+              Hi! I'm <a target="_blank" class="font-bold underline" href="https://www.instagram.com/wonglok831/">@wonglok831</a> ↗
             </div>
 
             <div class="px-3 mb-3">
-              1. <router-link class="font-bold underline inline-block" to="/prayer-room-intro">Share your Prayer / Story</router-link>
+              1. <router-link class="font-bold underline inline-block" to="/prayer-room-intro">Share your Prayer / Story 🙏🏻</router-link>
             </div>
 
             <div class="px-3 mb-3">
-              2. <router-link class="font-bold underline inline-block" to="/make-friends-intro">Fostering International Friendship</router-link>
+              2. <router-link class="font-bold underline inline-block" to="/make-friends-intro">Fostering International Friendship 👨🏼‍💻</router-link>
             </div>
 
             <div class="px-3 mb-3">
@@ -45,6 +45,7 @@
             </div>
 
             <div class="px-3 mb-3" v-if="!Auth.currentProfile">
+              <span class="text-xl font-bold mb-3 block">Let's Go!</span>
               <router-link class="font-bold underline inline-block mr-3" to="/register">Register</router-link>
               <router-link class="font-bold underline inline-block mr-3" to="/login">Login</router-link>
             </div>
@@ -79,9 +80,5 @@ export default {
 </script>
 
 <style scoped>
-
-.h-minus-navbar-height{
-  min-height: calc(100% - 60px);
-}
 
 </style>
