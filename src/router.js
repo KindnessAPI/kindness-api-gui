@@ -63,8 +63,12 @@ export default new Router({
       component: () => import('./WebGL/Pages/StoryOfLok.vue')
     },
     {
-      path: '/work-in-progress',
-      component: () => import('./WebGL/Pages/PlaceHolder.vue')
+      path: '/prayer-room-intro',
+      component: () => import('./WebGL/Pages/PrayerRoomIntro.vue')
+    },
+    {
+      path: '/make-friends-intro',
+      component: () => import('./WebGL/Pages/MakeFriendsIntroPage.vue')
     },
     {
       path: '/church',

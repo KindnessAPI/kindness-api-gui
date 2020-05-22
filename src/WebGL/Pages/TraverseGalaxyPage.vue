@@ -190,11 +190,10 @@
             :key="me.userID"
             @close="overlay = false"
             @reload="onReload"
-            :isMe="isMe"
+
             :graph="graph"
 
-            :userID="me.userID"
-            :username="me.username"
+            :me="me"
             v-if="overlay === 'notify'"
           ></NotificationUnit>
         <!-- </keep-alive> -->

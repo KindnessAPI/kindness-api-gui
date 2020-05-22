@@ -1,14 +1,22 @@
 <template>
-  <div class="">
+  <div class="w-full h-minus-toolbar-full">
 
-    <div class="flex flex-col lg:flex-row">
+    <div class="h-full w-full flex flex-col lg:flex-row">
 
-      <div class="lg:w-1/2 relative">
-        <ScissorArea class="lg:absolute top-0 left-0 right-0 bottom-0 h-min100 lg:h-auto" style="z-index: -1;">
-          <div slot="dom" class="full">
+      <div class="lg:w-1/2 relative bg-space">
+        <!-- <ScissorArea class="lg:absolute top-0 left-0 right-0 bottom-0 h-min100 lg:h-auto" style="z-index: -1;">
+          <div slot="dom" class="full bg-space">
           </div>
-          <StarFlowScene slot="o3d"></StarFlowScene>
-        </ScissorArea>
+          <TraverseScene slot="o3d"></TraverseScene>
+        </ScissorArea> -->
+
+        <div class="lg:absolute top-0 left-0 right-0 bottom-0 h-min100 lg:h-auto">
+          <TraverseDemoUnit :btns="[]">
+            <Spaceship></Spaceship>
+          </TraverseDemoUnit>
+        </div>
+
+        <div class="block lg:hidden absolute top-0 left-0 right-0 bottom-0"></div>
         <!--  -->
       </div>
       <div class="lg:w-1/2 relative">
@@ -23,16 +31,16 @@
 
         <div class="px-3 max-w-xl mx-auto  py-24 lg:py-32 xl:py-64">
           <div class="px-3 mb-3 text-3xl md:text-4xl font-bold">
-            Traverse the Galaxy
+            Fostering International Friendship
           </div>
           <div class="px-3 mb-3">
-            This website has a cosmic theme, spaceship and futuristic look. You can decorate your own star/planet within the space. You can also add lines to connect with each other 🙂 I call it love lines. 🥰
+            Explore people with StarMap
           </div>
           <div class="px-3 mb-3">
-            You an traverse the galaxy by the love lines. ❤️
+            Friends of Friends of Friends...
           </div>
           <div class="px-3 mb-3">
-            You can spread kindness and send content using your love lines and your friends can choose to spread it further or not.
+
           </div>
         </div>
       </div>
@@ -49,5 +57,13 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="postcss">
+.bg-space{
+  background-image: url('../../../WebGL/Pages/AppUnits/hdri/sky-space-milky-way-stars-110854.jpg');
+  background-size: cover;
+}
+
+.h-minus-toolbar-full{
+  height: calc(100% - 60px);
+}
 </style>

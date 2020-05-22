@@ -1,14 +1,14 @@
 <template>
-  <div>
-    <div class="relative">
+  <div class="w-full h-min-minus-toolbar-full">
+    <div class="h-full w-full relative">
 
       <ScissorArea class="scissor-right" style="z-index: -1;">
         <div slot="dom" class="full">
         </div>
-        <RiverFieldScene slot="o3d"></RiverFieldScene>
+        <SpaceWalkScene slot="o3d"></SpaceWalkScene>
       </ScissorArea>
 
-      <div class="scissor-left scissor-text">
+      <div class="scissor-left scissor-text flex-col justify-center items-center">
         <div class="h-24 lg:h-32 xl:h-64"></div>
         <div class="lg:px-4 max-w-xl mx-auto lg:ml-auto">
           <div class="px-3 mb-2 text-3xl md:text-4xl font-bold">
@@ -77,5 +77,8 @@ export default {
     width: 50%;
     height: 100%;
   }
+}
+.h-min-minus-toolbar-full{
+  min-height: calc(100% - 60px);
 }
 </style>

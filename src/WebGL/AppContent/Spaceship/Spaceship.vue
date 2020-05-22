@@ -8,13 +8,12 @@
 import { Tree, ShaderCubeRefraction } from '../../Reusable'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
-import { MeshMatcapMaterial, TextureLoader, DoubleSide, MeshPhongMaterial, Object3D } from 'three'
+import { Object3D } from 'three'
 let loaderGLB = new GLTFLoader()
-
 var dracoLoader = new DRACOLoader()
 dracoLoader.setDecoderPath('/threejslib/draco/')
 loaderGLB.setDRACOLoader(dracoLoader)
-let loaderTex = new TextureLoader()
+// let loaderTex = new TextureLoader()
 
 export default {
   name: 'SpaceStation',
@@ -39,9 +38,9 @@ export default {
 
       group.add(obj.scene)
 
-      group.scale.multiplyScalar(15)
+      group.scale.multiplyScalar(12)
 
-      group.position.x += 175
+      group.position.x += 145
       group.rotation.y = Math.PI * 0.5 * 0.5
       group.rotation.x = Math.PI * 0.5 * 0.25
 
@@ -97,14 +96,14 @@ export default {
           loaderGLB.load(require('file-loader!./glb/the-ship.glb').default, (v) => {
             resolve(v)
           })
-        }),
-        new Promise((resolve) => {
-          // eslint-disable-next-line
-          loaderTex.load(require('./matcap/silver4.jpg'), (obj) => {
-            let result = new MeshMatcapMaterial({ side: DoubleSide, transparent: true, opacity: 1.0, color: 0xffffff, matcap: obj })
-            resolve(result)
-          })
         })
+        // new Promise((resolve) => {
+        //   // eslint-disable-next-line
+        //   loaderTex.load(require('./matcap/silver4.jpg'), (obj) => {
+        //     let result = new MeshMatcapMaterial({ side: DoubleSide, transparent: true, opacity: 1.0, color: 0xffffff, matcap: obj })
+        //     resolve(result)
+        //   })
+        // })
         // new Promise((resolve) => {
         //   // eslint-disable-next-line
         //   loaderTex.load(require('./matcap/red-2.jpg'), (obj) => {
@@ -167,9 +166,9 @@ export default {
       this.configFBX({
         obj: all[0],
         mats: {
-          shaderCubeMat: shaderCube.out.material,
-          white: new MeshPhongMaterial({ side: DoubleSide, color: 0xffffff }),
-          silver4: all[1]
+          shaderCubeMat: shaderCube.out.material
+          // white: new MeshPhongMaterial({ side: DoubleSide, color: 0xffffff })
+          // silver4: all[1]
           // pink2: all[2],
           // silver: all[3],
           // yellow: all[4],

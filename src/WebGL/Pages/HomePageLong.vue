@@ -2,19 +2,25 @@
   <div class="full">
     <div class="fixed top-0 left-0 full pointer-events-none" :style="{ zIndex: -1 }" ref="mounter"></div>
 
-    <div v-show="!openMenu" class="full">
+    <div v-show="!openMenu">
       <TopNavBar @menu="openMenu = !openMenu"></TopNavBar>
-      <HeroUnit v-if="Auth" :Auth="Auth"></HeroUnit>
+
+      <HeroUnit></HeroUnit>
+      <!-- <KindnessRiverUnit></KindnessRiverUnit> -->
+      <!-- <MakeFriendsUnit></MakeFriendsUnit> -->
+      <!-- <SpacewalkUnit></SpacewalkUnit> -->
+      <!-- <RegisterUnit></RegisterUnit> -->
       <RegisterBanner></RegisterBanner>
     </div>
     <FullMenuBar v-show="openMenu" @close="openMenu = false"></FullMenuBar>
+
   </div>
 </template>
 
 <script>
+import { Auth } from '../../APIs/KA'
 import { PipeScissor, makeScrollBox } from '../Reusable'
 // import axios from 'axios'
-import { Auth } from '../../APIs/KA'
 
 export default {
   name: 'Home',
@@ -22,7 +28,6 @@ export default {
   data () {
     return {
       Auth,
-      Store: Auth.Store,
       openMenu: false,
       origColor: '',
       bgColor: '#fafafa'
@@ -32,7 +37,6 @@ export default {
     this.$watch('openMenu', () => {
       window.dispatchEvent(new Event('resize'))
     })
-
     this.scrollBox = makeScrollBox({ dom: window, base: this.base })
 
     // let axios = require('axios').default
@@ -49,9 +53,6 @@ export default {
   },
   beforeDestroy () {
     document.body.style.backgroundColor = this.origColor
-  },
-  methods: {
-
   }
 }
 </script>

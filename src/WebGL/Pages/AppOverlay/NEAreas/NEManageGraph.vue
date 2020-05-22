@@ -16,8 +16,9 @@
             <div>
               {{ enode.name }}
             </div>
-            <div class="text-gray-500 text-sm">
-              {{ getProfileType(enode.type) }}
+            <div class="text-gray-500 text-sm" v-if="enode.value">
+              @{{ enode.value.username }}
+              <!-- {{ getProfileType(enode.type) }} -->
             </div>
           </td>
           <td class="pr-3 pb-3">

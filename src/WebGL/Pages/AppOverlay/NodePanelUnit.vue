@@ -15,7 +15,7 @@
           <div class="mt-3 flex justify-start items-center flex-wrap">
             <NEIcon v-if="isMe" :color="'teal'" :img="require('./img/profile-teal.svg')" @click="tab = 'settings'" label="Edit My Profile"></NEIcon>
             <NENodeTraverseAction :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NENodeTraverseAction>
-            <NEPrayerRoom></NEPrayerRoom>
+            <NEPrayerRoom :isMe="isMe" :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEPrayerRoom>
           </div>
         </div>
         <div v-if="tab === 'settings'" :key="node._id" >
@@ -34,7 +34,7 @@
         <NEProfileArea :isMe="isMe" :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEProfileArea>
         <div class="mt-3 flex justify-start items-center flex-wrap">
           <NENodeTraverseAction :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NENodeTraverseAction>
-          <NEPrayerRoom></NEPrayerRoom>
+          <NEPrayerRoom :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEPrayerRoom>
         </div>
       </div>
     </div>

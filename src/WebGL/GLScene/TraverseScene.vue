@@ -38,7 +38,7 @@
     <!-- <Spacewalk :shaderCube="shaderCube"></Spacewalk>
     <HolyCross :shaderCube="shaderCube"></HolyCross> -->
 
-    <!-- <SpaceStation :shaderCube="shaderCube"></SpaceStation> -->
+    <Spaceship :shaderCube="shaderCube"></Spaceship>
 
     <!-- </O3D> -->
 
@@ -60,8 +60,8 @@
 </template>
 
 <script>
-import { Tree, RayPlay, PCamera, ShaderCube } from '../Reusable'
-import { Scene, Color } from 'three'
+import { Tree, RayPlay, PCamera, ShaderCubeRefraction } from '../Reusable'
+import { Scene } from 'three'
 // import { Interaction } from 'three.interaction'
 // import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
@@ -97,9 +97,9 @@ export default {
   async mounted () {
     await this.lookupWait('ready')
 
-    this.scene.background = new Color('#efefef')
+    // this.scene.background = new Color('#efefef')
 
-    this.shaderCube = new ShaderCube({ renderer: this.lookup('renderer'), loop: this.lookup('base').onLoop, res: 32 })
+    this.shaderCube = new ShaderCubeRefraction({ renderer: this.lookup('renderer'), loop: this.lookup('base').onLoop, res: 32 })
     // this.scene.background = this.shaderCube.out.envMap
 
     // prepare camera

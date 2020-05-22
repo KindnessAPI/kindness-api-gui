@@ -1,12 +1,13 @@
 <template>
   <div class="inline-block">
-    <NEIcon :label="`Prayer Room`" :badge="20" :img="require('../img/church.svg')"></NEIcon>
+    <NEIcon :label="isMe ?  `Prayer Room` : `Send Prayers`" @click="onClick" :badge="0" :img="require('../img/church.svg')"></NEIcon>
   </div>
 </template>
 
 <script>
 export default {
   props: {
+    isMe: {},
     node: {},
     graph: {}
   },
@@ -15,6 +16,19 @@ export default {
     ...require('../../../webgl').default
   },
   mounted () {
+    this.loadBadge()
+  },
+  methods: {
+    loadBadge () {
+
+    },
+    onClick () {
+      if (this.isMe) {
+        this.$router.push(`/prayer-room`)
+      } else {
+        this.$router.push(`/prayer-room?prayFor=${this.node.value.userID}`)
+      }
+    }
   }
 }
 </script>

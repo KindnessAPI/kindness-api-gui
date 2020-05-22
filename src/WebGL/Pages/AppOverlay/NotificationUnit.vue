@@ -15,11 +15,8 @@ import * as API from '../../../APIs/KA.js'
 
 export default {
   props: {
-    editable: {},
-    graph: {},
-    node: {},
-    userID: {},
-    username: {}
+    me: {},
+    graph: {}
   },
   components: {
     ...require('../../webgl').default
@@ -31,9 +28,6 @@ export default {
     }
   },
   computed: {
-    isMe () {
-      return this.node.value && this.node.value.userID === API.Auth.currentProfile.user.userID
-    }
   },
   mounted () {
   },
