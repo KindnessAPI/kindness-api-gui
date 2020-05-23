@@ -1,17 +1,17 @@
 <template>
   <div class="h-full w-full">
     <div class="msg-header text-lg py-3 text-center bg-yellow-500 flex justify-between">
-      <div class="w-1/3 text-left pl-4"></div>
-      <div class="w-1/3">
-        <span v-if="!loading">Channels</span>
+      <div class="w-1/6 text-left pl-4"></div>
+      <div class="w-4/6">
+        <span v-if="!loading">Chats</span>
         <span v-if="loading">Loading ⏱</span>
       </div>
-      <div class="w-1/3 text-right pr-4">
+      <div class="w-1/6 text-right pr-4">
         <img v-if="!loading" class="inline-block" src="./icon/add.svg" @click="$emit('view', 'add-channel')" alt="">
       </div>
     </div>
-    <div v-if="items" class="msg-body-list remain-height bg-white  overflow-x-hidden overflow-y-auto rounded-b-lg">
-      <ContactListUnit :checkbox="false" :items="items" @item="item = $event; onItem($event)" :mode="'full'"></ContactListUnit>
+    <div v-if="items" class="msg-body-list remain-height overflow-x-hidden overflow-y-auto">
+      <RoomListUnit :checkbox="false" :items="items" @item="item = $event; onItem($event)" :mode="'full'"></RoomListUnit>
     </div>
   </div>
 </template>

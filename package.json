@@ -38,6 +38,7 @@
     "gifshot": "^0.4.5",
     "glslify": "^7.0.0",
     "glslify-loader": "^2.0.0",
+    "howler": "^2.2.0",
     "inherits": "^2.0.4",
     "iphone-inline-video": "^2.2.2",
     "load-bmfont": "^1.4.0",

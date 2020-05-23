@@ -4,7 +4,7 @@
       <div class="w-1/3 text-left pl-4">
         <img src="./icon/left.svg" class="inline-block" @click="$emit('view', 'list-channel')" alt="">
       </div>
-      <div class="w-1/3">Add Channel</div>
+      <div class="w-1/3">Create Chat</div>
       <div class="w-1/3 text-right pr-4">
         <img class="inline-block" src="./icon/check.svg" v-if="selectedItems && selectedItems.length > 0" @click="$emit('add-chat')" alt="">
       </div>
@@ -14,7 +14,7 @@
         <input type="search" placeholder="Username or Display Name" v-model="query" class="py-3 px-4 shadow-none appearance-none border-yellow-700 border w-11/12 h-full my-3 rounded-full" @input="tryLoad()" />
       </div>
       <div class="border-t border-gray-500">
-        <ContactListUnit ref="contact" :checkbox="true" v-if="items" :items="items" @item="onPersonSelect"></ContactListUnit>
+        <ProfileListUnit ref="contact" :checkbox="true" v-if="items" :items="items" @item="onPersonSelect"></ProfileListUnit>
       </div>
     </div>
   </div>
@@ -29,6 +29,7 @@ export default {
   },
   data () {
     return {
+      profiles: false,
       selectedItems: false,
       items: false,
       query: ''
@@ -36,26 +37,24 @@ export default {
   },
   mounted () {
     this.$on('add-chat', async () => {
-      // console.log(this.selectedItems)
-      let participants = this.selectedItems.map(e => {
+      let members = this.selectedItems.map(e => {
         return {
-          username: e.username,
-          userID: e.userID,
+          profile: this.profiles.find(p => p.userID === e.userID),
           isAdmin: false
         }
       })
 
       let andMore = ''
-      if (participants.length >= 2) {
+      if (members.length >= 2) {
         andMore = ' and more'
       }
 
       let newChannel = await Channel.createChannel({
         userID: Auth.currentProfile.user.userID,
         username: Auth.currentProfile.user.username,
-        participants,
+        members,
         img: this.selectedItems[0].image,
-        title: '@' + participants[0].username + andMore
+        title: members[0].profile.displayName + andMore
       })
 
       this.$emit('channel', newChannel)
@@ -69,6 +68,7 @@ export default {
     },
     async load () {
       let data = await Profile.getProfilesByQuery({ query: this.query || '_____' })
+      this.profiles = data
       this.items = data.map(e => {
         return {
           username: e.username,

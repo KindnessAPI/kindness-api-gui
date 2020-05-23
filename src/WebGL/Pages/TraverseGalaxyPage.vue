@@ -214,7 +214,11 @@
 
 <script>
 import { PipeScissor, makeScrollBox } from '../Reusable'
-import { Auth, Graph, LambdaClient, getWS, getID, Profile } from '../../APIs/KA'
+import { Auth, Graph, LambdaClient, getWS, getID, Profile, Notification } from '../../APIs/KA'
+import { Howl } from 'howler'
+var dingding = new Howl({
+  src: [require('./mp3/dingding.mp3')]
+})
 
 // import axios from 'axios'
 export default {
@@ -250,9 +254,11 @@ export default {
       overlay: false,
       graph: false,
       Auth,
+      chatButton: false,
       openMenu: false,
       origColor: '',
-      bgColor: '#fafafa'
+      bgColor: '#fafafa',
+      notifications: false
     }
   },
   watch: {
@@ -340,18 +346,26 @@ export default {
 
       this.bellButton = {
         place: 'tr',
+        badge: 0,
         text: `🔔`,
         event: 'notify'
       }
       this.btns.push(this.bellButton)
 
-      // this.btns.push({
+      this.$on('update-bell', async () => {
+        await this.prepareNotifs()
+        this.bellButton.text = `🔔 ${this.notifications.filter(e => !e.read).length}`
+      })
+      this.$emit('update-bell')
+
+      // this.chatButton = {
       //   place: 'tr',
       //   type: 'mail',
       //   badge: 1,
-      //   text: `📨`,
+      //   text: `💬`,
       //   event: 'mail'
-      // })
+      // }
+      // this.btns.push(this.chatButton)
     },
     onReset () {
       this.btns = []
@@ -363,7 +377,6 @@ export default {
     },
     onNodeDrag (node) {
       this.currentNode = node
-      // this.overlay = 'node-panel'
       if (node.type === 'traverse') {
         if (node.value.username !== this.queryUsername) {
           this.$router.push(`/profile/${node.value.username}/${node.value.userID}`)
@@ -374,14 +387,12 @@ export default {
           setTimeout(() => {
             this.mainArea = 'traverse'
           }, 3000)
-          // this.overlay = 'node-panel'
         }
       } else {
         this.mainArea = 'starmap-loaded'
         setTimeout(() => {
           this.mainArea = 'traverse'
         }, 3000)
-        // this.overlay = 'node-panel'
       }
     },
     onNodeClick (node) {
@@ -402,6 +413,10 @@ export default {
       this.mainArea = 'loading'
       await this.prepareProfile()
       await this.prepareGraph()
+      // await this.prepareNotifs()
+    },
+    async prepareNotifs () {
+      this.notifications = await Notification.getMyNotifications({ pageAt: 0, perPage: 50 })
     },
     async prepareGraph () {
       this.mainArea = 'loading'
@@ -461,6 +476,13 @@ export default {
         this.$root.$emit('channel-update', event.data)
       })
 
+      myBell.on('prayer-update', (event) => {
+        this.$root.$emit('prayer-update', event.data)
+        console.log('prayer-update', event)
+        this.$emit('update-bell')
+        dingding.play()
+      })
+
       this.$on('onReset', () => {
         myBell.close()
       })
@@ -480,6 +502,7 @@ export default {
       this.makeMySocket()
       await this.prepareProfile()
       await this.prepareGraph()
+      // await this.prepareNotifs()
       this.onSetupBtns()
       this.mainArea = 'traverse'
     }

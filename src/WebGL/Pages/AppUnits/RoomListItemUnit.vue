@@ -1,5 +1,5 @@
 <template>
-  <div v-if="item" :class="{ 'justify-start': !checkbox, ' justify-between': checkbox }" class="flex border-b p-3 border-gray-500 flex cursor-pointer hover:bg-gray-200" @click="onClick(item)">
+  <div v-if="item" :class="{ 'justify-start': !checkbox, ' justify-between': checkbox }" class="bg-white-opacity flex border-b p-3 border-gray-500 flex cursor-pointer hover:bg-gray-200" @click="onClick(item)">
     <div class="p-1">
       <img :src="item.image" class="h-16 w-16 rounded-full object-cover object-center" alt="">
     </div>
@@ -38,5 +38,7 @@ export default {
 </script>
 
 <style>
-
+.bg-white-opacity{
+  background-color: rgba(255, 255, 255, 0.863);
+}
 </style>

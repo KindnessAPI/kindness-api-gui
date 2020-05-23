@@ -13,7 +13,7 @@
         </span>
       </div>
     </div>
-    <div class="msg-body-list remain-height-chat-diaglogue bg-white  overflow-x-hidden overflow-y-auto rounded-b-lg pb-4" ref="scroller">
+    <div class="msg-body-list bg-white-opacity remain-height-chat-diaglogue overflow-x-hidden overflow-y-auto pb-4" ref="scroller">
       <ChatDialogueBox :key="channel._id + 'dialogue'" :msgs="msgs.slice().sort(this.sortMsgs)"></ChatDialogueBox>
     </div>
     <div class="sender">
@@ -122,5 +122,8 @@ export default {
 <style scoped>
 .sender{
   height: 60px;
+}
+.bg-white-opacity{
+  background-color: rgba(255, 255, 255, 0.733);
 }
 </style>

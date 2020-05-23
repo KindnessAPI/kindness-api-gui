@@ -56,6 +56,6 @@ export default {
   position: relative;
   display: block;
   width: 100%;
-  height: calc(100% - 78px);
+  height: calc(100% - 60px);
 }
 </style>

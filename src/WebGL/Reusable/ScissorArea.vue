@@ -63,13 +63,25 @@ export default {
           element: this.element,
           scene: this.scene,
           camera: this.camera,
-          composer: this.composer
+          composer: this.composer,
+          clean: () => {
+            this.scene.traverse((item) => {
+              if (item.dispose) {
+                item.dispose()
+                console.log('item disposed')
+              }
+            })
+          }
         }
       }
     }
   },
   beforeDestroy () {
     let areas = this.lookup('areas')
+    for (let areaKN in areas) {
+      let area = areas[areaKN]
+      area.clean()
+    }
     delete areas[this.area]
   }
 }

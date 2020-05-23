@@ -1,6 +1,6 @@
 <template>
   <div class=" bg-gray-100" :class="{ 'sidebar border-r border-gray-500': mode === 'sidebar', 'full': mode === 'full' }">
-    <ContactListItemUnit :checkbox="checkbox" @item="$emit('item', $event)" :item="item" :key="item._id" v-for="item in getPeople()"></ContactListItemUnit>
+    <ProfileListItem :checkbox="checkbox" @item="$emit('item', $event)" :item="item" :key="item._id" v-for="item in getPeople()"></ProfileListItem>
   </div>
 </template>
 

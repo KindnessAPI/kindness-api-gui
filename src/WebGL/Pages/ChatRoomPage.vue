@@ -4,8 +4,7 @@
 
     <div v-show="!openMenu" class="full">
       <TopNavBar @menu="openMenu = !openMenu"></TopNavBar>
-      <PrayerRoomUnit :prayerID="prayerID" :prayFor="prayFor">
-      </PrayerRoomUnit>
+      <MessengerUnit class="h-no-toolbar-full w-full"></MessengerUnit>
     </div>
     <FullMenuBar v-show="openMenu" @close="openMenu = false"></FullMenuBar>
   </div>
@@ -22,29 +21,16 @@ export default {
   data () {
     return {
       Auth,
-      mode: 'list',
       openMenu: false,
       origColor: '',
       bgColor: '#fafafa'
-    }
-  },
-  computed: {
-    prayFor () {
-      return this.$route.query.prayFor
-    },
-    prayerID () {
-      return this.$route.query.prayerID
     }
   },
   mounted () {
     this.$watch('openMenu', () => {
       window.dispatchEvent(new Event('resize'))
     })
-
     this.scrollBox = makeScrollBox({ dom: window, base: this.base })
-    if (this.prayFor) {
-      this.mode = 'pray'
-    }
 
     // let axios = require('axios').default
     // axios.post('http://localhost:3333/login', {
@@ -65,4 +51,7 @@ export default {
 </script>
 
 <style scoped>
+.h-no-toolbar-full{
+  height: calc(100% - 60px);
+}
 </style>

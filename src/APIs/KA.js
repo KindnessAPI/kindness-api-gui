@@ -333,7 +333,6 @@ export class Auth {
     return Store.Profiles.length > 0
   }
   static async checkUsername (auth) {
-    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -350,7 +349,6 @@ export class Auth {
   }
 
   static async register (auth) {
-    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -372,7 +370,6 @@ export class Auth {
   }
 
   static async login (auth) {
-    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -397,7 +394,6 @@ Auth.loadProfiles()
 
 export class Profile {
   static async getProfilesByQuery ({ query }) {
-    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -426,7 +422,6 @@ export class Profile {
   }
 
   static async getProfileByUserID ({ userID }) {
-    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -447,7 +442,6 @@ export class Profile {
   }
 
   static async searchProfileByDisplayName ({ displayName }) {
-    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -456,7 +450,8 @@ export class Profile {
       data: {
         method: 'query',
         payload: {
-          displayName
+          displayName,
+          limit: 15
         }
       }
     })
@@ -468,7 +463,6 @@ export class Profile {
   }
 
   static async getProfileByUserIDList ({ list }) {
-    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -493,7 +487,6 @@ export class Profile {
   static async provideProfile ({ userID }) {
     // photo = photo || `https://picsum.photos/id/${(Math.random() * 1200).toFixed(0)}/256/256`
 
-    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -539,7 +532,6 @@ export class Profile {
   static async createProfile ({ userID, username, photo }) {
     photo = photo || `https://picsum.photos/id/${(Math.random() * 1200).toFixed(0)}/256/256`
 
-    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -577,7 +569,6 @@ export class Profile {
   }
 
   static async updateProfile ({ edit }) {
-    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -602,7 +593,6 @@ export class Profile {
 export class Graph {
   static async createFriendTraverseNode ({ profileUsername, profileUserID, name = 'New User', photo }) {
     photo = photo || `https://picsum.photos/id/${(Math.random() * 1200).toFixed(0)}/200/200`
-    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -634,7 +624,6 @@ export class Graph {
   }
 
   static async linkFriendTraverseNode ({ fromID, toID, fromPerson, toPerson }) {
-    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -669,7 +658,6 @@ export class Graph {
   // static async addUserNode ({ profileUsername, profileUserID, name = 'New User', photo }) {
   //   photo = photo || `https://picsum.photos/id/${(Math.random() * 1200).toFixed(0)}/200/200`
 
-  //   // let axios = (await import('axios')).default
   //   let resp = axios({
   //     baseURL: getRESTURL(),
   //     method: 'POST',
@@ -702,7 +690,6 @@ export class Graph {
 
   // ----
   static async listUserNodes ({ userID }) {
-    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -722,7 +709,6 @@ export class Graph {
     })
   }
   static async listUserEdges ({ userID }) {
-    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -743,7 +729,6 @@ export class Graph {
   }
 
   static async queryEdgesSourceNode ({ nodeID }) {
-    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -764,7 +749,6 @@ export class Graph {
   }
 
   static async queryEdgesTargetNode ({ nodeID }) {
-    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -785,7 +769,6 @@ export class Graph {
   }
 
   static async queryNodesByList ({ list }) {
-    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -806,7 +789,6 @@ export class Graph {
   }
 
   static async removeNodeByID ({ nodeID }) {
-    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -827,7 +809,6 @@ export class Graph {
   }
 
   static async removeEdgeByList ({ list }) {
-    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -848,7 +829,6 @@ export class Graph {
   }
 
   static async removeEdgeByID ({ edgeID }) {
-    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -869,7 +849,6 @@ export class Graph {
   }
 
   static async removeEdgesByIDList ({ list }) {
-    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -909,7 +888,6 @@ export class Graph {
   }
   */
   static async updateMyNode ({ edit }) {
-    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -931,7 +909,6 @@ export class Graph {
   }
 
   static async provideUserNode ({ userID }) {
-    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -952,7 +929,6 @@ export class Graph {
   }
 
   static async getMyNode () {
-    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -973,7 +949,6 @@ export class Graph {
   }
 
   static async searchNodeByName ({ name }) {
-    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -995,7 +970,6 @@ export class Graph {
   }
 
   static async getMyEdges () {
-    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -1016,7 +990,6 @@ export class Graph {
   }
 
   static async removeMyEdge ({ edge }) {
-    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -1037,7 +1010,6 @@ export class Graph {
   }
 
   static async getUserByIDList ({ idList }) {
-    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -1176,7 +1148,6 @@ export class MyFiles {
     })
   }
   static async getMyFiles ({ userID = Auth.currentProfile.user.userID, pageAt = 0, perPage = 20 }) {
-    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -1200,7 +1171,6 @@ export class MyFiles {
     })
   }
   static async createCloudinaryFile ({ cloudinary, filename, ext, mime, base64 }) {
-    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -1227,7 +1197,6 @@ export class MyFiles {
   }
 
   static async deleteCloudinaryFileByList ({ objs = [] }) {
-    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -1251,7 +1220,6 @@ export class MyFiles {
 
 export class Message {
   static async getMyRoomMessage ({ channelID, pageAt = 0, perPage = 50 }) {
-    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -1277,17 +1245,14 @@ export class Message {
 }
 
 export class Channel {
-  // update-by-participants
-
-  static async updateChannelByParticipants ({ edit }) {
-    // let axios = (await import('axios')).default
+  static async updateChannelByMembers ({ edit }) {
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
       url: '/access-channel',
       headers: getHeader(),
       data: {
-        method: 'update-by-participants',
+        method: 'update-by-members',
         payload: {
           _id: edit._id,
           edit
@@ -1303,7 +1268,6 @@ export class Channel {
   }
 
   static async getMyChannels ({ userID }) {
-    // let axios = (await import('axios')).default
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -1314,7 +1278,7 @@ export class Channel {
         payload: {
           $or: [
             { userID },
-            { 'participants.userID': userID }
+            { 'members.profile.userID': userID }
           ]
         }
       }
@@ -1327,8 +1291,28 @@ export class Channel {
     })
   }
 
-  static async createChannel ({ userID, username, participants, title, img = '' }) {
-    // let axios = (await import('axios')).default
+  static async removeChannelAndMessages ({ channelID }) {
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-channel',
+      headers: getHeader(),
+      data: {
+        method: 'remove-channel-and-messages',
+        payload: {
+          channelID
+        }
+      }
+    })
+
+    return resp.then((r) => {
+      return r.data
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+
+  static async createChannel ({ members, userID, username, title, img = '' }) {
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -1341,7 +1325,8 @@ export class Channel {
           username,
 
           type: 'chat', // dm
-          participants, /*
+          members,
+          /*
           [{
             username: String,
             userID: String,
@@ -1355,6 +1340,96 @@ export class Channel {
           title,
           img,
           tags: [{ text: 'chat-room' }]
+        }
+      }
+    })
+
+    return resp.then((r) => {
+      return r.data
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+}
+
+export class Prayer {
+  static async getMyReceivedPrayer ({ pageAt = 0, perPage = 25 }) {
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-prayer',
+      headers: getHeader(),
+      data: {
+        method: 'my-received-prayers',
+        payload: {
+          skip: pageAt * perPage,
+          limit: perPage
+        }
+      }
+    })
+
+    return resp.then((r) => {
+      return r.data
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+  static async getMySentPrayer ({ pageAt = 0, perPage = 25 }) {
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-prayer',
+      headers: getHeader(),
+      data: {
+        method: 'my-sent-prayers',
+        payload: {
+          skip: pageAt * perPage,
+          limit: perPage
+        }
+      }
+    })
+
+    return resp.then((r) => {
+      return r.data
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+}
+
+export class Notification {
+  static async getMyNotifications ({ pageAt = 0, perPage = 50 }) {
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-notification',
+      headers: getHeader(),
+      data: {
+        method: 'get-my-notifications',
+        payload: {
+          skip: pageAt * perPage,
+          limit: perPage
+        }
+      }
+    })
+
+    return resp.then((r) => {
+      return r.data
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
+  static async udpateNotificationStatus ({ isRead, list }) {
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-notification',
+      headers: getHeader(),
+      data: {
+        method: 'update-notifications-read-status',
+        payload: {
+          list,
+          isRead
         }
       }
     })

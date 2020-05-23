@@ -5,6 +5,7 @@
 </template>
 
 <script>
+// import { Auth } from '../../../../APIs/KA'
 export default {
   props: {
     isMe: {},
@@ -23,11 +24,7 @@ export default {
 
     },
     onClick () {
-      if (this.isMe) {
-        this.$router.push(`/prayer-room`)
-      } else {
-        this.$router.push(`/prayer-room?prayFor=${this.node.value.userID}`)
-      }
+      this.$router.push(`/prayer-room?prayFor=${this.node.value.userID}`)
     }
   }
 }

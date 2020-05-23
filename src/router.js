@@ -59,6 +59,11 @@ export default new Router({
       component: () => import('./WebGL/Pages/PrayerRoomPage.vue')
     },
     {
+      path: '/chat-room',
+      beforeEnter: loginGate,
+      component: () => import('./WebGL/Pages/ChatRoomPage.vue')
+    },
+    {
       path: '/thank-you-gospel',
       component: () => import('./WebGL/Pages/StoryOfLok.vue')
     },

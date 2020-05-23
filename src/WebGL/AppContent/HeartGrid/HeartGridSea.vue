@@ -39,17 +39,16 @@ export default {
       // eslint-disable-next-line
       loader.load(require('file-loader!./fbx/star.fbx').default, (obj) => {
         let geo = obj.children[2].geometry
-        geo.rotateX(Math.PI * -0.5)
+        geo.rotateX(Math.PI * 0.5)
         resolve(geo)
       })
     })
-
     let heartGeo = await new Promise((resolve) => {
       let loader = new FBXLoader()
       // eslint-disable-next-line
       loader.load(require('file-loader!./fbx/heart.fbx').default, (obj) => {
         let geo = obj.children[0].geometry
-        // geo.rotateX(-Math.PI * 0.5)
+        // geo.rotateX(-Math.PI)
         resolve(geo)
       })
     })
@@ -117,8 +116,8 @@ export default {
         matcaps.yellow = new MeshMatcapMaterial({ transparent: true, opacity: 1.0, color: 0xffffff, matcap: obj })
       })
     })
-    let cx = 10
-    let cy = 10 * this.screen.width / this.screen.height
+    let cx = 15
+    let cy = 15 * this.screen.width / this.screen.height
 
     if (this.screen.width < this.screen.height) {
       cx = cx * this.screen.height / this.screen.width
@@ -164,10 +163,10 @@ export default {
     }
 
     // group.rotation.y = Math.PI
-    // group.rotation.x = Math.PI * -0.35
+    group.rotation.x = Math.PI * -0.35
     group.rotation.z = Math.PI * 0.5
-    // group.position.y = -150
-    group.position.z = -50
+    group.position.y = -150
+    group.position.z = -350
 
     let mouseDown = false
     let rayhitID = false
@@ -242,23 +241,6 @@ export default {
       // let cos = Math.cos
       // let tan = Math.tan
       let idx = 0
-      this.clean = () => {
-        for (let y = 0; y < cy; y++) {
-          for (let x = 0; x < cx; x++) {
-            let { mesh } = mapper.get(idx)
-            if (mesh.material.dispose) {
-              mesh.material.dispose()
-            }
-            if (mesh.geometry.dispose) {
-              mesh.geometry.dispose()
-            }
-            if (mesh.dispose) {
-              mesh.dispose()
-            }
-          }
-        }
-      }
-
       for (let y = 0; y < cy; y++) {
         for (let x = 0; x < cx; x++) {
           let { mesh, color } = mapper.get(idx)
@@ -325,9 +307,9 @@ export default {
             mesh.rotation.y = 0
             mesh.rotation.z = time + wavy
           } else {
-            mesh.rotation.x = time * 2.0 + wavy
-            mesh.rotation.y = Math.PI * 0.5
-            mesh.rotation.z = 0
+            mesh.rotation.x = 0
+            mesh.rotation.y = 0
+            mesh.rotation.z = time * 2.0 + wavy
           }
           // mesh.rotation.x = Math.PI * 0.5
           idx++
@@ -336,7 +318,6 @@ export default {
     })
   },
   beforeDestroy () {
-    this.clean()
   }
 }
 </script>
