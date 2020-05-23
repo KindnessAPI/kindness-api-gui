@@ -101,12 +101,13 @@ export default {
       })
       this.state = 'ok'
       this.prayer.text = ''
-      sessionStorage.removeItem(this.NS)
+      // sessionStorage.removeItem(this.NS)
       if (this.prayFor) {
         this.prayer.toProfile = await Profile.getProfileByUserID({ userID: this.prayFor })
         this.prayer.query = this.prayer.toProfile.displayName
         this.prayer.toUserID = this.prayer.toProfile.userID
       }
+      this.onSaveTemp()
       setTimeout(() => {
         this.state = 'ready'
       }, 2500)
