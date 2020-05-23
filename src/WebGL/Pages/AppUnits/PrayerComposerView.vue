@@ -100,7 +100,7 @@ export default {
         }
       })
       this.state = 'ok'
-      this.prayer = this.templatePrayer()
+      this.prayer.text = ''
       sessionStorage.removeItem(this.NS)
       if (this.prayFor) {
         this.prayer.toProfile = await Profile.getProfileByUserID({ userID: this.prayFor })
