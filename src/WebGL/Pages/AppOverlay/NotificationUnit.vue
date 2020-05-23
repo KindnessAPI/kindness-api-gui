@@ -51,8 +51,13 @@ export default {
     },
     async onClick (notif) {
       if (notif.type === 'prayer') {
-        this.$router.push(`/prayer-room?prayerID=${notif.value.prayerID}`)
-        await API.Notification.udpateNotificationStatus({ isRead: true, list: [notif._id] })
+        this.$emit('prayerID', notif.value.prayerID)
+        // this.$router.push(`/prayer-room?prayerID=${notif.value.prayerID}`)
+        API.Notification.udpateNotificationStatus({ isRead: true, list: [notif._id] })
+          .then(() => {
+            this.$emit('notify')
+            this.$emit('overlay', 'prayer')
+          })
       }
     }
   }

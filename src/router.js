@@ -46,7 +46,7 @@ export default new Router({
     {
       path: '/profile/:username/:userID',
       beforeEnter: loginGate,
-      component: () => import('./WebGL/Pages/TraverseGalaxyPage.vue')
+      component: () => import('./WebGL/Pages/ProfilePage.vue')
     },
     {
       path: '/my-photos',

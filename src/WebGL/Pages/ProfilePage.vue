@@ -166,6 +166,10 @@
           :graph="graph"
           :userID="queryUserID"
           :username="queryUsername"
+          @prayFor="prayFor = $event"
+          @prayerID="prayerID = $event"
+          @overlay="overlay = $event"
+          @notify="prepareNotifs"
           v-if="currentNode && graph && overlay === 'node-panel'"
         ></NodePanelUnit>
       </transition>
@@ -192,12 +196,30 @@
             :key="me.userID"
             @close="overlay = false"
             @reload="onReload"
-
+            @overlay="overlay = $event"
+            @prayerID="prayerID = $event"
+            @notify="prepareNotifs"
             :graph="graph"
 
             :me="me"
             v-if="overlay === 'notify'"
           ></NotificationUnit>
+        <!-- </keep-alive> -->
+      </transition>
+
+      <transition name="flyin">
+        <!-- <keep-alive> -->
+          <PrayerRoomOverlayUnit
+            :key="me.userID"
+            @close="overlay = false"
+            @reload="onReload"
+            @overlay="overlay = $event"
+            :graph="graph"
+            :prayerID="prayerID"
+            :prayFor="prayFor"
+            :me="me"
+            v-if="overlay === 'prayer'"
+          ></PrayerRoomOverlayUnit>
         <!-- </keep-alive> -->
       </transition>
 
@@ -240,7 +262,14 @@ export default {
         earth: require('./AppUnits/hdri/astronomy-atmosphere-earth-exploration-220201.jpg'),
         galaxy: require('./AppUnits/hdri/sky-space-dark-galaxy-2150.jpg')
       },
-      bellButton: false,
+      prayerID: false,
+      prayFor: false,
+      bellButton: {
+        place: 'tr',
+        badge: 0,
+        text: `🔔`,
+        event: 'notify'
+      },
       myNode: false,
       allReady: false,
       profile: false,
@@ -344,19 +373,9 @@ export default {
         event: 'view'
       })
 
-      this.bellButton = {
-        place: 'tr',
-        badge: 0,
-        text: `🔔`,
-        event: 'notify'
-      }
       this.btns.push(this.bellButton)
 
-      this.$on('update-bell', async () => {
-        await this.prepareNotifs()
-        this.bellButton.text = `🔔 ${this.notifications.filter(e => !e.read).length}`
-      })
-      this.$emit('update-bell')
+      // this.$emit('update-bell')
 
       // this.chatButton = {
       //   place: 'tr',
@@ -413,10 +432,24 @@ export default {
       this.mainArea = 'loading'
       await this.prepareProfile()
       await this.prepareGraph()
-      // await this.prepareNotifs()
+      await this.prepareNotifs()
     },
     async prepareNotifs () {
       this.notifications = await Notification.getMyNotifications({ pageAt: 0, perPage: 50 })
+
+      if (this.queryUserID === Auth.currentProfile.user.userID) {
+        let badgeInfo = this.notifications.reduce((acc, notif) => {
+          acc[notif.fromUserID] = acc[notif.fromUserID] || 0
+          if (!notif.read) {
+            acc[notif.fromUserID]++
+          }
+          return acc
+        }, {})
+        for (let kn in badgeInfo) {
+          this.updateBadgeByUserID({ userID: kn, badge: badgeInfo[kn] })
+        }
+      }
+      this.bellButton.text = `🔔 ${this.notifications.filter(e => !e.read).length}`
     },
     async prepareGraph () {
       this.mainArea = 'loading'
@@ -457,8 +490,10 @@ export default {
     },
     updateBadgeByUserID ({ userID, badge }) {
       let node = this.graph.nodes.find(n => n.type === 'traverse' && n.value.userID === userID)
-      node.badge = badge
-      this.updateBadgeByNode(node)
+      if (node) {
+        node.badge = badge
+        this.updateBadgeByNode(node)
+      }
     },
     updateBadgeByNode (node) {
       node.badge = node.badge || 0
@@ -479,7 +514,7 @@ export default {
       myBell.on('prayer-update', (event) => {
         this.$root.$emit('prayer-update', event.data)
         console.log('prayer-update', event)
-        this.$emit('update-bell')
+        this.prepareNotifs()
         dingding.play()
       })
 
@@ -502,7 +537,7 @@ export default {
       this.makeMySocket()
       await this.prepareProfile()
       await this.prepareGraph()
-      // await this.prepareNotifs()
+      await this.prepareNotifs()
       this.onSetupBtns()
       this.mainArea = 'traverse'
     }

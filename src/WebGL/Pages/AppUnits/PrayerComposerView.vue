@@ -14,7 +14,10 @@
     </table>
     <textarea placeholder="Type your prayer here..." class="w-full resize-none border-black border-l hover:border-green-500 p-3 text-xl bg-transparent focus:outline-none" cols="50" rows="10" @input="onSaveTemp" v-model="prayer.text"></textarea>
     <div class="border-l border-black hover:border-green-500 p-3">
-      <button @click="sendPrayer" class="p-3 text-xl bg-gray-200 bg-transparent focus:outline-none cursor-pointer hover:bg-gray-300">Send Prayer</button>
+      <button @click="sendPrayer" class="p-3 text-xl bg-gray-400 rounded-full bg-transparent focus:outline-none cursor-pointer hover:bg-gray-300">
+        <span v-if="state === 'ready'">Send Prayer</span>
+        <span v-if="state === 'ok'">Successfully Sent</span>
+      </button>
     </div>
   </div>
 </template>
@@ -30,6 +33,7 @@ export default {
   },
   data () {
     return {
+      state: 'ready',
       profiles: false,
       NS: 'prayer-now' + this.prayFor,
       prayer: this.templatePrayer()
@@ -95,6 +99,7 @@ export default {
           tags: [{ text: 'prayer' }]
         }
       })
+      this.state = 'ok'
       this.prayer = this.templatePrayer()
       sessionStorage.removeItem(this.NS)
       if (this.prayFor) {
@@ -102,6 +107,9 @@ export default {
         this.prayer.query = this.prayer.toProfile.displayName
         this.prayer.toUserID = this.prayer.toProfile.userID
       }
+      setTimeout(() => {
+        this.state = 'ready'
+      }, 2500)
     },
     async chooseProfile (profile) {
       this.prayer.toUserID = profile.userID

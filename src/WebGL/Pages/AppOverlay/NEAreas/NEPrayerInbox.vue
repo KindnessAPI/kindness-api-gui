@@ -1,6 +1,6 @@
 <template>
   <div class="inline">
-    <NEIcon :label="'Send Prayers'" @click="onClick" :badge="0" :img="require('../img/church.svg')"></NEIcon>
+    <NEIcon :label="`Check Notification`" :color="'gray'" @click="onClick" :badge="node.badge" :img="require('../img/bell.svg')"></NEIcon>
   </div>
 </template>
 
@@ -20,9 +20,9 @@ export default {
   },
   methods: {
     onClick () {
-      this.$emit('prayFor', this.node.value.userID)
-      this.$emit('prayerID', false)
-      this.$emit('overlay', 'prayer')
+      // this.$emit('prayerID', '___')
+      // this.$emit('notify')
+      this.$emit('overlay', 'notify')
     }
   }
 }
