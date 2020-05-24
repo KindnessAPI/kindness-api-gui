@@ -20,7 +20,7 @@ export default {
   },
   methods: {
     onClick () {
-      this.$emit('overlayconfig', {
+      this.$emit('config', {
         back: 'node-panel'
       })
       this.$emit('overlay', 'prayer-outbox')

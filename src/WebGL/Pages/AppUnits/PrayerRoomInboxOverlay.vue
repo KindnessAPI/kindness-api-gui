@@ -3,13 +3,13 @@
     <!--  -->
 
     <div class="h-full  overflow-y-scroll scrolling-touch">
-      <div class="bg-yellow-400 p-3 text-bold cursor-pointer block" @click="$emit('overlay', overlayconfig.back)">
+      <div class="bg-yellow-400 p-3 text-bold cursor-pointer block" @click="$emit('overlay', config.back)">
         ← Back
       </div>
 
       <div class="p-3">
-        <!-- {{ overlayconfig }} -->
-        <PrayerReceivedView :prayerID="overlayconfig.prayerID"></PrayerReceivedView>
+        <!-- {{ config }} -->
+        <PrayerReceivedView :prayerID="config.prayerID"></PrayerReceivedView>
       </div>
 
     </div>
@@ -21,7 +21,7 @@
 import { Auth } from '../../../APIs/KA'
 export default {
   props: {
-    overlayconfig: {}
+    config: {}
   },
   components: {
     ...require('../../webgl').default

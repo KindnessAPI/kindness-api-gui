@@ -3,12 +3,12 @@
     <!--  -->
 
     <div class="h-full  overflow-y-scroll scrolling-touch">
-      <div class="bg-yellow-400 p-3 text-bold cursor-pointer block" @click="$emit('overlay', overlayconfig.back)">
+      <div class="bg-yellow-400 p-3 text-bold cursor-pointer block" @click="$emit('overlay', config.back)">
         ← Back
       </div>
 
       <div v-if="bell" class="p-3">
-        <PrayerComposerView :locksender="true" :socket="bell" :prayFor="overlayconfig.prayFor"></PrayerComposerView>
+        <PrayerComposerView :locksender="true" :socket="bell" :prayFor="config.prayFor"></PrayerComposerView>
       </div>
 
     </div>
@@ -21,7 +21,7 @@ import { Auth } from '../../../APIs/KA'
 export default {
   props: {
     bell: {},
-    overlayconfig: {}
+    config: {}
     // prayerID: {},
     // prayFor: {}
     // Auth: {}

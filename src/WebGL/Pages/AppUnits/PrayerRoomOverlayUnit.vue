@@ -21,10 +21,10 @@
 
       <div v-if="socket" class="p-3">
         <div v-if="tab === 'now'">
-          <PrayerComposerView :socket="socket" :prayFor="overlayconfig.prayFor"></PrayerComposerView>
+          <PrayerComposerView :socket="socket" :prayFor="config.prayFor"></PrayerComposerView>
         </div>
         <div v-if="tab === 'received'">
-          <PrayerReceivedView :prayerID="overlayconfig.prayerID" :socket="socket" ></PrayerReceivedView>
+          <PrayerReceivedView :prayerID="config.prayerID" :socket="socket" ></PrayerReceivedView>
         </div>
         <div v-if="tab === 'sent'">
           <PrayerSentView :socket="socket" ></PrayerSentView>
@@ -40,7 +40,7 @@
 import { Auth, LambdaClient, getWS, getID } from '../../../APIs/KA'
 export default {
   props: {
-    overlayconfig: {}
+    config: {}
     // prayerID: {},
     // prayFor: {}
     // Auth: {}
@@ -61,14 +61,14 @@ export default {
     // if (this.prayerID) {
     //   this.tab = 'received'
     // }
-    // if (this.overlayconfig.prayFor) {
-    //   this.prayFor = this.overlayconfig.prayFor
+    // if (this.config.prayFor) {
+    //   this.prayFor = this.config.prayFor
     // }
-    // if (this.overlayconfig.prayerID) {
-    //   this.prayerID = this.overlayconfig.prayerID
+    // if (this.config.prayerID) {
+    //   this.prayerID = this.config.prayerID
     // }
-    if (this.overlayconfig.tab) {
-      this.tab = this.overlayconfig.tab
+    if (this.config.tab) {
+      this.tab = this.config.tab
     }
     this.makeSocket()
   },

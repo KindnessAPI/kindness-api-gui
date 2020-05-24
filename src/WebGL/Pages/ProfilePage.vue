@@ -167,7 +167,7 @@
           :userID="queryUserID"
           :username="queryUsername"
           @overlay="overlay = $event"
-          @overlayconfig="overlayconfig = $event"
+          @config="config = $event"
           @notify="prepareNotifs"
           v-if="currentNode && graph && overlay === 'node-panel'"
         ></NodePanelUnit>
@@ -198,9 +198,9 @@
             @overlay="overlay = $event"
             @prayerID="prayerID = $event"
             @notify="prepareNotifs"
-            @overlayconfig="overlayconfig = $event"
+            @config="config = $event"
             :graph="graph"
-            :overlayconfig="overlayconfig"
+            :config="config"
             :me="me"
             v-if="overlay === 'notify'"
           ></NotificationUnit>
@@ -218,7 +218,7 @@
             :prayerID="prayerID"
             :prayFor="prayFor"
             :me="me"
-            :overlayconfig="overlayconfig"
+            :config="config"
             v-if="overlay === 'prayer'"
           ></PrayerRoomOverlayUnit>
         <!-- </keep-alive> -->
@@ -236,7 +236,7 @@
             :prayFor="prayFor"
             :me="me"
             :bell="myBell"
-            :overlayconfig="overlayconfig"
+            :config="config"
             v-if="myBell && overlay === 'pray-now'"
           ></PrayerRoomComposeOverlay>
         <!-- </keep-alive> -->
@@ -253,7 +253,7 @@
             :prayerID="prayerID"
             :prayFor="prayFor"
             :me="me"
-            :overlayconfig="overlayconfig"
+            :config="config"
             v-if="overlay === 'prayer-inbox'"
           ></PrayerRoomInboxOverlay>
         <!-- </keep-alive> -->
@@ -270,7 +270,7 @@
             :prayerID="prayerID"
             :prayFor="prayFor"
             :me="me"
-            :overlayconfig="overlayconfig"
+            :config="config"
             v-if="overlay === 'prayer-outbox'"
           ></PrayerRoomOutboxOverlay>
         <!-- </keep-alive> -->
@@ -287,7 +287,7 @@
             :prayerID="prayerID"
             :prayFor="prayFor"
             :me="me"
-            :overlayconfig="overlayconfig"
+            :config="config"
             v-if="overlay === 'prayer-detail'"
           ></PrayerRoomDetailOverlay>
         <!-- </keep-alive> -->
@@ -332,7 +332,7 @@ export default {
         earth: require('./AppUnits/hdri/astronomy-atmosphere-earth-exploration-220201.jpg'),
         galaxy: require('./AppUnits/hdri/sky-space-dark-galaxy-2150.jpg')
       },
-      overlayconfig: false,
+      config: false,
       prayerID: false,
       prayFor: false,
       bellButton: {
@@ -417,7 +417,7 @@ export default {
   },
   methods: {
     onNotify () {
-      this.overlayconfig = {}
+      this.config = {}
       this.overlay = 'notify'
     },
     onMail () {

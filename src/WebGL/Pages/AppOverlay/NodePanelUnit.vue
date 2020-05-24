@@ -15,9 +15,9 @@
           <div class="mt-3 flex justify-start items-center flex-wrap">
             <NEIcon v-if="isMe" :color="'teal'" :img="require('./img/profile-teal.svg')" @click="tab = 'settings'" label="Edit My Profile"></NEIcon>
             <NENodeTraverseAction :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NENodeTraverseAction>
-            <NEPrayerRoom @overlayconfig="$emit('overlayconfig', $event)" @notify="$emit('notify', $event)" @prayerID="$emit('prayerID', $event)" @prayFor="$emit('prayFor', $event)" @overlay="$emit('overlay', $event)" :isMe="isMe" :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEPrayerRoom>
-            <NENotificationButton @overlayconfig="$emit('overlayconfig', $event)" @notify="$emit('notify', $event)" @prayerID="$emit('prayerID', $event)" @overlay="$emit('overlay', $event)" :isMe="isMe" :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NENotificationButton>
-            <NEPrayerOutBoxButton v-if="isMe" @overlayconfig="$emit('overlayconfig', $event)" @notify="$emit('notify', $event)" @prayerID="$emit('prayerID', $event)" @overlay="$emit('overlay', $event)" :isMe="isMe" :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEPrayerOutBoxButton>
+            <NEPrayerRoom @config="$emit('config', $event)" @notify="$emit('notify', $event)" @prayerID="$emit('prayerID', $event)" @prayFor="$emit('prayFor', $event)" @overlay="$emit('overlay', $event)" :isMe="isMe" :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEPrayerRoom>
+            <NENotificationButton @config="$emit('config', $event)" @notify="$emit('notify', $event)" @prayerID="$emit('prayerID', $event)" @overlay="$emit('overlay', $event)" :isMe="isMe" :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NENotificationButton>
+            <NEPrayerOutBoxButton v-if="isMe" @config="$emit('config', $event)" @notify="$emit('notify', $event)" @prayerID="$emit('prayerID', $event)" @overlay="$emit('overlay', $event)" :isMe="isMe" :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEPrayerOutBoxButton>
           </div>
         </div>
         <div v-if="tab === 'settings'" :key="node._id" >
@@ -36,8 +36,8 @@
         <NEProfileArea :isMe="isMe" :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEProfileArea>
         <div class="mt-3 flex justify-start items-center flex-wrap">
           <NENodeTraverseAction :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NENodeTraverseAction>
-          <NEPrayerRoom @overlayconfig="$emit('overlayconfig', $event)" @notify="$emit('notify', $event)" @prayerID="$emit('prayerID', $event)" @prayFor="$emit('prayFor', $event)" @overlay="$emit('overlay', $event)" :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEPrayerRoom>
-          <NENotificationButton @overlayconfig="$emit('overlayconfig', $event)" @notify="$emit('notify', $event)" @prayerID="$emit('prayerID', $event)" @overlay="$emit('overlay', $event)" :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NENotificationButton>
+          <NEPrayerRoom @config="$emit('config', $event)" @notify="$emit('notify', $event)" @prayerID="$emit('prayerID', $event)" @prayFor="$emit('prayFor', $event)" @overlay="$emit('overlay', $event)" :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEPrayerRoom>
+          <NENotificationButton @config="$emit('config', $event)" @notify="$emit('notify', $event)" @prayerID="$emit('prayerID', $event)" @overlay="$emit('overlay', $event)" :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NENotificationButton>
         </div>
       </div>
     </div>

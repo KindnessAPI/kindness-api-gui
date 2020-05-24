@@ -22,7 +22,7 @@ export default {
     onClick () {
       // this.$emit('prayFor', this.node.value.userID)
       // this.$emit('prayerID', false)
-      this.$emit('overlayconfig', {
+      this.$emit('config', {
         prayFor: this.node.value.userID,
         back: 'node-panel'
       })

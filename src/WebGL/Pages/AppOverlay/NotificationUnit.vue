@@ -1,10 +1,20 @@
 <template>
   <div class="overlay border border-yellow-600">
-    <div class="p-3 bg-yellow-400 leading-6 rounded-t-lg text-center">Notifications</div>
+    <div class="bg-yellow-400 leading-6 rounded-t-lg flex justify-between">
+      <div class="w-1/5 p-3 cursor-pointer">
+        <span v-if="config.back" @click="onBack">← Back</span>
+      </div>
+      <div class="w-3/5 p-3 text-center">
+        Notification
+      </div>
+      <div class="w-1/5 p-3 ">
+
+      </div>
+    </div>
     <div class="content-height w-full overflow-y-scroll overflow-x-hidden scrolling-touch relative">
       <div class="p-3 text-center" v-if="!notifications">Loading....</div>
-      <div class="p-3 text-center" v-if="notifications && notifications.length === 0 && overlayconfig.fromUserID">No Notification from this person.</div>
-      <div class="p-3 text-center" v-if="notifications && notifications.length === 0 && !overlayconfig.fromUserID">No Notification</div>
+      <div class="p-3 text-center" v-if="notifications && notifications.length === 0 && config.fromUserID">No Notification from this person.</div>
+      <div class="p-3 text-center" v-if="notifications && notifications.length === 0 && !config.fromUserID">No Notification</div>
       <table class="w-full" v-if="notifications">
         <tr class="cursor-pointer hover:bg-blue-200" @click="onClick(notif)" :class="{ 'bg-blue-100': !notif.read }" v-for="notif in notifications" :key="notif._id">
           <td class="p-3 w-20 cursor-pointer">
@@ -28,7 +38,7 @@ import * as API from '../../../APIs/KA.js'
 import moment from 'moment'
 export default {
   props: {
-    overlayconfig: {
+    config: {
       default () {
         return {}
       }
@@ -51,13 +61,19 @@ export default {
     this.getNotifications()
   },
   methods: {
+    onBack () {
+      if (this.config.back === 'notify') {
+        this.config.back = 'node-panel'
+      }
+      this.$emit('overlay', this.config.back)
+    },
     getMoment (date) {
       return moment(date).fromNow()
     },
     async getNotifications () {
       let fromUserID
-      if (this.overlayconfig.fromUserID) {
-        fromUserID = this.overlayconfig.fromUserID
+      if (this.config.fromUserID) {
+        fromUserID = this.config.fromUserID
       }
       this.notifications = await API.Notification.getMyNotifications({ pageAt: 0, perPage: 50, fromUserID })
     },
@@ -67,13 +83,13 @@ export default {
         // this.$router.push(`/prayer-room?prayerID=${notif.value.prayerID}`)
         API.Notification.udpateNotificationStatus({ isRead: true, list: [notif._id] })
           .then(() => {
-            // this.$emit('overlayconfig', {
+            // this.$emit('config', {
             //   tab: 'received',
             //   prayerID: notif.value.prayerID
             // })
             this.$emit('notify')
 
-            this.$emit('overlayconfig', {
+            this.$emit('config', {
               prayerID: notif.value.prayerID,
               back: 'notify'
             })

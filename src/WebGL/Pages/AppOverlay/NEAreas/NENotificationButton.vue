@@ -20,7 +20,7 @@ export default {
   },
   methods: {
     onClick () {
-      this.$emit('overlayconfig', {
+      this.$emit('config', {
         fromUserID: this.node.value.userID,
         back: 'node-panel'
       })
