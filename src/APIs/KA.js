@@ -1398,7 +1398,7 @@ export class Prayer {
 }
 
 export class Notification {
-  static async getMyNotifications ({ pageAt = 0, perPage = 50 }) {
+  static async getMyNotifications ({ pageAt = 0, perPage = 50, fromUserID }) {
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -1407,6 +1407,7 @@ export class Notification {
       data: {
         method: 'get-my-notifications',
         payload: {
+          fromUserID,
           skip: pageAt * perPage,
           limit: perPage
         }

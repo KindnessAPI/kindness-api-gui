@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div @click="$emit('click')" class="relative p-4 w-24 h-24 m-2  border rounded-lg inline-block hover:opacity-50 cursor-pointer" :class="{ [`border-${color}-600 bg-${color}-200`]: true }">
+    <div @click="$emit('click')" class="relative p-4 w-24 h-24 m-1 border rounded-lg inline-block hover:opacity-50 cursor-pointer" :class="{ [`border-${color}-600 bg-${color}-200`]: true }">
       <div class="text-center mb-2">
         <img class="inline-block w-8 h-8" :src="img" alt="">
       </div>

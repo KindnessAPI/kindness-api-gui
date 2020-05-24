@@ -3,7 +3,7 @@
     <div class="p-3 bg-yellow-400 leading-6 rounded-t-lg text-center">Notifications</div>
     <div class="content-height w-full overflow-y-scroll overflow-x-hidden scrolling-touch relative">
       <table class="w-full" v-if="notifications">
-        <tr class="cursor-pointer" @click="onClick(notif)" :class="{ 'bg-blue-100': !notif.read }" v-for="notif in notifications.filter(nFilter)" :key="notif._id">
+        <tr class="cursor-pointer" @click="onClick(notif)" :class="{ 'bg-blue-100': !notif.read }" v-for="notif in notifications" :key="notif._id">
           <td class="p-3 w-20">
             <img :src="notif.fromProfile.photoImg" class="select-none w-12 h-12 object-cover object-center rounded-full" alt="">
           </td>
@@ -48,18 +48,15 @@ export default {
     this.getNotifications()
   },
   methods: {
-    nFilter (item) {
-      if (this.overlayconfig && this.overlayconfig.userID) {
-        return item.fromUserID === this.overlayconfig.userID
-      } else {
-        return true
-      }
-    },
     getMoment (date) {
       return moment(date).fromNow()
     },
     async getNotifications () {
-      this.notifications = await API.Notification.getMyNotifications({ pageAt: 0, perPage: 50 })
+      let fromUser
+      if (this.overlayconfig.userID) {
+        fromUser = this.overlayconfig.userID
+      }
+      this.notifications = await API.Notification.getMyNotifications({ pageAt: 0, perPage: 50, fromUser })
     },
     async onClick (notif) {
       if (notif.type === 'prayer') {

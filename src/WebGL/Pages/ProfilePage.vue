@@ -258,6 +258,23 @@
         <!-- </keep-alive> -->
       </transition>
 
+      <transition name="flyin">
+        <!-- <keep-alive> -->
+          <PrayerRoomOutboxOverlay
+            :key="me.userID"
+            @close="overlay = false"
+            @reload="onReload"
+            @overlay="overlay = $event"
+            :graph="graph"
+            :prayerID="prayerID"
+            :prayFor="prayFor"
+            :me="me"
+            :overlayconfig="overlayconfig"
+            v-if="overlay === 'prayer-outbox'"
+          ></PrayerRoomOutboxOverlay>
+        <!-- </keep-alive> -->
+      </transition>
+
       <transition name="circlein">
         <div v-if="overlay" @click="overlay = false" class="overlay-close-btn">
           <img src="./icon/close.svg" class="cursor-pointer close-icon bg-white p-2 rounded-full" alt="Close" title="close">
