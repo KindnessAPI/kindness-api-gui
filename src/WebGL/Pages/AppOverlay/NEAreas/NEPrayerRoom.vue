@@ -20,9 +20,13 @@ export default {
   },
   methods: {
     onClick () {
-      this.$emit('prayFor', this.node.value.userID)
-      this.$emit('prayerID', false)
-      this.$emit('overlay', 'prayer')
+      // this.$emit('prayFor', this.node.value.userID)
+      // this.$emit('prayerID', false)
+      this.$emit('overlayconfig', {
+        prayFor: this.node.value.userID,
+        back: 'node-panel'
+      })
+      this.$emit('overlay', 'pray-now')
     }
   }
 }

@@ -20,8 +20,10 @@ export default {
   },
   methods: {
     onClick () {
-      // this.$emit('prayerID', '___')
-      // this.$emit('notify')
+      this.$emit('overlayconfig', {
+        userID: this.node.value.userID,
+        back: 'node-panel'
+      })
       this.$emit('overlay', 'notify')
     }
   }

@@ -166,9 +166,8 @@
           :graph="graph"
           :userID="queryUserID"
           :username="queryUsername"
-          @prayFor="prayFor = $event"
-          @prayerID="prayerID = $event"
           @overlay="overlay = $event"
+          @overlayconfig="overlayconfig = $event"
           @notify="prepareNotifs"
           v-if="currentNode && graph && overlay === 'node-panel'"
         ></NodePanelUnit>
@@ -199,8 +198,9 @@
             @overlay="overlay = $event"
             @prayerID="prayerID = $event"
             @notify="prepareNotifs"
+            @overlayconfig="overlayconfig = $event"
             :graph="graph"
-
+            :overlayconfig="overlayconfig"
             :me="me"
             v-if="overlay === 'notify'"
           ></NotificationUnit>
@@ -218,8 +218,43 @@
             :prayerID="prayerID"
             :prayFor="prayFor"
             :me="me"
+            :overlayconfig="overlayconfig"
             v-if="overlay === 'prayer'"
           ></PrayerRoomOverlayUnit>
+        <!-- </keep-alive> -->
+      </transition>
+
+      <transition name="flyin">
+        <!-- <keep-alive> -->
+          <PrayerRoomComposeOverlay
+            :key="me.userID"
+            @close="overlay = false"
+            @reload="onReload"
+            @overlay="overlay = $event"
+            :graph="graph"
+            :prayerID="prayerID"
+            :prayFor="prayFor"
+            :me="me"
+            :overlayconfig="overlayconfig"
+            v-if="overlay === 'pray-now'"
+          ></PrayerRoomComposeOverlay>
+        <!-- </keep-alive> -->
+      </transition>
+
+      <transition name="flyin">
+        <!-- <keep-alive> -->
+          <PrayerRoomInboxOverlay
+            :key="me.userID"
+            @close="overlay = false"
+            @reload="onReload"
+            @overlay="overlay = $event"
+            :graph="graph"
+            :prayerID="prayerID"
+            :prayFor="prayFor"
+            :me="me"
+            :overlayconfig="overlayconfig"
+            v-if="overlay === 'prayer-inbox'"
+          ></PrayerRoomInboxOverlay>
         <!-- </keep-alive> -->
       </transition>
 
@@ -262,6 +297,7 @@ export default {
         earth: require('./AppUnits/hdri/astronomy-atmosphere-earth-exploration-220201.jpg'),
         galaxy: require('./AppUnits/hdri/sky-space-dark-galaxy-2150.jpg')
       },
+      overlayconfig: false,
       prayerID: false,
       prayFor: false,
       bellButton: {
@@ -345,6 +381,7 @@ export default {
   },
   methods: {
     onNotify () {
+      this.overlayconfig = {}
       this.overlay = 'notify'
     },
     onMail () {

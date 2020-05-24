@@ -2,10 +2,10 @@
   <div class="overlay border border-yellow-600">
     <div class="p-3 bg-yellow-400 leading-6 rounded-t-lg text-center">Notifications</div>
     <div class="content-height w-full overflow-y-scroll overflow-x-hidden scrolling-touch relative">
-      <table class="w-full">
-        <tr class="cursor-pointer" @click="onClick(notif)" :class="{ 'bg-blue-100': !notif.read }" v-for="notif in notifications" :key="notif._id">
+      <table class="w-full" v-if="notifications">
+        <tr class="cursor-pointer" @click="onClick(notif)" :class="{ 'bg-blue-100': !notif.read }" v-for="notif in notifications.filter(nFilter)" :key="notif._id">
           <td class="p-3 w-20">
-            <img :src="notif.toProfile.photoImg" class="select-none w-12 h-12 object-cover object-center rounded-full" alt="">
+            <img :src="notif.fromProfile.photoImg" class="select-none w-12 h-12 object-cover object-center rounded-full" alt="">
           </td>
           <td class="p-3 text-notif">
             <span>{{ notif.text }}</span>
@@ -25,6 +25,11 @@ import * as API from '../../../APIs/KA.js'
 import moment from 'moment'
 export default {
   props: {
+    overlayconfig: {
+      default () {
+        return {}
+      }
+    },
     me: {},
     graph: {}
   },
@@ -43,6 +48,13 @@ export default {
     this.getNotifications()
   },
   methods: {
+    nFilter (item) {
+      if (this.overlayconfig && this.overlayconfig.userID) {
+        return item.fromUserID === this.overlayconfig.userID
+      } else {
+        return true
+      }
+    },
     getMoment (date) {
       return moment(date).fromNow()
     },
@@ -51,12 +63,21 @@ export default {
     },
     async onClick (notif) {
       if (notif.type === 'prayer') {
-        this.$emit('prayerID', notif.value.prayerID)
+        // this.$emit('prayerID', notif.value.prayerID)
         // this.$router.push(`/prayer-room?prayerID=${notif.value.prayerID}`)
         API.Notification.udpateNotificationStatus({ isRead: true, list: [notif._id] })
           .then(() => {
+            // this.$emit('overlayconfig', {
+            //   tab: 'received',
+            //   prayerID: notif.value.prayerID
+            // })
             this.$emit('notify')
-            this.$emit('overlay', 'prayer')
+
+            this.$emit('overlayconfig', {
+              prayerID: notif.value.prayerID,
+              back: 'notify'
+            })
+            this.$emit('overlay', 'prayer-inbox')
           })
       }
     }

@@ -37,9 +37,7 @@
           <div class="px-3 text-lg mb-2">
             Life is better when we have each other to share our tears and joy, hope, your mental health recovery journey, and praise. 😍
           </div>
-
         </div>
-
       </div>
     </div>
 

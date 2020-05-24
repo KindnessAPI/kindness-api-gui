@@ -1,6 +1,6 @@
 <template>
   <div>
-    <textarea placeholder="Pray for..." class="w-full rounded-none resize-none border-black border-l hover:border-green-500 p-3 text-xl bg-transparent focus:outline-none" cols="50" rows="1" @input="onSearch" v-model="prayer.query"></textarea>
+    <textarea placeholder="Pray for..." :disabled="locksender" class="w-full rounded-none resize-none border-black border-l hover:border-green-500 p-3 text-xl bg-transparent focus:outline-none" cols="50" rows="1" @input="onSearch" v-model="prayer.query"></textarea>
     <table v-show="profiles">
       <tr v-for="profile in profiles" :key="profile._id" @click="chooseProfile(profile)">
         <td class="pb-4 cursor-pointer">
@@ -16,7 +16,7 @@
     <div class="border-l rounded-none border-black hover:border-green-500 p-3">
       <button @click="sendPrayer" class="p-3 text-xl bg-gray-400 rounded-full bg-transparent focus:outline-none cursor-pointer hover:bg-gray-300">
         <span v-if="state === 'ready'">Send Prayer</span>
-        <span v-if="state === 'ok'">Successfully Sent</span>
+        <span v-if="state === 'ok'">Prayer Sent Successfully</span>
       </button>
     </div>
   </div>
@@ -26,6 +26,7 @@
 import { Profile, Auth } from '../../../APIs/KA'
 export default {
   props: {
+    locksender: {},
     socket: {},
     prayFor: {
       default: ''

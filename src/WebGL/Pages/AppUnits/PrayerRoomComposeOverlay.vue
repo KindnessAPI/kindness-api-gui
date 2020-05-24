@@ -3,32 +3,12 @@
     <!--  -->
 
     <div class="h-full  overflow-y-scroll scrolling-touch">
-      <div class="bg-yellow-400 p-3 text-bold cursor-pointer block" @click="$emit('overlay', 'notify')">
+      <div class="bg-yellow-400 p-3 text-bold cursor-pointer block" @click="$emit('overlay', overlayconfig.back)">
         ← Back
       </div>
 
-      <div class="flex justify-around md:justify-start bg-yellow-300 py-3">
-        <div :class="{ 'underline ': tab === 'now' }" @click="tab = 'now'" class="px-3 text-lg mr-4">
-          Pray Now
-        </div>
-        <div :class="{ 'underline ': tab === 'sent' }" @click="tab = 'sent'" class="px-3 text-lg mr-4">
-          Sent
-        </div>
-        <div :class="{ 'underline ': tab === 'received' }" @click="tab = 'received'" class="px-3 text-lg">
-          Received
-        </div>
-      </div>
-
       <div v-if="socket" class="p-3">
-        <div v-if="tab === 'now'">
-          <PrayerComposerView :socket="socket" :prayFor="overlayconfig.prayFor"></PrayerComposerView>
-        </div>
-        <div v-if="tab === 'received'">
-          <PrayerReceivedView :prayerID="overlayconfig.prayerID" :socket="socket" ></PrayerReceivedView>
-        </div>
-        <div v-if="tab === 'sent'">
-          <PrayerSentView :socket="socket" ></PrayerSentView>
-        </div>
+        <PrayerComposerView :locksender="true" :socket="socket" :prayFor="overlayconfig.prayFor"></PrayerComposerView>
       </div>
 
     </div>
