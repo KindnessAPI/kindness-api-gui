@@ -2,6 +2,9 @@
   <div class="overlay border border-yellow-600">
     <div class="p-3 bg-yellow-400 leading-6 rounded-t-lg text-center">Notifications</div>
     <div class="content-height w-full overflow-y-scroll overflow-x-hidden scrolling-touch relative">
+      <div class="p-3 text-center" v-if="!notifications">Loading....</div>
+      <div class="p-3 text-center" v-if="notifications && notifications.length === 0 && overlayconfig.fromUserID">No Notification from this person.</div>
+      <div class="p-3 text-center" v-if="notifications && notifications.length === 0 && !overlayconfig.fromUserID">No Notification</div>
       <table class="w-full" v-if="notifications">
         <tr class="cursor-pointer" @click="onClick(notif)" :class="{ 'bg-blue-100': !notif.read }" v-for="notif in notifications" :key="notif._id">
           <td class="p-3 w-20">

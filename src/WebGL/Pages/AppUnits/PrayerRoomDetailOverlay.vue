@@ -1,19 +1,12 @@
 <template>
   <div class="overlay">
-    <!--  -->
-
     <div class="h-full  overflow-y-scroll scrolling-touch">
       <div class="bg-yellow-400 p-3 text-bold cursor-pointer block" @click="$emit('overlay', overlayconfig.back)">
         ← Back
       </div>
 
-      <div class="p-3">
-        <!-- {{ overlayconfig }} -->
-        <PrayerDetailView :prayerID="overlayconfig.prayerID"></PrayerDetailView>
-      </div>
-
+      <PrayerDetailView :prayerID="overlayconfig.prayerID"></PrayerDetailView>
     </div>
-
   </div>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="prayer">
+  <div v-if="prayer" class="p-3">
     <div class="">
       From: @{{ prayer.username }}
     </div>
@@ -10,6 +10,7 @@
     <div class="whitespace-pre">{{ prayer.text }}</div>
     <!-- <pre>{{ prayer }}</pre> -->
   </div>
+  <div class="p-3 text-center" v-else-if="!prayer">Loading....</div>
 </template>
 
 <script>

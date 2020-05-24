@@ -17,6 +17,7 @@
 
 <script>
 import { Auth } from '../../../APIs/KA'
+
 export default {
   props: {
     bell: {},
