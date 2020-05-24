@@ -40,10 +40,6 @@ export default {
 </script>
 
 <style scoped>
-
-</style>
-
-<style scoped>
 .item-unit{
   height: calc(100% - 60px);
 }

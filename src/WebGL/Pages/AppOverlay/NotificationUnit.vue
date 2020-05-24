@@ -6,15 +6,15 @@
       <div class="p-3 text-center" v-if="notifications && notifications.length === 0 && overlayconfig.fromUserID">No Notification from this person.</div>
       <div class="p-3 text-center" v-if="notifications && notifications.length === 0 && !overlayconfig.fromUserID">No Notification</div>
       <table class="w-full" v-if="notifications">
-        <tr class="cursor-pointer" @click="onClick(notif)" :class="{ 'bg-blue-100': !notif.read }" v-for="notif in notifications" :key="notif._id">
-          <td class="p-3 w-20">
+        <tr class="cursor-pointer hover:bg-blue-200" @click="onClick(notif)" :class="{ 'bg-blue-100': !notif.read }" v-for="notif in notifications" :key="notif._id">
+          <td class="p-3 w-20 cursor-pointer">
             <img :src="notif.fromProfile.photoImg" class="select-none w-12 h-12 object-cover object-center rounded-full" alt="">
           </td>
-          <td class="p-3 text-notif">
+          <td class="p-3 text-notif cursor-pointer">
             <span>{{ notif.text }}</span>
             <div class="text-sm text-gray-500">{{ getMoment(notif.created_at) }}</div>
           </td>
-          <td class="p-3">
+          <td class="p-3 cursor-pointer">
             <div class="w-4 h-4 rounded-full bg-blue-400" v-if="!notif.read"></div>
           </td>
         </tr>
