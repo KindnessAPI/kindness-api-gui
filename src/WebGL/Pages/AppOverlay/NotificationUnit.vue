@@ -74,7 +74,7 @@ export default {
               prayerID: notif.value.prayerID,
               back: 'notify'
             })
-            this.$emit('overlay', 'prayer-inbox')
+            this.$emit('overlay', 'prayer-detail')
           })
       }
     }

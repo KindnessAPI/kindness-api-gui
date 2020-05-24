@@ -7,11 +7,13 @@
         ← Back
       </div>
 
-      <div v-if="bell" class="p-3">
-        <PrayerComposerView :locksender="true" :socket="bell" :prayFor="overlayconfig.prayFor"></PrayerComposerView>
+      <div class="p-3">
+        <!-- {{ overlayconfig }} -->
+        <PrayerDetailView :prayerID="overlayconfig.prayerID"></PrayerDetailView>
       </div>
 
     </div>
+
   </div>
 </template>
 
@@ -19,11 +21,7 @@
 import { Auth } from '../../../APIs/KA'
 export default {
   props: {
-    bell: {},
     overlayconfig: {}
-    // prayerID: {},
-    // prayFor: {}
-    // Auth: {}
   },
   components: {
     ...require('../../webgl').default
@@ -34,6 +32,8 @@ export default {
     }
   },
   mounted () {
+  },
+  methods: {
   }
 }
 </script>

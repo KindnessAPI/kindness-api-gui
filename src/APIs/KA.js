@@ -1353,7 +1353,7 @@ export class Channel {
 }
 
 export class Prayer {
-  static async getMyReceivedPrayer ({ pageAt = 0, perPage = 25 }) {
+  static async getMyReceivedPrayer ({ prayerID, pageAt = 0, perPage = 25 }) {
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -1362,6 +1362,7 @@ export class Prayer {
       data: {
         method: 'my-received-prayers',
         payload: {
+          prayerID,
           skip: pageAt * perPage,
           limit: perPage
         }

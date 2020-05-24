@@ -235,8 +235,9 @@
             :prayerID="prayerID"
             :prayFor="prayFor"
             :me="me"
+            :bell="myBell"
             :overlayconfig="overlayconfig"
-            v-if="overlay === 'pray-now'"
+            v-if="myBell && overlay === 'pray-now'"
           ></PrayerRoomComposeOverlay>
         <!-- </keep-alive> -->
       </transition>
@@ -272,6 +273,23 @@
             :overlayconfig="overlayconfig"
             v-if="overlay === 'prayer-outbox'"
           ></PrayerRoomOutboxOverlay>
+        <!-- </keep-alive> -->
+      </transition>
+
+      <transition name="flyin">
+        <!-- <keep-alive> -->
+          <PrayerRoomDetailOverlay
+            :key="me.userID"
+            @close="overlay = false"
+            @reload="onReload"
+            @overlay="overlay = $event"
+            :graph="graph"
+            :prayerID="prayerID"
+            :prayFor="prayFor"
+            :me="me"
+            :overlayconfig="overlayconfig"
+            v-if="overlay === 'prayer-detail'"
+          ></PrayerRoomDetailOverlay>
         <!-- </keep-alive> -->
       </transition>
 
@@ -323,6 +341,7 @@ export default {
         text: `🔔`,
         event: 'notify'
       },
+      myBell: false,
       myNode: false,
       allReady: false,
       profile: false,
@@ -575,6 +594,8 @@ export default {
       this.$on('onReset', () => {
         myBell.close()
       })
+
+      this.myBell = myBell
 
       // myBell.on('update-user-badge', (event) => {
       //   let { userID, badge } = event.data
