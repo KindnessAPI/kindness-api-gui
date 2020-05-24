@@ -52,11 +52,11 @@ export default {
       return moment(date).fromNow()
     },
     async getNotifications () {
-      let fromUser
-      if (this.overlayconfig.userID) {
-        fromUser = this.overlayconfig.userID
+      let fromUserID
+      if (this.overlayconfig.fromUserID) {
+        fromUserID = this.overlayconfig.fromUserID
       }
-      this.notifications = await API.Notification.getMyNotifications({ pageAt: 0, perPage: 50, fromUser })
+      this.notifications = await API.Notification.getMyNotifications({ pageAt: 0, perPage: 50, fromUserID })
     },
     async onClick (notif) {
       if (notif.type === 'prayer') {

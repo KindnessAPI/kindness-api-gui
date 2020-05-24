@@ -21,7 +21,7 @@ export default {
   methods: {
     onClick () {
       this.$emit('overlayconfig', {
-        userID: this.node.value.userID,
+        fromUserID: this.node.value.userID,
         back: 'node-panel'
       })
       this.$emit('overlay', 'notify')
