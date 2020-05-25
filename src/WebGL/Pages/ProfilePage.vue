@@ -574,7 +574,9 @@ export default {
     },
     updateBadgeByNode (node) {
       node.badge = node.badge || 0
-      this.$refs['edge-node'].$emit('badge', node)
+      if (this && this.$root) {
+        this.$root.$emit('badge-node', node)
+      }
     },
     async makeMySocket () {
       let myBell = new LambdaClient({

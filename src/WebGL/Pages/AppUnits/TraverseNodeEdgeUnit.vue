@@ -679,7 +679,7 @@ export default {
             }
           }
           onBadgeChange(node)
-          this.$on('badge', onBadgeChange)
+          this.$root.$on('badge-node', onBadgeChange)
 
           border.position.z = 2.99
           sprite.position.z = 3
