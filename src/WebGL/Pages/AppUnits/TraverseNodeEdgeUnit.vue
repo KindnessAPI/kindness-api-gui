@@ -687,7 +687,7 @@ export default {
           let spriteText = new SpriteText(`${node.name}`)
           spriteText.color = 'white'
           spriteText.strokeColor = 'black'
-          spriteText.strokeWidth = 1
+          spriteText.strokeWidth = 2
           spriteText.textHeight = 4
           spriteText.position.y = iconGeo.boundingSphere.radius * -1.35
 

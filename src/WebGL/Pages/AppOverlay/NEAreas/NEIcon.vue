@@ -7,7 +7,7 @@
       <div class="text-center text-xs leading-3" :class="{ [`text-${color}-600`]: true }">
         {{ label }}
       </div>
-      <div v-if="badge" class="absolute badge text-sm p-1 flex justify-center items-center text-white bg-red-600 rounded-full w-8 h-8 text-center select-none">{{ badge > 25 ? '25+' : badge }}</div>
+      <div v-if="badge" class="absolute badge text-sm p-1 flex justify-center items-center text-white bg-red-600 rounded-full w-8 h-8 text-center select-none z-20">{{ badge > 25 ? '25+' : badge }}</div>
     </div>
   </div>
 </template>

@@ -577,7 +577,7 @@ export default {
       this.mainArea = 'traverse'
     },
     updateBadgeByUserID ({ userID, badge }) {
-      let node = this.graph.nodes.find(n => n.type === 'traverse' && n.value.userID === userID)
+      let node = this.graph.nodes.find(n => (n.type === 'traverse' || n.type === 'user') && n.value.userID === userID)
       if (node) {
         node.badge = badge
         this.updateBadgeByNode(node)
