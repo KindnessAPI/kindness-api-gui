@@ -1,6 +1,6 @@
 <template>
   <div class="inline">
-    <NEIcon :label="'Send Prayers'" @click="onClick" :badge="0" :img="require('../img/church.svg')"></NEIcon>
+    <NEIcon :label="'Send Prayers'" @click="onClick" :badge="0" :img="require('../img/send-blue.svg')"></NEIcon>
   </div>
 </template>
 
