@@ -3,12 +3,13 @@
     <!--  -->
 
     <div class="h-full  overflow-y-scroll scrolling-touch">
-      <div class="bg-yellow-400 p-3 text-bold cursor-pointer block" @click="$emit('overlay', config.back)">
+      <div class="bg-yellow-400 p-3 text-bold cursor-pointer block" @click="onBack">
         ← Back
       </div>
 
       <div v-if="bell" class="p-3">
-        <PrayerComposerView :locksender="true" :socket="bell" :prayFor="config.prayFor"></PrayerComposerView>
+        <!-- {{ config }} -->
+        <PrayerComposerView :locksender="true" :socket="bell" :config="config" :prayFor="config.prayFor"></PrayerComposerView>
       </div>
 
     </div>
@@ -32,6 +33,16 @@ export default {
   data () {
     return {
       Auth: Auth
+    }
+  },
+  methods: {
+    onBack () {
+      if (this.config.backData) {
+        this.$emit('conifg', {
+          ...this.config.backData
+        })
+      }
+      this.$emit('overlay', this.config.back)
     }
   },
   mounted () {

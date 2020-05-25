@@ -5,7 +5,7 @@
         ← Back
       </div>
 
-      <PrayerDetailView :prayerID="config.prayerID"></PrayerDetailView>
+      <PrayerDetailView @config="$emit('config', $event)" :config="config" @overlay="$emit('overlay', $event)" :prayerID="config.prayerID"></PrayerDetailView>
     </div>
   </div>
 </template>

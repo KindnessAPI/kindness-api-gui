@@ -1,7 +1,12 @@
 <template>
   <div v-if="prayer" class="p-3">
     <div class="">
-      From: @{{ prayer.username }}
+      <span>
+        From: @{{ prayer.username }}
+      </span>
+      <span class="text-xs text-blue-500 cursor-pointer" @click="prayBack">
+        Pray Back
+      </span>
     </div>
     <div class="">
       To: @{{ prayer.toProfile.username }}
@@ -18,6 +23,7 @@ import moment from 'moment'
 import { Prayer } from '../../../APIs/KA'
 export default {
   props: {
+    config: {},
     prayerID: {}
   },
   data () {
@@ -30,6 +36,17 @@ export default {
     this.getPrayers()
   },
   methods: {
+    prayBack () {
+      // console.log(this.prayer.userID)
+      this.$emit('config', {
+        prayFor: this.prayer.fromProfile.userID,
+        back: 'prayer-detail',
+        backData: {
+          prayerID: this.prayerID
+        }
+      })
+      this.$emit('overlay', 'pray-now')
+    },
     async getPrayers () {
       this.prayers = await Prayer.getMyReceivedPrayer({ prayerID: this.prayerID })
       if (this.prayers[0]) {

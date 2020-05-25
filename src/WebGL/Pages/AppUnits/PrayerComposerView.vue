@@ -27,6 +27,7 @@
 import { Profile, Auth } from '../../../APIs/KA'
 export default {
   props: {
+    config: {},
     locksender: {},
     socket: {},
     prayFor: {
