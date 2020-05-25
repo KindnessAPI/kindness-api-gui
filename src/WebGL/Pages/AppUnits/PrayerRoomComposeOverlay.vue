@@ -37,11 +37,6 @@ export default {
   },
   methods: {
     onBack () {
-      if (this.config.backData) {
-        this.$emit('conifg', {
-          ...this.config.backData
-        })
-      }
       this.$emit('overlay', this.config.back)
     }
   },

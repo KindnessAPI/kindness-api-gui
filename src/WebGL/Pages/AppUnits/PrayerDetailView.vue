@@ -40,10 +40,7 @@ export default {
       // console.log(this.prayer.userID)
       this.$emit('config', {
         prayFor: this.prayer.fromProfile.userID,
-        back: 'prayer-detail',
-        backData: {
-          prayerID: this.prayerID
-        }
+        back: 'notify'
       })
       this.$emit('overlay', 'pray-now')
     },

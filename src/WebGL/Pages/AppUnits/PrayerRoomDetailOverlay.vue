@@ -4,7 +4,7 @@
       <div class="bg-yellow-400 p-3 text-bold cursor-pointer block" @click="onBack">
         ← Back
       </div>
-
+      <!-- {{ config }} -->
       <PrayerDetailView @config="$emit('config', $event)" :config="config" @overlay="$emit('overlay', $event)" :prayerID="config.prayerID"></PrayerDetailView>
     </div>
   </div>
