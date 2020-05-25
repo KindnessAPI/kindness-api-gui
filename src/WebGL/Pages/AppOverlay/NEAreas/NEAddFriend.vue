@@ -98,7 +98,7 @@ export default {
     },
     async searchData () {
       this.search.loading = true
-      this.search.result = await Profile.searchProfileByDisplayName({ displayName: this.search.query })
+      this.search.result = await Profile.searchProfileByDisplayName({ displayName: this.search.query || '_____' })
       this.search.result = removeDuplicates(this.search.result, 'userID')
       this.search.loading = false
     },

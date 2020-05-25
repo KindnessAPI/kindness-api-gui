@@ -100,6 +100,8 @@ export default {
         this.readNotif(notif)
           .then(() => {
             this.$router.push(`/profile/${notif.fromProfile.username}/${notif.fromProfile.userID}`)
+            this.$emit('config', {
+            })
             this.$emit('overlay', false)
           })
       }
