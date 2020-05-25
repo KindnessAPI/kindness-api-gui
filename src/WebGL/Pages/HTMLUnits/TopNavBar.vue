@@ -19,8 +19,9 @@
             </div> -->
             <router-link v-if="!Auth.isLoggedIn" exact-active-class="underline" class="cursor-pointer text-xl text-black my-2 mr-3" to="/login">Login</router-link>
             <router-link v-if="!Auth.isLoggedIn" exact-active-class="cursor-pointer underline" class="cursor-pointer text-xl text-black my-2 mr-3" to="/register">Register</router-link>
-            <router-link v-if="Auth.isLoggedIn" class="cursor-pointer text-xl text-black my-2 mr-3" :to="`/profile/${Auth.currentProfile.user.username}/${Auth.currentProfile.user.userID}`">@{{ Auth.currentProfile.user.username }}</router-link>
+            <!-- <router-link v-if="Auth.isLoggedIn" class="cursor-pointer text-xl text-black my-2 mr-3" :to="`/profile/${Auth.currentProfile.user.username}/${Auth.currentProfile.user.userID}`">@{{ Auth.currentProfile.user.username }}</router-link> -->
           </div>
+          <div class="inline-block mr-3"><slot name="bell"></slot></div>
 
           <router-link to="/galaxy" class="inline-flex md:hidden ml-3 mr-3" v-if="$route.path.indexOf('/profile') === -1">
             <span class="inline-block md:hidden py-2 text-2xl">😎</span>

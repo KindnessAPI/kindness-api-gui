@@ -11,7 +11,7 @@
       </button>
     </div>
     <div class="absolute top-0 right-0">
-      <button :key="ii" v-for="(btn, ii) in btns.filter(e => e.place === 'tr')" @click="$emit(btn.event)" class="focus:outline-none text-white bg-black h-12 border-blue-800 bg-transparent-black border rounded-full shadow-2xl px-4 mt-3 mr-3">
+      <button :key="ii" v-for="(btn, ii) in btns.filter(e => e.place === 'tr')" @click="$emit(btn.event)" :class="{ 'bg-transparent-red': btn.red }" class="focus:outline-none text-white h-12 border-blue-800 bg-transparent-black border rounded-full shadow-2xl px-4 mt-3 mr-3">
         {{ btn.text }}
       </button>
     </div>
@@ -803,5 +803,11 @@ export default {
 
 .bg-transparent-black{
   background-color: rgba(0,0,0,0.7);
+}
+.bg-transparent-red{
+  background-color: rgba(255,0,0,0.7);
+}
+.bg-transparent-white{
+  background-color: rgba(255,255,255,0.7);
 }
 </style>

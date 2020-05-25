@@ -6,7 +6,11 @@
 
     <div v-show="!openMenu" class="full relative">
       <div class="topnavbar">
-        <TopNavBar @menu="openMenu = !openMenu" ></TopNavBar>
+        <TopNavBar @menu="openMenu = !openMenu">
+          <div slot="bell" @click="onNotify" class="cursor-pointer px-3 py-2 rounded-full text-black bg-white" :class="{ 'text-white bg-red-500': bellButton.red }">
+            {{ bellButton.text }}
+          </div>
+        </TopNavBar>
       </div>
 
       <!--
@@ -313,7 +317,7 @@ import { PipeScissor, makeScrollBox } from '../Reusable'
 import { Auth, Graph, LambdaClient, getWS, getID, Profile, Notification } from '../../APIs/KA'
 import { Howl } from 'howler'
 var dingding = new Howl({
-  src: [require('./mp3/dingding.mp3')]
+  src: [require('./mp3/br-ding.mp3')]
 })
 
 // import axios from 'axios'
@@ -342,6 +346,7 @@ export default {
       bellButton: {
         place: 'tr',
         badge: 0,
+        red: false,
         text: `🔔`,
         event: 'notify'
       },
@@ -450,7 +455,7 @@ export default {
         event: 'view'
       })
 
-      this.btns.push(this.bellButton)
+      // this.btns.push(this.bellButton)
 
       // this.$emit('update-bell')
 
@@ -526,7 +531,13 @@ export default {
           this.updateBadgeByUserID({ userID: kn, badge: badgeInfo[kn] })
         }
       }
-      this.bellButton.text = `🔔 ${this.notifications.filter(e => !e.read).length}`
+      let counter = this.notifications.filter(e => !e.read).length
+      this.bellButton.text = `🔔 ${counter !== 0 ? counter : ''}`
+      if (counter > 0) {
+        this.bellButton.red = true
+      } else {
+        this.bellButton.red = false
+      }
     },
     async prepareGraph () {
       this.mainArea = 'loading'
