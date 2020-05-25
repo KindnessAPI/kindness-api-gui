@@ -77,23 +77,30 @@ export default {
       }
       this.notifications = await API.Notification.getMyNotifications({ pageAt: 0, perPage: 50, fromUserID })
     },
+    async readNotif (notif) {
+      return API.Notification.udpateNotificationStatus({ isRead: true, list: [notif._id] })
+        .then(() => {
+          // refresh notification list
+          this.$emit('notify')
+        })
+    },
     async onClick (notif) {
       if (notif.type === 'prayer') {
         // this.$emit('prayerID', notif.value.prayerID)
         // this.$router.push(`/prayer-room?prayerID=${notif.value.prayerID}`)
-        API.Notification.udpateNotificationStatus({ isRead: true, list: [notif._id] })
+        this.readNotif(notif)
           .then(() => {
-            // this.$emit('config', {
-            //   tab: 'received',
-            //   prayerID: notif.value.prayerID
-            // })
-            this.$emit('notify')
-
             this.$emit('config', {
               prayerID: notif.value.prayerID,
               back: 'notify'
             })
             this.$emit('overlay', 'prayer-detail')
+          })
+      } else if (notif.type === 'link-friend') {
+        this.readNotif(notif)
+          .then(() => {
+            this.$router.push(`/profile/${notif.fromProfile.username}/${notif.fromProfile.userID}`)
+            this.$emit('overlay', false)
           })
       }
     }

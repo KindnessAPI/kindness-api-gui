@@ -591,6 +591,13 @@ export default {
         dingding.play()
       })
 
+      myBell.on('link-friend', (event) => {
+        this.$root.$emit('link-friend', event.data)
+        console.log('link-friend', event)
+        this.prepareNotifs()
+        dingding.play()
+      })
+
       this.$on('onReset', () => {
         myBell.close()
       })
