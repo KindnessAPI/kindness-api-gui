@@ -1,7 +1,7 @@
 <template>
   <div class="">
 
-    <ScissorArea class="h-min100 lg:h-min70" style="z-index: -1;">
+    <ScissorArea class="h-min100 lg:h-min60" style="z-index: -1;">
       <div slot="dom" class="full">
       </div>
       <BannerScene slot="o3d"></BannerScene>
@@ -18,7 +18,7 @@ export default {
   },
   data () {
     return {
-      Auth: Auth
+      Auth
     }
   }
 }

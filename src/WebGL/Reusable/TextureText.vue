@@ -132,6 +132,9 @@ export default {
     this.$watch('align', () => {
       this.$emit('try-init')
     })
+    this.$watch('scale', () => {
+      this.$emit('try-init')
+    })
     this.lookup('base').onResize(() => {
       this.$emit('try-init')
     })
