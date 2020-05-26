@@ -108,6 +108,7 @@ export default {
           myGraph.numDimensions(2)
         }
       })
+
       var engine = myGraph(this.$refs['mounter'])
       // engine.pauseAnimation()
       this.pauseAnimation = () => {
@@ -118,6 +119,7 @@ export default {
           }
         })
       }
+
       this.$watch('run', () => {
         if (this.run) {
           engine.resumeAnimation()
@@ -132,85 +134,86 @@ export default {
 
       // this.$parent.$emit('scene', engine.scene())
       // this.$parent.$emit('camera', engine.camera())
-      // let ShaderMaterial = require('three/src/materials/ShaderMaterial').ShaderMaterial
-      // let Color = require('three/src/math/Color').Color
-      // let makePhantom = ({ color = `#32cd32`, opacity = 1 }) => new ShaderMaterial({
-      //   transparent: true,
-      //   depthWrite: false,
-      //   uniforms: {
-      //     color: { value: new Color(color) },
-      //     time: { value: 0 },
-      //     opacity: { value: opacity }
-      //   },
-      //   vertexShader: `
-      //     varying vec2 vUv;
-      //     void main (void) {
-      //       vUv = uv;
-      //       gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-      //     }
-      //   `,
-      //   fragmentShader: `
-      //     precision highp float;
 
-      //     // uniform lowp vec2 sceneRect;
-      //     uniform float time;
-      //     uniform vec3 color;
-      //     uniform float opacity;
-      //     varying vec2 vUv;
+      let ShaderMaterial = require('three/src/materials/ShaderMaterial').ShaderMaterial
+      let Color = require('three/src/math/Color').Color
+      let makePhantom = ({ color = `#32cd32`, opacity = 1 }) => new ShaderMaterial({
+        transparent: true,
+        depthWrite: false,
+        uniforms: {
+          color: { value: new Color(color) },
+          time: { value: 0 },
+          opacity: { value: opacity }
+        },
+        vertexShader: `
+          varying vec2 vUv;
+          void main (void) {
+            vUv = uv;
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+          }
+        `,
+        fragmentShader: `
+          precision highp float;
 
-      //     const mat2 m = mat2( 0.80,  0.60, -0.60,  0.80 );
+          // uniform lowp vec2 sceneRect;
+          uniform float time;
+          uniform vec3 color;
+          uniform float opacity;
+          varying vec2 vUv;
 
-      //     float noise( in vec2 p ) {
-      //       return sin(p.x)*sin(p.y);
-      //     }
+          const mat2 m = mat2( 0.80,  0.60, -0.60,  0.80 );
 
-      //     float fbm4( vec2 p )
-      //     {
-      //         float f = 0.0;
-      //         f += 0.5000 * noise( p ); p = m * p * 2.02;
-      //         f += 0.2500 * noise( p ); p = m * p * 2.03;
-      //         f += 0.1250 * noise( p ); p = m * p * 2.01;
-      //         f += 0.0625 * noise( p );
-      //         return f / 0.9375;
-      //     }
+          float noise( in vec2 p ) {
+            return sin(p.x)*sin(p.y);
+          }
 
-      //     float fbm6( vec2 p )
-      //     {
-      //         float f = 0.0;
-      //         f += 0.500000*(0.5+0.5*noise( p )); p = m*p*2.02;
-      //         f += 0.250000*(0.5+0.5*noise( p )); p = m*p*2.03;
-      //         f += 0.125000*(0.5+0.5*noise( p )); p = m*p*2.01;
-      //         f += 0.062500*(0.5+0.5*noise( p )); p = m*p*2.04;
-      //         f += 0.031250*(0.5+0.5*noise( p )); p = m*p*2.01;
-      //         f += 0.015625*(0.5+0.5*noise( p ));
-      //         return f/0.96875;
-      //     }
+          float fbm4( vec2 p )
+          {
+              float f = 0.0;
+              f += 0.5000 * noise( p ); p = m * p * 2.02;
+              f += 0.2500 * noise( p ); p = m * p * 2.03;
+              f += 0.1250 * noise( p ); p = m * p * 2.01;
+              f += 0.0625 * noise( p );
+              return f / 0.9375;
+          }
 
-      //     float pattern (vec2 p) {
-      //       float vout = fbm4( p + time + fbm6( p + fbm4( p + time )) );
-      //       return abs(vout);
-      //     }
+          float fbm6( vec2 p )
+          {
+              float f = 0.0;
+              f += 0.500000*(0.5+0.5*noise( p )); p = m*p*2.02;
+              f += 0.250000*(0.5+0.5*noise( p )); p = m*p*2.03;
+              f += 0.125000*(0.5+0.5*noise( p )); p = m*p*2.01;
+              f += 0.062500*(0.5+0.5*noise( p )); p = m*p*2.04;
+              f += 0.031250*(0.5+0.5*noise( p )); p = m*p*2.01;
+              f += 0.015625*(0.5+0.5*noise( p ));
+              return f/0.96875;
+          }
 
-      //     void main (void) {
-      //       vec3 outColor = vec3(0.0);
-      //       vec2 pt = vUv.xy;
-      //       // pt.y = pt.y * (sceneRect.y / sceneRect.x);
-      //       pt.xy = pt.xy * 2.0;
+          float pattern (vec2 p) {
+            float vout = fbm4( p + time + fbm6( p + fbm4( p + time )) );
+            return abs(vout);
+          }
 
-      //       outColor.r = 1.0 - 0.55 * pattern(pt.xy + -0.4015 * cos(time));
-      //       outColor.g = 1.0 - 0.55 * pattern(pt.xy + 0.0);
-      //       outColor.b = 1.0 - 0.55 * pattern(pt.xy + 0.4015 * cos(time));
+          void main (void) {
+            vec3 outColor = vec3(0.0);
+            vec2 pt = vUv.xy;
+            // pt.y = pt.y * (sceneRect.y / sceneRect.x);
+            pt.xy = pt.xy * 2.0;
 
-      //       gl_FragColor = vec4(clamp(color * outColor.rgb, 0.0, 1.0), opacity);
-      //     }
-      //   `
-      // })
-      // // let phantomMatLime = makePhantom({ color: 'rgb(20, 156, 255)', opacity: 1 })
-      // let phantomMatWhite = makePhantom({ color: '#ffffff', opacity: 1 })
-      // this.base.onLoop(() => {
-      //   // phantomMatLime.uniforms.time.value = window.performance.now() * 0.001
-      //   phantomMatWhite.uniforms.time.value = window.performance.now() * 0.001
-      // })
+            outColor.r = 1.0 - 0.55 * pattern(pt.xy + -0.4015 * cos(time));
+            outColor.g = 1.0 - 0.55 * pattern(pt.xy + 0.0);
+            outColor.b = 1.0 - 0.55 * pattern(pt.xy + 0.4015 * cos(time));
+
+            gl_FragColor = vec4(clamp(color * outColor.rgb, 0.0, 1.0), opacity);
+          }
+        `
+      })
+      // let phantomMatLime = makePhantom({ color: 'rgb(20, 156, 255)', opacity: 1 })
+      let phantomMatWhite = makePhantom({ color: '#ffffff', opacity: 1 })
+      this.base.onLoop(() => {
+        // phantomMatLime.uniforms.time.value = window.performance.now() * 0.001
+        phantomMatWhite.uniforms.time.value = window.performance.now() * 0.001
+      })
 
       // this.cuber = new ShaderCube({ renderer: engine.renderer(), loop: this.base.onLoop, res: 32 })
       // this.cuber.out.material.transparent = true
@@ -336,6 +339,7 @@ export default {
       this.o3d.scale.x = 5
       this.o3d.scale.y = 5
       this.o3d.scale.z = 5
+
       engine.scene().add(this.o3d)
 
       this.base.onInit()
@@ -601,10 +605,10 @@ export default {
       borderGeoBadge.translate(0, 0, -0.1)
 
       let transparentMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0 })
-      let whiteMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 1.0, color: 0xffffff })
+      // let whiteMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 1.0, color: 0xffffff })
       let blueMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0.85, color: 0xffffff })
       let limeMat = new MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0.85, color: 0x32cd32 })
-      // let whiteMat = phantomMatWhite
+      let whiteMat = phantomMatWhite
       // let limeMat = phantomMatLime
       // let blueMat = phantomMatWhite
 

@@ -116,6 +116,8 @@
         :ddrun="overlay === false"
         ref="edge-node"
       >
+        <Spaceship v-if="ready" :visible="mainArea !== 'loading'"></Spaceship>
+        <ParametricCluster v-if="ready" :visible="mainArea === 'loading'" :mode="'magic'"></ParametricCluster>
       </TraverseNodeEdgeUnit>
 
       <transition name="fade">
@@ -341,6 +343,7 @@
 </template>
 
 <script>
+import { makeSDK } from '../../human'
 import { PipeScissor } from '../Reusable'
 import { Auth, Graph, LambdaClient, getWS, getID, Profile, Notification } from '../../APIs/KA'
 import { Howl } from 'howler'
@@ -358,6 +361,8 @@ export default {
   },
   data () {
     return {
+      ready: false,
+      sdk: false,
       isDekstop: false,
       // transitionSceneList: [
       //   'DashboardScene',
@@ -679,6 +684,8 @@ export default {
     }
   },
   async mounted () {
+    this.sdk = await makeSDK()
+    this.ready = true
     // this.base.onResize(() => {
     //   this.isDekstop = window.innerWidth >= 500
     // })

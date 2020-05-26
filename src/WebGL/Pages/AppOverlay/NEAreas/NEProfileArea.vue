@@ -1,5 +1,5 @@
 <template>
-  <div v-if="profile" class="rounded-lg p-2" style="background-color: rgba(255,255,255,0.5)">
+  <div v-if="profile" class="rounded-lg p-2 border border-gray-400" style="background-color: rgba(255,255,255,0.5)">
 
     <div :style="{
       backgroundImage: `url(${profile.bgImg})`
@@ -31,7 +31,7 @@
 
     <!-- <pre>{{ profile }}</pre> -->
   </div>
-  <div v-else-if="profile === null" style="background-color: rgba(255,255,255,0.5)" class="max-w-xl mx-auto text-center rounded-lg p-2">
+  <div v-else-if="profile === null" style="background-color: rgba(255,255,255,0.5)" class="border border-gray-400 max-w-xl mx-auto text-center rounded-lg p-2">
     <div :style="{
     }" class="m-2 mt-0 p-2 rounded-lg bg-cover bg-center max-w-md mx-auto py-12 bg-gray-300">
       <div class="w-full mb-3 flex justify-center">

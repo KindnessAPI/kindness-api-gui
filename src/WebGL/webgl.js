@@ -26,11 +26,11 @@ async function importAll (r, type) {
   return exporter
 }
 
-importAll(require.context('./Reusable', true, /\.vue$/, 'lazy'), 'lazy')
-importAll(require.context('./GLScene', true, /\.vue$/, 'lazy'), 'lazy')
+importAll(require.context('./Reusable', true, /\.vue$/, 'sync'), 'sync')
+importAll(require.context('./GLScene', true, /\.vue$/, 'sync'), 'sync')
 importAll(require.context('./AppContent', true, /\.vue$/, 'lazy'), 'lazy')
 importAll(require.context('./Pages/AppOverlay', true, /\.vue$/, 'sync'), 'sync')
-importAll(require.context('./Pages/HTMLUnits', true, /\.vue$/, 'lazy'), 'lazy')
+importAll(require.context('./Pages/HTMLUnits', true, /\.vue$/, 'sync'), 'sync')
 importAll(require.context('./Pages/AuthUnits', true, /\.vue$/, 'sync'), 'sync')
 importAll(require.context('./Pages/AppUnits', true, /\.vue$/, 'sync'), 'sync')
 importAll(require.context('./Pages/AppResuables', true, /\.vue$/, 'sync'), 'sync')
