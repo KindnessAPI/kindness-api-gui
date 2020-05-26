@@ -32,7 +32,7 @@
       </div>
       <!-- <TopNavBar @open="openMenu = true" @close="openMenu = false" @menu="openMenu = !openMenu"></TopNavBar> -->
     </div>
-    <PhantomScene slot="o3d"></PhantomScene>
+    <PhantomScene v-if="!nogl" slot="o3d"></PhantomScene>
   </ScissorArea>
 </template>
 
@@ -40,6 +40,11 @@
 import { Auth } from '../../../APIs/KA'
 
 export default {
+  props: {
+    nogl: {
+      default: false
+    }
+  },
   components: {
     ...require('../../webgl').default
   },

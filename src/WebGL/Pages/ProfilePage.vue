@@ -1,12 +1,12 @@
 <template>
   <div class="full">
-    <div class="fixed top-0 left-0 full pointer-events-none" :style="{
-      zIndex: -1,
+    <div class="fixed top-0 left-0 w-full pointer-events-none" :style="{
+      zIndex: -1
     }" ref="mounter"></div>
 
-    <div v-show="!openMenu" class="full relative">
-      <div class="topnavbar">
-        <TopNavBar @menu="openMenu = !openMenu">
+    <div v-show="!openMenu" :style="{ ddvisibility: isDekstop && !openMenu && overlay ? 'hidden' : 'visible' }" class="full relative">
+      <div class="topnavbar bg-yellow-300">
+        <TopNavBar :nogl="true" @menu="openMenu = !openMenu">
           <div slot="bell" @click="onNotify" class="cursor-pointer px-3 py-2 rounded-full text-black bg-white" :class="{ 'text-white bg-red-500': bellButton.red }">
             {{ bellButton.text }}
           </div>
@@ -53,17 +53,18 @@
         </div>
       </transition>
 
-      <!-- <div class="simple-bg pointer-events-none" v-if="mainArea === 'loading'">
+      <!--
+      <div class="simple-bg pointer-events-none" v-show="isDesktop && mainArea === 'loading'">
         <ScissorArea class="w-full h-full focus:outline-none" style="z-index: -1;">
           <div slot="dom" class="full bg-gray pt-3 focus:outline-none">
           </div>
-          <StarFlowScene slot="o3d"></StarFlowScene>
+          <PhantomScene slot="o3d"></PhantomScene>
         </ScissorArea>
       </div> -->
 
       <transition name="fade">
         <div class="simple-bg pointer-events-none"
-          v-if="mainArea === 'traverse'"
+          v-if="mainArea === 'traverse' || mainArea === 'starmap-loaded'"
           :key="readyBG + '__ready'"
           :style="{
             backgroundColor: 'transparent',
@@ -76,14 +77,13 @@
         </div>
       </transition>
 
-      <div class="simple-bg pointer-events-none" v-if="mainArea === 'starmap-loaded'">
+      <!-- <div class="simple-bg pointer-events-none" v-if="mainArea === 'starmap-loaded'">
         <ScissorArea class="w-full h-full focus:outline-none" style="z-index: -1;">
           <div slot="dom" class="full bg-gray pt-3 focus:outline-none">
           </div>
-          <!-- <component :is="transitionScene" slot="o3d"></component> -->
           <DashboardScene slot="o3d"></DashboardScene>
         </ScissorArea>
-      </div>
+      </div> -->
 
       <!-- <div class="relative minus-navbar-height h-full w-full focus:outline-none">
         <ScissorArea class="w-full h-full focus:outline-none" style="z-index: -1;">
@@ -105,16 +105,16 @@
       </div> -->
 
       <TraverseNodeEdgeUnit
-      :btns="btns"
-      @home="onGoHome"
-      @view="onViewProfile"
-      @node-click="onNodeClick"
-      @node-drag="onNodeDrag"
-      :graph="graph"
-      @mail="onMail"
-      @notify="onNotify"
-      :run="overlay === false"
-      ref="edge-node"
+        :btns="btns"
+        @home="onGoHome"
+        @view="onViewProfile"
+        @node-click="onNodeClick"
+        @node-drag="onNodeDrag"
+        :graph="graph"
+        @mail="onMail"
+        @notify="onNotify"
+        :ddrun="overlay === false"
+        ref="edge-node"
       >
       </TraverseNodeEdgeUnit>
 
@@ -157,163 +157,191 @@
       -->
 
       <!-- <div v-if="overlay" @click="overlay = false" class="overlay-bg"></div> -->
-      <transition name="fadefast">
-        <div v-if="overlay" @click="overlay = false" class="overlay-close"></div>
-      </transition>
 
-      <transition name="flyin">
-        <NodePanelUnit
+    </div>
+    <FullMenuBar class=" bg-yellow-300" :nogl="true" v-show="openMenu" @close="openMenu = false"></FullMenuBar>
+    <transition name="fadefast">
+      <div v-if="overlay" @click="overlay = false" class="overlay-close">
+        <!-- <ScissorArea v-if="isDekstop" class="w-full h-full">
+          <div slot="dom" class="full">
+          </div>
+          <ResetScene slot="o3d"></ResetScene>
+        </ScissorArea> -->
+      </div>
+    </transition>
+
+    <transition name="flyin">
+      <NodePanelUnit
+        @close="overlay = false"
+        @reload="onReload"
+        :editable="isMe"
+        :node="currentNode"
+        :graph="graph"
+        :userID="queryUserID"
+        :username="queryUsername"
+        @overlay="overlay = $event"
+        @config="config = $event"
+        @notify="prepareNotifs"
+
+        v-if="currentNode && graph && overlay === 'node-panel'"
+      >
+      </NodePanelUnit>
+    </transition>
+
+    <transition name="flyin">
+      <!-- <keep-alive> -->
+        <MessengerUnit
+          :key="me.userID"
           @close="overlay = false"
           @reload="onReload"
           :editable="isMe"
-          :node="currentNode"
           :graph="graph"
-          :userID="queryUserID"
-          :username="queryUsername"
+
+          :userID="me.userID"
+          :username="me.username"
+          v-if="overlay === 'messenger'"
+        ></MessengerUnit>
+      <!-- </keep-alive> -->
+    </transition>
+
+    <transition name="flyin">
+      <!-- <keep-alive> -->
+        <NotificationUnit
+          :key="me.userID"
+          @close="overlay = false"
+          @reload="onReload"
+          @overlay="overlay = $event"
+          @prayerID="prayerID = $event"
+          @notify="prepareNotifs"
+          @config="config = $event"
+          :graph="graph"
+          :config="config"
+          :me="me"
+          class="bg-white"
+          v-if="overlay === 'notify'"
+        ></NotificationUnit>
+      <!-- </keep-alive> -->
+    </transition>
+
+    <transition name="flyin">
+      <!-- <keep-alive> -->
+        <PrayerRoomOverlayUnit
+          :key="me.userID"
+          @close="overlay = false"
+          @reload="onReload"
+          @overlay="overlay = $event"
+          :graph="graph"
+          :prayerID="prayerID"
+          :prayFor="prayFor"
+          :me="me"
+          :config="config"
+          class="bg-white"
+          v-if="overlay === 'prayer'"
+        ></PrayerRoomOverlayUnit>
+      <!-- </keep-alive> -->
+    </transition>
+
+    <transition name="flyin">
+      <!-- <keep-alive> -->
+        <PrayerRoomComposeOverlay
+          :key="me.userID"
+          @close="overlay = false"
+          @reload="onReload"
           @overlay="overlay = $event"
           @config="config = $event"
-          @notify="prepareNotifs"
-          v-if="currentNode && graph && overlay === 'node-panel'"
-        ></NodePanelUnit>
-      </transition>
+          :graph="graph"
+          :prayerID="prayerID"
+          :prayFor="prayFor"
+          :me="me"
+          :bell="myBell"
+          :config="config"
+          class="bg-white"
+          v-if="myBell && overlay === 'pray-now'"
+        ></PrayerRoomComposeOverlay>
+      <!-- </keep-alive> -->
+    </transition>
 
-      <transition name="flyin">
-        <!-- <keep-alive> -->
-          <MessengerUnit
-            :key="me.userID"
-            @close="overlay = false"
-            @reload="onReload"
-            :editable="isMe"
-            :graph="graph"
+    <transition name="flyin">
+      <!-- <keep-alive> -->
+        <PrayerRoomInboxOverlay
+          :key="me.userID"
+          @close="overlay = false"
+          @reload="onReload"
+          @overlay="overlay = $event"
+          @config="config = $event"
+          :graph="graph"
+          :prayerID="prayerID"
+          :prayFor="prayFor"
+          :me="me"
+          :config="config"
+          class="bg-white"
+          v-if="overlay === 'prayer-inbox'"
+        ></PrayerRoomInboxOverlay>
+      <!-- </keep-alive> -->
+    </transition>
 
-            :userID="me.userID"
-            :username="me.username"
-            v-if="overlay === 'messenger'"
-          ></MessengerUnit>
-        <!-- </keep-alive> -->
-      </transition>
+    <transition name="flyin">
+      <!-- <keep-alive> -->
+        <PrayerRoomOutboxOverlay
+          :key="me.userID"
+          @close="overlay = false"
+          @reload="onReload"
+          @overlay="overlay = $event"
+          @config="config = $event"
+          :graph="graph"
+          :prayerID="prayerID"
+          :prayFor="prayFor"
+          :me="me"
+          :config="config"
+          class="bg-white"
+          v-if="overlay === 'prayer-outbox'"
+        ></PrayerRoomOutboxOverlay>
+      <!-- </keep-alive> -->
+    </transition>
 
-      <transition name="flyin">
-        <!-- <keep-alive> -->
-          <NotificationUnit
-            :key="me.userID"
-            @close="overlay = false"
-            @reload="onReload"
-            @overlay="overlay = $event"
-            @prayerID="prayerID = $event"
-            @notify="prepareNotifs"
-            @config="config = $event"
-            :graph="graph"
-            :config="config"
-            :me="me"
-            v-if="overlay === 'notify'"
-          ></NotificationUnit>
-        <!-- </keep-alive> -->
-      </transition>
+    <transition name="flyin">
+      <!-- <keep-alive> -->
+        <PrayerRoomDetailOverlay
+          :key="me.userID"
+          @close="overlay = false"
+          @reload="onReload"
+          @overlay="overlay = $event"
+          @config="config = $event"
+          :graph="graph"
+          :prayerID="prayerID"
+          :prayFor="prayFor"
+          :me="me"
+          :config="config"
+          class="bg-white"
+          v-if="overlay === 'prayer-detail'"
+        ></PrayerRoomDetailOverlay>
+      <!-- </keep-alive> -->
+    </transition>
 
-      <transition name="flyin">
-        <!-- <keep-alive> -->
-          <PrayerRoomOverlayUnit
-            :key="me.userID"
-            @close="overlay = false"
-            @reload="onReload"
-            @overlay="overlay = $event"
-            :graph="graph"
-            :prayerID="prayerID"
-            :prayFor="prayFor"
-            :me="me"
-            :config="config"
-            v-if="overlay === 'prayer'"
-          ></PrayerRoomOverlayUnit>
-        <!-- </keep-alive> -->
-      </transition>
+    <transition name="circlein">
+      <div v-if="overlay" @click="overlay = false" class="overlay-close-btn">
+        <img src="./icon/close.svg" class="cursor-pointer close-icon bg-white p-2 rounded-full" alt="Close" title="close">
+      </div>
+    </transition>
 
-      <transition name="flyin">
-        <!-- <keep-alive> -->
-          <PrayerRoomComposeOverlay
-            :key="me.userID"
-            @close="overlay = false"
-            @reload="onReload"
-            @overlay="overlay = $event"
-            @config="config = $event"
-            :graph="graph"
-            :prayerID="prayerID"
-            :prayFor="prayFor"
-            :me="me"
-            :bell="myBell"
-            :config="config"
-            v-if="myBell && overlay === 'pray-now'"
-          ></PrayerRoomComposeOverlay>
-        <!-- </keep-alive> -->
-      </transition>
-
-      <transition name="flyin">
-        <!-- <keep-alive> -->
-          <PrayerRoomInboxOverlay
-            :key="me.userID"
-            @close="overlay = false"
-            @reload="onReload"
-            @overlay="overlay = $event"
-            @config="config = $event"
-            :graph="graph"
-            :prayerID="prayerID"
-            :prayFor="prayFor"
-            :me="me"
-            :config="config"
-            v-if="overlay === 'prayer-inbox'"
-          ></PrayerRoomInboxOverlay>
-        <!-- </keep-alive> -->
-      </transition>
-
-      <transition name="flyin">
-        <!-- <keep-alive> -->
-          <PrayerRoomOutboxOverlay
-            :key="me.userID"
-            @close="overlay = false"
-            @reload="onReload"
-            @overlay="overlay = $event"
-            @config="config = $event"
-            :graph="graph"
-            :prayerID="prayerID"
-            :prayFor="prayFor"
-            :me="me"
-            :config="config"
-            v-if="overlay === 'prayer-outbox'"
-          ></PrayerRoomOutboxOverlay>
-        <!-- </keep-alive> -->
-      </transition>
-
-      <transition name="flyin">
-        <!-- <keep-alive> -->
-          <PrayerRoomDetailOverlay
-            :key="me.userID"
-            @close="overlay = false"
-            @reload="onReload"
-            @overlay="overlay = $event"
-            @config="config = $event"
-            :graph="graph"
-            :prayerID="prayerID"
-            :prayFor="prayFor"
-            :me="me"
-            :config="config"
-            v-if="overlay === 'prayer-detail'"
-          ></PrayerRoomDetailOverlay>
-        <!-- </keep-alive> -->
-      </transition>
-
-      <transition name="circlein">
-        <div v-if="overlay" @click="overlay = false" class="overlay-close-btn">
-          <img src="./icon/close.svg" class="cursor-pointer close-icon bg-white p-2 rounded-full" alt="Close" title="close">
+    <!-- <div class="overlay" v-if="overlay">
+      <ScissorArea class="w-full h-full">
+        <div slot="dom" class="full">
+          123
         </div>
-      </transition>
+        <DashboardScene slot="o3d"></DashboardScene>
+      </ScissorArea>
+    </div> -->
 
-    </div>
-    <FullMenuBar v-show="openMenu" @close="openMenu = false"></FullMenuBar>
+    <!-- <div class="fixed top-0 left-0 full pointer-events-none" :style="{
+      zIndex: 60,
+    }" ref="mounterAbove"></div> -->
+
   </div>
 </template>
 
 <script>
-import { PipeScissor, makeScrollBox } from '../Reusable'
+import { PipeScissor } from '../Reusable'
 import { Auth, Graph, LambdaClient, getWS, getID, Profile, Notification } from '../../APIs/KA'
 import { Howl } from 'howler'
 var dingding = new Howl({
@@ -323,9 +351,14 @@ var dingding = new Howl({
 // import axios from 'axios'
 export default {
   name: 'Home',
-  mixins: [PipeScissor],
+  PipeScissor,
+  // mixins: [PipeScissor],
+  components: {
+    ...require('../webgl.js').default
+  },
   data () {
     return {
+      isDekstop: false,
       // transitionSceneList: [
       //   'DashboardScene',
       //   // 'StarFlowScene',
@@ -379,18 +412,22 @@ export default {
       //   window.dispatchEvent(new Event('resize'))
       // }, 100)
     },
-    overlay () {
+    overlay (nv, ov) {
       // this.transitionScene = this.transitionSceneList[Math.floor(this.transitionSceneList.length * Math.random())]
       if (this.overlay) {
         this.escFncs.push(() => {
           this.overlay = false
         })
       }
-      if (this.overlay) {
-        this.base.isActiveRender = false
-      } else {
-        this.base.isActiveRender = true
-      }
+      // window.dispatchEvent(new Event('resize'))
+
+      // if (!this.isDekstop) {
+      //   if (this.overlay) {
+      //     this.base.isActiveRender = false
+      //   } else {
+      //     this.base.isActiveRender = true
+      //   }
+      // }
     },
     queryUserID () {
       // this.transitionScene = this.transitionSceneList[Math.floor(this.transitionSceneList.length * Math.random())]
@@ -642,10 +679,13 @@ export default {
     }
   },
   async mounted () {
+    // this.base.onResize(() => {
+    //   this.isDekstop = window.innerWidth >= 500
+    // })
     this.$watch('openMenu', () => {
       window.dispatchEvent(new Event('resize'))
     })
-    this.scrollBox = makeScrollBox({ dom: window, base: this.base })
+    // this.scrollBox = makeScrollBox({ dom: window, base: this.base })
 
     await this.onInit()
 
@@ -753,7 +793,7 @@ export default {
   right: 10px;
   bottom: 80px;
   z-index: 12;
-  background-color: rgba(255, 255, 255, 0.95);
+  /* background-color: rgba(255, 255, 255, 0); */
   box-shadow: 0px 0px 30px 0px rgba(255, 255, 255, 0.6);
   border-radius: 15px;
   overflow: hidden;
@@ -764,9 +804,9 @@ export default {
 
 .overlay-full {
   position: absolute;
-  top: 10px;
-  left: 10px;
-  right: 10px;
+  top: 0px;
+  left: 0px;
+  right: 0px;
   bottom: 80px;
   z-index: 16;
   background-color: rgba(255, 255, 255, 0.95);
