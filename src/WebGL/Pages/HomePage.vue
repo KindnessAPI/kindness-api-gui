@@ -4,6 +4,7 @@
 
     <div v-show="!openMenu" class="w-full relative">
       <TopNavBar @menu="openMenu = !openMenu"></TopNavBar>
+      <BannerUnit></BannerUnit>
       <HeroUnit v-if="Auth" :Auth="Auth"></HeroUnit>
       <RegisterBanner></RegisterBanner>
     </div>

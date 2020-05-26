@@ -1,0 +1,29 @@
+<template>
+  <div class="">
+
+    <ScissorArea class="h-min100 lg:h-min70" style="z-index: -1;">
+      <div slot="dom" class="full">
+      </div>
+      <BannerScene slot="o3d"></BannerScene>
+    </ScissorArea>
+
+  </div>
+</template>
+
+<script>
+import { Auth } from '../../../APIs/KA'
+export default {
+  components: {
+    ...require('../../webgl').default
+  },
+  data () {
+    return {
+      Auth: Auth
+    }
+  }
+}
+</script>
+
+<style scoped>
+
+</style>
