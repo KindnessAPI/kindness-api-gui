@@ -5,7 +5,7 @@
     }" ref="mounter"></div>
 
     <div v-show="!openMenu" :style="{ ddvisibility: isDekstop && !openMenu && overlay ? 'hidden' : 'visible' }" class="full relative">
-      <div class="topnavbar bg-yellow-300">
+      <div class="topnavbar bg-yellow-400">
         <TopNavBar :nogl="true" @menu="openMenu = !openMenu">
           <div slot="bell" @click="onNotify" class="cursor-pointer px-3 py-2 rounded-full text-black bg-white" :class="{ 'text-white bg-red-500': bellButton.red }">
             {{ bellButton.text }}
@@ -15,9 +15,9 @@
 
       <!--
       <ScissorArea
-      class="webgl-bg"
-      :key="'webgloading'"
-      v-if="mainArea === 'loading'"
+        class="webgl-bg"
+        :key="'webgloading'"
+        v-if="mainArea === 'loading'"
       >
         <div
           slot="dom"
@@ -161,7 +161,7 @@
       <!-- <div v-if="overlay" @click="overlay = false" class="overlay-bg"></div> -->
 
     </div>
-    <FullMenuBar class=" bg-yellow-300" :nogl="true" v-show="openMenu" @close="openMenu = false"></FullMenuBar>
+    <FullMenuBar class=" bg-yellow-600" :nogl="true" v-show="openMenu" @close="openMenu = false"></FullMenuBar>
     <transition name="fadefast">
       <div v-if="overlay" @click="overlay = false" class="overlay-close">
         <!-- <ScissorArea v-if="isDekstop" class="w-full h-full">

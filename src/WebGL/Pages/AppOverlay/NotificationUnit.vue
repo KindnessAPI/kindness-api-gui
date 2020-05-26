@@ -1,13 +1,13 @@
 <template>
   <div class="overlay border border-yellow-600">
     <div class="bg-yellow-400 leading-6 rounded-t-lg flex justify-between">
-      <div class="w-1/5 p-3 cursor-pointer">
+      <div class="w-2/6 p-3 cursor-pointer">
         <span v-if="config.back" @click="onBack">← Back</span>
       </div>
-      <div class="w-3/5 p-3 text-center">
+      <div class="w-2/6 p-3 text-center">
         Notification
       </div>
-      <div class="w-1/5 p-3 ">
+      <div class="w-2/6 p-3 ">
 
       </div>
     </div>
@@ -44,6 +44,7 @@ export default {
       }
     },
     me: {},
+    node: {},
     graph: {}
   },
   components: {
