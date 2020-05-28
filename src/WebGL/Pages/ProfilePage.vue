@@ -60,7 +60,8 @@
           </div>
           <PhantomScene slot="o3d"></PhantomScene>
         </ScissorArea>
-      </div> -->
+      </div>
+      -->
 
       <transition name="fade">
         <div class="simple-bg pointer-events-none"

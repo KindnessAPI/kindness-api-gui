@@ -32,8 +32,7 @@
     <!-- <pre>{{ profile }}</pre> -->
   </div>
   <div v-else-if="profile === null" style="background-color: rgba(255,255,255,0.5)" class="border border-gray-400 max-w-xl mx-auto text-center rounded-lg p-2">
-    <div :style="{
-    }" class="m-2 mt-0 p-2 rounded-lg bg-cover bg-center max-w-md mx-auto py-12 bg-gray-300">
+    <div :style="{}" class="m-2 mt-0 p-2 rounded-lg bg-cover bg-center max-w-md mx-auto py-12 bg-gray-300">
       <div class="w-full mb-3 flex justify-center">
         <div class="w-24 h-24">
           <div class="w-24 h-24 object-center object-cover rounded-full bg-gray-400"></div>

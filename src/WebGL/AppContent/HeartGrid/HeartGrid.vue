@@ -116,6 +116,9 @@ export default {
       loader.load(require('./matcap/yellow.jpg'), (obj) => {
         matcaps.yellow = new MeshMatcapMaterial({ transparent: true, opacity: 1.0, color: 0xffffff, matcap: obj })
       })
+      loader.load(require('./matcap/yellow-unsatuated.jpg'), (obj) => {
+        matcaps.chrome = new MeshMatcapMaterial({ transparent: true, opacity: 1.0, color: 0xffffff, matcap: obj })
+      })
     })
     let cx = 10
     let cy = 10 * this.screen.width / this.screen.height
@@ -243,18 +246,23 @@ export default {
       // let tan = Math.tan
       let idx = 0
       this.clean = () => {
+        let idx = 0
         for (let y = 0; y < cy; y++) {
           for (let x = 0; x < cx; x++) {
-            let { mesh } = mapper.get(idx)
-            if (mesh.material.dispose) {
-              mesh.material.dispose()
+            let item = mapper.get(idx)
+            if (item) {
+              let mesh = item.mesh
+              if (mesh && mesh.dispose) {
+                mesh.dispose()
+                if (mesh.material && mesh.material.dispose) {
+                  mesh.material.dispose()
+                }
+                if (mesh.geometry && mesh.geometry.dispose) {
+                  mesh.geometry.dispose()
+                }
+              }
             }
-            if (mesh.geometry.dispose) {
-              mesh.geometry.dispose()
-            }
-            if (mesh.dispose) {
-              mesh.dispose()
-            }
+            idx++
           }
         }
       }
@@ -289,7 +297,8 @@ export default {
           mesh.position.x *= -80
           mesh.position.y *= 80
           // mesh.position.z = 40// * wavy
-          mesh.position.z = Math.sin(mesh.position.y * 0.003 + mesh.position.x * 0.003 + time) * 40
+
+          // mesh.position.z = Math.sin(mesh.position.y * 0.003 + mesh.position.x * 0.003 + time) * 40
 
           // mesh.position.x *= -50
           // mesh.position.y *= 50
@@ -307,22 +316,23 @@ export default {
             mesh.geometry = heartGeo
             this.hit = idx
           } else if (hoverID === mesh.uuid) {
-            if (matcaps.pink2) {
-              mesh.material = matcaps.pink2
+            if (matcaps.white) {
+              mesh.material = matcaps.white
             }
           } else {
             mesh.scale.x = 20
             mesh.scale.y = 20
             mesh.scale.z = 20
-            if (matcaps.yellow) {
-              mesh.material = matcaps.yellow
-              // color.setHSL(offsetX - x + Math.sin(x * 3.14 * 2.0 + time * 0.5), 0.65, 0.65)
+            if (matcaps.chrome) {
+              mesh.material = matcaps.chrome
+              // color.setHSL((mesh.rotation.z * 0.1) % 1, 0.65, 0.65)
               mesh.material.color = color
             }
           }
+
           if (mesh.geometry === starGeo) {
-            mesh.rotation.x = 0 + Math.sin(mesh.position.z * 0.01) * Math.PI * 0.75
-            mesh.rotation.y = 0
+            mesh.rotation.x = time + wavy + Math.sin(mesh.position.z * 0.01) * Math.PI * 0.75
+            mesh.rotation.y = time + wavy
             mesh.rotation.z = time + wavy
           } else {
             mesh.rotation.x = time * 2.0 + wavy

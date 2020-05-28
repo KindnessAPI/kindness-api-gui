@@ -19,6 +19,7 @@
       <!-- <BloomBG></BloomBG> -->
       <!-- <RiverField :mode="'magic'"></RiverField> -->
       <!-- <RiverField :mode="'magic'"></RiverField> -->
+      <ChromaticsBG></ChromaticsBG>
     </O3D>
 
     <O3D :animated="true" :layout="'frontlayer'">
@@ -75,7 +76,6 @@ export default {
     return {
       composer: false,
       settings: {},
-      flower1: {},
 
       scene: new Scene(),
       paint2DTex: false,
