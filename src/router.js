@@ -49,6 +49,11 @@ export default new Router({
       component: () => import('./WebGL/Pages/ProfilePage.vue')
     },
     {
+      path: '/content',
+      beforeEnter: loginGate,
+      component: () => import('./WebGL/Pages/ContentDashboardPage.vue')
+    },
+    {
       path: '/my-photos',
       beforeEnter: loginGate,
       component: () => import('./WebGL/Pages/AppResuables/GEImageManager.vue')
