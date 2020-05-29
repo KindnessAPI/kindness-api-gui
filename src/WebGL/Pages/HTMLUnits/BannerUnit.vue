@@ -1,11 +1,13 @@
 <template>
   <div class="" style="margin-top: -1px;">
 
-    <ScissorArea class="h-min100 lg:h-min60" style="z-index: -1;">
-      <div slot="dom" class="full">
-      </div>
-      <BannerScene slot="o3d"></BannerScene>
-    </ScissorArea>
+    <a href="https://our.togethertime.me">
+      <ScissorArea class="h-min100 lg:h-min60" style="z-index: -1;">
+        <div slot="dom" class="full">
+        </div>
+        <BannerScene slot="o3d"></BannerScene>
+      </ScissorArea>
+    </a>
 
   </div>
 </template>
