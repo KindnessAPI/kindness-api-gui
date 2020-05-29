@@ -49,9 +49,31 @@ export default new Router({
       component: () => import('./WebGL/Pages/ProfilePage.vue')
     },
     {
-      path: '/content',
+      path: '/dashboard',
       beforeEnter: loginGate,
-      component: () => import('./WebGL/Pages/ContentDashboardPage.vue')
+      children: [
+        {
+          path: '',
+          component: () => import('./WebGL/Pages/AppUnits/Content/CTTable.vue')
+        },
+        {
+          path: 'quote-cards',
+          component: () => import('./WebGL/Pages/AppUnits/Content/CTQuoteCards.vue')
+        },
+        {
+          path: 'poster-video',
+          component: () => import('./WebGL/Pages/AppUnits/Content/CTPosterVideo.vue')
+        },
+        {
+          path: 'poster-images',
+          component: () => import('./WebGL/Pages/AppUnits/Content/CTPosterImages.vue')
+        },
+        {
+          path: 'video-messages',
+          component: () => import('./WebGL/Pages/AppUnits/Content/CTVideoMessages.vue')
+        }
+      ],
+      component: () => import('./WebGL/Pages/AppUnits/Content/CTLayoutUnit.vue')
     },
     {
       path: '/my-photos',

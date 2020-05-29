@@ -1057,6 +1057,7 @@ export class MyFiles {
     }
   }
 
+  static UPLOAD_VIDEO_URL = `https://api.cloudinary.com/v1_1/loklok-keystone/video/upload`
   static UPLOAD_URL = `https://api.cloudinary.com/v1_1/loklok-keystone/image/upload`
   /* eslint-disable */
   static snapshotResize (srcData, width, height) {
@@ -1147,7 +1148,7 @@ export class MyFiles {
       }
     })
   }
-  static async getMyFiles ({ userID = Auth.currentProfile.user.userID, pageAt = 0, perPage = 20 }) {
+  static async getMyFiles ({ type = 'cloudinary-image', userID = Auth.currentProfile.user.userID, pageAt = 0, perPage = 20 }) {
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -1156,6 +1157,7 @@ export class MyFiles {
       data: {
         method: 'query',
         payload: {
+          type,
           userID,
           skip: pageAt * perPage,
           limit: perPage,
@@ -1170,7 +1172,8 @@ export class MyFiles {
       return Promise.reject(err)
     })
   }
-  static async createCloudinaryFile ({ cloudinary, filename, ext, mime, base64 }) {
+
+  static async createCloudinaryFile ({ type = 'image', cloudinary, filename, ext, mime, base64 }) {
     let resp = axios({
       baseURL: getRESTURL(),
       method: 'POST',
@@ -1179,7 +1182,7 @@ export class MyFiles {
       data: {
         method: 'create',
         payload: {
-          type: 'cloudinary',
+          type: 'cloudinary-' + type,
           filename,
           ext,
           mime,

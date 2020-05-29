@@ -1,5 +1,6 @@
 <template>
-  <div v-if="profile" class="rounded-lg p-2 border border-gray-400" style="background-color: rgba(255,255,255,0.5)">
+  <div v-if="profile" class="rounded-lg p-2 border border-gray-400" :style="{
+  }" style="background-color: rgba(255,255,255,0.5)">
 
     <div :style="{
       backgroundImage: `url(${profile.bgImg})`

@@ -12,11 +12,11 @@ import { Mesh, PlaneBufferGeometry, MeshBasicMaterial } from 'three'
 export default {
   props: {
     text: {},
+    scale: {
+      default: 1
+    },
     font: {
       default: 'LoveLo'
-    },
-    scale: {
-      default: 0.735
     },
     envMap: {},
     align: {
@@ -50,8 +50,7 @@ export default {
       // }
 
       async function loadLovelo () {
-        // let link = 'https://res.cloudinary.com/loklok-keystone/raw/upload/v1590476294/loklok/Lovelo/Lovelo-LineLight.ttf'
-        let link = '/fonts/lovelo/Lovelo-LineLight.ttf'
+        let link = 'https://res.cloudinary.com/loklok-keystone/raw/upload/v1590476294/loklok/Lovelo/Lovelo-LineLight.ttf'
         const font = new FontFace('LoveLo', `url('${link}')  format('truetype')`, {
           family: 'LoveLo',
           style: 'normal',
@@ -82,15 +81,16 @@ export default {
         text: this.text
       })
       texture.redraw()
-      let defaultSize = texture.image.width * 0.075
+      // let defaultSize = texture.image.width * 0.075
+      let minAxis = this.screen.width < this.screen.height ? this.screen.width : this.screen.height
+      let defaultSize = minAxis * 0.1 * this.scale
 
-      if (defaultSize > this.screen.width * 0.9) {
-        defaultSize = this.screen.width * 0.9
-      }
-      defaultSize *= this.scale
       let width = defaultSize
       let height = defaultSize * (texture.image.height) / (texture.image.width)
       let geo = new PlaneBufferGeometry(width, height, 2, 2)
+
+      this.$emit('width', width)
+      this.$emit('height', height)
 
       geo.computeBoundingSphere()
       geo.computeBoundingBox()
@@ -106,7 +106,7 @@ export default {
       this.$emit('child', sizing)
       this.$parent.$emit('child', sizing)
 
-      let mat = new MeshBasicMaterial({ color: 0xffffff, opacity: 1, map: texture, transparent: true, envMap: this.envMap })
+      let mat = new MeshBasicMaterial({ color: 0xffffff, opacity: 1, map: texture, depthWrite: false, transparent: true, envMap: this.envMap })
       let item = new Mesh(geo, mat)
       this.o3d.children.forEach((v) => {
         this.$emit('disable-play', v)
@@ -129,10 +129,10 @@ export default {
     this.$watch('font', () => {
       this.$emit('try-init')
     })
-    this.$watch('align', () => {
+    this.$watch('scale', () => {
       this.$emit('try-init')
     })
-    this.$watch('scale', () => {
+    this.$watch('align', () => {
       this.$emit('try-init')
     })
     this.lookup('base').onResize(() => {

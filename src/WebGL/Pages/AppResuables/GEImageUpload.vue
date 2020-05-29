@@ -70,6 +70,7 @@ export default {
               let formData = new FormData()
 
               formData.append('file', compressedImage)
+              // upload image preset
               formData.append('upload_preset', 'kindness-api')
 
               var config = {
@@ -107,7 +108,7 @@ export default {
               let filename = file.name
               let ext = file.name.split('.').pop()
               // let size = file.size
-              let dbData = await MyFiles.createCloudinaryFile({ filename, ext, mime, cloudinary })
+              let dbData = await MyFiles.createCloudinaryFile({ type: 'image', filename, ext, mime, cloudinary })
               // let url = dbData.cloudinary.secure_url
               // let qAutoURL = url.replace(`/image/upload/`, `/image/upload/q_auto/`)
               this.$emit('data', dbData)
