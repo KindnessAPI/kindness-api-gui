@@ -120,6 +120,7 @@ export default {
     },
     async onCreate () {
       this.mode = 'create'
+      this.toBeEdited = this.getTemplate()
     },
     getTemplate () {
       return Quotes.getTemplate()
