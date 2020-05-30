@@ -1,169 +1,139 @@
 <template>
-  <div class="w-full mt-6">
-      <p class="text-xl pb-3 flex items-center">
-          <i class="fa fa-list mr-3"></i> Quote Cards
-      </p>
-      <div class="bg-white overflow-auto">
-          <table class="min-w-full leading-normal">
-              <thead>
-                  <tr>
-                      <th
-                          class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                          User
-                      </th>
-                      <th
-                          class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                          Rol
-                      </th>
-                      <th
-                          class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                          Created at
-                      </th>
-                      <th
-                          class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                          Status
-                      </th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr>
-                      <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                          <div class="flex items-center">
-                              <div class="flex-shrink-0 w-10 h-10">
-                                  <img class="w-full h-full rounded-full"
-                                      src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"
-                                      alt="" />
-                              </div>
-                              <div class="ml-3">
-                                  <p class="text-gray-900 whitespace-no-wrap">
-                                      Vera Carpenter
-                                  </p>
-                              </div>
-                          </div>
-                      </td>
-                      <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                          <p class="text-gray-900 whitespace-no-wrap">Admin</p>
-                      </td>
-                      <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                          <p class="text-gray-900 whitespace-no-wrap">
-                              Jan 21, 2020
-                          </p>
-                      </td>
-                      <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                          <span
-                              class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                              <span aria-hidden
-                                  class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
-                              <span class="relative">Activo</span>
-                          </span>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                          <div class="flex items-center">
-                              <div class="flex-shrink-0 w-10 h-10">
-                                  <img class="w-full h-full rounded-full"
-                                      src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"
-                                      alt="" />
-                              </div>
-                              <div class="ml-3">
-                                  <p class="text-gray-900 whitespace-no-wrap">
-                                      Blake Bowman
-                                  </p>
-                              </div>
-                          </div>
-                      </td>
-                      <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                          <p class="text-gray-900 whitespace-no-wrap">Editor</p>
-                      </td>
-                      <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                          <p class="text-gray-900 whitespace-no-wrap">
-                              Jan 01, 2020
-                          </p>
-                      </td>
-                      <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                          <span
-                              class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                              <span aria-hidden
-                                  class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
-                              <span class="relative">Activo</span>
-                          </span>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                          <div class="flex items-center">
-                              <div class="flex-shrink-0 w-10 h-10">
-                                  <img class="w-full h-full rounded-full"
-                                      src="https://images.unsplash.com/photo-1540845511934-7721dd7adec3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"
-                                      alt="" />
-                              </div>
-                              <div class="ml-3">
-                                  <p class="text-gray-900 whitespace-no-wrap">
-                                      Dana Moore
-                                  </p>
-                              </div>
-                          </div>
-                      </td>
-                      <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                          <p class="text-gray-900 whitespace-no-wrap">Editor</p>
-                      </td>
-                      <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                          <p class="text-gray-900 whitespace-no-wrap">
-                              Jan 10, 2020
-                          </p>
-                      </td>
-                      <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                          <span
-                              class="relative inline-block px-3 py-1 font-semibold text-orange-900 leading-tight">
-                              <span aria-hidden
-                                  class="absolute inset-0 bg-orange-200 opacity-50 rounded-full"></span>
-                              <span class="relative">Suspended</span>
-                          </span>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="px-5 py-5 bg-white text-sm">
-                          <div class="flex items-center">
-                              <div class="flex-shrink-0 w-10 h-10">
-                                  <img class="w-full h-full rounded-full"
-                                      src="https://images.unsplash.com/photo-1522609925277-66fea332c575?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&h=160&w=160&q=80"
-                                      alt="" />
-                              </div>
-                              <div class="ml-3">
-                                  <p class="text-gray-900 whitespace-no-wrap">
-                                      Alonzo Cox
-                                  </p>
-                              </div>
-                          </div>
-                      </td>
-                      <td class="px-5 py-5 bg-white text-sm">
-                          <p class="text-gray-900 whitespace-no-wrap">Admin</p>
-                      </td>
-                      <td class="px-5 py-5 bg-white text-sm">
-                          <p class="text-gray-900 whitespace-no-wrap">Jan 18, 2020</p>
-                      </td>
-                      <td class="px-5 py-5 bg-white text-sm">
-                          <span
-                              class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
-                              <span aria-hidden
-                                  class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
-                              <span class="relative">Inactive</span>
-                          </span>
-                      </td>
-                  </tr>
-              </tbody>
-          </table>
+  <div class="w-full mt-6 relative">
+    <!-- <ScissorArea class="main-area-webgl" style="z-index: -1;">
+      <div slot="dom" class="full">
       </div>
+      <DashboardScene slot="o3d"></DashboardScene>
+    </ScissorArea> -->
+    <CTQuotePaperList v-if="mode === 'list' && list" :list="list" @nextPage="onNextPage" @prevPage="onPrevPage" @togglePublished="onTooglePublished"  @edit="onEdit" @create="onCreate"></CTQuotePaperList>
+    <CTQuotePaperEdit v-if="mode === 'create'" :init="initPaper" @back="mode = 'list'" @submitform="saveCreate($event)"></CTQuotePaperEdit>
+    <CTQuotePaperEdit v-if="mode === 'edit' && toBeEdited" :init="toBeEdited" @back="mode = 'list'" @submitform="saveEdit($event)"></CTQuotePaperEdit>
+    <span v-if="loading" class="inline-block text-4xl absolute top-0 right-0 p-6 bg-white shadow-lg border rounded-lg">Loading...</span>
   </div>
 </template>
 
 <script>
-export default {
+import { Quotes, Auth } from '../../../../APIs/KA.js'
 
+export default {
+  components: {
+    ...require('../../../webgl').default
+  },
+  data () {
+    return {
+      pageAt: 0,
+      toBeEdited: false,
+      loading: false,
+      list: [],
+      mode: '',
+      initPaper: this.getTemplate()
+    }
+  },
+  watch: {
+    routerMode () {
+      if (this.$route.query.mode) {
+        this.mode = this.$route.query.mode
+      } else {
+        this.mode = 'list'
+      }
+    },
+    mode () {
+      try {
+        this.$router.push({
+          path: this.$route.path,
+          query: {
+            mode: this.mode,
+            enigma: (Math.random() * 100000).toFixed(0)
+          }
+        })
+      } catch (e) {
+        console.log(e)
+      }
+    }
+  },
+  computed: {
+    routerMode () {
+      return JSON.stringify(this.$route.query)
+    }
+  },
+  async mounted () {
+    await this.onInit()
+  },
+  methods: {
+    onNextPage () {
+      this.pageAt++
+      this.onLoad()
+    },
+    onPrevPage () {
+      this.pageAt--
+      if (this.pageAt < 0) {
+        this.pageAt = 0
+      }
+      this.onLoad()
+    },
+    async onLoad () {
+      this.loading = true
+      this.list = await Quotes.listQuoteDocByUserID({ userID: Auth.currentProfile.user.userID, pageAt: this.pageAt, perPage: 25 })
+      this.loading = false
+      console.log(this.list)
+    },
+    async onInit () {
+      await this.onLoad()
+      if (this.list.length === 0) {
+        this.mode = 'create'
+      } else {
+        this.mode = 'list'
+      }
+    },
+    async saveCreate ({ paper }) {
+      console.log(paper)
+      await Quotes.createQuoteDoc({
+        generated: paper.generated,
+        title: paper.title,
+        author: paper.author,
+        published: paper.published,
+        text: paper.text
+      })
+      await this.onLoad()
+    },
+    async saveEdit ({ paper }) {
+      console.log(paper)
+      this.loading = true
+      await Quotes.editQuoteDoc({
+        edit: paper
+      })
+      this.loading = false
+      await this.onLoad()
+    },
+    async onTooglePublished ({ paper }) {
+      paper.published = !paper.published
+      this.loading = true
+      await Quotes.editQuoteDoc({
+        edit: paper
+      })
+      this.loading = false
+      await this.onLoad()
+    },
+    async onEdit ($event) {
+      this.toBeEdited = $event
+      this.mode = 'edit'
+    },
+    async onCreate () {
+      this.mode = 'create'
+    },
+    getTemplate () {
+      return Quotes.getTemplate()
+    }
+  }
 }
 </script>
 
-<style>
-
+<style lang="postcss" scoped>
+.main-area-webgl{
+  position: fixed;
+  top: 60px;
+  height: calc(100% - 60px);
+  width: calc(100% - 200px);
+  left: 200px;
+}
 </style>

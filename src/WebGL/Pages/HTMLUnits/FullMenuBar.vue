@@ -21,6 +21,9 @@
             <router-link exact-active-class="underline" to="/galaxy">My StarMap</router-link>
           </div>
           <div class="mb-3 px-2 text-black text-xl" v-if="Auth.currentProfile">
+            <router-link exact-active-class="underline" to="/dashboard">Kindness Content Dashboard</router-link>
+          </div>
+          <div class="mb-3 px-2 text-black text-xl" v-if="Auth.currentProfile">
             <router-link exact-active-class="underline" to="/prayer-room">Prayer Room</router-link>
           </div>
           <div class="mb-3 px-2 text-black text-xl" v-if="!Auth.isLoggedIn">

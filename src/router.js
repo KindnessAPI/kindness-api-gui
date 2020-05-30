@@ -54,7 +54,7 @@ export default new Router({
       children: [
         {
           path: '',
-          component: () => import('./WebGL/Pages/AppUnits/Content/CTTable.vue')
+          redirect: '/dashboard/quote-cards'
         },
         {
           path: 'quote-cards',
