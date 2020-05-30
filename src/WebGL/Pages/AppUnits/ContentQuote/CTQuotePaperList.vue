@@ -1,7 +1,10 @@
 <template>
   <div class="w-full mt-6">
-      <p class="text-2xl pb-3 flex items-center">
+      <p class="text-3xl pb-3 flex items-center">
         Quotes Categories
+      </p>
+      <p class="pb-3 mb-3">
+        Your Site: <a :href="getLink()" class="underline ml-2"> {{ getLink() }}</a>
       </p>
       <div class="pb-3 inline-block underline cursor-pointer">
         <div @click="$emit('create')">Create a New Quote Category</div>
@@ -168,11 +171,16 @@
 
 <script>
 import moment from 'moment'
+import { Auth } from '../../../../APIs/KA'
 export default {
   props: {
     list: {}
   },
   methods: {
+    getLink () {
+      let username = Auth.currentProfile.user.username
+      return `https://${username}.our.togethertime.me`
+    },
     getMoment (str) {
       return moment(str).calendar()
     }
