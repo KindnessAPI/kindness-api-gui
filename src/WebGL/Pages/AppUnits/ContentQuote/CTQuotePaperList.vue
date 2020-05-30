@@ -4,7 +4,7 @@
         Quotes Categories
       </p>
       <p class="pb-3 mb-3">
-        Your Site: <a :href="getLink()" class="underline ml-2"> {{ getLink() }}</a>
+        Your Site: <a :href="getLink()" class="underline ml-2" target="_blank"> {{ getLink() }}</a>
       </p>
       <div class="pb-3 inline-block underline cursor-pointer">
         <div @click="$emit('create')">Create a New Quote Category</div>
