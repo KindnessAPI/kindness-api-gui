@@ -1495,6 +1495,26 @@ export class Quotes {
       return Promise.reject(err)
     })
   }
+  static async removeQuoteDoc ({ remove }) {
+    let resp = axios({
+      baseURL: getRESTURL(),
+      method: 'POST',
+      url: '/access-quote',
+      headers: getHeader(),
+      data: {
+        method: 'remove-one',
+        payload: {
+          _id: remove._id
+        }
+      }
+    })
+
+    return resp.then((r) => {
+      return r.data
+    }, (err) => {
+      return Promise.reject(err)
+    })
+  }
 
   static async searchAllQuotes ({ search, pageAt = 0, perPage = 25 }) {
     let resp = axios({

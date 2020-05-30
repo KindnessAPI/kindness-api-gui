@@ -5,7 +5,7 @@
       </div>
       <DashboardScene slot="o3d"></DashboardScene>
     </ScissorArea> -->
-    <CTQuotePaperList v-if="mode === 'list' && list" :list="list" @nextPage="onNextPage" @prevPage="onPrevPage" @togglePublished="onTooglePublished"  @edit="onEdit" @create="onCreate"></CTQuotePaperList>
+    <CTQuotePaperList v-if="mode === 'list' && list" :list="list" @nextPage="onNextPage" @prevPage="onPrevPage" @togglePublished="onTooglePublished"  @edit="onEdit" @remove="onRemove" @create="onCreate"></CTQuotePaperList>
     <CTQuotePaperEdit v-if="mode === 'create'" :init="initPaper" @back="mode = 'list'" @submitform="saveCreate($event)"></CTQuotePaperEdit>
     <CTQuotePaperEdit v-if="mode === 'edit' && toBeEdited" :init="toBeEdited" @back="mode = 'list'" @submitform="saveEdit($event)"></CTQuotePaperEdit>
     <span v-if="loading" class="inline-block text-4xl absolute top-0 right-0 p-6 bg-white shadow-lg border rounded-lg">Loading...</span>
@@ -95,6 +95,12 @@ export default {
         text: paper.text
       })
       await this.onLoad()
+    },
+    async onRemove ({ paper }) {
+      if (window.prompt(`Remove ${paper.title} and ${paper.generated.length} Quotes within? Type "delete${paper.generated.length}" to confirm.`) === `delete${paper.generated.length}`) {
+        await Quotes.removeQuoteDoc({ remove: paper })
+        await this.onLoad()
+      }
     },
     async saveEdit ({ paper }) {
       console.log(paper)
