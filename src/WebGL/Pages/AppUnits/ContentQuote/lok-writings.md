@@ -289,7 +289,7 @@ Power of the situation. Do rome in rome. Be kind at BeRoyal.com
 
 I used to be getting by with each person, so there’s not much connection with each other. Get by is just faking agreement politely but could be even having grudges and resentment.
 
-If you can't handle the truth, you get the lie. - Jenni
+If you can't handle the truth, you get the lie. - @jenni
 
 Lie may be comforting at the beginning but it ultimately lock people in different cells of fake-agreement-separation and make people feel alone because they cannot have a genuine conversation with everyone after a long time of being fake to avoid conflict.
 
