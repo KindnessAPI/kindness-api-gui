@@ -79,6 +79,7 @@ export default {
     },
     async onInit () {
       await this.onLoad()
+
       if (this.list.length === 0) {
         this.mode = 'create'
       } else {

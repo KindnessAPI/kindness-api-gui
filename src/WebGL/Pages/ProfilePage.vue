@@ -1,8 +1,5 @@
 <template>
   <div class="full">
-    <div class="fixed top-0 left-0 w-full pointer-events-none" :style="{
-      zIndex: -1
-    }" ref="mounter"></div>
 
     <div v-show="!openMenu" :style="{ ddvisibility: isDekstop && !openMenu && overlay ? 'hidden' : 'visible' }" class="full relative">
       <div class="topnavbar bg-yellow-400">
@@ -340,6 +337,10 @@
       zIndex: 60,
     }" ref="mounterAbove"></div> -->
 
+    <div class="fixed top-0 left-0 w-full pointer-events-none" :style="{
+      zIndex: 10000,
+      visibility: base.isActiveRender ? 'visible' : 'hidden'
+    }" ref="mounter"></div>
   </div>
 </template>
 
@@ -356,7 +357,7 @@ var dingding = new Howl({
 export default {
   name: 'Home',
   PipeScissor,
-  // mixins: [PipeScissor],
+  mixins: [PipeScissor],
   components: {
     ...require('../webgl.js').default
   },
@@ -428,11 +429,12 @@ export default {
       // window.dispatchEvent(new Event('resize'))
 
       // if (!this.isDekstop) {
-      //   if (this.overlay) {
-      //     this.base.isActiveRender = false
-      //   } else {
-      //     this.base.isActiveRender = true
-      //   }
+      if (this.overlay === 'prayer-detail') {
+        this.base.isActiveRender = true
+      } else {
+        this.base.isActiveRender = false
+      }
+
       // }
     },
     queryUserID () {
