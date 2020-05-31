@@ -201,9 +201,9 @@ export default {
             // pt.y = pt.y * (sceneRect.y / sceneRect.x);
             pt.xy = pt.xy * 2.0;
 
-            outColor.r = 1.0 - 0.55 * pattern(pt.xy + -0.4015 * cos(time));
+            outColor.r = 1.0 - 0.55 * pattern(pt.xy + -0.94015 * cos(time));
             outColor.g = 1.0 - 0.55 * pattern(pt.xy + 0.0);
-            outColor.b = 1.0 - 0.55 * pattern(pt.xy + 0.4015 * cos(time));
+            outColor.b = 1.0 - 0.55 * pattern(pt.xy + 0.94015 * cos(time));
 
             gl_FragColor = vec4(clamp(color * outColor.rgb, 0.0, 1.0), opacity);
           }
