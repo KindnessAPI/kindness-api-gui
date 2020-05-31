@@ -12,11 +12,13 @@
       To: @{{ prayer.toProfile.username }}
     </div>
     <div class="text-sm text-gray-600 mb-3">{{ getMoment(prayer.created_at) }}</div>
-    <!-- <div class="whitespace-pre">{{ prayer.text }}</div> -->
-    <!-- <pre>{{ prayer }}</pre> -->
-    <ScissorArea :style="{ width: `100%`, height: size.width.toFixed(0) + 'px', minHeight: '300px' }">
+    <div>
+      <button @click="mode = 'poster'" class="px-3 focus:outline-none mr-2 mb-2 rounded-full bg-yellow-300 py-2 text-sm">Poster</button>
+      <button @click="mode = 'text'" class="px-3 focus:outline-none mr-2 mb-2 rounded-full bg-yellow-300 py-2 text-sm">Text</button>
+    </div>
+    <div v-if="mode === 'text'" class="whitespace-pre">{{ prayer.text }}</div>
+    <ScissorArea v-if="mode === 'poster'" :style="{ width: `100%`, height: size.width.toFixed(0) + 'px', minHeight: '300px' }">
       <div slot="dom" class="full">
-        <div class="whitespace-pre">{{ prayer.text }}</div>
       </div>
       <PrayerScene slot="o3d" :text="prayer.text">
       </PrayerScene>
@@ -41,6 +43,7 @@ export default {
   },
   data () {
     return {
+      mode: 'poster',
       size: {
         width: 300,
         height: 300

@@ -22,7 +22,7 @@
     </O3D>
 
     <O3D :animated="true" :layout="'frontlayout'">
-      <TextureText :scale="1.0" :envMap="shaderCube.out.envMap" :canplay="true" font="LoveLo" align="left" :clicked="() => {}" :text="text"></TextureText>
+      <TextureTextArea :scale="1.0" :envMap="shaderCube.out.envMap" :canplay="true" font="LoveLo" align="left" :clicked="() => {}" :text="text"></TextureTextArea>
 
       <!-- <O3D layout="subtitle">
         <TextureText :scale="0.735" :envMap="shaderCube.out.envMap" :canplay="true" font="LoveLo" align="left" :clicked="() => {}" :text="'Kindness Content Distribution ✨'"></TextureText>
@@ -170,9 +170,9 @@ export default {
         'frontlayout': {
           // py: '50',
 
-          sx: 8,
-          sy: 8,
-          sz: 8
+          sx: 7.5,
+          sy: 7.5,
+          sz: 7.5
         }
         // 'subtitle': {
         //   py: -10,
