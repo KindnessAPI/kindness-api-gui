@@ -432,11 +432,12 @@ export default {
       // window.dispatchEvent(new Event('resize'))
 
       // if (!this.isDekstop) {
-      if (this.overlay === 'prayer-detail') {
-        this.base.isActiveRender = true
-      } else {
-        this.base.isActiveRender = false
-      }
+
+      // if (this.overlay === 'prayer-detail') {
+      //   this.base.isActiveRender = true
+      // } else {
+      //   this.base.isActiveRender = false
+      // }
 
       // }
     },
