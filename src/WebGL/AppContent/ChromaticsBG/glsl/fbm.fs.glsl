@@ -41,11 +41,11 @@ void main (void) {
   vec3 outColor = vec3(0.0);
   vec2 pt = vUv.xy;
   pt.y = pt.y * (sceneRect.y / sceneRect.x);
-  pt.xy = pt.xy * 3.0;
+  pt.xy = pt.xy * 6.0;
 
-  outColor.r = 0.7 - pattern(pt.xy + -0.15 * cos(time));
+  outColor.r = 0.7 - pattern(pt.xy + -0.125 * cos(time));
   outColor.g = 0.7 - pattern(pt.xy + 0.0);
-  outColor.b = 0.7 - pattern(pt.xy + 0.15 * cos(time));
+  outColor.b = 0.7 - pattern(pt.xy + 0.125 * cos(time));
 
-  gl_FragColor = vec4(clamp(outColor.rgb, 0.0, 1.0), outColor.r * 0.52);
+  gl_FragColor = vec4(clamp(outColor.rgb, 0.0, 1.0), outColor.r * 0.5);
 }

@@ -8,14 +8,15 @@
         Pray Back
       </span>
     </div>
-    <div class="" ref="text-area">
+    <div class="w-full" ref="text-area">
       To: @{{ prayer.toProfile.username }}
     </div>
     <div class="text-sm text-gray-600 mb-3">{{ getMoment(prayer.created_at) }}</div>
     <!-- <div class="whitespace-pre">{{ prayer.text }}</div> -->
     <!-- <pre>{{ prayer }}</pre> -->
-    <ScissorArea :style="{ width: size.width + 'px', height: size.width + 'px' }">
+    <ScissorArea :style="{ width: `100%`, height: size.width.toFixed(0) + 'px', minHeight: '300px' }">
       <div slot="dom" class="full">
+        <div class="whitespace-pre">{{ prayer.text }}</div>
       </div>
       <PrayerScene slot="o3d" :text="prayer.text">
       </PrayerScene>
@@ -27,9 +28,10 @@
 <script>
 import moment from 'moment'
 import { Prayer } from '../../../APIs/KA'
-// import {  } from '../../Reusable/index'
+import { Tree } from '../../Reusable/index'
 
 export default {
+  mixins: [Tree],
   components: {
     ...require('../../webgl').default
   },
@@ -80,6 +82,7 @@ export default {
       this.prayers = await Prayer.getMyReceivedPrayer({ prayerID: this.prayerID })
       if (this.prayers[0]) {
         this.prayer = this.prayers[0]
+        this.getSize()
         this.$nextTick(() => {
           this.getSize()
         })

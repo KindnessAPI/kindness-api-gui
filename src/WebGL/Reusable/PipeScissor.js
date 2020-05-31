@@ -34,7 +34,7 @@ export const PipeScissor = {
 
     // prepare render loop
     let renderFnc = () => {
-      this.renderer.setClearColor(0xffffff, 0.1)
+      this.renderer.setClearColor(0xffffff, 0.0)
       this.renderer.setScissorTest(false)
       this.renderer.clear()
       this.renderer.setScissorTest(true)

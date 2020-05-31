@@ -25,7 +25,7 @@ import SpriteText from 'three-spritetext'
 import { Mesh, CircleBufferGeometry, MeshBasicMaterial, SpriteMaterial, TextureLoader, Sprite, Raycaster } from 'three'
 // import { MapControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { MapControls } from './OrbitControls.js'
-import { makeBase, Tree } from '../../Reusable/index'
+import { Tree } from '../../Reusable/index'
 
 export default {
   mixins: [Tree],
@@ -60,7 +60,7 @@ export default {
     return {
       cuber: false,
       vm: this,
-      pauseAnimation () {},
+      // pauseAnimation () {},
       base: false,
       ready: false,
       view3D: false,
@@ -69,8 +69,8 @@ export default {
   },
   beforeDestroy () {
     this.here = false
-    this.base.onTearDown()
-    this.pauseAnimation()
+    // this.base.onTearDown()
+    // this.pauseAnimation()
   },
   mounted () {
     this.prepBase()
@@ -78,7 +78,7 @@ export default {
   },
   methods: {
     prepBase () {
-      this.base = makeBase()
+      // this.base = makeBase()
     },
     toggle3D2D () {
       this.view3D = !this.view3D
@@ -111,22 +111,23 @@ export default {
 
       var engine = myGraph(this.$refs['mounter'])
       // engine.pauseAnimation()
-      this.pauseAnimation = () => {
-        engine.pauseAnimation()
-        engine.scene().traverse((item) => {
-          if (item.dispose) {
-            item.dispose()
-          }
-        })
-      }
+      // this.pauseAnimation = () => {
+      //   engine.pauseAnimation()
+      //   engine.scene().traverse((item) => {
+      //     if (item.dispose) {
+      //       item.dispose()
+      //     }
+      //   })
+      // }
 
-      this.$watch('run', () => {
-        if (this.run) {
-          engine.resumeAnimation()
-        } else {
-          engine.pauseAnimation()
-        }
-      })
+      // this.$watch('run', () => {
+      //   if (this.run) {
+      //     engine.resumeAnimation()
+      //   } else {
+      //     engine.pauseAnimation()
+      //   }
+      // })
+
       // engine.pauseAnimation()
       // this.base.onLoop(() => {
       //   engine.onEngineTick()
@@ -210,10 +211,15 @@ export default {
       })
       // let phantomMatLime = makePhantom({ color: 'rgb(20, 156, 255)', opacity: 1 })
       let phantomMatWhite = makePhantom({ color: '#ffffff', opacity: 1 })
-      this.base.onLoop(() => {
-        // phantomMatLime.uniforms.time.value = window.performance.now() * 0.001
+      let rAF = () => {
+        window.requestAnimationFrame(rAF)
         phantomMatWhite.uniforms.time.value = window.performance.now() * 0.001
-      })
+      }
+      window.requestAnimationFrame(rAF)
+      // this.base.onLoop(() => {
+      //   // phantomMatLime.uniforms.time.value = window.performance.now() * 0.001
+      //   phantomMatWhite.uniforms.time.value = window.performance.now() * 0.001
+      // })
 
       // this.cuber = new ShaderCube({ renderer: engine.renderer(), loop: this.base.onLoop, res: 32 })
       // this.cuber.out.material.transparent = true
@@ -342,7 +348,7 @@ export default {
 
       engine.scene().add(this.o3d)
 
-      this.base.onInit()
+      // this.base.onInit()
       this.ready = true
 
       let oldControl = myGraph.controls()

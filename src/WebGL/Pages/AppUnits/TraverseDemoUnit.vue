@@ -25,7 +25,7 @@ import SpriteText from 'three-spritetext'
 import { Mesh, CircleBufferGeometry, MeshBasicMaterial, SpriteMaterial, TextureLoader, Sprite, Raycaster } from 'three'
 // import { MapControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { MapControls } from './OrbitControls.js'
-import { makeBase, Tree } from '../../Reusable/index'
+import { Tree } from '../../Reusable/index'
 
 export default {
   mixins: [Tree],
@@ -69,7 +69,7 @@ export default {
   },
   beforeDestroy () {
     this.here = false
-    this.base.onTearDown()
+    // this.base.onTearDown()
     this.pauseAnimation()
   },
   mounted () {
@@ -78,7 +78,7 @@ export default {
   },
   methods: {
     prepBase () {
-      this.base = makeBase()
+      // this.base = makeBase()
     },
     toggle3D2D () {
       this.view3D = !this.view3D
@@ -345,7 +345,7 @@ export default {
       this.o3d.scale.z = 5
       engine.scene().add(this.o3d)
 
-      this.base.onInit()
+      // this.base.onInit()
       this.ready = true
 
       let oldControl = myGraph.controls()

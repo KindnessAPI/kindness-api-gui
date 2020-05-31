@@ -159,7 +159,9 @@
       <!-- <div v-if="overlay" @click="overlay = false" class="overlay-bg"></div> -->
 
     </div>
+
     <FullMenuBar class=" bg-yellow-600" :nogl="true" v-show="openMenu" @close="openMenu = false"></FullMenuBar>
+
     <transition name="fadefast">
       <div v-if="overlay" @click="overlay = false" class="overlay-close">
         <!-- <ScissorArea v-if="isDekstop" class="w-full h-full">
@@ -337,9 +339,10 @@
       zIndex: 60,
     }" ref="mounterAbove"></div> -->
 
-    <div class="fixed top-0 left-0 w-full pointer-events-none" :style="{
-      zIndex: 10000,
-      visibility: base.isActiveRender ? 'visible' : 'hidden'
+    <div class="fixed top-0 left-0 bottom-0 right-0 pointer-events-none" :style="{
+      zIndex: 60,
+      opacity: overlay === 'prayer-detail' ? '1' : '0',
+      transform: `perspective(100vmax) translateZ(2px)`
     }" ref="mounter"></div>
   </div>
 </template>
@@ -689,6 +692,7 @@ export default {
   async mounted () {
     this.sdk = await makeSDK()
     this.ready = true
+    this.base.isActiveRender = true
     // this.base.onResize(() => {
     //   this.isDekstop = window.innerWidth >= 500
     // })
@@ -720,6 +724,7 @@ export default {
     document.body.style.backgroundColor = this.bgColor
 
     this.allReady = true
+    this.ready = true
   },
   beforeDestroy () {
     this.onReset()

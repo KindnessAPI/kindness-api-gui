@@ -12,7 +12,12 @@
 
 <script>
 import { Auth } from '../../../APIs/KA'
+import { Tree } from '../../Reusable/index'
+
 export default {
+  mixins: [
+    Tree
+  ],
   props: {
     config: {}
   },
