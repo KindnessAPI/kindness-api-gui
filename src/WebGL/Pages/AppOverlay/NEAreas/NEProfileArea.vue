@@ -13,7 +13,7 @@
     </div>
 
     <div v-if="profile.displayName" class="w-full flex text-lg justify-center items-center">
-      {{ profile.displayName }} <img v-if="profile.verified" class="w-5 h-5 ml-1" src="../img/verified.svg">
+      {{ profile.displayName }}  <span class="mx-1 text-2xl text-white bg-blue-500 w-8 h-8 inline-flex justify-center items-center text-center rounded-full" v-if="profile.christian">✞</span> <img v-if="profile.verified" class="w-5 h-5 ml-1" src="../img/verified.svg">
     </div>
     <div v-if="profile.displayName" class="w-full text-sm text-gray-600 mb-3 flex justify-center items-center">
       <span>@{{ node.value.username }} </span>

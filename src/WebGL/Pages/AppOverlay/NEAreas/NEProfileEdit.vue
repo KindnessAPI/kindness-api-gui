@@ -11,6 +11,10 @@
           <textarea placeholder="Display name" v-model="profile.displayName" cols="36" rows="1" class="max-w-full rounded-none bg-transparent whitespace-pre-line resize-none px-0 py-2 mb-3 border-b border-black inline-block"></textarea>
         </div>
         <div class="mb-3 border-l border-black hover:border-green-400 pl-3">
+          <div class="text-lg mt-3">Chrsitian</div>
+          <input type="checkbox" v-model="profile.christian" cols="36" rows="1" class="max-w-full w-4 h-4 rounded-none bg-transparent whitespace-pre-line resize-none px-0 py-2 mb-3 border-b border-black inline-block" />
+        </div>
+        <div class="mb-3 border-l border-black hover:border-green-400 pl-3">
           <div class="text-lg mt-3">Bio</div>
           <textarea placeholder="Bio" v-model="profile.bio" cols="36" rows="5" class="max-w-full rounded-none bg-transparent whitespace-pre-line resize-none px-0 py-2 mb-3 border-b border-black inline-block"></textarea>
         </div>
