@@ -433,13 +433,11 @@ export default {
       // window.dispatchEvent(new Event('resize'))
 
       // if (!this.isDekstop) {
-
       // if (this.overlay === 'prayer-detail') {
       //   this.base.isActiveRender = true
       // } else {
       //   this.base.isActiveRender = false
       // }
-
       // }
     },
     queryUserID () {
@@ -453,8 +451,11 @@ export default {
       return Auth.currentProfile.user
     },
     loadingBG () {
-      if (this.profile && this.profile.loadingImg) {
-        return this.profile.loadingImg
+      // if (this.profile && this.profile.loadingImg) {
+      //   return this.profile.loadingImg
+      // }
+      if (this.profile && this.profile.bgImg) {
+        return this.profile.bgImg
       }
       return this.bg.nebula
     },
