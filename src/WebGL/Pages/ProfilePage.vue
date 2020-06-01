@@ -379,6 +379,7 @@ export default {
       // ],
       // transitionScene: 'FallScene',
       bg: {
+        nebula: require('./AppUnits/hdri/galaxyspace.jpg'),
         stars: require('./AppUnits/hdri/sky-space-milky-way-stars-110854.jpg'),
         earth: require('./AppUnits/hdri/astronomy-atmosphere-earth-exploration-220201.jpg'),
         galaxy: require('./AppUnits/hdri/sky-space-dark-galaxy-2150.jpg')
@@ -455,13 +456,13 @@ export default {
       if (this.profile && this.profile.loadingImg) {
         return this.profile.loadingImg
       }
-      return this.bg.stars
+      return this.bg.nebula
     },
     readyBG () {
       if (this.profile && this.profile.bgImg) {
         return this.profile.bgImg
       }
-      return this.bg.stars
+      return this.bg.nebula
     },
     queryUserID () {
       return this.$route.params.userID
