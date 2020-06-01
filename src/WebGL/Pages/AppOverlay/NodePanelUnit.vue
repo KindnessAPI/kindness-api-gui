@@ -21,6 +21,8 @@
                 <NEPrayerRoom @config="$emit('config', $event)" @notify="$emit('notify', $event)" @prayerID="$emit('prayerID', $event)" @prayFor="$emit('prayFor', $event)" @overlay="$emit('overlay', $event)" :isMe="isMe" :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEPrayerRoom>
                 <NENotificationButton @config="$emit('config', $event)" @notify="$emit('notify', $event)" @prayerID="$emit('prayerID', $event)" @overlay="$emit('overlay', $event)" :isMe="isMe" :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NENotificationButton>
                 <NEPrayerOutBoxButton v-if="isMe" @config="$emit('config', $event)" @notify="$emit('notify', $event)" @prayerID="$emit('prayerID', $event)" @overlay="$emit('overlay', $event)" :isMe="isMe" :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEPrayerOutBoxButton>
+                <NEMiniSiteButton @config="$emit('config', $event)" @notify="$emit('notify', $event)" @prayerID="$emit('prayerID', $event)" @overlay="$emit('overlay', $event)" :isMe="isMe" :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEMiniSiteButton>
+                <NESiteDashboardButton v-if="isMe" @config="$emit('config', $event)" @notify="$emit('notify', $event)" @prayerID="$emit('prayerID', $event)" @overlay="$emit('overlay', $event)" :isMe="isMe" :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NESiteDashboardButton>
               </div>
             </div>
             <div v-if="tab === 'settings'" :key="node._id" >
@@ -41,6 +43,7 @@
               <NENodeTraverseAction :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NENodeTraverseAction>
               <NEPrayerRoom @config="$emit('config', $event)" @notify="$emit('notify', $event)" @prayerID="$emit('prayerID', $event)" @prayFor="$emit('prayFor', $event)" @overlay="$emit('overlay', $event)" :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEPrayerRoom>
               <NENotificationButton @config="$emit('config', $event)" @notify="$emit('notify', $event)" @prayerID="$emit('prayerID', $event)" @overlay="$emit('overlay', $event)" :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NENotificationButton>
+              <NEMiniSiteButton @config="$emit('config', $event)" @notify="$emit('notify', $event)" @prayerID="$emit('prayerID', $event)" @overlay="$emit('overlay', $event)" :isMe="isMe" :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEMiniSiteButton>
             </div>
           </div>
         </div>

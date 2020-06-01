@@ -9,7 +9,7 @@
     </ScissorArea>
 
     <div class="p-6">
-      <router-link to="/galaxy" class="text-white text-2xl hover:text-gray-300 w-full inline-block text-center">Star Map</router-link>
+      <router-link to="/galaxy" class="text-white text-2xl hover:text-gray-300 w-full inline-block text-center border-white border p-3 rounded-full hover:bg-gray-800">My Home</router-link>
       <!-- <router-link exact-active-class="active" to="/dashboard">
         <button class="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
           Kindness Central
