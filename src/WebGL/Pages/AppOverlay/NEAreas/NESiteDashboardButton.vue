@@ -1,8 +1,8 @@
 <template>
   <div class="inline">
-    <router-link to="/dashboard">
+    <a target="_blank" href="/dashboard">
       <NEIcon :label="`Site Dashboard`" :color="'orange'" :img="require('../img/dashboard.svg')"></NEIcon>
-    </router-link>
+    </a>
   </div>
 </template>
 
