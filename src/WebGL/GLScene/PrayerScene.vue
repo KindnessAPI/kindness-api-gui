@@ -22,7 +22,8 @@
     </O3D>
 
     <O3D :animated="true" :layout="'frontlayout'">
-      <TextureTextArea :scale="1.0" :envMap="shaderCube.out.envMap" :canplay="true" font="LoveLo" align="left" :clicked="() => {}" :text="text"></TextureTextArea>
+      <TextureTextArea :scale="1.0" :envMap="shaderCube.out.envMap" :canplay="true" font="LoveALo" align="left" :clicked="() => {}" :text="text"></TextureTextArea>
+      <!-- <TextureTextArea :scale="1.0" :envMap="shaderCube.out.envMap" :canplay="true" font="LoveLo" align="left" :clicked="() => {}" :text="text"></TextureTextArea> -->
 
       <!-- <O3D layout="subtitle">
         <TextureText :scale="0.735" :envMap="shaderCube.out.envMap" :canplay="true" font="LoveLo" align="left" :clicked="() => {}" :text="'Kindness Content Distribution ✨'"></TextureText>

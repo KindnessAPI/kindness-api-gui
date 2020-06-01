@@ -34,13 +34,13 @@ export const PipeScissor = {
 
     // prepare render loop
     let renderFnc = () => {
-      if (Object.keys(this.areas).length === 0) {
-        return
-      }
       this.renderer.setClearColor(0xffffff, 0.0)
       this.renderer.setScissorTest(false)
       this.renderer.clear()
       this.renderer.setScissorTest(true)
+      if (Object.keys(this.areas).length === 0) {
+        return
+      }
       for (let areaKN in this.areas) {
         let config = this.areas[areaKN]
 
