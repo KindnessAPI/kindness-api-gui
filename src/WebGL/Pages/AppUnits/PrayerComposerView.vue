@@ -16,8 +16,8 @@
 
     <div class="border-l rounded-none border-black hover:border-green-500 p-3">
       <button @click="sendPrayer" class="p-3 text-xl bg-gray-400 rounded-full bg-transparent focus:outline-none cursor-pointer hover:bg-gray-300">
-        <span v-if="state === 'ready'">Send Prayer</span>
-        <span v-if="state === 'ok'">Prayer Sent Successfully</span>
+        <span v-if="state === 'ready'">Send Letter</span>
+        <span v-if="state === 'ok'">Letter Sent Successfully</span>
       </button>
     </div>
   </div>

@@ -22,7 +22,7 @@ export default {
       default: false
     },
     label: {
-      default: `Send a Prayer`
+      default: `Send a Letter`
     },
     img: {
       default: require('../img/church.svg')

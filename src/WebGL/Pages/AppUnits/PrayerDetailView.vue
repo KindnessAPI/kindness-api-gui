@@ -5,7 +5,7 @@
         From: @{{ prayer.username }}
       </span>
       <span class="text-xs text-blue-500 cursor-pointer" @click="prayBack">
-        Pray Back
+        Write Back
       </span>
     </div>
     <div class="w-full" ref="text-area">
@@ -13,8 +13,8 @@
     </div>
     <div class="text-sm text-gray-600 mb-3">{{ getMoment(prayer.created_at) }}</div>
     <div>
-      <button @click="mode = 'poster'" class="px-3 focus:outline-none mr-2 mb-2 rounded-full bg-yellow-300 py-2 text-sm">Poster</button>
-      <button @click="mode = 'text'" class="px-3 focus:outline-none mr-2 mb-2 rounded-full bg-yellow-300 py-2 text-sm">Text</button>
+      <button @click="mode = 'poster'" class="px-3 focus:outline-none mr-2 mb-2 rounded-full bg-yellow-300 py-2 text-sm">Fancy Display</button>
+      <button @click="mode = 'text'" class="px-3 focus:outline-none mr-2 mb-2 rounded-full bg-yellow-300 py-2 text-sm">Plain Text</button>
     </div>
     <div v-if="mode === 'text'" class="whitespace-pre">{{ prayer.text }}</div>
     <ScissorArea v-if="mode === 'poster'" :style="{ width: `100%`, height: size.width.toFixed(0) + 'px', minHeight: '300px' }">

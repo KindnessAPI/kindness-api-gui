@@ -132,6 +132,12 @@
 
     </div>
 
+    <ScissorArea class="w-full h-min70" style="z-index: 2;">
+      <div slot="dom" class="full">
+      </div>
+      <SpaceWalkScene slot="o3d"></SpaceWalkScene>
+    </ScissorArea>
+
   </div>
 </template>
 

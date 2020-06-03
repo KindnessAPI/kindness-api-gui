@@ -23,12 +23,12 @@
             TogetherTime.me ✨
           </div>
           <div class="px-3 mb-12 text-lg font-bold">
-            Platform to Love all.
+            Love all.
           </div>
 
           <div>
             <div class="px-3 mb-3">
-              1. <router-link class="font-bold underline inline-block" to="/mini-letter-intro">Sharing Kindness ❤️</router-link>
+              1. <router-link class="font-bold underline inline-block" to="/mini-letter-intro">Sharing Kindness 💧</router-link>
             </div>
 
             <div class="px-3 mb-3">

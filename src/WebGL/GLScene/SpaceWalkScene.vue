@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import { Tree, RayPlay, PCamera, ShaderCube } from '../Reusable'
+import { Tree, PCamera, ShaderCube } from '../Reusable'
 import { Scene, Color } from 'three'
 // import { Interaction } from 'three.interaction'
 // import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
@@ -105,7 +105,7 @@ export default {
     // prepare camera
     this.camera = new PCamera({ base: this.lookup('base'), element: this.lookup('element') })
     this.camera.position.z = 600
-    this.rayplay = new RayPlay({ mounter: this.lookup('element'), base: this.lookup('base'), camera: this.camera })
+    // this.rayplay = new RayPlay({ mounter: this.lookup('element'), base: this.lookup('base'), camera: this.camera })
 
     // let OrbitControls = require('three/examples/jsm/controls/OrbitControls').OrbitControls
     // this.controls = new OrbitControls(this.camera, this.lookup('element'))

@@ -81,7 +81,7 @@ export default new Router({
       component: () => import('./WebGL/Pages/AppResuables/GEImageManager.vue')
     },
     {
-      path: '/prayer-room',
+      path: '/your-letters',
       beforeEnter: loginGate,
       component: () => import('./WebGL/Pages/PrayerRoomPage.vue')
     },
@@ -92,7 +92,7 @@ export default new Router({
     },
     {
       path: '/thank-you-gospel',
-      component: () => import('./WebGL/Pages/StoryOfLok.vue')
+      component: () => import('./WebGL/Pages/ThankYouGospelPage.vue')
     },
     {
       path: '/mini-letter-intro',

@@ -6,7 +6,7 @@
           Receiver
         </th>
         <th class="p-2">
-          Prayer
+          Letters
         </th>
       </tr>
       <tr v-for="prayer in prayers" :key="prayer._id">

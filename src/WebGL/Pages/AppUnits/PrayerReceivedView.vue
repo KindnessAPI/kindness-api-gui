@@ -6,7 +6,7 @@
           Sender
         </th>
         <th class="p-2 w-3/4">
-          Prayer
+          Letter
         </th>
       </tr>
       <tr v-for="prayer in prayers" :key="prayer._id" :class="{ 'bg-blue-100': prayer._id === prayerID }">

@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import { Tree, RayPlay, PCamera } from '../Reusable'
+import { Tree, PCamera } from '../Reusable'
 import { Scene, Color } from 'three'
 // import { Interaction } from 'three.interaction'
 // import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
@@ -91,7 +91,7 @@ export default {
     // prepare camera
     this.camera = new PCamera({ base: this.lookup('base'), element: this.lookup('element') })
     this.camera.position.z = 60
-    this.rayplay = new RayPlay({ mounter: this.lookup('element'), base: this.lookup('base'), camera: this.camera })
+    // this.rayplay = new RayPlay({ mounter: this.lookup('element'), base: this.lookup('base'), camera: this.camera })
 
     // this.controls = new OrbitControls(this.camera, this.lookup('element'))
     // this.lookup('base').onLoop(() => {

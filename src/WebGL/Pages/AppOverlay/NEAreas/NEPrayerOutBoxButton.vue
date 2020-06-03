@@ -1,6 +1,6 @@
 <template>
   <div class="inline">
-    <NEIcon :label="`Prayer Outbox`" :color="'gray'" @click="onClick" :img="require('../img/church-black.svg')"></NEIcon>
+    <NEIcon :label="`Letter Outbox`" :color="'gray'" @click="onClick" :img="require('../img/church-black.svg')"></NEIcon>
   </div>
 </template>
 

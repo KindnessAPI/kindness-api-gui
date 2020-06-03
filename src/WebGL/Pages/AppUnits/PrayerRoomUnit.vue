@@ -19,7 +19,7 @@
 
           <div class="flex justify-around md:justify-start ">
             <div :class="{ 'border-b text-teal-500 ': tab === 'now' }" @click="tab = 'now'" class="px-3 mb-3 text-lg md:text-xl font-bold border-teal-500 mr-4">
-              Pray Now
+              Write Letter
             </div>
             <div :class="{ 'border-b text-teal-500 ': tab === 'sent' }" @click="tab = 'sent'" class="px-3 mb-3 text-lg md:text-xl font-bold border-teal-500 mr-4">
               Sent

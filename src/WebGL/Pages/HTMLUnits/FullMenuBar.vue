@@ -21,10 +21,10 @@
             <router-link exact-active-class="underline" to="/galaxy">My StarMap</router-link>
           </div>
           <div class="mb-3 px-2 text-black text-xl" v-if="Auth.currentProfile">
-            <router-link exact-active-class="underline" to="/dashboard">Kindness Content Dashboard</router-link>
+            <router-link exact-active-class="underline" to="/dashboard">My Kindness Content Dashboard</router-link>
           </div>
           <div class="mb-3 px-2 text-black text-xl" v-if="Auth.currentProfile">
-            <router-link exact-active-class="underline" to="/prayer-room">Prayer Room</router-link>
+            <router-link exact-active-class="underline" to="/your-letters">My Letters</router-link>
           </div>
           <div class="mb-3 px-2 text-black text-xl" v-if="!Auth.isLoggedIn">
             <router-link exact-active-class="underline" class="block mb-3 hover:opacity-50" to="/login">Login</router-link>

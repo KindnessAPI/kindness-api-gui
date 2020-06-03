@@ -9,7 +9,7 @@
 
       <div class="flex justify-around md:justify-start bg-yellow-300 py-3">
         <div :class="{ 'underline ': tab === 'now' }" @click="tab = 'now'" class="px-3 text-lg mr-4">
-          Pray Now
+          Write Letter
         </div>
         <div :class="{ 'underline ': tab === 'sent' }" @click="tab = 'sent'" class="px-3 text-lg mr-4">
           Sent
