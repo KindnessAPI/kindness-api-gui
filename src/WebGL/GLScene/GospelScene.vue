@@ -136,10 +136,10 @@ export default {
     //   this.settings[cheery] = stub
     // })
 
-    // let parentScrollBox = this.lookup('scrollBox')
+    let parentScrollBox = this.lookup('scrollBox')
 
     let looper = () => {
-      // if (!parentScrollBox) { return }
+      if (!parentScrollBox) { return }
       // if (!this.settings[cheery]) { return }
       let time = window.performance.now() * 0.001
       // let setting = this.settings[cheery]
@@ -152,8 +152,9 @@ export default {
           sz: '0.75'
         },
         'bglayer': {
+
           pz: '-500',
-          rz: `${time * 0.03}`
+          rz: `${time * 0.03 + parentScrollBox.page * Math.PI * 2.0}`
         },
         'lens': {
           blur: 0.0, // Math.abs(Math.sin(time)),

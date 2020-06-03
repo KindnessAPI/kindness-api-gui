@@ -134,16 +134,16 @@ export default {
     //   this.settings[cheery] = stub
     // })
 
-    // let parentScrollBox = this.lookup('scrollBox')
+    let parentScrollBox = this.lookup('scrollBox')
 
     let looper = () => {
-      // if (!parentScrollBox) { return }
+      if (!parentScrollBox) { return }
       // if (!this.settings[cheery]) { return }
       // let time = window.performance.now() * 0.001
       // let setting = this.settings[cheery]
       this.layouts = {
         'cluster': {
-          // rz: `${Math.PI * 0.5}`,
+          rz: `${Math.PI * 2.0 * parentScrollBox.page}`,
           pz: '0',
           sx: '1.0',
           sy: '1.0',

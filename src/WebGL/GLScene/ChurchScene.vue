@@ -30,10 +30,11 @@
       <RadientBG></RadientBG>
       <!-- <MBLinesSVG></MBLinesSVG> -->
     </O3D>
-    <!-- <O3D :animated="true" layout="cross"> -->
-    <HolyCross></HolyCross>
-    <Church></Church>
-    <!-- </O3D> -->
+
+    <O3D :animated="true" layout="church">
+      <HolyCross></HolyCross>
+      <Church></Church>
+    </O3D>
 
     <!-- <MBLines></MBLines> -->
 
@@ -133,6 +134,9 @@ export default {
           sy: 1.0,
           sz: 1.0,
           pz: -3000
+        },
+        church: {
+          pz: -1000 * (parentScrollBox.page)
         }
       }
     }

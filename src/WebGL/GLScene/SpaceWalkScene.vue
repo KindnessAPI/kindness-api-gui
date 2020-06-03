@@ -35,7 +35,9 @@
     -->
     <!-- <Church></Church> -->
 
-    <Spacewalk :shaderCube="shaderCube"></Spacewalk>
+    <O3D :animated="true" layout="zoom">
+      <Spacewalk :shaderCube="shaderCube"></Spacewalk>
+    </O3D>
     <HolyCross :shaderCube="shaderCube"></HolyCross>
 
     <!-- <SpaceStation :shaderCube="shaderCube"></SpaceStation> -->
@@ -139,11 +141,11 @@ export default {
       // let cb3or = setting['flower3-offfset-rotation']
 
       this.layouts = {
-        bgarea: {
+        zoom: {
           sx: 1.0,
           sy: 1.0,
           sz: 1.0,
-          pz: -3000
+          pz: (1.0 - parentScrollBox.page) * 2500
         }
       }
     }

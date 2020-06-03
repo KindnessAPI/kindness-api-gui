@@ -155,8 +155,9 @@ export default {
 
     this.$parent.$emit('composer', this.composer)
 
+    let parentScrollBox = this.lookup('scrollBox')
     let looper = () => {
-      // if (!parentScrollBox) { return }
+      if (!parentScrollBox) { return }
       // if (!this.settings[cheery]) { return }
       // let time = window.performance.now() * 0.001
       // let setting = this.settings[cheery]
@@ -167,9 +168,9 @@ export default {
         'frontlayout': {
           py: '50',
 
-          sx: 9,
-          sy: 9,
-          sz: 9
+          sx: 10 * parentScrollBox.page,
+          sy: 10 * parentScrollBox.page,
+          sz: 10 * parentScrollBox.page
         },
         'subtitle': {
           py: -10,

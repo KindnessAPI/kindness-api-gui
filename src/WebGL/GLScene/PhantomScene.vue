@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { Tree, RayPlay, PCamera } from '../Reusable'
+import { Tree, PCamera } from '../Reusable'
 import { Scene, Color } from 'three'
 // import { Interaction } from 'three.interaction'
 
@@ -43,7 +43,7 @@ export default {
     // prepare camera
     this.camera = new PCamera({ base: this.lookup('base'), element: this.lookup('element') })
     this.camera.position.z = 100
-    this.rayplay = new RayPlay({ mounter: this.lookup('element'), base: this.lookup('base'), camera: this.camera })
+    // this.rayplay = new RayPlay({ mounter: this.lookup('element'), base: this.lookup('base'), camera: this.camera })
 
     this.scene.add(this.o3d)
 

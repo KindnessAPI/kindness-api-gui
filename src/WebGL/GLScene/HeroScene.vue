@@ -134,7 +134,7 @@ export default {
           rz: `${cb1r.z / 100 * Math.PI * 2}`
         },
         'cb-item': {
-          rx: `${time}`,
+          rx: `${time + parentScrollBox.page * 3.14 * 2}`,
           ry: ``,
           rz: ``
         },
@@ -172,9 +172,9 @@ export default {
           rz: `${(cb3or.z - 50) / 100 * Math.PI * 2}`
         },
         mblines: {
-          sx: 1.0,
-          sy: 1.0,
-          sz: 1.0,
+          sx: 1.0 + parentScrollBox.page,
+          sy: 1.0 + parentScrollBox.page,
+          sz: 1.0 + parentScrollBox.page,
           pz: -2000
         }
       }
