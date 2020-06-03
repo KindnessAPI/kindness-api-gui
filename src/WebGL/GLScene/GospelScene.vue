@@ -152,7 +152,6 @@ export default {
           sz: '0.75'
         },
         'bglayer': {
-
           pz: '-500',
           rz: `${time * 0.03 + parentScrollBox.page * Math.PI * 2.0}`
         },

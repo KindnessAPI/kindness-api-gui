@@ -168,9 +168,9 @@ export default {
         'frontlayout': {
           py: '50',
 
-          sx: 10 * parentScrollBox.page,
-          sy: 10 * parentScrollBox.page,
-          sz: 10 * parentScrollBox.page
+          sx: 10 + parentScrollBox.page,
+          sy: 10 + parentScrollBox.page,
+          sz: 10 + parentScrollBox.page
         },
         'subtitle': {
           py: -10,
