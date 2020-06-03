@@ -36,7 +36,7 @@
             </div>
 
             <div class="px-3 mb-12">
-              3. <router-link class="font-bold underline inline-block" to="/thank-you-gospel">My Stories of Miracles and Praise</router-link> 🥰
+              3. <router-link class="font-bold underline inline-block" to="/thank-you-gospel">My Story</router-link> 🥰
             </div>
 
             <div class="px-3 mb-3" v-if="!Auth.currentProfile">
