@@ -22,26 +22,21 @@
           <div class="px-3 mb-3 text-3xl md:text-4xl font-bold">
             TogetherTime.me ✞ ✨
           </div>
+          <div class="px-3 mb-12 text-lg font-bold">
+            Lok's Christian Platform
+          </div>
 
           <div>
-            <div class="px-3 mb-3" v-if="!Auth.currentProfile">
-              Hi! I'm <a target="_blank" class="font-bold underline" href="https://www.instagram.com/wonglok831/">@wonglok831</a> ↗
+            <div class="px-3 mb-3">
+              1. <router-link class="font-bold underline inline-block" to="/prayer-room-intro">Sharing Prayer 🙏🏻</router-link>
             </div>
 
             <div class="px-3 mb-3">
-              1. <router-link class="font-bold underline inline-block" to="/prayer-room-intro">Share your Prayer / Story 🙏🏻</router-link>
+              2. <router-link class="font-bold underline inline-block" to="/make-friends-intro">Fostering Christian Friendship 👨🏼‍💻</router-link>
             </div>
 
-            <div class="px-3 mb-3">
-              2. <router-link class="font-bold underline inline-block" to="/make-friends-intro">Fostering International Friendship 👨🏼‍💻</router-link>
-            </div>
-
-            <div class="px-3 mb-3">
-              3. <router-link class="font-bold underline inline-block" to="/thank-you-gospel">My testimonal and personal story</router-link> 🥰
-            </div>
-
-            <div class="px-3 mb-3">
-              I made this place to praise Dear God's and Dear Jesus' Grace and Mercy.
+            <div class="px-3 mb-12">
+              3. <router-link class="font-bold underline inline-block" to="/thank-you-gospel">My Stories of Miracles and Praise</router-link> 🥰
             </div>
 
             <div class="px-3 mb-3" v-if="!Auth.currentProfile">
