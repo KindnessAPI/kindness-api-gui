@@ -95,8 +95,8 @@ export default new Router({
       component: () => import('./WebGL/Pages/StoryOfLok.vue')
     },
     {
-      path: '/prayer-room-intro',
-      component: () => import('./WebGL/Pages/PrayerRoomIntro.vue')
+      path: '/mini-letter-intro',
+      component: () => import('./WebGL/Pages/MiniLoveLetterIntro.vue')
     },
     {
       path: '/make-friends-intro',

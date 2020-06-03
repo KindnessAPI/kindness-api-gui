@@ -20,23 +20,23 @@
 
         <div class="px-3 max-w-xl mx-auto  py-24 lg:py-32 xl:py-64">
           <div class="px-3 mb-3 text-3xl md:text-4xl font-bold">
-            TogetherTime.me ✞ ✨
+            TogetherTime.me ✨
           </div>
           <div class="px-3 mb-12 text-lg font-bold">
-            Lok's Christian Platform
+            Platform to Love all.
           </div>
 
           <div>
             <div class="px-3 mb-3">
-              1. <router-link class="font-bold underline inline-block" to="/prayer-room-intro">Sharing Prayer 🙏🏻</router-link>
+              1. <router-link class="font-bold underline inline-block" to="/mini-letter-intro">Sharing Kindness ❤️</router-link>
             </div>
 
             <div class="px-3 mb-3">
-              2. <router-link class="font-bold underline inline-block" to="/make-friends-intro">Fostering Christian Friendship 👨🏼‍💻</router-link>
+              2. <router-link class="font-bold underline inline-block" to="/make-friends-intro">Fostering International Friendship 👨🏼‍💻</router-link>
             </div>
 
             <div class="px-3 mb-12">
-              3. <router-link class="font-bold underline inline-block" to="/thank-you-gospel">My Story</router-link> 🥰
+              3. <router-link class="font-bold underline inline-block" to="/thank-you-gospel">My Personal Story</router-link> 🥰
             </div>
 
             <div class="px-3 mb-3" v-if="!Auth.currentProfile">

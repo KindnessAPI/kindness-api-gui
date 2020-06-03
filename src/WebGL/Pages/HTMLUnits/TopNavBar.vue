@@ -5,7 +5,7 @@
         <div class="block lg:w-1/3">
           <div class="text-2xl text-black py-3">
             <router-link to="/" class="cursor-pointer">
-              TogetherTime.me ✞
+              TogetherTime.me ✨
             </router-link>
           </div>
         </div>

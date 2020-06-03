@@ -12,7 +12,7 @@
       Lok Lok's Life Story
     </div>
     <div class="px-3 pb-8">
-      Hello everybody, I'm Lok Lok. 👋🏼 TogetherTime.me is a thanks giving tribute to Dear God's Grace and Dear Jesus's Mercy.
+      Hello everybody, I'm Lok Lok. 👋🏼 TogetherTime.me is a platform to love all. Personally I would like to give thanks and tribute to Dear God's Grace and Dear Jesus's Mercy.
       This platform is also a give back to the amazing Royal friends I've met online who changed my bad mindset and guided me to Jesus.
       Lok Lok found his life's happiness and purpose again after mental illness. With God, all things are poissible. (Matthew 19:23-30) Now, many of his dreams becomes reality one by one.
     </div>
