@@ -2,11 +2,10 @@
 <template>
   <div v-if="node">
     <div class="mb-3">
-      <span class="text-xl">Relationship</span>
+      <span class="text-xl">Relationship Network</span>
       <span class="text-sm">
         of
         <span class="font-bold" v-if="node && node.value"> @{{ node.value.username }}</span>
-        with others.
       </span>
     </div>
     <div>

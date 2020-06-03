@@ -5,7 +5,7 @@
         <span v-if="config.back" @click="onBack">← Back</span>
       </div>
       <div class="w-2/6 p-3 text-center">
-        Notification
+        Notification {{ isLoading ? 'Loading...' : '' }}
       </div>
       <div class="w-2/6 p-3 ">
 
@@ -22,7 +22,12 @@
           </td>
           <td class="p-3 text-notif cursor-pointer">
             <span>{{ notif.text }}</span>
-            <div class="text-sm text-gray-500">{{ getMoment(notif.created_at) }}</div>
+            <div class="text-sm text-gray-500">
+
+              <span>{{ getMoment(notif.created_at) }} </span>
+              <span v-if="notif.type === 'link-friend' && added(notif.fromProfile)">Followed Back already.</span>
+              <span class="text-blue-500" v-if="notif.type === 'link-friend' && !added(notif.fromProfile)">Click to Follow Back</span>
+            </div>
           </td>
           <td class="p-3 cursor-pointer">
             <div class="w-4 h-4 rounded-full bg-blue-400" v-if="!notif.read"></div>
@@ -52,16 +57,21 @@ export default {
   },
   data () {
     return {
+      isLoading: false,
       notifications: false,
       API
     }
   },
   computed: {
+
   },
   mounted () {
     this.getNotifications()
   },
   methods: {
+    added (profile) {
+      return API.Friend.alreadyAdded({ profile, graph: this.graph })
+    },
     onBack () {
       if (this.config.back === 'notify') {
         this.config.back = 'node-panel'
@@ -99,8 +109,16 @@ export default {
           })
       } else if (notif.type === 'link-friend') {
         this.readNotif(notif)
-          .then(() => {
-            this.$router.push(`/profile/${notif.fromProfile.username}/${notif.fromProfile.userID}`)
+          .then(async () => {
+            if (!this.added(notif.fromProfile)) {
+              this.isLoading = true
+              await API.Friend.addFriend({ friend: notif.fromProfile, you: notif.toProfile })
+              window.dispatchEvent(new Event('reload-graph'))
+              this.isLoading = false
+            }
+            //
+            // this.$router.push(`/profile/${notif.fromProfile.username}/${notif.fromProfile.userID}`)
+
             this.$emit('config', {
             })
             this.$emit('overlay', false)

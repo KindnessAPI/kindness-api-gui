@@ -1,6 +1,6 @@
 <template>
   <div class="inline">
-    <NEIcon :label="`Letter Outbox`" :color="'gray'" @click="onClick" :img="require('../img/outbox.svg')"></NEIcon>
+    <NEIcon :label="`Follow a Friend`" :color="'gray'" @click="onClick" :img="require('../img/add-friend.svg')"></NEIcon>
   </div>
 </template>
 
@@ -20,10 +20,10 @@ export default {
   },
   methods: {
     onClick () {
-      this.$emit('config', {
-        back: 'node-panel'
-      })
-      this.$emit('overlay', 'prayer-outbox')
+      // this.$emit('config', {
+      //   back: 'node-panel'
+      // })
+      this.$emit('tab', 'friendship')
     }
   }
 }

@@ -590,6 +590,29 @@ export class Profile {
   }
 }
 
+export class Friend {
+  static alreadyAdded ({ profile, graph }) {
+    return graph.nodes.filter(n => n.value && n.value.userID).some(n => n.value.userID === profile.userID)
+  }
+  static async addFriend ({ friend, node }) {
+    try {
+      let newNode = await Graph.createFriendTraverseNode({ profileUsername: friend.username, name: friend.name, profileUserID: friend.userID, photo: friend.photo })
+      let toPerson = {
+        userID: friend.userID,
+        username: friend.username
+      }
+      let fromPerson = {
+        userID: Auth.currentProfile.userID,
+        username: Auth.currentProfile.username
+      }
+      let node = await Graph.getMyNode()
+      await Graph.linkFriendTraverseNode({ fromID: node._id, toID: newNode._id, fromPerson, toPerson })
+    } catch (e) {
+      console.log(e)
+    }
+  }
+}
+
 export class Graph {
   static async createFriendTraverseNode ({ profileUsername, profileUserID, name = 'New User', photo }) {
     photo = photo || `https://picsum.photos/id/${(Math.random() * 1200).toFixed(0)}/200/200`

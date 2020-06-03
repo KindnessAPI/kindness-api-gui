@@ -7,7 +7,7 @@
           <div class="flex flex-wrap justify-start px-3 pt-3 bg-yellow-400">
             <div :class="{ 'border-yellow-700 bg-yellow-200 text-yellow-800': tab === 'profile' }" @click="tab = 'profile'" class="shadow-sm inline-block px-3 py-2 border border-gray-500 mb-2 mr-2 bg-white rounded-lg ">Profile</div>
             <!-- <div v-if="tab === 'settings'" :class="{ 'border-yellow-700 bg-yellow-200 text-yellow-800': tab === 'settings' }" @click="tab = 'profile'" class="shadow-sm inline-block px-3 py-2 border border-gray-500 mb-2 mr-2 bg-white rounded-lg ">Settings</div> -->
-            <div :class="{ 'border-yellow-700 bg-yellow-200 text-yellow-800': tab === 'friendship' }" @click="tab = 'friendship'" class="shadow-sm inline-block px-3 py-2 border border-gray-500 mb-2 mr-2  bg-white rounded-lg ">Friendship</div>
+            <div :class="{ 'border-yellow-700 bg-yellow-200 text-yellow-800': tab === 'friendship' }" @click="tab = 'friendship'" class="shadow-sm inline-block px-3 py-2 border border-gray-500 mb-2 mr-2  bg-white rounded-lg ">Follow a Friend</div>
           </div>
           <div class="p-3 content-height  relative overflow-y-scroll overflow-x-hidden scrolling-touch">
             <div v-if="tab === 'profile'" :key="node._id" >
@@ -16,6 +16,7 @@
                 <ReButton v-if="isMe" :color="'blue'" @click="tab = 'settings'">Edit My Profile</ReButton>
               </div> -->
               <div class="mt-3 flex justify-start items-center flex-wrap">
+                <NEFollowFriendButton @tab="tab = $event" @config="$emit('config', $event)" @notify="$emit('notify', $event)" @prayerID="$emit('prayerID', $event)" @overlay="$emit('overlay', $event)" :isMe="isMe" :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEFollowFriendButton>
                 <NEIcon v-if="isMe" :color="'teal'" :img="require('./img/profile-teal.svg')" @click="tab = 'settings'" label="Edit My Profile"></NEIcon>
                 <NENodeTraverseAction :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NENodeTraverseAction>
                 <NEPrayerRoom @config="$emit('config', $event)" @notify="$emit('notify', $event)" @prayerID="$emit('prayerID', $event)" @prayFor="$emit('prayFor', $event)" @overlay="$emit('overlay', $event)" :isMe="isMe" :node="node" :graph="graph" @close="$emit('close')" @reload="$emit('reload')"></NEPrayerRoom>
